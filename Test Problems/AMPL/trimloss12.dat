@@ -1,0 +1,67 @@
+# trimloss12.dat
+# AMPL coding: S. Leyffer, August 2000.
+#
+# Data file for trimlon.mod; Example with 12 product types
+#
+data;
+param Bmax  := 2100.0;      # width of raw paper roll
+param Delta :=  100.0;      # tolerance for width
+param Nmax  :=    5.0;      # max number of products in cut
+
+param:  I:  b,     nord :=  # width & # orders of product roll-type i
+        1   350.0  10
+        2   450.0  28
+        3   550.0  48
+        4   650.0  28
+        5   700.0  40
+        6   740.0  30
+	7   800.0  21
+	8   840.0  22
+	9   910.0   8
+       10   960.0   8
+       11  1010.0   9
+       12  1060.0   8;
+
+param:  J:  c,     C    :=  # cost factors
+        1   1      0.1
+        2   1      0.2
+        3   1      0.3
+        4   1      0.4
+        5   1      0.5
+        6   1      0.6
+	7   1      0.7
+	8   1      0.8
+	9   1      0.9
+       10   1      1.0
+       11   1      1.1
+       12   1      1.2;
+
+param	:  	L :=
+        1   	48
+        2   	40
+        3   	30
+        4   	28
+        5   	28
+        6   	22
+	7   	21
+	8   	10
+	9   	 9
+       10   	 8
+       11   	 8
+       12   	 8;
+
+param	:  	K :=
+        1   	6
+        2   	4
+        3   	3
+        4   	3
+        5   	3
+        6   	2
+	7   	2
+	8   	2
+	9   	2
+       10   	2
+       11   	2
+       12   	1;
+
+

@@ -1,0 +1,28 @@
+<productinfo>
+    
+<matlabrelease>R2012b</matlabrelease>
+<name>OPTI</name>
+<type>toolbox</type>
+<icon></icon>
+<help_location>OPTI_HTML</help_location>
+<help_contents_icon>$toolbox/matlab/icons/bookicon.gif</help_contents_icon>
+    
+<list>
+
+<listitem>
+<label>Help</label>
+<callback>web('Opti_Main.html','-helpbrowser');</callback> 
+<icon>$toolbox/matlab/icons/book_mat.gif</icon>
+</listitem>
+
+<listitem>
+<label>Product Page (Web)</label>
+<callback>web http://www.i2c2.aut.ac.nz/Wiki/OPTI/ -browser;</callback>
+<icon>$toolbox/matlab/icons/webicon.gif</icon>
+</listitem>
+
+</list>
+
+
+
+</productinfo>

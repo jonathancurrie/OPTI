@@ -1,0 +1,45 @@
+# trimloss7.dat
+# AMPL coding: S. Leyffer, August 2000.
+#
+# Data file for trimloss.mod; Example with 7 product types
+data;
+param Bmax  := 3400.0;      # width of raw paper roll
+param Delta :=  200.0;      # tolerance for width
+param Nmax  :=    6.0;      # max number of products in cut
+
+param:  I:  b,     nord :=  # width & # orders of product roll-type i
+        1   550	   8
+        2   630	   11
+        3   685    15
+        4   720    5
+        5   760    8
+        6   810    12
+        7   850    6;
+
+param:  J:  c,     C    :=  # cost factors
+        1   1      0.1
+        2   1      0.2
+        3   1      0.3
+        4   1      0.4
+        5   1      0.5
+        6   1      0.6
+        7   1      0.7;
+
+param	:	L :=
+        1   	15
+        2   	12
+        3   	11
+        4   	 8
+        5   	 8
+        6   	 6
+        7   	 5;
+
+param	:	K :=
+        1   	6
+        2   	5
+        3   	4
+        4   	4
+        5   	4	
+        6   	4
+        7   	4;
+

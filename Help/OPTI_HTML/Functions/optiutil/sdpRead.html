@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>sdpRead</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">sdpRead</p>
+<p class="Normal">Read a SDPA Dense or Sparse file, or SeDuMi MAT file into Matlab</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">prob = sdpRead(filename)</p>
+<p class="Syntax">prob = sdpRead(filename,filetype)</p>
+<p class="Syntax">prob = sdpRead(filename,filetype,print)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal">Read a SDP into Matlab.</p>
+<p class="Normal"><span class="Code">prob = sdpRead(filename)</span> reads the 
+file specified by <span class="Code">filename</span> and creates an
+<a href="../opti/optiprob.html">optiprob</a> problem. If you supply only a 
+filename the file must be on Matlab&#39;s path in order for this function to find 
+it. Otherwise if you supply a full path + filename, it may reside anywhere on 
+your PC. You must supply the file extension using this method.</p>
+<p class="Normal"><span class="Code">prob = sdpRead(filename,filetype)</span> 
+allows the user to enter just the filename (without an extension), and manually 
+specify the file type (e.g. <span class="String">&#39;SDPA'</span>).</p>
+<p class="Normal"><span class="Code">prob = sdpRead(filename,filetype,print)</span> 
+will also print headings found plus any errors encountered during reading with
+<span class="Code">print</span> = 1. Note not all file types support text 
+output, in which case it will be ignored.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Heading2">Available File Types</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 168px"><strong>File Type</strong></td>
+		<td style="width: 187px"><strong>Extension</strong></td>
+		<td><strong>Notes</strong></td>
+	</tr>
+	<tr>
+		<td class="String" style="width: 168px">'SDPA-S'</td>
+		<td style="width: 187px">.dat-s</td>
+		<td>Sparse Format</td>
+	</tr>
+	<tr>
+		<td class="String" style="width: 168px">'SDPA'</td>
+		<td style="width: 187px">.dat</td>
+		<td>Dense Format</td>
+	</tr>
+	<tr>
+		<td class="String" style="width: 168px">'SeDuMi'</td>
+		<td style="width: 187px">.mat</td>
+		<td>&nbsp;</td>
+	</tr>
+</table>
+<br/>
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Heading2">Examples</p>
+<p class="Normal">A number of small examples are supplied with the 
+toolbox in the folder OPTI/Test Problems/ which can be used 
+for testing.</p>
+<p class="Heading3">Reading a SDPA file</p>
+<p class="Normal">If a file extension is supplied, this dictates the file type.</p>
+<p class="Code">&gt;&gt; prob = 
+sdpRead(<span class="String">&#39;arch0.dat-s'</span>)</p>
+<p class="Heading3">Reading a SeDuMi file</p>
+<p class="Normal">You may also supply the file type manually.</p>
+<p class="Code">&gt;&gt; prob = 
+sdpRead(<span class="String">&#39;sdp_truss1'</span><span class="Code">,</span><span class="String">&#39;sedumi'</span>)</p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

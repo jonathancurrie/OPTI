@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>coinRead</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">coinRead</p>
+<p class="Normal">Read a MPS, QPS, GMPL, GAMS or LP file into Matlab</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">prob = coinRead(filename)</p>
+<p class="Syntax">prob = coinRead(filename,filetype)</p>
+<p class="Syntax">prob = coinRead(filename,filetype,print)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal">Read a LP, MILP or QP into Matlab. Nonlinear problems are not 
+supported.</p>
+<p class="Normal"><span class="Code">prob = coinRead(filename)</span> reads the 
+file specified by <span class="Code">filename</span> and creates an
+<a href="../opti/optiprob.html">optiprob</a> problem. If you supply only a 
+filename the file must be on Matlab&#39;s path in order for this function to find 
+it. Otherwise if you supply a full path + filename, it may reside anywhere on 
+your PC. You must supply the file extension using this method.</p>
+<p class="Normal"><span class="Code">prob = coinRead(filename,filetype)</span> 
+allows the user to enter just the filename (without an extension), and manually 
+specify the file type (e.g. <span class="String">&#39;mps&#39;</span>).</p>
+<p class="Normal"><span class="Code">prob = coinRead(filename,filetype,print)</span> 
+will also print headings found plus any errors encountered during reading with
+<span class="Code">print</span> = 1. Note not all file types support text 
+output, in which case it will be ignored.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Heading2">Important Notes</p>
+<p class="Normal">Routines for reading MPS, QPS, GAMS and LP problems use
+<a href="../../UsersGuide/utilities.html#CoinUtils">CoinUtils</a>.</p>
+
+
+<p class="Normal">Routines for reading GMPL problems use
+<a href="../../UsersGuide/Solvers/supplied.html#GLPK">GLPK</a>.</p>
+
+
+<p class="Normal">If the routine fails check the error messages by enabling 
+print. If it still doesn&#39;t work the error may reside in the underlying code, in 
+which case I cannot fix it. You may like to report this to the original authors. 
+Also note the GAMS reader is new code and may not work for all GAMS files. </p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Examples</p>
+<p class="Normal">A number of small examples are supplied with the 
+toolbox in the folder OPTI/Test Problems/ which can be used 
+for testing.</p>
+<p class="Heading3">Reading a MPS file</p>
+<p class="Normal">If a file extension is supplied, this dictates the file type.</p>
+<p class="Code">&gt;&gt; prob = 
+coinRead(<span class="String">&#39;testLP.mps&#39;</span>)</p>
+<p class="Heading3">Reading a QPS file</p>
+<p class="Normal">You may also supply the file type manually.</p>
+<p class="Code">&gt;&gt; prob = 
+coinRead(<span class="String">&#39;testQP&#39;</span><span class="Code">,</span><span class="String">&#39;qps&#39;</span>)</p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

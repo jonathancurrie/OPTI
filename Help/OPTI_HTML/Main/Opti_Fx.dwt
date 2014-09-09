@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>Introduction</title>
+<!-- #EndEditable -->
+<link href="Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">function</p>
+<p class="Normal">function description</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">function syntax</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal">full description</p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+</html>

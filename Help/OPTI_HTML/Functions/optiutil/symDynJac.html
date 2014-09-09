@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>symDynJac</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">symDynJac</p>
+<p class="Normal">Return the symbolically generated partial derivatives 
+(required for sensitivity) from an ODE 
+function handle</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">[dfdz,dfdp] = symDynJac(ode)</p>
+<p class="Syntax">[dfdz,dfdp] = symDynJac(ode,nstates)</p>
+<p class="Syntax">[dfdz,dfdp] = symDynJac(ode,nstates,nparam)</p>
+<p class="Syntax">[dfdz,dfdp,sym_dfdz,sym_dfdp] = symDynJac(ode)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal"><span class="Code">[dfdz,dfdp] = symDynJac(ode)</span> converts the 
+function handle <span class="Code">ode</span> into a symbolic expression, 
+calculates the partial derivatives using the Symbolic Toolbox command <span class="Code">Jacobian</span>, 
+then converts each derivative expression back to a function handle as
+<span class="Code">dfdz</span><span class="Normal"> (derivative with respect to 
+states, </span><span class="Code">z</span><span class="Normal">) and </span>
+<span class="Code">dfdp</span><span class="Normal"> (derivative with respect to 
+parameters, </span><span class="Code">p</span><span class="Normal">)</span>.</p>
+<p class="Normal"><span class="Code">[dfdz,dfdp] = symDynJac(ode,nstates)</span> ensures the 
+correct number (<span class="Code">nstates</span>) of states is used in the 
+resulting Jacobian. This is useful if your function does not include 
+all indices of <span class="Code">z</span><span class="Normal">.</span></p>
+<p class="Normal"><span class="Code">[dfdz,dfdp] = symDynJac(ode,nstates,nparam)</span> ensures the 
+correct number (<span class="Code">nparam</span>) of parameters is used in the 
+resulting Jacobian. This is useful if your function does not include 
+all indices of <span class="Code">p</span><span class="Normal">.</span></p>
+<p class="Normal"><span class="Code">[dfdz,dfdp,sym_dfdz,sym_dfdp] = symDynJac(ode)</span> 
+also returns the intermediate symbolic expressions of the&nbsp; partial 
+derivatives.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Important Notes</p>
+<p class="Normal">This function uses the Matlab Symbolic Toolbox<sup>&reg;</sup> 
+thus you must have this installed to use this function. This is also a very 
+basic routine thus you may wish to confirm the solution via one of the other 
+differentiation routines provided.</p>
+<p class="Normal">The form of your function handle must be as follows:</p>
+<p class="Normal">ode<span class="Code"> = @(t,z,p) z(1) + p(1)*z(2);</span>&nbsp; where 
+the function is only a function of <span class="Code">t</span><span class="Normal">,</span><span class="Code">z</span><span class="Normal">, 
+and </span><span class="Code">p</span>, and
+all variables are indexed into the expression (no vectorized 
+calls). </p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Example</p>
+<p class="Code">
+&gt;&gt; ode = @(t,z,p) [z(2); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+p(1)*(1-z(1)^2)*z(2) - z(1)];</p>
+<p class="Code">
+&gt;&gt; [dfdz,dfdp] = symDynJac(ode)<br />
+<br />
+dfdz = <br />
+<br />
+@(t,z,p)[[0,1];[-2*p(1)*z(1)*z(2)-1,-p(1)*(z(1)^2-1)]]<br />
+<br />
+<br />
+dfdp = <br />
+<br />
+@(t,z,p)[[0];[-z(2)*(z(1)^2-1)]]</p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

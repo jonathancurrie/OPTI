@@ -1,0 +1,525 @@
+\documentclass{article}
+
+\usepackage{latexsym}  % Use this package file for the special \LaTeX symbols.
+\usepackage{amsmath,amssymb} % nice extra stuff but changes required to beq etc.
+
+\usepackage{listings} % note s in name
+\usepackage[numbered,framed]{mcode} % Nice coloured Matlab listings
+
+\input{boldchar2e} %! updated for boldfonts in greek
+\input{shthnd}
+
+\newenvironment{sbmatrix}[1]
+ {\def\mysubscript{#1}\mathop\bgroup\begin{bmatrix}}
+ {\end{bmatrix}\egroup_{\textstyle\mathstrut\mysubscript}}
+\newenvironment{smatrix}[1]
+ {\def\mysubscript{#1}\mathop\bgroup\begin{matrix}}
+ {\end{matrix}\egroup_{\textstyle\mathstrut\mysubscript}}
+
+\begin{document}
+
+Linear Programs
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } \mathbf{f}^T \mathbf{x} \\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{A}_{\text{eq}}\mathbf{x} =  \mathbf{b}_{\text{eq}}\\
+                       & \mathbf{l}_{\text{b}} \le \mathbf{x} \le \mathbf{u}_{\text{b}}\\
+\end{align*}
+
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } \mathbf{f}^T \mathbf{x} + objbias\\
+\end{align*}
+
+Ex1 LP
+
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } -6x_1 - 5x_2 \\
+    \mbox{subject to: } & x_1 + 4x_2 \le 16\\
+                        & 6x_1 + 4x_2 \le 28\\
+                        & 2x_1 - 5x_2 \le 6\\
+                       & 0 \le \mathbf{x} \le 10\\
+\end{align*}
+
+\begin{align*}
+    &\qquad \qquad \text{min}_{\mathbf{x}}  \begin{bmatrix} -6 \\ -5 \end{bmatrix}^T \mathbf{x} \\
+    &\begin{aligned}
+    \mbox{subject to: } \begin{bmatrix} 1 & 4 \\ 6 & 4 \\ 2 & -5 \end{bmatrix} &\mathbf{x} \le \begin{bmatrix} 16 \\ 28 \\ 6 \end{bmatrix} \\
+                        0 \le &\mathbf{x} \le 10
+    \end{aligned}
+\end{align*}
+
+Ex2 LP
+
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } -x_1 - 2x_2 - 3x_3 \\
+    \mbox{subject to: } & -x_1 + x_2 + x_3 \le 20\\
+                        & x_1 - 3x_2 + x_3 \le 30\\
+                        & x_1 + x_2 + x_3 = 40\\
+                       & 0 \le x_1 \le 40\\
+                       & 0 \le x_2 \\
+                       & 0 \le x_3 \\
+\end{align*}
+
+
+MI Linear Programs
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } \mathbf{f}^T \mathbf{x} \\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{A}_{\text{eq}}\mathbf{x} =  \mathbf{b}_{\text{eq}}\\
+                       & \mathbf{l}_{\text{b}} \le \mathbf{x} \le \mathbf{u}_{\text{b}}\\
+                       & x_i \in \mathbb{Z}\\
+                       & x_j \in \{0,1\}\\
+\end{align*}
+
+Ex1 MILP
+
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } -6x_1 - 5x_2 \\
+    \mbox{subject to: } & x_1 + 4x_2 \le 16\\
+                        & 6x_1 + 4x_2 \le 28\\
+                        & 2x_1 - 5x_2 \le 6\\
+                        & 0 \le \mathbf{x} \le 10\\
+                        & \mathbf{x} \in \mathbb{Z}
+\end{align*}
+
+Ex2 MILP
+
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } -x_1 - x_2 - 3x_3 - 2x_2 - 2x_5 \\
+    \mbox{subject to: } & -x_1 - x_2 + x_3 + x_4 \le 30\\
+                        & x_1 + x_3 - 3x_4 \le 30\\
+                        & 0 \le x_1 \le 40\\
+                        & 0 \le x_2 \le 1\\
+                        & 0 \le x_3\\
+                        & 0 \le x_4\\
+                        & 0 \le x_5 \le 1
+\end{align*}
+
+Quadratic Programs
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } \frac{1}{2}\mathbf{x}^T \mathbf{H} \mathbf{x} + \mathbf{f}^T \mathbf{x} \\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{A}_\text{eq}\mathbf{x} = \mathbf{b}_\text{eq}\\
+                       & \mathbf{l}_{\text{b}} \le \mathbf{x} \le \mathbf{u}_{\text{b}}\\
+\end{align*}
+
+\begin{align*}
+    \text{min}_{\mathbf{x}} \text{ } 0.5x_1^2 + x_2^2 - x_1x_2 - 2x_1 - 6x_2\\
+    \begin{aligned}
+    \mbox{subject to: } \qquad x_1 + x_2 &\le 2\\
+                        -x_1 + 2x_2 &\le 2\\
+                        2x_1 + x_2 &\le 3\\
+                        \mathbf{0} &\le \mathbf{x}\\
+    \end{aligned}
+\end{align*}
+
+\begin{align*}
+    \text{min}_{\mathbf{x}} \text{ } -2x_1x_2\\
+    \begin{aligned}
+    \mbox{subject to: } \mathbf{-0.5} &\le \mathbf{x} \le \mathbf{1} \\
+    \end{aligned}
+\end{align*}
+
+
+MI Quadratic Programs
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } \frac{1}{2}\mathbf{x}^T \mathbf{H} \mathbf{x} + \mathbf{f}^T \mathbf{x} \\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{A}_\text{eq}\mathbf{x} = \mathbf{b}_\text{eq}\\
+                       & \mathbf{l}_{\text{b}} \le \mathbf{x} \le \mathbf{u}_{\text{b}}\\
+                       & x_i \in \mathbb{Z}\\
+                       & x_j \in \{0,1\}\\
+\end{align*}
+
+\begin{align*}
+    \text{min}_{\mathbf{x}} \text{ } 0.5x_1^2 + x_2^2 - x_1x_2 - 2x_1 - 6x_2\\
+    \begin{aligned}
+    \mbox{subject to: } \qquad x_1 + x_2 &\le 2\\
+                        -x_1 + 2x_2 &\le 2\\
+                        2x_1 + x_2 &\le 3\\
+                        \mathbf{0} &\le \mathbf{x}\\
+                        x_1 &\in \mathbb{Z}
+    \end{aligned}
+\end{align*}
+
+QC Quadratic Programs
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } \frac{1}{2}\mathbf{x}^T \mathbf{H} \mathbf{x} + \mathbf{f}^T \mathbf{x} \\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{A}_\text{eq}\mathbf{x} = \mathbf{b}_\text{eq}\\
+                       & \mathbf{l}_{\text{b}} \le \mathbf{x} \le \mathbf{u}_{\text{b}}\\
+                       & \mathbf{x}^T \mathbf{Q} \mathbf{x} + \mathbf{l}^T \mathbf{x} \le \mathbf{r}\\
+\end{align*}
+
+QC Row
+\begin{align*}
+\mathbf{q}_\text{rl} \le \mathbf{x}^T \mathbf{Q} \mathbf{x} + \mathbf{l}^T \mathbf{x} \le \mathbf{q}_\text{ru}\\
+\end{align*}
+
+\begin{align*}
+    \text{min}_{\mathbf{x}} \text{ } 0.5x_1^2 + 0.5x_2^2 - 2x_1 - 2x_2\\
+    \begin{aligned}
+    \mbox{subject to: } \qquad -x_1 + x_2 &\le 2\\
+                        x_1 + 3x_2 &\le 5\\
+                        x_1^2 + x_2^2 - 2x_2 &\le 1\\
+                        \mathbf{0} &\le \mathbf{x}\\
+    \end{aligned}
+\end{align*}
+
+\begin{align*}
+    \text{min}_{\mathbf{x}} \text{ } 0.5x_1^2 + 0.5x_2^2 - 2x_1 - 2x_2\\
+    \begin{aligned}
+    \mbox{subject to: } \qquad -x_1 + x_2 &\le 2\\
+                        x_1 + 3x_2 &\le 5\\
+                        x_1^2 + x_2^2 - 2x_2 &\le 1\\
+                        x_1^2 + x_2^2 - x_1 + 2x_2 &\le 1.2\\
+                        \mathbf{0} &\le \mathbf{x}\\
+    \end{aligned}
+\end{align*}
+
+
+MIQC Quadratic Programs
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } \frac{1}{2}\mathbf{x}^T \mathbf{H} \mathbf{x} + \mathbf{f}^T \mathbf{x} \\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{A}_\text{eq}\mathbf{x} = \mathbf{b}_\text{eq}\\
+                       & \mathbf{l}_{\text{b}} \le \mathbf{x} \le \mathbf{u}_{\text{b}}\\
+                       & \mathbf{x}^T \mathbf{Q} \mathbf{x} + \mathbf{l}^T \mathbf{x} \le \mathbf{r}\\
+                       & x_i \in \mathbb{Z}\\
+                       & x_j \in \{0,1\}\\
+\end{align*}
+
+\begin{align*}
+    \text{min}_{\mathbf{x}} \text{ } 0.5x_1^2 + 0.5x_2^2 - 2x_1 - 2x_2\\
+    \begin{aligned}
+    \mbox{subject to: } \qquad -x_1 + x_2 &\le 2\\
+                        x_1 + 3x_2 &\le 5\\
+                        x_1^2 + x_2^2 - 2x_2 &\le 1\\
+                        \mathbf{0} &\le \mathbf{x}\\
+                        x_1 &\in \mathbb{Z}
+    \end{aligned}
+\end{align*}
+
+SDP
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } \mathbf{f}^T \mathbf{x} \\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{l}_{\text{b}} \le \mathbf{x} \le \mathbf{u}_{\text{b}}\\
+                       & \mathbf{X} = \sum_{i=1}^n x_i \mathbf{F}_i - \mathbf{F}_0\\
+                       & \mathbf{X} \succeq \mathbf{0} \text{  } [\text{Positive Semidefinite}]\\
+\end{align*}
+
+Ex1 SDP
+\begin{align*}
+    \text{min}_{\text{x}}& \text{ } x\\
+    \mbox{subject to: }& \left[\begin{matrix} x & \sqrt{2} \\ \sqrt{2} & x \end{matrix}\text{ }\right] \succeq \mathbf{0}\\
+\end{align*}
+
+Ex1 SDP Equation
+\begin{align*}
+    &x\underbrace{\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}}_{\mathbf{F}_1} - \underbrace{\begin{bmatrix} 0 & -\sqrt{2}\text{ } \\ -\sqrt{2} & 0 \end{bmatrix}}_{\mathbf{F}_0} \succeq \mathbf{0}\\
+\end{align*}
+
+Ex2 SDP
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } x_1 + x_2\\
+    \mbox{subject to: }&\left[\begin{matrix} x_1 & 2 \\ 2 & x_2 \end{matrix}\right] \succeq \mathbf{0}\\
+                       &\mathbf{0} \leq \mathbf{x} \leq \mathbf{10}\\
+\end{align*}
+
+Ex2 SDP Equation
+\begin{align*}
+    &x_1\underbrace{\begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix}}_{\mathbf{A}_1} + \text{ } x_2\underbrace{\begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}}_{\mathbf{A}_2}
+    -\underbrace{\begin{bmatrix} 0 & -2\text{ } \\ -2 & 0 \end{bmatrix}}_{\mathbf{C}} \succeq \mathbf{0}\\
+\end{align*}
+
+Ex3 SDP
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } x_1\\
+    \mbox{subject to: }&\begin{bmatrix} x_2 & x_3 \\ x_3 & x_4 \end{bmatrix} \preceq \begin{bmatrix} x_1 & 0 \\ 0 & x_1 \end{bmatrix}\\
+                       &\begin{bmatrix} x_2 & x_3 \\ x_3 & x_4 \end{bmatrix} \succeq \begin{bmatrix} 1 & 0.2 \\ 0.2 & 1 \end{bmatrix}\\
+\end{align*}
+
+Nonlinear Least Squares
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } \| \mathbf{F} \left(\mathbf{x}\right) - \mathbf{ydata} \|_2^2\\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{A}_{\text{eq}}\mathbf{x} = \mathbf{b}_{\text{eq}}\\
+                       & \mathbf{l}_{\text{b}} \le \mathbf{x} \le \mathbf{u}_{\text{b}}\\
+\end{align*}
+
+\begin{align*}
+\text{min}_{\mathbf{x}}& \text{ } \sum_i \left( \text{F}_i \left( \mathbf{x}, \mathbf{xdata} \right) - ydata_i \right)^2\\
+\end{align*}
+
+Ex1
+\begin{align*}
+\text{min}_{\mathbf{x}}& \text{ } \left|\left| \begin{matrix} 100\left(x_2-x_1^2\right) \\1-x_1 \end{matrix}  \right|\right|_2^2\\
+\end{align*}
+
+Ex2
+\begin{align*}
+\text{min}_{\mathbf{x}}& \text{ } \left|\left| \begin{matrix} 100\left(x_2-x_1^2\right) \\1-x_1 \end{matrix}  \right|\right|_2^2\\
+\mbox{subject to: }& -2 \le \mathbf{x} \le 0.5\\
+\end{align*}
+
+Ex3
+\begin{align*}
+\mathbf{F} \left(\mathbf{x},\mathbf{xdata}\right) &= x_1 e^{x_2 \mathbf{xdata}}\\
+\end{align*}
+
+Dynamic Nonlinear Least Squares
+\begin{align*}
+\dot{\mathbf{z}}(t) = \mathbf{f} \left( t,  \mathbf{z}(t), \mathbf{p} \right), \qquad \mathbf{z}(t_0) = \mathbf{z}_0\\
+\end{align*}
+
+\begin{align*}
+\theta := \begin{bmatrix} \mathbf{p}\\ \mathbf{z}_0 \end{bmatrix}
+\end{align*}
+
+\begin{align*}
+\dot{\mathbf{S}} &= \mathbf{J} \mathbf{S} + \begin{bmatrix} \mathbf{J_p} & \mathbf{0} \end{bmatrix}\\
+\end{align*}
+where
+\begin{align*}
+\mathbf{J} &= \frac{\partial \mathbf{f}}{\partial \mathbf{z}} =
+            &\begin{bmatrix}
+            \frac{\partial f_1}{\partial z_1} & \frac{\partial f_1}{\partial z_2} & \cdots & \frac{\partial f_1}{\partial z_n}\\
+            \frac{\partial f_2}{\partial z_1} & \frac{\partial f_2}{\partial z_2} & \cdots & \frac{\partial f_2}{\partial z_n}\\
+            \vdots & \vdots & \ddots & \vdots\\
+            \frac{\partial f_n}{\partial z_1} & \frac{\partial f_n}{\partial z_2} & \cdots & \frac{\partial f_n}{\partial z_n}\\
+            \end{bmatrix}\\
+            &\\
+\mathbf{J_p} &= \frac{\partial \mathbf{f}}{\partial \mathbf{p}} =
+            &\begin{bmatrix}
+            \frac{\partial f_1}{\partial p_1} & \frac{\partial f_1}{\partial p_2} & \cdots & \frac{\partial f_1}{\partial p_m}\\
+            \frac{\partial f_2}{\partial p_1} & \frac{\partial f_2}{\partial p_2} & \cdots & \frac{\partial f_2}{\partial p_m}\\
+            \vdots & \vdots & \ddots & \vdots\\
+            \frac{\partial f_n}{\partial p_1} & \frac{\partial f_n}{\partial p_2} & \cdots & \frac{\partial f_n}{\partial p_m}\\
+            \end{bmatrix}\\
+\end{align*}
+
+\begin{align*}
+\dot{z_1} &= -p_1z_1 + 4\\
+\dot{z_2} &= 2z_1 - p_1z_2 + 5\\
+\dot{z_3} &= -4z_1 - 2z_2z_3 - p_2\\
+\end{align*}
+
+\begin{align*}
+\dot{z_1} &= p_1z_1^2 - z_1^3\\
+\end{align*}
+
+
+System of Nonlinear Equations
+\begin{align*}
+     & \mathbf{F} \left( \mathbf{x} \right) = \mathbf{0} \\
+\end{align*}
+
+\begin{align*}
+    2x_1 - x_2 - e^{-x_1} &= 0\\
+    -x_1 + 2x_2 - e^{-x_2} &= 0\\
+\end{align*}
+
+\begin{align*}
+    10 \left(x_2 - x_1^2 \right) = 0\\
+    \sqrt{90} \left(x_4 - x_3^2 \right) = 0\\
+    \sqrt{10} \left(x_2 + x_4 - 2 \right) = 0\\
+    \frac{1}{\sqrt{10}} \left(x_2 - x_4 \right) = 0\\
+\end{align*}
+
+System of Constrained Nonlinear Equations
+\begin{align*}
+    & \mathbf{F} \left( \mathbf{x} \right) = \mathbf{0} \\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{A}_{\text{eq}}\mathbf{x} = \mathbf{b}_{\text{eq}}\\
+                       & \mathbf{l}_{\text{b}} \le \mathbf{x} \le \mathbf{u}_{\text{b}}\\
+\end{align*}
+
+Ex1
+\begin{align*}
+2x_1 - x_2 - e^{-x_1} &= 0\\
+-x_1 + 2x_2 - e^{-x_2} &= 0\\
+\mbox{subject to: } 0.6 \le x_1 &\le 1\\
+                    0 \le x_2 &\le 1\\
+\end{align*}
+
+Nonlinear Programs
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } f\left(\mathbf{x}\right) \\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{A}_{\text{eq}}\mathbf{x} = \mathbf{b}_{\text{eq}}\\
+                       & \mathbf{l}_{\text{b}} \le \mathbf{x} \le \mathbf{u}_{\text{b}}\\
+                       & \mathbf{c}\left(\mathbf{x}\right) \le \mathbf{d}\\
+                       & \mathbf{c}_{\text{eq}}\left(\mathbf{x}\right) = \mathbf{d}_{\text{eq}}\\
+\end{align*}
+
+Ex2 NLP
+
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } 100(x_2 - x_1^2)^2 + (1 - x_1)^2 \\
+    \mbox{subject to: } & -5 \le \mathbf{x} \le 5\\
+\end{align*}
+
+Ex2 NLP
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } \log(1+x_1^2) - x_2 \\
+    \mbox{subject to: } & \left(1 + x_1^2\right)^2 + x_2^2 = 4\\
+\end{align*}
+
+Ex2 NLP
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } x_1x_4\left(x_1+x_2+x_3\right) + x_3 \\
+    \mbox{subject to: } & x_1x_2x_3x_4 \ge 25\\
+                        & x_1^2 + x_2^2 + x_3^2 + x_4^2 = 40\\
+                        & 1 \le \mathbf{x} \le 5\\
+\end{align*}
+
+Ex2 LinearCon NLP
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } (x_1 - x_2)^2 + (x_2 - x_3 - 2)^2 + (x_4  - 1)^2 + (x_5 - 1)^2  \\
+    \mbox{subject to: } & x_1 + 3x_3 = 4\\
+                        & x_3 + x_4 -2x_5  = 0\\
+                        & x_2 - x_5 = 0\\
+\end{align*}
+
+Ex 3
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } 100(x_2 - x_1^2)^2 + (1 - x_1)^2 \\
+\end{align*}
+
+MI Nonlinear Programs
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } f\left(\mathbf{x}\right) \\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{A}_{\text{eq}}\mathbf{x} = \mathbf{b}_{\text{eq}}\\
+                       & \mathbf{l}_{\text{b}} \le \mathbf{x} \le \mathbf{u}_{\text{b}}\\
+                       & \mathbf{c}\left(\mathbf{x}\right) \le \mathbf{d}\\
+                       & \mathbf{c}_{\text{eq}}\left(\mathbf{x}\right) = \mathbf{d}_{\text{eq}}\\
+                       & x_i \in \mathbb{Z}\\
+                       & x_j \in \{0,1\}\\
+\end{align*}
+
+EX1 MINLP
+\begin{align*}
+    &\text{min}_{\mathbf{x}} \text{ } -x_1 - x_2 - x_3 \\
+    &\begin{aligned}
+    \mbox{subject to: }  (x_2 - 0.5)^2 + (x_3 - 0.5)^2 &\le 0.25\\
+                         x_1 - x_2 &\le 0\\
+                         x_1 + x_3 + x_4 &\le 2\\
+                         x_1 &\le 1\\
+                         x_4 &\le 5\\
+                         \mathbf{0} &\le \mathbf{x}\\
+                         x_1 &\in \{0,1\}\\
+                         x_4 &\in \mathbb{Z}
+    \end{aligned}
+\end{align*}
+
+EX2 MINLP
+\begin{align*}
+    &\text{min}_{\mathbf{x}} \text{ } 20 + x_1^2 + x_2^2 - 10(\cos2\pi x_1 + \cos2\pi x_2) \\
+    &\begin{aligned}
+    \mbox{subject to: }  5\pi \le x_1 &\le 20\pi\\
+                         -20\pi \le x_2 &\le -4\pi\\
+                         x_1 &\in \mathbb{Z}
+    \end{aligned}
+\end{align*}
+
+Constraint Stuff
+\begin{align*}
+    \mathbf{r_l} \le \mathbf{Ax} \le \mathbf{r_u}\\
+\end{align*}
+
+1st Derivatives
+
+Gradient
+\begin{align*}
+    \nabla f = \frac{\partial f}{\partial \mathbf{x}} =
+        \begin{bmatrix}
+            \frac{\partial f}{\partial x_1} & \frac{\partial f}{\partial x_2} & \cdots & \frac{\partial f}{\partial x_n}\\
+        \end{bmatrix}
+\end{align*}
+
+Jacobian
+\begin{align*}
+    \renewcommand\arraystretch{1.5}
+    \nabla \mathbf{F} = \frac{\partial \mathbf{F}}{\partial \mathbf{x}} =
+        \begin{bmatrix}
+            \frac{\partial f_1}{\partial x_1} & \frac{\partial f_1}{\partial x_2} & \cdots & \frac{\partial f_1}{\partial x_n}\\
+            \frac{\partial f_2}{\partial x_1} & \frac{\partial f_2}{\partial x_2} & \cdots & \frac{\partial f_2}{\partial x_n}\\
+            \vdots & \vdots & \ddots & \vdots\\
+            \frac{\partial f_m}{\partial x_1} & \frac{\partial f_m}{\partial x_2} & \cdots & \frac{\partial f_m}{\partial x_n}\\
+        \end{bmatrix}
+\end{align*}
+
+Ex1
+\begin{align*}
+    f(\mathbf{x}) = x_1 x_4 (x_1 + x_2 + x_3) + x_3
+\end{align*}
+
+2nd Derivatives
+\begin{align*}
+    \renewcommand\arraystretch{1.5}
+    \nabla^2 f = \frac{\partial^2 f}{\partial \mathbf{x}^2} =
+        \begin{bmatrix}
+            \frac{\partial^2 f}{\partial x_1^2} & \frac{\partial^2 f}{\partial x_1 \partial x_2} & \cdots & \frac{\partial^2 f}{\partial x_1 \partial x_n}\\
+            \frac{\partial^2 f}{\partial x_2 \partial x_1} & \frac{\partial^2 f}{\partial x_2^2} & \cdots & \frac{\partial^2 f}{\partial x_2 \partial x_n}\\
+            \vdots & \vdots & \ddots & \vdots\\
+            \frac{\partial^2 f}{\partial x_n \partial x_1} & \frac{\partial^2 f}{\partial x_n \partial x_2} & \cdots & \frac{\partial^2 f}{\partial x_n^2}\\
+        \end{bmatrix}
+\end{align*}
+
+Hess Lagrangian
+\begin{align*}
+    \nabla^2 \mathbf{L} = \sigma \nabla^2 f + \sum_i \lambda_i \nabla^2 c_i\\
+\end{align*}
+
+Adv Options
+
+Tolr
+\begin{align*}
+    \frac{\left| f_i - f_{i-1} \right|}{\left| f_i \right|}  \le \text{tol}_{rel}
+\end{align*}
+
+Tola
+\begin{align*}
+    \left| f_i - f_{i-1}\right| \le \text{tol}_{abs}
+\end{align*}
+
+Toli
+\begin{align*}
+    \left| x_r - x_z \right| \le \text{tol}_{int}
+\end{align*}
+
+Integer Tricks
+
+Constrained Set
+\begin{align*}
+    x \in \{3,5,8,20\}
+\end{align*}
+
+\begin{align*}
+    \text{min}_x & \text{ } x \\
+    \mbox{subject to: } & l \le x \le 20\\
+                        & x \in \{3,5,8,20\}
+\end{align*}
+
+Many nlcon example
+\begin{align*}
+    \begin{bmatrix} x_{(1)} x_{(2N+1)} - r_{(1)} x_{(1)} x_{(N+1)} + (1-r_{(1)}) x_{(N+1)} x_{(2N+1)}\\
+                    x_{(2)} x_{(2N+2)} - r_{(2)} x_{(2)} x_{(N+2)} + (1-r_{(2)}) x_{(N+2)} x_{(2N+2)}\\
+                    \vdots\\
+                    x_{(N)} x_{(2N+N)} - r_{(N)} x_{(N)} x_{(N+N)} + (1-r_{(N)}) x_{(N+N)} x_{(2N+N)}
+    \end{bmatrix} = 
+    \begin{bmatrix} q_1 \\ q_2 \\ \vdots \\ q_N \end{bmatrix}
+\end{align*}
+
+%jMPC STUFF
+\begin{align} \label{e:3dofheli}
+\begin{split}
+\ddot{\theta}_e& = \left(\frac{K_f l_a}{J_e} \right) \left(V_f + V_b\right) \cos (\theta_p) - \frac{T_g}{J_e}\\
+\ddot{\theta}_p& = \left(\frac{K_f l_h}{J_p} \right) \left(V_f - V_b \right)\\
+\ddot{\theta}_r& = -\left(\frac{F_g l_a}{J_t} \right)\sin (\theta_p)
+\end{split}
+\end{align}
+
+\end{document}

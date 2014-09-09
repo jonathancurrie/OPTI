@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>opti_mintprog</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">opti_mintprog</p>
+<p class="Normal">Solve a 
+<a href="http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/MILP">MILP</a> 
+using an OPTI solver 
+(e.g. GLPK)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">x = opti_mintprog(f,A,b)</p>
+<p class="Syntax">x = opti_mintprog(f,A,b,Aeq,beq)</p>
+<p class="Syntax">x = opti_mintprog(f,A,b,Aeq,beq,lb,ub)</p>
+<p class="Syntax">x = opti_mintprog(f,A,b,Aeq,beq,lb,ub,int)</p>
+<p class="Syntax">x = opti_mintprog(f,A,b,Aeq,beq,lb,ub,int,sos)</p>
+<p class="Syntax">[x,fval,exitflag,info,Opt] = opti_mintprog(f,A,b,Aeq,beq,lb,ub,int,sos,opts)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal"><span class="Code">x = opti_mintprog(f,A,b)</span> solves the 
+linear program with objective specified by <span class="Code">f</span>, subject 
+to the linear inequality constraints <span class="Code">A</span>,
+<span class="Code">b</span>.</p>
+<p class="Normal"><span class="Code">x = opti_mintprog(f,A,b,Aeq,beq)</span> solves 
+subject to the linear equality constraints, <span class="Code">Aeq</span>,
+<span class="Code">beq</span>.</p>
+<p class="Normal"><span class="Code">x = opti_mintprog(f,A,b,Aeq,beq,lb,ub)</span> 
+solves subject to the decision variable bounds <span class="Code">lb</span>,
+<span class="Code">ub</span>. </p>
+<p class="Normal"><span class="Code">x = opti_mintprog(f,A,b,Aeq,beq,lb,ub,int)</span> 
+adds binary or integer constraints specified via the character array
+<span class="Code">int</span>. The array must be the length of
+<span class="Code">f</span>, and contain only <span class="Code">C</span> 
+(Continuous), <span class="Code">B</span> (Binary) or <span class="Code">I</span> 
+(Integer).</p>
+<p class="Normal"><span class="Code">x = opti_mintprog(f,A,b,Aeq,beq,lb,ub,int,sos)</span> 
+adds Special Ordered Sets (SOS) to the constraints, inferring a MILP.
+<span class="Code">sos</span><span class="Normal"> </span>is a structure 
+containing fields <span class="Code">sostype</span>, <span class="Code">sosind</span> 
+and <span class="Code">soswt</span>. See
+<a class="Code" href="../opti/optiprob.html">optiprob</a> for a description of 
+each field.</p>
+<p class="Normal"><span class="Code">[x,fval,exitflag,info,Opt] = opti_mintprog(f,A,b,Aeq,beq,lb,ub,int,sos,opts)</span> 
+allows the user to specify additional options via <span class="Code">opts</span>, 
+created from <span class="Code"><a href="../opti/optiset.html">optiset</a></span>. 
+This includes being able to specify the solver used via the 'solver' field. Also returned is the function value at the solution, exitflag, 
+plus information structure and internally created OPTI object.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Typical Use</p>
+<p class="Normal">This function is provided for users who are familiar with the 
+Matlab Optimization Toolbox and its routines, and wish to experiment with OPTI 
+toolbox routines without major code changes. It is suggested once you are 
+familiar with the OPTI class and creating it, to use it explicitly rather than 
+calling this function.</p>
+<p class="Normal">Note this function is not a current Optimization Toolbox 
+function but is intended to follow the same calling strategy if one existed.</p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

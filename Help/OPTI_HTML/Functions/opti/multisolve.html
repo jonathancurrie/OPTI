@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>multisolve</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">multisolve</p>
+<p class="Normal">Solve an OPTI optimization problem using a simple multi-start 
+algorithm (beta functionality - to be upgraded)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">x = multisolve(optiObj)</p>
+<p class="Syntax">x = multisolve(optiObj,x0)</p>
+<p class="Syntax">x = multisolve(optiObj,x0,divisions)</p>
+<p class="Syntax">x = multisolve(optiObj,x0,divisions,penalty)</p>
+<p class="Syntax">x = multisolve(optiObj,x0,divisions,penalty,solveAll)</p>
+<p class="Syntax">[x,fval,exitflag,info] = solve(optiObj,x0)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal"><span class="Code">x = multisolve(optiObj)</span> solves the 
+optimization problem specified by the OPTI object <span class="Code">optiObj</span> 
+using a multi-start algorithm 
+and returns the solution <span class="Code">x</span>. See below for a 
+description of the algorithm.</p>
+<p class="Normal"><span class="Code">x = multisolve(optiObj,x0)</span> tells the 
+multi-start algorithm to automatically search and solve multiple points around 
+x0 for improved solutions.</p>
+<p class="Normal"><span class="Code">x = multisolve(optiObj,x0,divisions)</span> 
+<em>[divisions is a scalar] </em>specifies the number of divisions each variable 
+is searched within Phase 1. The default will attempt to search around 100 
+points, but this value will increase rapidly on higher dimensional problems. For 
+an ND problem, a division of 10 will result in 10^N search points in Phase 1. 
+The more points <em>may</em> help find a solution, but will significantly 
+increase search time.</p>
+<p class="Normal"><span class="Code">x = multisolve(optiObj,x0,divisions)</span> 
+<em>[divisions is a vector] </em>the first element is a the divisions for Phase 
+1, and the second element the divisions for Phase 2. See above for a 
+description.</p>
+<p class="Normal"><span class="Code">x = multisolve(optiObj,x0,divisions,penalty)</span>specifies 
+the penalty factor applied to constraint violations. The default is 1e4. Larger 
+values will be required for objective functions that exceed this value.</p>
+<p class="Normal"><span class="Code">x = multisolve(optiObj,x0,divisions,penalty,solveAll)</span>specifies 
+at each search point an optimization is also performed. Significantly longer to 
+execute, but covers the search area quite comprehensively (aka exhaustively...). </p>
+<p class="Normal"><span class="Code">[x,fval,exitflag,info] = multisolve(optiObj,x0)</span> 
+also returns the objective function value at the solution, an exitflag 
+indicating the solver&#39;s reason for returning, as well as an information 
+structure, described below.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Return Arguments</p>
+<p class="Normal">See the <span class="Code"><a href="solve.html">solve</a></span><span class="Normal">
+</span>page for a description of the return arguments.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Multi-Start Algorithm</p>
+<p class="Normal">The multi-start algorithm is a naive implementation which 
+basically divides the problem search space into regions, then exhaustively 
+searches it for a number of best points (Phase 1). From these points it 
+sub-divides up the region further, and searches again for a number of best 
+points (Phase 2). A number of optimization runs are also solved at a selection 
+of points, and the best solution returned. A couple of heuristics are used to 
+improve the chance of finding the solution, however the algorithm is very basic. 
+For a graphical description, see the example plots on the <span class="Code">
+<a href="multiplot.html">multiplot</a></span> page.</p>
+<p class="Normal">Basically sits as a template structure for a student 
+interested in writing a rigorous multi-start solver! Contact <a href="../../Main/Contact.html">me</a> if you are interested in this project.</p>
+
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

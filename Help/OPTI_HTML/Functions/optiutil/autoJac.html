@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>autoJac</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">autoJac</p>
+<p class="Normal">Estimate the gradient or Jacobian of a function via automatic 
+differentiation</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">jac = autoJac(fun,x)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal">This function uses William McIlhagga&#39;s
+<a href="http://www.mathworks.com/matlabcentral/fileexchange/26807-automatic-differentiation-with-matlab-objects" target="_blank">
+adiff package</a> to estimate the gradient or Jacobian at a 
+value of <span class="Code">x</span> using forward automatic differentiation.</p>
+<p class="Normal"><span class="Code">jac = autoJac(fun,x)</span> uses the 
+function handle <span class="Code">fun</span> and the current state vector
+<span class="Code">x</span> to estimate the gradient / Jacobian of the function
+<span class="Code">fun</span>.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Example</p>
+<p class="Normal">Estimate the Jacobian of the following nonlinear constraint 
+function at x = [1 1 1 1]<sup>T</sup>:</p>
+<p class="Code">
+nlcon = @(x) [8 - x(1)^2 - x(2)^2 - x(3)^2 - x(4)^2 - x(1) + x(2) - x(3) + x(4);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+10 - x(1)^2 - 2*x(2)^2 - x(3)^2 - 2*x(4)^2 + x(1) + x(4);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+5 - 2*x(1)^2 - x(2)^2 - x(3)^2 - 2*x(1) + x(2) + x(4)];</p>
+<p class="Code">
+x = [1;1;1;1];</p>
+<p class="Code">
+jac = autoJac(nlcon,x)</p>
+<p class="Code">
+&nbsp;&nbsp;</p>
+<p class="Code">
+jac =<br />
+<br />
+-3 -1 -3 -1<br />
+-1 -4 -2 -3<br />
+-6 -1 -2&nbsp; 1</p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

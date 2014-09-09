@@ -1,0 +1,24 @@
+ 
+
+ Pierre Bonami, project manager (CNRS),
+ John J. Forrest (IBM Copr.),
+ Carl Laird, (Carnegie Mellon University),
+ Lazlo Ladanyi (IBM Copr.),
+ Jon Lee (IBM Copr.)
+ Francois Margot (Carnegie Mellon University)
+ Andreas Waechter (IBM Copr.)
+ Claudia D'amborsio (Universita di Bologna, various improvement for non-convex problems).
+ Pietro Belotti (Lehigh).
+ Stefan Vigerske (Humboldt-University, found and fixed many bugs when developping the GAMSlink for Bonmin)
+ Hassan Hijazi (Orange Labs, experimental code for separable problems + various improvements)
+  
+
+We would also like to acknoweldge  <br>
+ L.T. Biegler (Carnegie Mellon University)  <br>
+ A.R. Conn (IBM)  <br>
+ G. Cornuejols (LIF Marseille, Carnegie Mellon University)  <br>
+ I.E. Grossmann (Carnegie Mellon University)  <br>
+ J. Lee (IBM)  <br>
+ A. Lodi (IBM, Universita di Bologna)  <br>
+ N. Sawaya (Carnegie Mellon University)  <br>
+for their advices, help and other contributions to the underlying algorithms.

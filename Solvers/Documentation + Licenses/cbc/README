@@ -1,0 +1,66 @@
+CBC README
+==========
+
+Welcome to the README for the COIN Branch and Cut Solver (CBC). CBC is
+distributed under the Eclipse Public License and is freely redistributable.
+All source code and documentation is Copyright IBM and others. This README may
+be redistributed freely.
+
+DOCUMENTATION
+=============
+
+For a quick start guide, please see the INSTALL file in this distribution. A (somehwat outdated) user's manual is available here:
+
+http://www.coin-or.org/Cbc
+
+More up-to-date automatically generated documentation of the source code can
+be found here:
+
+http://www.coin-or.org/Doxygen/Cbc/
+
+Further information can be found here:
+
+http://projects.coin-or.org/Cbc
+
+WHAT'S NEW
+==========
+
+Release 2.7.1:
+
+1. Fixes to MSVC++ files
+
+Release 2.7.0:
+
+1. License has been changed to the EPL.
+
+2. Support for MSVC++ version 10 added.
+
+3. Support for BuildTools version 0.7 to incorporate recent enhancements,
+including proper library versioning in Linux, prohibiting installation of
+private headers, etc.
+
+4. Updated externals to new stable versions of dependent projects.
+
+5. Improvements to heuristics. 
+
+6. New options for cut generation. 
+
+7. Improved reporting of results. 
+
+8. Improvements to documentation. 
+
+9. Minor bug fixes. 
+
+SUPPORT
+=======
+
+1. List Serve
+
+CBC users should use the Cbc mailing list. To subscribe, go to 
+http://list.coin-or.org/mailman/listinfo/cbc
+
+3. Bug Reports
+
+Bug reports should be reported on the CBC development web site at
+
+https://projects.coin-or.org/Cbc/newticket

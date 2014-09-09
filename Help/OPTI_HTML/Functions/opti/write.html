@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>write</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">write</p>
+<p class="Normal">Write an OPTI object to a mathematical file.</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">write(optiObj,filename)</p>
+<p class="Syntax">write(optiObj,filename,filetype)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal">Write an OPTI problem to a mathematical description file. 
+Multiple file formats are supported.</p>
+<p class="Normal">w<span class="Code">rite(optiObj,filename)</span> writes the 
+problem described by the
+OPTI object <span class="Code">optiObj</span> 
+to the file <span class="Code">filename</span>. If you only supply a filename 
+the file will be written to the current Matlab directory. Otherwise if you 
+supply a full path + filename, it will be written to that location. You must 
+supply the file extension using this method.</p>
+<p class="Normal"><span class="Code">write(optiObj,filename,filetype)</span> 
+allows the user to enter just the filename (without an extension), and manually 
+specify the file type (e.g. <span class="String">&#39;SDPA'</span>).</p>
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Heading2">Available File Types</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 168px"><strong>File Type</strong></td>
+		<td style="width: 187px"><strong>Extension</strong></td>
+		<td style="width: 210px"><strong>Supported Problems</strong></td>
+		<td style="width: 154px"><strong>OPTI Function</strong></td>
+		<td><strong>Notes</strong></td>
+	</tr>
+	<tr>
+		<td class="String" style="width: 168px">'MPS'</td>
+		<td style="width: 187px">.mps</td>
+		<td style="width: 210px">LP, MILP, QP, MIQP</td>
+		<td style="width: 154px"><a href="../optiutil/coinWrite.html">coinWrite</a></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="String" style="width: 168px">'QPS'</td>
+		<td style="width: 187px">.qps</td>
+		<td style="width: 210px">LP, MILP, QP, MIQP</td>
+		<td style="width: 154px"><a href="../optiutil/coinWrite.html">coinWrite</a></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="String" style="width: 168px">'LP'</td>
+		<td style="width: 187px">.lp</td>
+		<td style="width: 210px">LP, MILP</td>
+		<td style="width: 154px"><a href="../optiutil/coinWrite.html">coinWrite</a></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="String" style="width: 168px">'SDPA-S'</td>
+		<td style="width: 187px">.dat-s</td>
+		<td style="width: 210px">LP, SDP</td>
+		<td style="width: 154px"><a href="../optiutil/sdpWrite.html">sdpWrite</a></td>
+		<td>Sparse Format</td>
+	</tr>
+	<tr>
+		<td class="String" style="width: 168px">'SDPA'</td>
+		<td style="width: 187px">.dat</td>
+		<td style="width: 210px">LP, SDP</td>
+		<td style="width: 154px"><a href="../optiutil/sdpWrite.html">sdpWrite</a></td>
+		<td>Dense Format</td>
+	</tr>
+	<tr>
+		<td class="String" style="width: 168px">'SeDuMi'</td>
+		<td style="width: 187px">.mat</td>
+		<td style="width: 210px">LP, SDP</td>
+		<td style="width: 154px"><a href="../optiutil/sdpWrite.html">sdpWrite</a></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="String" style="width: 168px">'GMS'</td>
+		<td style="width: 187px">.gms</td>
+		<td style="width: 210px">All but SDP, SNLE and NLS</td>
+		<td style="width: 154px"><a href="../optiutil/gamsWrite.html">gamsWrite</a></td>
+		<td>Remember GAMS uses 0-100 bounds on integer vars</td>
+	</tr>
+</table>
+<br/>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

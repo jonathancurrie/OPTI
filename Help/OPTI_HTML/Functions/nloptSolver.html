@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>nloptSolver</title>
+<!-- #EndEditable -->
+<link href="../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">nloptSolver</p>
+<p class="Normal">Return or display available NLOPT algorithms with configuration details</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">enum = nloptSolver(name)</p>
+<p class="Syntax">[enum,ineq,eq,uncon,glob,deriv,subprob] = nloptSolver(name)</p>
+<p class="Syntax">name = nloptSolver(enum)</p>
+<p class="Syntax">nloptSolver()</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal"><span class="Code">enum = nloptSolver(name)</span> returns the 
+enumeration for a given NLOPT algorithm name.</p>
+<p class="Normal"><span class="Code">[enum,ineq,eq,uncon,glob,deriv,subprob] = 
+nloptSolver(name)</span> also returns the following information:</p>
+<p class="NormalIndent">ineq - 1 if the algorithm supports nonlinear 
+inequalities<br />
+eq&nbsp;&nbsp;&nbsp; - 1 if the algorithm supports nonlinear equalities<br />
+uncon - 1 if the algorithm allows unconstrained optimization (or infinite 
+bounds)<br />
+glob - 1 if the algorithm is a global optimization strategy<br />
+deriv - 1 if the algorithm requires a gradient and Jacobian<br />
+subprob - 1 if the algorithm requires a suboptimizer, such as the Augmented 
+Lagrangian method.&nbsp; </p>
+<p class="Normal"><span class="Code">name = nloptSolver(enum)</span> returns the 
+algorithm name for a given NLOPT enumeration.</p>
+<p class="Normal"><span class="Code">nloptSolver()</span> prints a list of all 
+algorithms and their configuration details.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Example</p>
+<p class="Normal">The following examples show the various uses of this function. 
+Note the example lists below will change depending on the version you have 
+downloaded.</p>
+<p class="Normal"><span class="Heading3">Checking all solvers</span></p>
+<p class="Normal">To see a list of all algorithms available from NLOPT together 
+with configuration details:</p>
+<p class="Code">&gt;&gt; nloptSolver</p>
+<p class="Code">
+--------------------------------------------------------------------------------------------------<br />
+NLOPT AVAILABLE SOLVERS:<br />
+<br />
+NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SCOPE&nbsp;&nbsp; 
+DERIV UNCON&nbsp; INEQ&nbsp; EQ&nbsp;&nbsp;&nbsp; DESCRIPTION&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+SUBOPT<br />
+AUGLAG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Global | Any | YES | YES | 
+YES | Augmented Langrangian - Top Layer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+| Req&nbsp; |<br />
+GD_STOGO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Global | Req |&nbsp;&nbsp;&nbsp;&nbsp; 
+|&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; | StoGO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br />
+GD_STOGO_RAND | Global | Req |&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; 
+|&nbsp;&nbsp;&nbsp;&nbsp; | StoGO, Randomized Search&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br />
+GN_CRS2_LM&nbsp;&nbsp;&nbsp; | Global |&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; 
+|&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; | Controlled Random Search, 
+Local Mutation |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |</p>
+<p class="Heading3">Returning the name of an NLOPT algorithm for a given 
+enumeration</p>
+<p class="Code">
+&gt;&gt; name = nloptSolver(1)<br />
+<br />
+name =<br />
+<br />
+GN_DIRECT_L</p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

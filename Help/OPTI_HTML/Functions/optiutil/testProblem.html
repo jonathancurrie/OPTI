@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>testProblem</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">testProblem</p>
+<p class="Normal">Test an OPTI problem against all available solvers</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">[times,results] = testProblem(optiObj)</p>
+<p class="Syntax">[times,results] = testProblem(optiObj,solvers)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal"><span class="Code">[times,results] = testProblem(optiObj)</span> 
+runs the OPTI object through each solver available to solve the type of problem, 
+recording the results and returning the execution times and a results structure. 
+The function will also print a summary to the command window.</p>
+<p class="Normal"><span class="Code">[times,results] = testProblem(optiObj,solvers)</span> 
+uses the supplied solvers in a cell array as the test solvers.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Example</p>
+<p class="Normal">Assuming Opt is an OPTI object containing an LP, use the 
+following to test CLP &amp; GLPK solving it:</p>
+<p class="Code">&gt;&gt; [times,results] = testProblem(<span class="Code">Opt</span>,<span class="Code">{</span><span class="String">'CLP'</span><span class="Code">,</span><span class="String">'GLPK'</span><span class="Code">}</span>);</p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

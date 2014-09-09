@@ -1,0 +1,44 @@
+# data file for cyclic scheduling (c-sched.mod)
+# Example 1
+# AMPL coding: S. Leyffer, University of Dundee, March 2000.
+data;
+# ... index sets
+set feeds    := A B C;
+set furnaces := 1;
+
+param K := 20;				# upper bound on No. subcycles
+param U := 150;				# upper bound on processing time
+
+# ... changeover time [days]
+param tau(tr): 	A 	B 	C := 	
+      1		2	3	3 ;
+
+# ... processing rate [tons/day]
+param D(tr): 	A 	B 	C := 	
+      1		1300	1000	1100;
+
+# ... conversion parameters [1/day]
+param a(tr): 	A 	B 	C := 	
+      1		0.20	0.18	0.19;
+
+param b(tr): 	A 	B 	C := 	
+      1		0.10	0.13	0.09;
+
+param c(tr): 	A 	B 	C := 	
+      1		0.18	0.10	0.12;
+
+# ... price parameter [$/ton]
+param P(tr): 	A 	B 	C := 	
+      1		160	90	120;
+
+# ... setup/cleaning cost [$]
+param Cs(tr): 	A 	B 	C := 	
+      1		100	90	80;
+
+# ... lower/upper bnd on flow rate
+param: 	Flo,	Fup := 			
+     A	350	650  
+     B	300	600
+     C	300	600;
+
+let Tcycle := 100;

@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>checkSolver</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">checkSolver</p>
+<p class="Normal">Display available solvers, or find a solver for a particular 
+problem</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">checkSolver</p>
+<p class="Syntax">checkSolver('matrix')</p>
+<p class="Syntax">checkSolver('config')</p>
+<p class="Syntax">checkSolver(&#39;x&#39;)</p>
+<p class="Syntax">list = checkSolver(&#39;x&#39;)</p>
+<p class="Syntax">ok = checkSolver(&#39;solver&#39;)</p>
+<p class="Syntax">solver = checkSolver(&#39;best_x&#39;)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal"><span class="Code">checkSolver()</span> prints a list of all 
+solvers, their version number and their availability on your system.</p>
+<p class="Normal"><span class="Code">checkSolver('matrix')</span> prints a 
+solver versus problem matrix showing what problems each solver is setup to solve 
+within the OPTI framework.</p>
+<p class="Normal"><span class="Code">checkSolver('config')</span> prints a 
+solver versus config matrix showing which <span class="Code">optiset</span> 
+options are configured for which solvers.</p>
+<p class="Normal"><span class="Code">checkSolver(&#39;x&#39;)</span> prints a list 
+of all available solvers for a given problem type, specified by
+<span class="String">&#39;LP&#39;</span>, <span class="String">&#39;QP&#39;</span>, etc.</p>
+<p class="Normal"><span class="Code">list = checkSolver(&#39;x&#39;)</span> returns 
+all available solvers as a cell array available for a given problem type, 
+specified by <span class="String">&#39;LP&#39;</span>, or <span class="String">
+&#39;QP&#39;</span>, etc.</p>
+<p class="Normal"><span class="Code">ok = checkSolver(&#39;solver&#39;)</span> checks if 
+the supplied solver is available on your system. It will return true if it 
+exists, otherwise it will present an error.</p>
+<p class="Normal"><span class="Code">solver = checkSolver(&#39;best_x&#39;)</span> 
+returns the best solver as a string available for a given problem type, 
+specified by <span class="String">&#39;best_LP&#39;</span>, or <span class="String">
+&#39;best_QP&#39;</span>, etc.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Examples</p>
+<p class="Normal">The following examples show the various uses of this function. 
+Note the example lists below will change depending on the version you have 
+downloaded.</p>
+<p class="Normal"><span class="Heading3">Checking all solvers</span></p>
+<p class="Normal">To see a list of all solvers interfaced to OPTI, their version 
+number and whether 
+they are available on your system:</p>
+<p class="Code">&gt;&gt; checkSolver</p>
+<p class="Code">
+------------------------------------------------<br />
+OPTI AVAILABLE SOLVERS:<br />
+<br />
+BONMIN:&nbsp;&nbsp; Available&nbsp;&nbsp; v1.5.2<br />
+CBC:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Available&nbsp;&nbsp; v2.7.6<br />
+CLP:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Available&nbsp;&nbsp; v1.14.6<br />
+CPLEX:&nbsp;&nbsp;&nbsp; Available&nbsp;&nbsp; v12.4.0.0<br />
+GLPK:&nbsp;&nbsp;&nbsp;&nbsp; Available&nbsp;&nbsp; v4.47<br />
+GMATLAB:&nbsp; Available&nbsp;&nbsp; v3.2<br />
+HYBRJ:&nbsp;&nbsp;&nbsp; Available <br />
+IPOPT:&nbsp;&nbsp;&nbsp; Available&nbsp;&nbsp; v3.10.2<br />
+LBFGSB:&nbsp;&nbsp; Available&nbsp;&nbsp; v3.0<br />
+LEVMAR:&nbsp;&nbsp; Available&nbsp;&nbsp; v2.5 (December 2009)<br />
+LMDER:&nbsp;&nbsp;&nbsp; Available <br />
+LP_SOLVE: Available&nbsp;&nbsp; v5.5.2.0<br />
+MATLAB:&nbsp;&nbsp; Available&nbsp;&nbsp; v6.1<br />
+MKLTRNLS: Available&nbsp;&nbsp; v10.3 R7<br />
+MOSEK:&nbsp;&nbsp;&nbsp; Available <br />
+MUMPS:&nbsp;&nbsp;&nbsp; Available&nbsp;&nbsp; v4.10.0<br />
+NL2SOL:&nbsp;&nbsp; Available&nbsp;&nbsp; v2.2<br />
+NLOPT:&nbsp;&nbsp;&nbsp; Available&nbsp;&nbsp; v2.2.4<br />
+NOMAD:&nbsp;&nbsp;&nbsp; Available&nbsp;&nbsp; v3.5.1<br />
+OOQP:&nbsp;&nbsp;&nbsp;&nbsp; Available&nbsp;&nbsp; v0.99.22<br />
+PSWARM:&nbsp;&nbsp; Available&nbsp;&nbsp; v1.5<br />
+QSOPT:&nbsp;&nbsp;&nbsp; Available&nbsp;&nbsp; v080725<br />
+------------------------------------------------</p>
+<p class="Heading3">Returning the &#39;best&#39; solver for a given problem type</p>
+<p class="Normal">Note the best solver is defined by our experience with the 
+available solvers. It may not be the best solver for your particular problem.</p>
+<p class="Code">
+&gt;&gt; solver 
+= checkSolver(<span class="String">&#39;best_NLP&#39;</span>)<br />
+<br />
+solver =<br />
+<br />
+IPOPT</p>
+<p class="Heading3">Returning a list of all solvers for a given problem type</p>
+<p class="Code">
+&gt;&gt;
+checkSolver(<span class="String">&#39;NLP&#39;</span>)<br />
+<br />
+------------------------------------------------<br />
+OPTI NLP SOLVERS:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+BD LI LE NI NE SP D1 GL<br />
+(1) IPOPT&nbsp;&nbsp;&nbsp;&nbsp; x&nbsp; *&nbsp; *&nbsp; x&nbsp; x&nbsp; x&nbsp; 
+x&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Interior-Point Optimization<br />
+(2) MATLAB&nbsp;&nbsp;&nbsp; x&nbsp; x&nbsp; x&nbsp; x&nbsp; x&nbsp; x&nbsp; x&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Optimization Toolbox: fmincon<br />
+(3) NLOPT&nbsp;&nbsp;&nbsp;&nbsp; x&nbsp; *&nbsp; *&nbsp; x&nbsp; x&nbsp;&nbsp;&nbsp;&nbsp; 
+*&nbsp; *&nbsp;&nbsp;&nbsp; Nonlinear Optimization<br />
+(4) LBFGSB&nbsp;&nbsp;&nbsp; x&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+x&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Limited Memory Broyden-Fletcher-Goldfarb-Shanno 
+Bounded Optimization<br />
+(5) PSWARM&nbsp;&nbsp;&nbsp; x&nbsp; x&nbsp; *&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+x&nbsp;&nbsp;&nbsp; Pattern and Particle Swarm Global Optimizer<br />
+-----------------------------------------------</p>
+<p class="Normal">
+where the interior table headings are:</p>
+<p class="NormalIndent">
+BD - Bounds<br />
+LI - Linear Inequality<br />
+LE - Linear Equality<br />
+QI - Quadratic Inequality<br />
+NI - Nonlinear Inequality<br />
+NE - Nonlinear Equality<br />
+SP - Supports Sparse Matrices<br />
+D1 - Requires first derivatives<br />
+D2 - Requires second derivatives<br />
+GL - Global solver</p>
+<p class="Normal">
+and <span class="Code">x</span> means available / required, while
+<span class="Code">*</span> means solver settings dependent / optionally 
+available.</p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

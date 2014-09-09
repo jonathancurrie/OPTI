@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>optiBench</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">optiBench</p>
+<p class="Normal">Run an optimization benchmark across available solvers</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">optiBench(prob_type)</p>
+<p class="Syntax">optiBench(prob_type,no)</p>
+<p class="Syntax">optiBench(prob_type,no,plot)</p>
+<p class="Syntax">[times,results,solvers] = optiBench(prob_type,no)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal"><span class="Code">optiBench(prob_type)</span> runs all 
+available solvers for a given problem type, <span class="Code">prob_type</span>, 
+against all test problems. A comparison plot will be plotted as well as detailed 
+problem by problem results printed in the command window.</p>
+<p class="Normal"><span class="Code">optiBench(prob_type,no)</span> runs only
+<span class="Code">no</span> number of test problems for the benchmark. If
+<span class="Code">no</span> is specified greater than the number available, it 
+will be saturated at the maximum available.</p>
+<p class="Normal"><span class="Code">optiBench(prob_type,no,plot)</span> 
+specifies whether to plot the result (1) or not (0).</p>
+<p class="Normal"><span class="Code">[times,results,solvers] = optiBench(prob_type,no)</span> 
+returns the low level results as a structure from the benchmark as well as 
+execution times and solver names.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Example</p>
+<p class="Normal">The following example shows how to run a benchmark test 
+against the supplied LP solvers (note only tiny problems used in this example):</p>
+<p class="Code">&gt;&gt; optiBench(<span class="String">&#39;LP&#39;</span>)</p>
+<p class="Normal">The function will detect all available LP solvers, and run 
+them across all available LP test problems. It will print on screen a problem by 
+problem summary, as well as final summary:</p>
+<p class="Code">
+--------------------------------------------------<br />
+LP Benchmark Summary:<br />
+--------------------------------------------------<br />
+Solver&nbsp;&nbsp;&nbsp;&nbsp; Problems Solved&nbsp;&nbsp; Total Time<br />
+CPLEX&nbsp;&nbsp;&nbsp;&nbsp; 10 / 10 [100.00%]&nbsp;&nbsp; 0.0875s<br />
+clp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10 / 10 [100.00%]&nbsp;&nbsp; 0.0029s<br />
+qsopt&nbsp;&nbsp;&nbsp;&nbsp; 10 / 10 [100.00%]&nbsp;&nbsp; 0.0021s<br />
+glpk&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10 / 10 [100.00%]&nbsp;&nbsp; 0.0137s<br />
+lp_solve&nbsp;&nbsp; 9 / 10 [ 90.00%]&nbsp;&nbsp; 0.0178s<br />
+matlab&nbsp;&nbsp;&nbsp; 10 / 10 [100.00%]&nbsp;&nbsp; 0.0658s<br />
+opti&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 9 / 10 [ 90.00%]&nbsp;&nbsp; 0.0104s<br />
+--------------------------------------------------</p>
+<p class="Normal">As well as printing a comparison plot:</p>
+<p class="Normal">
+<img alt="lpbench" height="420" src="../images/lpbench.png" width="561" /></p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

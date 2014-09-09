@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>opti_quadprog</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">opti_quadprog</p>
+<p class="Normal">Solve a 
+<a href="http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/QP">QP</a> 
+using an OPTI solver 
+(e.g. OOQP)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">x = opti_quadprog(H,f,A,b)</p>
+<p class="Syntax">x = opti_quadprog(H,f,A,b,Aeq,beq)</p>
+<p class="Syntax">x = opti_quadprog(H,f,A,b,Aeq,beq,lb,ub)</p>
+<p class="Syntax">x = opti_quadprog(H,f,A,b,Aeq,beq,lb,ub,x0)</p>
+<p class="Syntax">[x,fval,exitflag,info,lambda,Opt] = opti_quadprog(H,f,A,b,Aeq,beq,lb,ub,x0,opts)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal"><span class="Code">x = opti_quadprog(H,f,A,b)</span> solves the 
+quadratic program with objective specified by <span class="Code">H,</span><span class="Normal">
+</span> <span class="Code">f</span>, subject 
+to the linear inequality constraints <span class="Code">A</span>,
+<span class="Code">b</span>.</p>
+<p class="Normal"><span class="Code">x = opti_quadprog(H,f,A,b,Aeq,beq)</span> solves 
+subject to the linear equality constraints, <span class="Code">Aeq</span>,
+<span class="Code">beq</span>.</p>
+<p class="Normal"><span class="Code">x = opti_quadprog(H,f,A,b,Aeq,beq,lb,ub)</span> 
+solves subject to the decision variable bounds <span class="Code">lb</span>,
+<span class="Code">ub</span>. OPTI will also solve purely bounded problems.</p>
+<p class="Normal"><span class="Code">x = opti_quadprog(H,f,A,b,Aeq,beq,lb,ub,x0)</span> 
+solves using the initial guess x0. Note most OPTI QP solvers do not use x0.</p>
+<p class="Normal"><span class="Code">[x,fval,exitflag,info,lambda,Opt] = opti_quadprog(H,f,A,b,Aeq,beq,lb,ub,x0,opts)</span> 
+allows the user to specify additional options via <span class="Code">opts</span>, 
+created from <span class="Code"><a href="../opti/optiset.html">optiset</a></span>. 
+This includes being able to specify the solver used via the 'solver' field. Also returned is the function value at the solution, exitflag, 
+information structure plus lambda (dual variables) and internally created OPTI object.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Typical Use</p>
+<p class="Normal">This function is provided for users who are familiar with the 
+Matlab Optimization Toolbox and its routines, and wish to experiment with OPTI 
+toolbox routines without major code changes. It is suggested once you are 
+familiar with the OPTI class and creating it, to use it explicitly rather than 
+calling this function.</p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

@@ -1,0 +1,352 @@
+\documentclass{article}
+
+\usepackage{latexsym}  % Use this package file for the special \LaTeX symbols.
+\usepackage{amsmath,amssymb} % nice extra stuff but changes required to beq etc.
+
+\usepackage{listings} % note s in name
+\usepackage[numbered,framed]{mcode} % Nice coloured Matlab listings
+
+\input{boldchar2e} %! updated for boldfonts in greek
+\input{shthnd}
+
+\begin{document}
+
+Linear Constraints
+\begin{align*}
+    & \mathbf{r}_{\text{l}} \le \mathbf{A}\mathbf{x} \le \mathbf{r}_{\text{u}}\\
+\end{align*}
+
+\begin{align*}
+    & \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+    & \mathbf{A}_{\text{eq}}\mathbf{x} =  \mathbf{b}_{\text{eq}}\\
+\end{align*}
+
+Nonlinear Constraints
+\begin{align*}
+    & \mathbf{c}_{\text{l}} \le \mathbf{nlcon}\left(\mathbf{x}\right) \le \mathbf{c}_{\text{u}}\\
+\end{align*}
+
+\begin{align*}
+    & \mathbf{nlcon}\left(\mathbf{x}\right) \underbrace{\left[\le or \ge or = \right]}_{\mathbf{nle}} \mathbf{nlrhs}\\
+\end{align*}
+
+System of Linear Equations
+\begin{align*}
+\text{\bA \bx} = \bb
+\end{align*}
+
+\begin{align*}
+    a + c &= 2200\\
+    4a + 1.5c &= 5050\\
+\end{align*}
+
+\begin{align*}
+    \begin{bmatrix} 1 & 1 \\ 4 & 1.5\\\end{bmatrix}
+    \begin{bmatrix} a \\ c \end{bmatrix} =
+    \begin{bmatrix} 2200 \\ 5050\end{bmatrix}
+\end{align*}
+
+Linear Programs
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } \mathbf{f}^T \mathbf{x} \\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{A}_{\text{eq}}\mathbf{x} =  \mathbf{b}_{\text{eq}}\\
+                       & \mathbf{l}_{\text{b}} \le \mathbf{x} \le \mathbf{u}_{\text{b}}\\
+\end{align*}
+
+\begin{align*}
+    \text{return} = -0.07x - 0.08y - 0.12z
+\end{align*}
+
+\begin{align*}
+    x + y + z &= 12000\\
+    z &\le 2000 \\
+    -\frac{1}{3}x + y &\le 0\\
+    x,y,z &\ge 0
+\end{align*}
+
+\begin{align*}
+    &\qquad \text{min}_{\mathbf{x}} -\begin{bmatrix} 0.07 \\ 0.08 \\ 0.12 \end{bmatrix}^T \mathbf{x} \\
+    &\begin{aligned}
+    \mbox{subject to: } \begin{bmatrix} -\frac{1}{3} & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} \mathbf{x} &\le \begin{bmatrix} 0 \\ 2000 \end{bmatrix} \\
+                        \begin{bmatrix} 1 & 1 & 1 \end{bmatrix} \mathbf{x} &= \begin{bmatrix} 12000 \end{bmatrix} \\
+                        \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix} &\le \mathbf{x}
+    \end{aligned}
+\end{align*}
+
+Binary Integer Linear Programs
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } \mathbf{f}^T \mathbf{x} \\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{A}_{\text{eq}}\mathbf{x} = \mathbf{b}_{\text{eq}}\\
+                       & \mathbf{x} \in \{0,1\}\\
+\end{align*}
+
+\begin{align*}
+    \text{return} = -0.2x_1 - 0.3x_2 - 0.5x_3 - 0.1x_4
+\end{align*}
+
+\begin{align*}
+    &0.5x_1 + 1.0x_2 + 1.5x_3 + 0.1x_4 \le 3.1\\
+    &0.3x_1 + 0.8x_2 + 1.5x_3 + 0.4x_4 \le 2.5\\
+    &0.2x_1 + 0.2x_2 + 0.3x_3 + 0.1x_4 \le 0.4\\
+\end{align*}
+
+\begin{align*}
+    &\qquad \text{min}_{\mathbf{x}} -\begin{bmatrix} 0.2 \\ 0.3 \\ 0.5 \\ 0.1 \end{bmatrix}^T \mathbf{x} \\
+    &\begin{aligned}
+    \mbox{subject to: } \begin{bmatrix} 0.5 & 1.0 & 1.5 & 0.1 \\ 0.3 & 0.8 & 1.5 & 0.4 \\ 0.2 & 0.2 & 0.3 & 0.1 \end{bmatrix} \mathbf{x}
+                         &\le \begin{bmatrix} 3.1 \\ 2.5 \\ 0.4 \end{bmatrix} \\
+                          \mathbf{x} &\in \{0,1\}\\
+    \end{aligned}
+\end{align*}
+
+Mixed Integer Linear Programs
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } \mathbf{f}^T \mathbf{x} \\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{A}_{\text{eq}}\mathbf{x} = \mathbf{b}_{\text{eq}}\\
+                       & \mathbf{l}_{\text{b}} \le \mathbf{x} \le \mathbf{u}_{\text{b}}\\
+                       & x_i \in \mathbb{Z}\\
+                       & x_j \in \{0,1\}\\
+\end{align*}
+
+\begin{align*}
+    \text{profit} = -12x_{11} - 16x_{12} - 12x_{21} - 16x_{22} + 45e3f_{11} + 76e3f_{12} + 45e3f_{21} + 76e3f_{22}
+\end{align*}
+
+\begin{align*}
+    \frac{1}{52}x_{11} + \frac{1}{38}x_{12} \le 480\\
+    \frac{1}{42}x_{21} + \frac{1}{23}x_{22} \le 720\\
+\end{align*}
+
+\begin{align*}
+    x_{11} - 52\left(480\right)f_{11} \le 0\\
+    x_{12} - 38\left(480\right)f_{12} \le 0\\
+    x_{21} - 42\left(720\right)f_{21} \le 0\\
+    x_{22} - 23\left(720\right)f_{22} \le 0\\
+\end{align*}
+
+\begin{align*}
+    &\qquad \text{min}_{\mathbf{x}} -\begin{bmatrix} 12 & 16 & 12 & 16 & -45e3 & -76e3 & -45e3 & -76e3 \end{bmatrix} \mathbf{x} \\
+    &\begin{aligned}
+    \mbox{subject to: } \begin{bmatrix} \frac{1}{52} & \frac{1}{38} & 0 & 0 & 0 & 0 & 0 & 0\\
+                                         0 & 0 & \frac{1}{42} & \frac{1}{23}  & 0 & 0 & 0 & 0\\
+                                         1 & 0 & 0 & 0 & -52\left(480\right) & 0 & 0 & 0\\
+                                         0 & 1 & 0 & 0 & 0 & -38\left(480\right)  & 0 & 0\\
+                                         0 & 0 & 1 & 0 & 0 & 0 & -42\left(720\right) & 0 \\
+                                         0 & 0 & 0 & 1 & 0 & 0 & 0 & -23\left(720\right) \\
+                         \end{bmatrix} \mathbf{x} &\le
+                         \begin{bmatrix} 480 \\ 720 \\ 0 \\ 0 \\ 0 \\ 0 \end{bmatrix} \\
+                        \mathbf{0} &\le \mathbf{x}\\
+                        x_{1,2,3,4} &\in \mathbb{Z}\\
+                        x_{5,6,7,8} &\in \{0,1\}\\
+    \end{aligned}
+\end{align*}
+
+Quadratic Programs
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } \frac{1}{2}\mathbf{x}^T \mathbf{H} \mathbf{x} + \mathbf{f}^T \mathbf{x} \\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{A}_\text{eq}\mathbf{x} = \mathbf{b}_\text{eq}\\
+                       & \mathbf{l}_{\text{b}} \le \mathbf{x} \le \mathbf{u}_{\text{b}}\\
+\end{align*}
+
+\begin{align*}
+    \text{min}_{\mathbf{x}} \text{ } 0.5x_1^2 + x_2^2 - x_1x_2 - 2x_1 - 6x_2\\
+    \begin{aligned}
+    \mbox{subject to: } \qquad x_1 + x_2 &\le 2\\
+                        -x_1 + 2x_2 &\le 2\\
+                        2x_1 + x_2 &\le 3\\
+                        \mathbf{0} &\le \mathbf{x}\\
+    \end{aligned}
+\end{align*}
+
+\begin{align*}
+    &\qquad \text{min}_{\mathbf{x}} \text{ } \frac{1}{2}\mathbf{x}^T \begin{bmatrix} 1 & -1 \\ -1 & 2 \end{bmatrix} \mathbf{x} +
+                                        \begin{bmatrix} -2 \\ -6 \end{bmatrix}^T \mathbf{x}\\
+    &\begin{aligned}
+    \mbox{subject to: } \begin{bmatrix} 1 & 1 \\ -1 & 2 \\ 2 & 1 \end{bmatrix} \mathbf{x} &\le \begin{bmatrix} 2 \\ 2 \\ 3 \end{bmatrix}\\
+                        \mathbf{0} &\le \mathbf{x}\\
+    \end{aligned}
+\end{align*}
+
+
+Quadratically Constrained Quadratic Programs
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } \frac{1}{2}\mathbf{x}^T \mathbf{H} \mathbf{x} + \mathbf{f}^T \mathbf{x} \\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{A}_{\text{eq}}\mathbf{x} = \mathbf{b}_{\text{eq}}\\
+                       & \mathbf{l}_{\text{b}} \le \mathbf{x} \le \mathbf{u}_{\text{b}}\\
+                       & \forall i = 0...q : \mathbf{x}^T \mathbf{Q}_i \mathbf{x} + \mathbf{l}_i^T \mathbf{x} \le \mathbf{r}_i\\
+\end{align*}
+
+\begin{align*}
+    \text{min}_{\mathbf{x}} \text{ } 0.5x_1^2 + 0.5x_2^2 - 2x_1 - 2x_2\\
+    \begin{aligned}
+    \mbox{subject to: } \qquad -x_1 + x_2 &\le 2\\
+                        x_1 + 3x_2 &\le 5\\
+                        x_1^2 + x_2^2 - 2x_2 &\le 1\\
+                        \mathbf{0} &\le \mathbf{x}\\
+    \end{aligned}
+\end{align*}
+
+\begin{align*}
+    &\qquad \text{min}_{\mathbf{x}} \text{ } \frac{1}{2}\mathbf{x}^T \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} \mathbf{x} +
+                                        \begin{bmatrix} -2 \\ -2 \end{bmatrix}^T \mathbf{x}\\
+    &\begin{aligned}
+    \mbox{subject to: } \qquad \begin{bmatrix} -1 & 1 \\ 1 & 3 \end{bmatrix} \mathbf{x} &\le \begin{bmatrix} 2 \\ 5 \end{bmatrix}\\
+                        \mathbf{x}^T \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} \mathbf{x} + \begin{bmatrix} 0 \\ -2 \end{bmatrix}^T \mathbf{x}
+                        &\le 1\\
+                        \mathbf{0} &\le \mathbf{x}\\
+    \end{aligned}
+\end{align*}
+
+
+Mixed Integer Quadratic Programs
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } \frac{1}{2}\mathbf{x}^T \mathbf{H} \mathbf{x} + \mathbf{f}^T \mathbf{x} \\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{A}_{\text{eq}}\mathbf{x} = \mathbf{b}_{\text{eq}}\\
+                       & \mathbf{l}_{\text{b}} \le \mathbf{x} \le \mathbf{u}_{\text{b}}\\
+                       & \forall i = 0...n : x_i \in \mathbb{Z}\\
+                       & \forall j = 0...n : x_j \in \{0,1\}\\
+\end{align*}
+
+\begin{align*}
+    \text{min}_{\mathbf{x}} \text{ } 0.5x_1^2 + x_2^2 - x_1x_2 - 2x_1 - 6x_2\\
+    \begin{aligned}
+    \mbox{subject to: } \qquad x_1 + x_2 &\le 2\\
+                        -x_1 + 2x_2 &\le 2\\
+                        2x_1 + x_2 &\le 3\\
+                        \mathbf{0} &\le \mathbf{x}\\
+                        x_1 &\in \mathbb{Z}\\
+    \end{aligned}
+\end{align*}
+
+\begin{align*}
+    &\qquad \text{min}_{\mathbf{x}} \text{ } \frac{1}{2}\mathbf{x}^T \begin{bmatrix} 1 & -1 \\ -1 & 2 \end{bmatrix} \mathbf{x} +
+                                        \begin{bmatrix} -2 \\ -6 \end{bmatrix}^T \mathbf{x}\\
+    &\begin{aligned}
+    \mbox{subject to: } \begin{bmatrix} 1 & 1 \\ -1 & 2 \\ 2 & 1 \end{bmatrix} \mathbf{x} &\le \begin{bmatrix} 2 \\ 2 \\ 3 \end{bmatrix}\\
+                        \mathbf{0} &\le \mathbf{x}\\
+                        x_1 &\in \mathbb{Z}\\
+    \end{aligned}
+\end{align*}
+
+
+Mixed Integer Quadratically Constrained Quadratic Programs
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } \frac{1}{2}\mathbf{x}^T \mathbf{H} \mathbf{x} + \mathbf{f}^T \mathbf{x} \\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{A}_{\text{eq}}\mathbf{x} = \mathbf{b}_{\text{eq}}\\
+                       & \mathbf{l}_{\text{b}} \le \mathbf{x} \le \mathbf{u}_{\text{b}}\\
+                       & \forall i = 0...q : \mathbf{x}^T \mathbf{Q}_i \mathbf{x} + \mathbf{l}_i^T \mathbf{x} \le \mathbf{r}_i\\
+                       & \forall j = 0...m : x_j \in \mathbb{Z}\\
+                       & \forall k = 0...n : x_k \in \{0,1\}\\
+\end{align*}
+
+\begin{align*}
+    \text{min}_{\mathbf{x}} \text{ } 0.5x_1^2 + 0.5x_2^2 - 2x_1 - 2x_2\\
+    \begin{aligned}
+    \mbox{subject to: } \qquad -x_1 + x_2 &\le 2\\
+                        x_1 + 3x_2 &\le 5\\
+                        x_1^2 + x_2^2 - 2x_2 &\le 1\\
+                        \mathbf{0} &\le \mathbf{x}\\
+                        x_1 &\in \mathbb{Z}\\
+    \end{aligned}
+\end{align*}
+
+\begin{align*}
+    &\qquad \text{min}_{\mathbf{x}} \text{ } \frac{1}{2}\mathbf{x}^T \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} \mathbf{x} +
+                                        \begin{bmatrix} -2 \\ -2 \end{bmatrix}^T \mathbf{x}\\
+    &\begin{aligned}
+    \mbox{subject to: } \qquad \begin{bmatrix} -1 & 1 \\ 1 & 3 \end{bmatrix} \mathbf{x} &\le \begin{bmatrix} 2 \\ 5 \end{bmatrix}\\
+                        \mathbf{x}^T \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} \mathbf{x} + \begin{bmatrix} 0 \\ -2 \end{bmatrix}^T \mathbf{x}
+                        &\le 1\\
+                        \mathbf{0} &\le \mathbf{x}\\
+                        x_1 &\in \mathbb{Z}\\
+    \end{aligned}
+\end{align*}
+
+System of Nonlinear Equations
+\begin{align*}
+     & \mathbf{F} \left( \mathbf{x} \right) = \mathbf{0} \\
+\end{align*}
+
+\begin{align*}
+    2x_1 - x_2 - e^{-x_1} &= 0\\
+    -x_1 + 2x_2 - e^{-x_2} &= 0\\
+\end{align*}
+
+
+System of Constrained Nonlinear Equations
+\begin{align*}
+                       & \mathbf{F} \left( \mathbf{x} \right) = \mathbf{0} \\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{l}_{\text{b}} \le \mathbf{x} \le \mathbf{u}_{\text{b}}\\
+                       & \mathbf{c}\left(\mathbf{x}\right) \le \mathbf{d}\\
+\end{align*}
+
+Nonlinear Least Squares
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } \| \mathbf{F} \left(\mathbf{x}\right) \|_2^2\\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{A}_{\text{eq}}\mathbf{x} = \mathbf{b}_{\text{eq}}\\
+                       & \mathbf{l}_{\text{b}} \le \mathbf{x} \le \mathbf{u}_{\text{b}}\\
+\end{align*}
+
+\begin{align*}
+\text{min}_{\mathbf{x}}& \text{ } \sum_i \left( \mathbf{F} \left( \mathbf{x}, xdata_i \right) - ydata_i \right)^2\\
+\end{align*}
+
+\begin{align*}
+\mathbf{F} \left(\mathbf{x},\mathbf{xdata}\right) &= x_1 e^{x_2 \mathbf{xdata}}\\
+\end{align*}
+
+Unconstrained Nonlinear Optimization
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } f\left(\mathbf{x}\right) \\
+\end{align*}
+
+\begin{align*}
+    \text{min}_{\mathbf{x}} \text{ } \left(1-x_1\right)^2 + 100\left(x_2 - x_1^2\right)^2\\
+\end{align*}
+
+Nonlinear Programs
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } f\left(\mathbf{x}\right) \\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{A}_{\text{eq}}\mathbf{x} = \mathbf{b}_{\text{eq}}\\
+                       & \mathbf{l}_{\text{b}} \le \mathbf{x} \le \mathbf{u}_{\text{b}}\\
+                       & \mathbf{c}\left(\mathbf{x}\right) \le \mathbf{d}\\
+                       & \mathbf{c}_{\text{eq}}\left(\mathbf{x}\right) = \mathbf{d}_{\text{eq}}\\
+\end{align*}
+
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } \ln\left(1 + x_1^2\right) - x_2\\
+    \mbox{subject to: }& \left(1 + x_1^2\right)^2 + x_2^2 = 4\\
+\end{align*}
+
+Mixed Integer Nonlinear Programs
+\begin{align*}
+    \text{min}_{\mathbf{x}}& \text{ } f\left(\mathbf{x}\right) \\
+    \mbox{subject to: }& \mathbf{A}\mathbf{x} \le \mathbf{b}\\
+                       & \mathbf{A}_{\text{eq}}\mathbf{x} = \mathbf{b}_{\text{eq}}\\
+                       & \mathbf{l}_{\text{b}} \le \mathbf{x} \le \mathbf{u}_{\text{b}}\\
+                       & \mathbf{c}\left(\mathbf{x}\right) \le \mathbf{d}\\
+                       & \mathbf{c}_{\text{eq}}\left(\mathbf{x}\right) = \mathbf{d}_{\text{eq}}\\
+                       & \forall i = 0...m : x_i \in \mathbb{Z}\\
+                       & \forall j = 0...n : x_j \in \{0,1\}\\
+\end{align*}
+
+\begin{align*}
+    &\text{min}_{\mathbf{x}} \text{ } \sin\left(\pi \frac{x_1}{12}\right)\cos\left(\pi \frac{x_2}{16}\right)\\
+    &\begin{aligned}
+    \mbox{subject to: } -x_1 + 2.5x_2 &\le 1\\
+                          x_1 + 2.5x_2 &\le -15\\
+                          x_1,x_2 &\in \mathbb{Z}\\
+    \end{aligned}
+\end{align*}
+
+\end{document}

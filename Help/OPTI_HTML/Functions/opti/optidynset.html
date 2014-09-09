@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>optiset</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">optidynset</p>
+<p class="Normal">Create or edit OPTI dynamic optimization options structure</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">options = optidynset(&#39;param1&#39;,value1,&#39;param2&#39;,value2,...)</p>
+<p class="Syntax">optidynset</p>
+<p class="Syntax">options = optidynset</p>
+<p class="Syntax">options = optidynset(oldopts,&#39;param1&#39;,value1,...)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal">The function <span class="Code">optidynset</span> creates an 
+options structure that you can pass to <a class="Code" href="optiset.html">optiset</a> 
+for customizing the building and solving of a dynamic optimization problem.</p>
+<p class="Normal"><span class="Code">options = optidynset(&#39;param1&#39;,value1,&#39;param2&#39;,value2,...)</span> 
+creates a OPTI dynamic optimization options structure in which the specified parameters (<span class="Code">param</span>) 
+have the specified values (<span class="Code">value</span>).</p>
+<p class="Normal"><span class="Code">optidynset</span> with no input or output 
+arguments displays a complete list of parameters with their valid names.</p>
+<p class="Normal"><span class="Code">options = optidynset</span> with no input 
+arguments creates a default options structure</p>
+<p class="Normal"><span class="Code">options = optidynset(oldopts,&#39;param1&#39;,value1,...)</span> 
+updates the existing object structure, <span class="Code">oldopts</span>, with 
+the new values specified.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Options</p>
+<p class="Normal">The following table lists the available options for
+<span class="Code">optidynset</span>:</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="height: 25px; width: 144px"><strong>Parameter</strong></td>
+		<td style="height: 25px; width: 158px"><strong>Value</strong></td>
+		<td style="height: 25px; width: 629px"><strong>Description</strong></td>
+		<td style="height: 25px"><strong>Default</strong></td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px">integrator</td>
+		<td style="width: 158px">string</td>
+		<td style="width: 629px">ODE Integrator</td>
+		<td>'ode45'</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px; height: 25px;">sensitivity</td>
+		<td style="width: 158px; height: 25px;">string</td>
+		<td style="width: 629px; height: 25px;">Sensitivity implementation 
+		('ND', 'AD', 'User', 'None')</td>
+		<td style="height: 25px">[] (defaults to ND if not supplied)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px; height: 25px">dfdz</td>
+		<td style="height: 25px; width: 158px">function handle</td>
+		<td style="width: 629px; height: 25px">Jacobian of ODE with respect to 
+		state variables (z)</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px; height: 25px">dfdp</td>
+		<td style="height: 25px; width: 158px">function handle</td>
+		<td style="width: 629px; height: 25px">Jacobian of ODE with respect to 
+		parameters (p)</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px; height: 25px">stateIndex</td>
+		<td style="height: 25px; width: 158px">double vector</td>
+		<td style="width: 629px; height: 25px">Indices of states to fit to 
+		measured data</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px; height: 25px">initialT</td>
+		<td style="height: 25px; width: 158px">double scalar</td>
+		<td style="width: 629px; height: 25px">Initial time to start the ODE 
+		integrator</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px; height: 25px">odeMaxTime</td>
+		<td style="width: 158px">double scalar</td>
+		<td style="width: 629px">Maximum time the ODE integrator can run per 
+		call [sec]</td>
+		<td>30</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px; height: 25px">odeOpts</td>
+		<td style="width: 158px">structure</td>
+		<td style="width: 629px">odeset options to pass to the integrator</td>
+		<td>[]</td>
+	</tr>
+	</table>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

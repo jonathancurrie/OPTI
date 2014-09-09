@@ -1,0 +1,27 @@
+﻿.rounded-corner
+{
+	font-family: "Calibri";
+	font-size: medium;
+	margin: 10px 45px 10px 45px;
+	width: 930px;
+	text-align: left;
+	border-collapse: collapse;
+}
+.rounded-corner th
+{
+	padding: 8px;
+	font-weight: bold;
+	font-size: medium;
+	background: #c1c1c1;
+}
+.rounded-corner td
+{
+	padding: 8px;
+	background: #f3f3ff;
+	border-top: 1px solid #fff;
+	color: #449;
+}
+.rounded-corner tbody tr:hover td
+{
+	background: #ede8ff;
+}

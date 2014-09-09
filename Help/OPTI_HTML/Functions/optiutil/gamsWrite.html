@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>gamsWrite</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">gamsWrite</p>
+<p class="Normal">Write an <a href="../opti/optiprob.html">optiprob</a> 
+structure to a GAMS file.</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">gamsWrite(prob,filename)</p>
+<p class="Syntax">write(optiObj)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal">Write an OPTI problem to a
+<a href="http://www.gams.com/" target="_blank">GAMS</a> file. </p>
+<p class="Normal"><span class="Code">gamsWrite(prob,filename)</span> writes the 
+problem described by the
+<a href="../opti/optiprob.html">optiprob</a> structure <span class="Code">prob</span> 
+to the file <span class="Code">filename</span>. If you only supply a filename 
+the file will be written to the current Matlab directory. Otherwise if you 
+supply a full path + filename, it will be written to that location.</p>
+<p class="Normal"><span class="Code">write(optiObj,filename)</span> 
+allows the above method to be called directly from a OPTI object. You must 
+specify the filename as '.gms' in order to be written to a GAMS file.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Heading2">Important Notes</p>
+<p class="Normal">There are two routines used for writing GAMS files. By default 
+OPTI will use SCIP to write the GAMS file. This allows any problem that SCIP can 
+parse to be written to a GAMS file, meaning the problem must be deterministic 
+and contain only SCIP compatible functions. General nonlinear models cannot be 
+written without SCIP.</p>
+<p class="Normal">If SCIP is not installed, OPTI will write any problem up to 
+MIQCQP complexity using its own built in routine. OPTI will automatically write 
+a GDX (GAMS Data Exchange) file containing the problem matrices and vectors, and 
+a general GAMS model with the required model functions.</p>
+<p class="Normal">Remember currently GAMS enforces default bounds of 0-&gt;100 on 
+integer variables. Both SCIP and OPTI do not attempt to override this. I have 
+been advised in a later version of GAMS this should hopefully be removed.</p>
+<p class="Normal">Finally, OPTI options are not written to GAMS files, thus you 
+will need to manually specify these if required.</p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

@@ -1,0 +1,2079 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../Main/Opti_Normal.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>Expected Solver Formats</title>
+<!-- #EndEditable -->
+<link href="../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+<!-- #BeginEditable "MainTitle" -->
+
+<p class="Heading1">Solver Configuration</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Body" -->
+<p class="Normal">From OPTI v1.80 you can now obtain all the information that was previously stored in this document using the following commands:</p>
+<p class="Heading3">Checking Supported Constraints and Special Requirements</p>
+<p class="Code">&gt;&gt; checkSolver(<span class="String">'solver'</span>);</p>
+<p class="Normal">Where 'solver' is the name of the solver you wish to check, 
+e.g. 'bonmin'.</p>
+<p class="Heading3">Checking Supported Options</p>
+<p class="Code">&gt;&gt; checkSolver(<span class="String">'config'</span>);</p>
+
+<!--<p class="Normal">This section details the setup configuration the user can 
+specify for a particular solver. This enables customized solver runs which may 
+enhance performance or provide run time information. Factors which determine 
+available settings include the level of configuration detail within the MEX 
+Interface as well as options setup within OPTI. If there is a feature missing 
+which you would like incorporated please <a href="../../Main/Contact.html">
+contact me</a>.</p>
+<p class="Heading2">BONMIN</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Implemented for IPOPT (Relaxed Solver)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Implemented for IPOPT (Relaxed Solver)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented (<span class="Code">'iter'</span> only)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Used to supply <span class="Code">bonminset</span> options to 
+		solver</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>A, Aeq, Jacobian, Hessian, Jac + Hess Structure</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Linear Constraints (A, Aeq)</td>
+		<td>Added as Nonlinear Constraints</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Initial Guess (x0)</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Form</td>
+		<td>Symmetric Lower Triangular</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Jacobian Structure</td>
+		<td>Required (Defaults to ones)</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Structure</td>
+		<td>Required (Defaults to tril(ones))</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Ctrl-C Exit</td>
+		<td>Implemented</td>
+	</tr>
+	</table>
+	
+	<p class="Heading2">CBC</p>
+<p class="Normal">CBC is compiled to use CLP for solving all MILP problems. A 
+probing generator is automatically added as well as rounding and local 
+heuristics.</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented </td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Sparse Matrix Support</td>
+		<td>H, A, Aeq</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Linear 
+		Constraints (A, b)</span></td>
+		<td>Bounded problems OK</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Initial Guess 
+		(x0)</span></td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">QP Form</span></td>
+		<td>Symmetric Lower Triangular</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Quadratic 
+		Constraints</span></td>
+		<td>Not Implemented (on to-do list)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Ctrl-C Exit</span></td>
+		<td>Implemented</td>
+	</tr>
+	</table>
+<p class="Heading2">CLP</p>
+<p class="Normal">For LP problems CLP will use the dual simplex algorithm, while 
+for QP problems it will use the primal simplex algorithm. The interior point 
+solver has not been implemented.</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Implemented (Primal Tolerance)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented </td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Sparse Matrix Support</td>
+		<td>H, A, Aeq</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Linear 
+		Constraints (A, b)</span></td>
+		<td>Bounded problems OK</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Initial Guess 
+		(x0)</span></td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">QP Form</span></td>
+		<td>Symmetric Lower Triangular</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Quadratic 
+		Constraints</span></td>
+		<td>Not Implemented (on to-do list)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Ctrl-C Exit</span></td>
+		<td>Implemented</td>
+	</tr>
+	</table>
+<p class="Heading2">CPLEX</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px; height: 25px;">maxtime</td>
+		<td style="height: 25px">Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Implemented (TolFun + TolRLPFun)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Implemented (TolXInteger)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented </td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Used to supply CPLEX parameters to the 
+		solver</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>H, A, Aeq, Q</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Linear Constraints (A, b)</td>
+		<td>Required by Solver</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Initial Guess</span></td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">QP Form</span></td>
+		<td>Symmetric</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Quadratic 
+		Constraints</span></td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Ctrl-C Exit</span></td>
+		<td>Implemented</td>
+	</tr>
+	</table>
+	
+<p class="Heading2">CSDP</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px; height: 25px;">maxtime</td>
+		<td style="height: 25px">Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented </td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Used to supply <span class="Code">csdpset</span> options to 
+		solver</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>sdcone, A</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Initial Guess</span></td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Ctrl-C Exit</span></td>
+		<td>Implemented</td>
+	</tr>
+	</table>
+	
+<p class="Heading2">DSDP</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px; height: 25px;">maxtime</td>
+		<td style="height: 25px">Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented </td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Used to supply <span class="Code">dsdpset</span> options to 
+		solver</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>sdcone, A</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Initial Guess</span></td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Ctrl-C Exit</span></td>
+		<td>Implemented</td>
+	</tr>
+	</table>
+	
+<p class="Heading2">FILTERSD</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Implemented [but won't return the latest point when solving bounded 
+		problems]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Implemented [but won't return the latest point when solving bounded 
+		problems]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Implemented as Reduced Gradient Tolerance</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Implemented </td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>A, Aeq, Jacobian, Jac + Structure [note this solver has two 
+		interfaces, one dense, one sparse, called automatically depending on Jac]</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Linear Constraints (A, Aeq)</td>
+		<td>Added as Nonlinear Constraints</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Initial Guess (x0)</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Form</td>
+		<td>Hessian is not required (uses internal approximation)</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Jacobian Structure</td>
+		<td>Required (Defaults to ones)</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Ctrl-C Exit</td>
+		<td>Implemented [but won't return the latest point when solving bounded 
+		problems]</td>
+	</tr>
+	</table>
+	
+<p class="Heading2">GLPK</p>
+<p class="Normal">For LP problems GLPK uses its simplex algorithm. By default 
+the interior point algorithm is not used, but can be manually enabled within <span class="Code">opti_glpk.m</span>.</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Implemented (LP Only)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented (only <span class="Code">'iter'</span>)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>A, Aeq</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Linear Constraints (A, b)</td>
+		<td>Required by Solver</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Initial Guess (x0)</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Ctrl-C Exit</span></td>
+		<td>Implemented</td>
+	</tr>
+	</table>
+	
+<p class="Heading2">HYBRJ + HYBRD</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Linear Constraints (A, Aeq)</td>
+		<td>Unconstrained Only</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Initial Guess (x0)</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Form</td>
+		<td>Hessian not required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Jacobian Structure</td>
+		<td>Nonlinear constraints not available</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Structure</td>
+		<td>Hessian not required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Ctrl-C Exit</td>
+		<td>Implemented</td>
+	</tr>
+	</table>
+	
+<p class="Heading2">IPOPT</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Implemented (But the third argument is a structure, also containing 
+		x)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Used to supply <span class="Code">ipoptset</span> options to 
+		solver</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>A, Aeq, Jacobian, Hessian, Jac + Hess Structure</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Linear Constraints (A, Aeq)</td>
+		<td>Added as Nonlinear Constraints</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Initial Guess (x0)</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Form</td>
+		<td>Symmetric Lower Triangular</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Jacobian Structure</td>
+		<td>Required (Defaults to ones)</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Structure</td>
+		<td>Required (Defaults to tril(ones))</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Ctrl-C Exit</td>
+		<td>Implemented</td>
+	</tr>
+	</table>
+	
+<p class="Heading2">L-BFGS-B</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Linear Constraints (A, Aeq)</td>
+		<td>Not supported</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Initial Guess (x0)</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Form</td>
+		<td>Hessian not required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Jacobian Structure</td>
+		<td>Nonlinear constraints not available</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Structure</td>
+		<td>Hessian not required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Ctrl-C Exit</td>
+		<td>Implemented</td>
+	</tr>
+	</table>
+	
+<p class="Heading2">LEVMAR</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Implemented (But stop not available)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Linear Constraints (A, Aeq)</td>
+		<td>Bounded Problems OK</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Initial Guess (x0)</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Form</td>
+		<td>Hessian not required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Jacobian Structure</td>
+		<td>Nonlinear constraints not available</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Structure</td>
+		<td>Hessian not required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Ctrl-C Exit</td>
+		<td>Implemented</td>
+	</tr>
+	</table>
+	
+<p class="Heading2">LM_DIF + LM_DER</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Linear Constraints (A, Aeq)</td>
+		<td>Unconstrained Only</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Initial Guess (x0)</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Form</td>
+		<td>Hessian not required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Jacobian Structure</td>
+		<td>Nonlinear constraints not available</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Structure</td>
+		<td>Hessian not required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Ctrl-C Exit</td>
+		<td>Implemented</td>
+	</tr>
+	</table>
+	
+	<p class="Heading2">LP_SOLVE</p>
+<p class="Normal">Curtis-Reid scaling and pre-solve is enabled by default in
+<span class="Code">opti_lpsolve.m</span></p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Not Available (Not in API?)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Implemented (BB Depth Limit - Not # Nodes)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Implemented (Integer Values Only)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Not Available (Not in API?)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>A, Aeq</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Linear Constraints (A, b)</td>
+		<td>Bounded problems OK</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Initial Guess (x0)</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Ctrl-C Exit</td>
+		<td>Not Implemented</td>
+	</tr>
+	</table>
+
+<p class="Heading2">M1QN3</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Implemented (but gradient tolerance, not objective)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Linear Constraints (A, Aeq)</td>
+		<td>Unconstrained problems only</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Initial Guess (x0)</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Form</td>
+		<td>Hessian Not Used</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Jacobian Structure</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Structure</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Ctrl-C Exit</td>
+		<td>Implemented</td>
+	</tr>
+	</table>
+
+<p class="Heading2">MATLAB</p>
+<p class="Normal">For bounded QP problems the trust-region solver is used, while 
+for linearly constrained problems the active-set method is used. For constrained 
+nonlinear problems the interior point algorithm is used, while for unconstrained 
+nonlinear the <span class="Code">fminsearch</span> simplex algorithm is used.</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Implemented (<span class="Code">bintprog</span> only)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Implemented (<span class="Code">bintprog</span> only)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented (But not available in all algorithms)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Used to supply <span class="Code">optimset</span> options to 
+		solver</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>A, Aeq, H, Jacobian, Hessian, Jac + Hess Structures</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Linear Constraints (A, b)</td>
+		<td>Bounded Problems OK</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Initial Guess (x0)</td>
+		<td>Implemented (Required for NLP)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">QP Form</span></td>
+		<td>Any (But may only find local optimum for non positive definite)</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Form</td>
+		<td>Symmetric</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Jacobian Structure</td>
+		<td>Required (Defaults to ones)</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Structure</td>
+		<td>Required (Defaults to ones)</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Ctrl-C Exit</td>
+		<td>Implemented</td>
+	</tr>
+	</table>
+
+<p class="Heading2">MKL TR NLS</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>&nbsp;Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Linear Constraints (A, Aeq)</td>
+		<td>Bounded only</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Initial Guess (x0)</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Form</td>
+		<td>Hessian not required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Jacobian Structure</td>
+		<td>Nonlinear constraints not available</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Structure</td>
+		<td>Hessian not required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Ctrl-C Exit</td>
+		<td>Implemented</td>
+	</tr>
+	</table>
+	
+<p class="Heading2">MUMPS</p>
+<p class="Normal">The current build of MUMPs only supports double precision real 
+matrices, solved using a sequential build. Future versions will include parallel 
+solving.</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>A</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Ctrl-C Exit</td>
+		<td>Not Implemented</td>
+	</tr>
+	</table>
+
+<!--<p class="Heading2">MOSEK</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px; height: 25px;">maxtime</td>
+		<td style="height: 25px">Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Implemented (ptol + dtol)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented </td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Used to supply <span class="Code">mosekset</span> options to 
+		solver</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>H, A, Aeq</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Linear Constraints (A, b)</td>
+		<td>Required by Solver</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Initial Guess</span></td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">QP Form</span></td>
+		<td>Symmetric Lower Triangular</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Quadratic 
+		Constraints</span></td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Ctrl-C Exit</span></td>
+		<td>Implemented</td>
+	</tr>
+	</table>
+
+<p class="Heading2">NL2SOL + NL2SNO</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Implemented (But stop not available)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Linear Constraints (A, Aeq)</td>
+		<td>Bounded problems only</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Initial Guess (x0)</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Form</td>
+		<td>Hessian not required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Jacobian Structure</td>
+		<td>Nonlinear constraints not available</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Structure</td>
+		<td>Hessian not required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Ctrl-C Exit</td>
+		<td>Not Implemented</td>
+	</tr>
+	</table>
+	
+<p class="Heading2">NLOPT</p>
+<p class="Normal">The default algorithm used is LN_AUGLAG with LN_PRAXIS chosen 
+as the sub-optimizer, however these can be easily changed using
+<span class="Code">nloptset</span>.</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Used to supply <span class="Code">nloptset</span> options to 
+		solver</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Linear Constraints (A, Aeq)</td>
+		<td>Added as Nonlinear Constraints</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Initial Guess (x0)</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Form</td>
+		<td>Hessian Not Used</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Jacobian Structure</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Structure</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Ctrl-C Exit</td>
+		<td>Implemented</td>
+	</tr>
+	</table>
+
+<p class="Heading2">NOMAD</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Used to supply <span class="Code">nomadset</span> options to 
+		solver</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Linear Constraints (A)</td>
+		<td>Added as Nonlinear Constraints</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Initial Guess (x0)</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Form</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Jacobian Structure</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Structure</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Ctrl-C Exit</td>
+		<td>Implemented</td>
+	</tr>
+	</table>
+	
+<p class="Heading2">OOQP</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Not Available (Not in API - Member is Protected?)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Not Available (Not in API?)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Not Available (Only mu &amp; resid tol - so not implemented)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>H, A, Aeq</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Linear Constraints (A, b)</td>
+		<td>Bounded problems OK</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Initial Guess (x0)</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">QP Form</span></td>
+		<td>Symmetric Upper Triangular</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Ctrl-C Exit</span></td>
+		<td>Not Implemented (available via status class but would have to 
+		re-implement termination conditions)</td>
+	</tr>
+	</table>
+
+<p class="Heading2">PSwarm</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Implemented - But requires an iteration call before checking maxtime</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Used to supply <span class="Code">pswarmset</span> options to 
+		solver</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Linear Constraints (A, Aeq)</td>
+		<td>Only supports Linear Inequality Constraints</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Initial Guess (x0)</td>
+		<td>Required</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Form</td>
+		<td>Hessian Not Used</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Jacobian Structure</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Hessian Structure</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Ctrl-C Exit</td>
+		<td>Implemented</td>
+	</tr>
+	</table>
+
+<p class="Heading2">QSOPT</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Implemented (Although doesn't seem to work?)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Not Available (Not in API?)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented (only <span class="Code">'iter'</span> and basic output 
+		only)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>A, Aeq</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Linear Constraints (A, b)</td>
+		<td>Required by Solver</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Initial Guess (x0)</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Ctrl-C Exit</td>
+		<td>Not Implemented</td>
+	</tr>
+	</table>
+
+<p class="Heading2">SCIP</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 220px"><strong>General Settings</strong></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxiter</td>
+		<td>Implemented (per each LP Only)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxfeval</td>
+		<td>Not Applicable</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxnodes</td>
+		<td>Implemented (but maximum branch and bound nodes for global search)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">maxtime</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolrfun</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolafun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">tolint</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">iterfun</td>
+		<td>Not Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">display</td>
+		<td>Implemented</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px">solverOpts</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal"><strong>
+		Problem Specific Settings</strong></span></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Supports Sparsity</td>
+		<td>H, A, Aeq, Q</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Linear Constraints (A, b)</td>
+		<td>Not Required</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">QP Form</span></td>
+		<td>Any (solves non-convex problems as well)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Quadratic 
+		Constraints</span></td>
+		<td>Implemented (may also be non-convex)</td>
+	</tr>
+	<tr>
+		<td class="Normal" style="width: 220px">Initial Guess (x0)</td>
+		<td>Not Used</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 220px"><span class="Normal">Ctrl-C Exit</span></td>
+		<td>Implemented</td>
+	</tr>
+	</table>-->
+	
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+
+</body>
+<!-- #EndTemplate -->
+</html>

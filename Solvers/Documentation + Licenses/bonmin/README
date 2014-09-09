@@ -1,0 +1,67 @@
+README file for Bonmin
+
+Bonmin (Basic Open-source Nonlinear Mixed INteger programming) is an
+open-source code for solving general MINLP (Mixed Integer NonLinear
+Programming) problems.
+
+It is distributed on COINOR (www.coin-or.org) under the CPL (Common Public
+License). The CPL is a license approved by the OSI (Open Source
+Initiative), thus Bonmin is OSI Certified Open Source Software.
+
+Bonmin features several algorithms
+ - B-BB is a NLP-based branch-and-bound algorithm,
+ - B-OA is an outer-approximation decomposition algorithm,
+ - B-QG is an implementation of  Quesada and Grossmann's branch-and-cut
+ algorithm,
+ - B-Hyb is a hybrid outer-approximation based branch-and-cut algorithm.
+
+
+Bonmin documentation consists of a users' manual and a refernece
+manual they may be found on-line at the project web-site or can be built
+from the project source distribution. Instructions are provided in the
+INSTALL file.
+
+
+BONMIN MAINTAINER : Pierre Bonami (contact at pbonami@andrew.cmu.edu)
+
+
+BONMIN WEB-PAGE : https://projects.coin-or.org/Bonmin
+
+
+BONMIN MAILING LIST : http://list.coin-or.org/mailman/listinfo/bonmin
+
+
+For obtaining support, reporting bug, requesting feature you should
+write to the mailing-list (or if it does not exists yet to the project
+maintainer).
+
+
+For contributing code you should either contact the project maintainer
+or write to the mailing list. You will find legal requirement here :
+http://www.coin-or.org/contributions.html#contributions.
+
+
+
+This project was initiated in 2004 by IBM and Carnegie Mellon University
+as part of a joint effort to study algorithm for MINLP.
+
+You may find additional informations on at
+http://egon.cheme.cmu.edu/ibm/page.htm.
+In partivular
+ - A publicly available library of test instances of Convex MINLPs,
+ - Research papers on new algorithmic procedures for MINLP.
+
+
+DEPENDENCIES : Bonmin depends on the following external software : -
+COIN-OR software : CoinUtils, Cbc, Cgl, Clp, Ipopt
+- Others : blas, lapck, HSL.
+
+EXTERNAL RESSOURCES : COIN-OR : www.coin-or.org Common Public License :
+http://www.opensource.org/licenses/cpl.php
+
+IBM-CMU Open Source MINLP web page :
+http://egon.cheme.cmu.edu/ibm/page.htm
+
+Bonmin is available on NEOS :
+http://www-neos.mcs.anl.gov/
+

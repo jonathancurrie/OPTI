@@ -1,0 +1,6 @@
+*.sol
+Solvers/Source/Include/
+Utilities/Source/Include/Rmathlib/config.h
+Utilities/Source/Include/
+_vti_cnf/
+_vti_pvt/

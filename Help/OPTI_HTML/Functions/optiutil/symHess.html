@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>symHess</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">symHess</p>
+<p class="Normal">Return a symbolically generated Hessian from a 
+function handle</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">hess = symHess(fun)</p>
+<p class="Syntax">hess = symHess(fun,nvar)</p>
+<p class="Syntax">hess = symHess(fun,nvar,isTril)</p>
+<p class="Syntax">hess = symHess(fun,nvar,isTril,var)</p>
+<p class="Syntax">[hess,pattern] = symHess(fun)</p>
+<p class="Syntax">[hess,pattern,symhess] = symHess(fun)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal"><span class="Code">hess = symHess(fun)</span> 
+converts the 
+function handle <span class="Code">fun</span> into a symbolic expression, 
+differentiates it using the Symbolic Toolbox command <span class="Code">Hessian</span>, 
+then converts it back to a function handle as <span class="Code">hess</span>.</p>
+<p class="Normal"><span class="Code">hess = symHess(fun,nvar)</span> 
+ensures the 
+correct number (<span class="Code">nvar</span>) of variables is used in the 
+resulting Hessian. This is useful if your function does not include 
+all indices of <span class="Code">x</span><span class="Normal">.</span></p>
+<p class="Normal"><span class="Code">hess = symHess(fun,nvar,isTril)</span> 
+specifies if the returned Hessian should be Symmetric Lower Triangular.</p>
+<p class="Normal"><span class="Code">hess = symHess(fun,nvar,isTril,var)</span> 
+allows a variable other than <span class="Code">'x'</span> to be parsed from the 
+expression.</p>
+<p class="Normal"><span class="Code">[hess,pattern] = symHess(fun)</span> 
+returns the Hessian sparsity pattern as a function handle.</p>
+<p class="Normal"><span class="Code">[hess,pattern,symjac] = symHess(fun)</span> 
+also returns the intermediate symbolic expression of the Hessian.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Important Notes</p>
+<p class="Normal">This function uses the Matlab Symbolic Toolbox<sup>&reg;</sup> 
+thus you must have this installed to use this function. This is also a very 
+basic routine thus you may wish to confirm the solution via one of the other 
+differentiation routines provided.</p>
+<p class="Normal">The form of your function handle must be as follows:</p>
+<p class="Normal"><span class="Code">fun = @(x) x(1) + x(2);</span>&nbsp; where 
+the function is only a function of <span class="Code">x</span>, and
+<span class="Code">x</span> is indexed into the expression (no vectorized 
+calls). </p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Example</p>
+<p class="Code">
+&gt;&gt; fun = @(x) 
+3*x(1)^2 + 4*sin(x(2));</p>
+<p class="Code">
+&gt;&gt; hess = symHess(fun)<br />
+<br />
+hess = <br />
+<br />
+@(x)[[6,0];[0,-4*sin(x(2))]]</p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

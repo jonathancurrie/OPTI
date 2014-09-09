@@ -1,0 +1,454 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>optiprob</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">optiprob</p>
+<p class="Normal">Create a structure describing the optimization problem</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">prob = optiprob(&#39;param1&#39;,value1,&#39;param2&#39;,value2,...)</p>
+<p class="Syntax">optiprob</p>
+<p class="Syntax">prob = optiprob</p>
+<p class="Syntax">prob = optiprob(oldprob,&#39;param1&#39;,value1,...)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal"><span class="Copyright">Note from v1.53 this function is no 
+longer required to build an <a href="opti.html">opti</a> object.</span></p>
+<p class="Normal">The function <span class="Code">optiprob</span> creates the 
+problem structure that you pass to <a class="Code" href="opti.html">opti</a> 
+for building an optimization problem.</p>
+<p class="Normal"><span class="Code">prob = optiprob(&#39;param1&#39;,value1,&#39;param2&#39;,value2,...)</span> 
+creates a OPTI problem structure in which the specified parameters (<span class="Code">param</span>) 
+have the specified values (<span class="Code">value</span>).</p>
+<p class="Normal"><span class="Code">optiprob</span> with no input or output 
+arguments displays a complete list of parameters with their valid names.</p>
+<p class="Normal"><span class="Code">prob = optiprob</span> with no input 
+arguments creates a default problem structure</p>
+<p class="Normal"><span class="Code">options = optiprob(oldprob,&#39;param1&#39;,value1,...)</span> 
+updates the existing object structure, <span class="Code">oldprob</span>, with 
+the new values specified.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Fields</p>
+<p class="Normal">The following table lists the available fields for
+<span class="Code">optiprob</span>, noting some field have more than one name 
+associated for ease of use:</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="height: 25px; width: 169px"><strong>Parameter</strong></td>
+		<td style="height: 25px; width: 292px"><strong>Value</strong></td>
+		<td style="height: 25px; width: 511px"><strong>Description</strong></td>
+		<td style="height: 25px"><strong>Default</strong></td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px">Name</td>
+		<td style="width: 292px">string</td>
+		<td style="width: 511px">Optional Problem Name</td>
+		<td>'OPTI Problem'</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px">f / c / grad </td>
+		<td style="width: 292px">1) double column vector or <br />
+		2) function handle</td>
+		<td style="width: 511px">1) LP / QP linear gradient vector<br />
+		2) Nonlinear Objective Function Gradient</td>
+		<td>[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">H / hess</td>
+		<td style="height: 25px; width: 292px">1) double matrix or<br />
+		2) function handle</td>
+		<td style="width: 511px; height: 25px">1) QP Quadratic Hessian Matrix<br />
+		2) Nonlinear Hessian of the Lagrangian</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">Hstr</td>
+		<td style="height: 25px; width: 292px">function handle (sparse)</td>
+		<td style="width: 511px; height: 25px">Nonlinear Hessian Structure</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">fun / obj</td>
+		<td style="height: 25px; width: 292px">function handle</td>
+		<td style="width: 511px; height: 25px">
+		<p>Nonlinear Objective Function</p>
+		</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">sense</td>
+		<td style="height: 25px; width: 292px">double scalar</td>
+		<td style="width: 511px; height: 25px">Optimization Sense (1 
+		Minimization, -1 Maximization)</td>
+		<td style="height: 25px">1</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">objbias</td>
+		<td style="height: 25px; width: 292px">double scalar</td>
+		<td style="width: 511px; height: 25px">Linear or Quadratic Objective 
+		Bias Term</td>
+		<td style="height: 25px">0</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">A</td>
+		<td style="height: 25px; width: 292px">double matrix</td>
+		<td style="width: 511px; height: 25px">Linear Inequality Constraints LHS 
+		(Ax &lt;= b) or <br />
+		System of Linear Equations LHS (A)</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">b</td>
+		<td style="height: 25px; width: 292px">double column vector</td>
+		<td style="width: 511px; height: 25px">Linear Inequality Constraints RHS 
+		or <br />
+		System of Linear Equations RHS (b)</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">Aeq</td>
+		<td style="height: 25px; width: 292px">double matrix</td>
+		<td style="width: 511px; height: 25px">Linear Equality Constraints LHS (Aeqx 
+		= beq)</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">beq</td>
+		<td style="height: 25px; width: 292px">double column vector</td>
+		<td style="width: 511px; height: 25px">Linear Equality Constraints RHS</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">rl</td>
+		<td style="height: 25px; width: 292px">double column vector</td>
+		<td style="width: 511px; height: 25px">Linear Constraint Lowed Bound (rl 
+		&lt;= A*x &lt;= ru)</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">ru</td>
+		<td style="height: 25px; width: 292px">double column vector</td>
+		<td style="width: 511px; height: 25px">Linear Constraint Upper Bound</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">lb</td>
+		<td style="height: 25px; width: 292px">double column vector</td>
+		<td style="width: 511px; height: 25px">Lower Bounds (lb &lt;= x &lt;= ub)</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">ub</td>
+		<td style="height: 25px; width: 292px">double column vector</td>
+		<td style="width: 511px; height: 25px">Upper Bounds</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">Q</td>
+		<td style="height: 25px; width: 292px">1) double matrix or<br />
+		2) column cell array of double matrices</td>
+		<td style="width: 511px; height: 25px">1) Quadratic Constraint Quadratic 
+		LHS (x'Qx + l'x &lt;= r)<br />
+		2) A cell array of (1)</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">l</td>
+		<td style="height: 25px; width: 292px">1) double column vector or<br />
+		2) double matrix</td>
+		<td style="width: 511px; height: 25px">1) Quadratic Constraint Linear 
+		LHS<br />
+		2) A matrix of (1), each column representing a quadratic constraint l</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">qrl</td>
+		<td style="height: 25px; width: 292px">1) double scalar or<br />
+		2) double column vector</td>
+		<td style="width: 511px; height: 25px">1) Quadratic Constraint Lower 
+		Bound<br />
+		2) A vector of (1), each row representing a quadratic constraint qrl</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">qru</td>
+		<td style="height: 25px; width: 292px">1) double scalar or<br />
+		2) double column vector</td>
+		<td style="width: 511px; height: 25px">1) Quadratic Constraint Upper 
+		Bound<br />
+		2) A vector of (1), each row representing a quadratic constraint qru</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">sdcone</td>
+		<td style="height: 25px; width: 292px">1) double matrix<br />
+		2) column cell array of double matrices</td>
+		<td style="width: 511px; height: 25px">1) Semidefinite constraint 
+		(sum(xi*Fi) - F0 &gt;= 0) as [F0(:) F1(:) ... Fn(:)]<br />
+		2) A cell array of (1)</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">sedumi</td>
+		<td style="height: 25px; width: 292px">structure</td>
+		<td style="width: 511px; height: 25px">A structure with fields At, b, c, 
+		and K representing a SeDuMi problem</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">nlcon</td>
+		<td style="height: 25px; width: 292px">function handle</td>
+		<td style="width: 511px; height: 25px">Nonlinear Constraint Function</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">nljac</td>
+		<td style="height: 25px; width: 292px">function handle (sparse)</td>
+		<td style="width: 511px; height: 25px">Nonlinear Constraint Function 
+		Jacobian</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">nljacstr</td>
+		<td style="height: 25px; width: 292px">function handle (sparse)</td>
+		<td style="width: 511px; height: 25px">Nonlinear Constraint Function 
+		Jacobian Structure</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">nlrhs</td>
+		<td style="height: 25px; width: 292px">double column vector</td>
+		<td style="width: 511px; height: 25px">Nonlinear Constraint RHS</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">nle</td>
+		<td style="height: 25px; width: 292px">double column vector</td>
+		<td style="width: 511px; height: 25px">Nonlinear Constraint Type (-1 &lt;=, 
+		0 ==, 1 &gt;=)</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">cl</td>
+		<td style="height: 25px; width: 292px">double column vector</td>
+		<td style="width: 511px; height: 25px">Nonlinear Constraint Lower Bound 
+		(cl &lt;= nlcon(x) &lt;= cu)</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">cu</td>
+		<td style="height: 25px; width: 292px">double column vector</td>
+		<td style="width: 511px; height: 25px">Nonlinear Constraint Upper Bound</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">int / ctype / vtype 
+		/ ivars</td>
+		<td style="height: 25px; width: 292px">1) character row vector<br />
+		2) double column vector</td>
+		<td style="width: 511px; height: 25px">1) Integer Variable String (C 
+		Continuous, I Integer, B Binary)<br />
+		2) Integer Variable Indices (e.g. <span class="Code">[1 3 5]</span> for
+		<span class="String">'ICICI'</span>)</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">sos</td>
+		<td style="height: 25px; width: 292px">structure</td>
+		<td style="width: 511px; height: 25px">SOS constraint structure (.type, 
+		.index, .weight)</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">xdata</td>
+		<td style="height: 25px; width: 292px">double column vector</td>
+		<td style="width: 511px; height: 25px">Data Fitting Problem x data</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">ydata</td>
+		<td style="height: 25px; width: 292px">double column vector</td>
+		<td style="width: 511px; height: 25px">Data Fitting Problem y data</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">x0 / theta0</td>
+		<td style="height: 25px; width: 292px">double column vector</td>
+		<td style="width: 511px; height: 25px">Initial Solution Guess</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">ode</td>
+		<td style="height: 25px; width: 292px">function handle</td>
+		<td style="width: 511px; height: 25px">Dynamic Optimization ODE Function</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 169px; height: 25px">z0 / odez0</td>
+		<td style="height: 25px; width: 292px">double column vector</td>
+		<td style="width: 511px; height: 25px">Dynamic Optimization ODE Initial 
+		State Vector</td>
+		<td style="height: 25px">[]</td>
+	</tr>
+	</table>
+	<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Heading2">Alternative Entry Groups</p>
+<p class="Normal">To make entering groups of fields easier, several extra 
+arguments are recognized by optiprob for entering common groups:</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="height: 25px; width: 165px"><strong>Group</strong></td>
+		<td style="height: 25px; width: 192px"><strong>Parameters</strong></td>
+		<td style="height: 25px; width: 584px"><strong>Description</strong></td>
+		<td style="height: 25px; width: 496px"><strong>Example</strong></td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 165px">ineq</td>
+		<td style="width: 192px" class="Code">A, b</td>
+		<td style="width: 584px">Linear Inequality Constraints, A + b</td>
+		<td style="width: 496px" class="Code">optiprob(<span class="String">'ineq'</span>,A,b)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 165px">eq</td>
+		<td style="width: 192px" class="Code">Aeq, beq</td>
+		<td style="width: 584px">Linear Equality Constraints, Aeq + beq</td>
+		<td style="width: 496px" class="Code">optiprob(<span class="String">'eq'</span>,Aeq,beq)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 165px; height: 25px;">lin</td>
+		<td style="width: 192px; height: 25px;" class="Code">A, rl, ru</td>
+		<td style="width: 584px; height: 25px;">Linear Constraints A + rl + ru</td>
+		<td style="width: 496px; height: 25px;" class="Code">optiprob(<span class="String">'lin'</span>,A,rl,ru)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 165px; height: 25px;">bounds</td>
+		<td style="width: 192px; height: 25px;" class="Code">lb, ub</td>
+		<td style="width: 584px; height: 25px;">Lower and Upper Bounds</td>
+		<td style="width: 496px; height: 25px;" class="Code">optiprob(<span class="String">'bounds'</span>,lb,ub)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 165px; height: 25px;">mix</td>
+		<td style="width: 192px; height: 25px;" class="Code">A, b, e</td>
+		<td style="width: 584px; height: 25px;">Mixed Linear Constraints and 
+		Type, A + b + e where e is (-1 &lt;=, 0 ==, 1 &gt;=)</td>
+		<td style="width: 496px; height: 25px;" class="Code">optiprob(<span class="String">'mix'</span>,A,b,e)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 165px; height: 25px;"><a name="ndec">ndec</a></td>
+		<td style="width: 192px; height: 25px;" class="Code">x0 = NaN(ndec,1)</td>
+		<td style="width: 584px; height: 25px;">Sets the number of decision 
+		variables in a nonlinear problem</td>
+		<td style="width: 496px; height: 25px;" class="Code">optiprob(<span class="String">'ndec'</span>,2)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 165px; height: 25px;">nlmix</td>
+		<td style="width: 192px; height: 25px;" class="Code">nlcon, nlrhs, nle</td>
+		<td style="width: 584px; height: 25px;">Mixed Nonlinear Constraints and 
+		Type, nlcon + nlrhs + nle</td>
+		<td style="width: 496px; height: 25px;" class="Code">optiprob(<span class="String">'nlmix'</span>,nlcon,nlrhs,nle)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 165px; height: 25px;">nl</td>
+		<td style="width: 192px; height: 25px;" class="Code">nlcon, cl, cu</td>
+		<td style="width: 584px; height: 25px;">Nonlinear Constraints nlcon + cl 
+		+ cu</td>
+		<td style="width: 496px; height: 25px;" class="Code">optiprob(<span class="String">'nl'</span>,nlcon,cl,cu)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 165px">sle</td>
+		<td style="width: 192px" class="Code">A, b</td>
+		<td style="width: 584px">System of Linear Equations, A + b</td>
+		<td style="width: 496px" class="Code">optiprob(<span class="String">&#39;sle&#39;</span>,A,b)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 165px">qp</td>
+		<td style="width: 192px" class="Code"><span class="Code">H, f</span></td>
+		<td style="width: 584px">Quadratic Objective Function, H + f</td>
+		<td style="width: 496px" class="Code">optiprob(<span class="String">'qp'</span>,H,f)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 165px">qc</td>
+		<td style="width: 192px" class="Code">Q, l, qru</td>
+		<td style="width: 584px">Quadratic Inequality Constraints, Q + l + qru</td>
+		<td style="width: 496px" class="Code">optiprob(<span class="String">'qc'</span>,Q,l,qru)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 165px">qcrow</td>
+		<td style="width: 192px" class="Code">Q, l, qrl, qru</td>
+		<td style="width: 584px">Quadratic Inequality Constraints, Q + l + qrl + 
+		qru</td>
+		<td style="width: 496px" class="Code">optiprob(<span class="String">'qcrow'</span>,Q,l,qrl,qru)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 165px">sos</td>
+		<td style="width: 192px" class="Code">sostype, sosind, soswt</td>
+		<td style="width: 584px">Special Ordered Set (SOS) type + indices + 
+		weights</td>
+		<td style="width: 496px" class="Code">optiprob(<span class="String">'sos'</span>,type,index,weight)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 165px">data</td>
+		<td style="width: 192px" class="Code">xdata, ydata</td>
+		<td style="width: 584px">Data Fitting Problem data</td>
+		<td style="width: 496px" class="Code">optiprob(<span class="String">'data'</span>,xdata,ydata)</td>
+	</tr>
+</table>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Examples</p>
+<p class="Heading3">Creating a LP</p>
+<p class="Code">
+<span class="Comment">% LP Objective &amp; Constraints</span><br />
+f = -[6 5]';<br />
+A = ([1,4; 6,4; 2, -5]); <br />
+b = [16;28;6];</p>
+<p class="Code">
+<span class="Comment">% Build Problem</span><br />
+prob = optiprob(<span class="String">'grad'</span>,f,<span class="String">'ineq'</span>,A,b,<span class="String">'bounds'</span>,[0;0],[10;10]);</p>
+<p class="Heading3">Creating a MILP</p>
+<p class="Code">
+<span class="Comment">% MILP Objective &amp; Constraints</span><br />
+f = -[6 5]';<br />
+A = ([1,4; 6,4; 2, -5]); <br />
+b = [16;28;6];</p>
+<p class="Code">
+<span class="Comment">% Build Problem</span><br />
+prob = optiprob(<span class="String">'grad'</span>,f,<span class="String">'ineq'</span>,A,b,<span class="String">'bounds'</span>,[0;0],[10;10],<span class="String">'int'</span>,<span class="String">'II'</span>);</p>
+<p class="Heading3">Creating a NLP</p>
+<p class="Code">
+<span class="Comment">% NLP Objective</span><br />
+obj&nbsp;&nbsp; = @(x) (x(1) - x(2))^2 + (x(2) + x(3) - 2)^2 + (x(4) - 1)^2 + (x(5) - 1)^2;</p>
+<p class="Code">
+<span class="Comment">% NLP Constraints</span><br />
+nlcon = @(x) [ x(1) + 3*x(2);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+x(3) + x(4) - 2*x(5);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+x(2) - x(5) ];<br />
+nlrhs = [4 0 0]';<br />
+nle&nbsp;&nbsp; = [0 0 0]';</p>
+<p class="Code">
+<span class="Comment">% Build Problem</span><br />
+prob = optiprob(<span class="String">'obj'</span>,obj,<span class="String">'nlmix'</span>,nlcon,nlrhs,nle,<span class="String">'ndec'</span>,5);</p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

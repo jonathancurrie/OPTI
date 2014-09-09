@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>amplRead</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">amplRead</p>
+<p class="Normal">Read an AMPL (.nl or .mod) file into Matlab</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">prob = amplRead(filename)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal">Read an AMPL .nl or .mod file into Matlab. If the file is a 
+.mod, the AMPL executable is used to convert it to a .nl, before reading it into 
+Matlab. If the AMPL executable cannot be found on the MATLAB path, you will need 
+to enter its path as the third argument (see below). LP, MILP, QP, MIQP, QCQP, 
+MIQCQP, UNO, 
+NLP, and MINLP problems will be automatically identified and the corresponding 
+structure created. Other problem and constraint types are not currently supported, including 
+complementarity constraints, network problems or linear arcs. For information on 
+converting your AMPL model to a .NL file see the AMPL user's guide
+<a href="../../UsersGuide/AMPL.html">section</a>.</p>
+<p class="Normal"><span class="Code">prob = amplRead(filename)</span> reads the 
+file specified by <span class="Code">filename</span> and creates an
+<a href="../opti/optiprob.html">optiprob</a> problem. If you supply only a 
+filename the file must be on Matlab&#39;s path in order for this function to 
+find it. Otherwise if you supply a full path + filename, it may reside anywhere 
+on your PC. If you omit .nl it will be automatically added to the filename.</p>
+<p class="Normal"><span class="Code">prob = amplRead(filename,extraArgs)</span> 
+allows you to pass extra arguments to AMPL when converting your model file from 
+.mod to .nl, such as options or data. Pass multiple arguments as a cell array. 
+Files not on the Matlab path must be passed as a full path.</p>
+<p class="Normal"><span class="Code">prob = amplRead(filename,extraArgs,amplPath)</span> 
+allows you to specify the full path to the AMPL executable on your system.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Important Notes</p>
+<p class="Normal">Routines for reading NL problems use
+the
+<a href="../../UsersGuide/utilities.html#AMPL_Solver_Library">AMPL 
+Solver Library</a>.</p>
+<p class="Normal">In order to convert .mod models into .nl, the AMPL executable 
+(ampl.exe) is required. You can obtain a free, size limited student version 
+online <a href="http://www.ampl.com/DOWNLOADS/index.html">here</a>, or purchase 
+the full version of AMPL from <a href="http://www.ampl.com/">here</a>.</p>
+
+
+<p class="Normal">If the model opened is a nonlinear model, the file will remain 
+open in the MEX function <span class="Code">asl</span>. Call <span class="Code">
+asl(</span><span class="String">'close'</span><span class="Code">)</span> in 
+order to free the file, or this will be performed automatically when you close 
+Matlab.</p>
+<p class="Normal">If the routine fails I would be interested to fix the problem, 
+and if you are willing to send me the .nl or .mod file I can take a look for you! </p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Examples</p>
+<p class="Normal">A number of small examples are supplied with the 
+toolbox in the folder OPTI/Test Problems/ which can be used 
+for testing.</p>
+<p class="Heading3">Reading an NL file</p>
+<p class="Code">&gt;&gt; prob = 
+amplRead(<span class="String">&#39;ch3.nl&#39;</span>)</p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

@@ -1,0 +1,123 @@
+﻿
+.MainHeading {
+	font-size: xx-large;
+	font-weight: bold;
+	margin-bottom: 3px;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	color: #333333;
+}
+.TopHeading {
+	font-weight: bold;
+	background-color: #E7EBF7;
+	vertical-align: baseline;
+}
+.Heading1 {
+	font-size: x-large;
+	font-weight: bold;
+	color: #000066;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.CodeHeading1 {
+	font-family: "Courier New";
+	font-size: xx-large;
+	font-weight: bolder;
+	color: #550066;
+}
+.Heading2 {
+	font-size: large;
+	font-weight: bold;
+	color: #000066;
+	padding-top: 5px;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.CodeHeading2 {
+	font-family: "Courier New";
+	font-size: large;
+	color: #550066;
+	font-weight: bold;
+}
+.Heading3 {
+	color: #000066;
+	padding-top: 10px;
+	padding-bottom: 3px;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.Normal {
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.NormalIndent {
+	margin-left: 20px;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.Copyright {
+	font-size: small;
+	padding-top: 0px;
+}
+.Code {
+	font-family: "Courier New", Courier, monospace;
+}
+.CodeIndent {
+	font-family: "Courier New", Courier, monospace;
+	margin-left: 40px;
+}
+.Syntax {
+	margin-left: 20px;
+	font-family: "Courier New", Courier, monospace;
+}
+.Comment {
+	font-family: "Courier New", Courier, monospace;
+	color: #008000;
+}
+.Function {
+	color: #0000FF;
+	font-family: "Courier New", Courier, monospace;
+}
+.String {
+	font-family: "Courier New", Courier, monospace;
+	color: #800080;
+}
+.Caption {
+	font-size: small;
+	margin-bottom: 10px;
+}
+.MainPageFnc {
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 14px;
+	color: #000066;
+	font-weight: bold;
+}
+.BlockParam {
+	font-weight: bold;
+}
+.CopyrightBreak {
+	background-color: #ECF3FF;
+	font-size: small;
+	margin-bottom: -10px;
+	margin-top: 10px;
+}
+.BulletsTight {
+	padding-bottom: -5px;
+	margin-bottom: -5px;
+	line-height: 14px;
+}
+.Heading3Copy {
+	color: #990000;
+	padding-top: 10px;
+	padding-bottom: 3px;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.NormaCentre {
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	text-align: center;
+}
+.TableBreakLine{
+	width:100%;
+	padding:0px;
+	margin:0px;
+	border-collapse:collapse;
+}
+.TableBreakLine tr{
+	height:5px;
+	background-color:indigo; 
+	vertical-align:top;
+}

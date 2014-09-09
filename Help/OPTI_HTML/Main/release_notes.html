@@ -1,0 +1,527 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "Opti_Normal.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>Release Notes</title>
+<!-- #EndEditable -->
+<link href="Opti_Styles.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+<!-- #BeginEditable "MainTitle" -->
+
+<p class="Heading1">Release Notes</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Body" -->
+<p class="Heading3">
+v2.10 (20/07/14)</p>
+<p class="Normal">
+- Reorganised OPTI folder structure to reduce number of folders<br />
+- Removed support for lipsol and qsopt<br />
+- Removed demos, re-written as examples<br />
+- Rebuilt all solvers against MKL v11.1 R3<br />
+- Added support for intlinprog (2014a) (including opti_ overload)<br />
+- Added ability to calculate fit statistics for NLS/DNLS problems<br />
+- Added fitting function 'optifit'<br />
+- Added experimental symbolic derivative &amp; solving function 'optisym'<br />
+- Added automatic plotting of prediction confidence bounds<br />
+- Added RMathlib with a library of statistical functions<br />
+- Added code generation (including automatic derivatives via CppAD) from 
+SymBuilder models<br />
+- Enabled MOSEK install test<br />
+- Fixed options bug in opti_nomad with Inf bounds (M. Porcelli)<br />
+- Fixed bug in nlopt displaying suboptimizer when not used<br />
+- Fixed bug in SymBuilder with 0.5 in quadratic programs<br />
+- Fixed bug in Cbc incorrectly missing infeasibility in some models<br />
+- Fixed bug in derivative checker with Hessian with no NL constraints<br />
+- Updated IPOPT to v3.11.8<br />
+- Updated NLOPT to v2.4.2<br />
+- Data fitting weights are now treated as sqrt(weights) internally</p>
+<p class="Heading3">
+v2.05 (29/12/13)</p>
+<p class="Normal">
+- Rebuilt all solvers against MKL v11.1 R1<br />
+- Added support for BARON (Global MINLP solver)<br />
+- (Re)Added support for MOSEK ((MI)LP/QP/QCQP solver)<br />
+- Added ability to solve SNLE/SCNLE problems as NLP without dummy objective<br />
+- Added ability to plot SLE/SNLE/SCNLE problems<br />
+- Added ability to supply weights for NLS and DNLS problems<br />
+- Added ability to change fmincon algorithm via optimset options<br />
+- Added plotting of the initial guess to plot(optiObj)<br />
+- Added build date to MEX files<br />
+- Added ability to specify 'solver' option in opti arg list<br />
+- Added ability to read mathematical files directly into opti constructor<br />
+- Added cstepJac, cstepHess and cstepHessLag for complex step first and second derivatives<br />
+- Added mkltrnlsset for setting MKLTRNLS options<br />
+- Updated Clp to v1.15.6 (removed QP support due to heap corruption)<br />
+- Updated Cbc to v2.8.8<br />
+- Updated Bonmin to v1.7.4<br />
+- Updated SCIP to v3.0.2<br />
+- Updated IPOPT to v3.11.7, added PARDISO as a linear solver option<br />
+- Updated NOMAD to v3.6.2<br />
+- Updated L-BFGS-B interface, added lbfgsbset<br />
+- Updated CBC interface, added presolver + cbcset, changed return codes + arg 
+order<br />
+- Updated support for SeDuMi v1.32 and higher<br />
+- Smaller fonts on higher dimensional plots<br />
+- Fixed slow code for checking integer variable arrays<br />
+- Fixed bug in Clp when suppling H with no nonzero terms (J.Lofberg)<br />
+- Fixed bug when writing MPS files with SOS<br />
+- Fixed bug in HYBRJ, LMDER and LEVMAR with large problems<br />
+- Fixed bug in symJac, symHess, symHessLag with scalar problems<br />
+- Fixed bug in mklJac when supplied sparse data (now returns error)</p>
+<p class="Heading3">
+v2.00 (20/06/13)</p>
+<p class="Normal">
+- Rebuilt all solvers against R2013a and VC++ 2012<br />
+- Updated pre-requisite checking for VC++ 2012 and Intel C++ XE 2013<br />
+- Updated SeDuMi interface to support v1.31 and above only<br />
+- Updated amplRead to return quadratic row constraints<br />
+- Updated NOMAD to accept problems up to 5000 variables<br />
+- Updated 'set' routines to create common code checks<br />
+- Updated OOQP MEX interface, added MA57 as a linear solver option (also now tril H and no A' as well as Ctrl C, maxtime and maxiter options)
+<br />
+- Updated symJac, added symHess, symHessLag, also returns sparsity pattern + 
+more robust and added symDynJac for DNLS problems<br />
+- Updated BONMIN to v1.7.0<br />
+- Updated Clp to v1.15.1 (+ changes to argument order + added presolver + clpset + Aboca)<br />
+- Updated CBC to v2.8.2<br />
+- Updated CoinUtils to v2.9.1<br />
+- Updated GLPK to v4.48<br />
+- Updated NOMAD to v3.6.1 (+ changes to nomadset)<br />
+- Updated IPOPT to v3.11.1<br />
+- Updated CppAD in SCIP to v20130422<br />
+- Updated ASL to v20130419<br />
+- Added LIPSOL (LP solver) <br />
+- Added basic dynamic parameter estimation solving (+ optidynset)<br />
+- Added basic multi-start solver (multisolve)<br />
+- Added automatic derivative checker (optiset option 'derivCheck')<br />
+- Added most remaining IPOPT options to ipoptset<br />
+- Added ability to write GAMS files from OPTI (inc NL via SCIP)<br />
+- Added automatic VS project builder code to most solvers<br />
+- Added objbias term for linear and quadratic problems (inc File IO)<br />
+- Added x0 as an input argument to opti_linprog and opti_quadprog<br />
+- Added lambda as an output argument from opti_linprog and opti_quadprog<br />
+- Added complex MUMPS build<br />
+- Added ability for IPOPT, NOMAD, NLOPT to solve SNLE, NLS<br />
+- Added ability to plot bounded or x0 supplied unsolved problems<br />
+- Added ability to plot 1D to 5D problems<br />
+- Fixed bug in NOMAD with &gt;= nonlinear constraints<br />
+- Fixed bug in IPOPT when not supplying opts.ipopt<br />
+- Fixed bug in BONMIN when not supplying any constraints<br />
+- Fixed bug in BONMIN when supplying doubled sided row constraints<br />
+- Fixed bug in sdpWrite with row constraints<br />
+- Fixed bug in SCIP with quadratic constraints (incorrect l index)<br />
+- Fixed bug in optiprob with ndec that overwrites x0<br />
+- Removed support for CPLEX v12.5.0.0 with R2013a x64 (strange crashes)</p>
+<p class="Heading3">
+v1.81 (02/04/13)</p>
+<p class="Normal">
+- Added ability to specify quadratic constraints in row form<br />
+- Added support for plotting quadratic equalities<br />
+- Changed how SOS are stored internally<br />
+- Changed xtype specification for CBC<br />
+- Changed SOS specification for CBC, LP_SOLVE and SCIP and coinW<br />
+- Rebuilt CSDP with aligned memory allocation<br />
+- Rebuilt solvers and utilities against MKL 11.0 R3<br />
+- Fixed bug in filterSD glcpd.f<br />
+- Fixed bug in filterSD [sparse] with workspace memory allocation<br />
+- Fixed bug in filterSD [sparse] with bounded problems<br />
+- Fixed bug in structure generation for linear constraints with nonlinear 
+solvers<br />
+- Fixed bug in MIQCQPs with CPLEX</p>
+<p class="Heading3">
+v1.80 (26/03/13)</p>
+<p class="Normal">
+- Added Semidefinite Programming Constraints (sdcone, sedumi)<br />
+- Added Semidefinite cone plotting<br />
+- Added DSDP (SDP solver)<br />
+- Added CSDP (SDP solver, parallelized with OpenMP)<br />
+- Added interface to SeDuMi<br />
+- Added ability to read SeDuMi arguments into opti()<br />
+- Added sdpRead() to read SDPA &amp; SeDuMi problems into opti()<br />
+- Added sdpWrite() to write OPTI problems to SDPA &amp; SeDuMi files<br />
+- Added some of the SDPLIB problems to opti test problems<br />
+- Changed warning levels to 'all', 'critical' (default) or 'none'<br />
+- Changed checkSolver to also provide solver configuration details<br />
+- Changed IPOPT &amp; BONMIN to accept linear constraints directly</p>
+<p class="Heading3">
+v1.79 (05/03/13)</p>
+<p class="Normal">
+- Substantial updates to ASL mex interface, now reads QCQPs natively<br />
+- Updated amplRead to allow linear constraints to be identified for NLPs<br />
+- AMPL constraint linearity now available via field 'conlin' returned from 
+amplRead<br />
+- Changed solve(opti) to automatically write AMPL .sol files once an AMPL 
+problem is solved<br />
+- Changed CPLEX OPTI interface to use CPLEX class object<br />
+- Rewrote and tidied up NLOPT MEX interface<br />
+- Added #FuncEvals returned from NLOPT<br />
+- Fixed bug in buildOpti QCQP checking of l<br />
+- Fixed bug in asl when requesting Hessian structure multiple times<br />
+- Fixed bug when plotting semidefinite / indefinite QCs<br />
+- Fixed bug in SCIP QCQPs<br />
+- Fixed bug in NLOPT Jacobian callback</p>
+<p class="Heading3">
+v1.78 (17/02/13)</p>
+<p class="Normal">
+- Updated SCIP to correct for SOC bug (also updated CppAD to 20130205)<br />
+- Updated SCIP to allow reading and solving of AMPL .nl models.</p>
+<p class="Heading3">
+v1.77 (04/02/13)</p>
+<p class="Normal">
+- Changed error checking to enforce double precision numerical arguments only<br />
+- Fixed IPOPT iteration callback to return complete x vector<br />
+- Rebuilt solvers and utilities against R2012b and MKL 11.0 R2<br />
+- Added To-Do list for possible contributors to OPTI (see Help folder)</p>
+<p class="Heading3">
+v1.76 (26/01/13)</p>
+<p class="Normal">
+- Added filterSD (NLP solver)<br />
+- Updated amplRead to interface to ampl.exe directly<br />
+- Updated SCIP to v3.0.1 and SoPlex to v1.7.1<br />
+- Minor documentation updates<br />
+- Minor bug fixes</p>
+<p class="Heading3">
+v1.75 (20/01/13)</p>
+<p class="Normal">
+- Updated SCIP interface to solve Global NLPs and MINLPs (beta)<br />
+- Updated BONMIN interface to allow use of CPLEX as an MILP solver<br />
+- Changed error checking to enforce dense problem vectors<br />
+- Updates to checkSol()<br />
+- Changes to allow IPOPT and BONMIN to solve (MI)QCQPs via solver choice<br />
+- Added extra return argument structure to IPOPT iteration callback<br />
+- Minor updates to interfaces for LBFSGB, MKLTRNLS, HYBRJ and NL2SOL solvers<br />
+- Updates to ipoptset and bonminset</p>
+<p class="Heading3">
+v1.72 (24/12/12)</p>
+<p class="Normal">
+- Changed IPOPT return function evaluation names to match ipopt.m description<br />
+- Minor documentation updates</p>
+<p class="Heading3">
+v1.71 (13/11/12)</p>
+<p class="Normal">
+- Added ability for IPOPT (and BONMIN &amp; SCIP) to use Matlab's supplied MA57 
+linear solver<br />
+- Rebuilt solvers and utilities against Intel MKL 11.0 R1<br />
+- Fixed bug in opti_fsolve for scalar problems</p>
+<p class="Heading3">
+v1.70 (14/09/12)</p>
+<p class="Normal">
+- Added SCIP v3.0.0<br />
+- Added M1QN3 v3.3<br />
+- Fixed memory leak in OOQP interface<br />
+- Fixed matrix ordering problem in coinRead<br />
+- Rebuilt solvers and utilities against Intel MKL 11.0 R0<br />
+- Updated CLP to v1.14.7<br />
+- Updated CoinUtils to v2.8.7<br />
+- Updated LEVMAR to v2.6<br />
+- Updated NLOPT to v2.3<br />
+- Updated NL2SOL to v2.3, now handles bounds<br />
+- Updated BONMIN to latest stable build<br />
+- Migrated solver documentation to Wiki<br />
+- Updates to installer</p>
+<p class="Heading3">
+v1.64 (26/08/12)</p>
+<p class="Normal">
+- Fixed documentation bug with sense (1 is min, -1 is max)<br />
+- Updated ASL interface to v20120624<br />
+- Fixed ASL interface bug with undefined operations</p>
+<p class="Heading3">
+v1.63 (07/08/12)</p>
+<p class="Normal">
+- Fixed infeasible problem status bugs in nomad &amp; ooqp<br />
+- Removed support for MOSEK</p>
+<p class="Heading3">
+v1.62 (11/07/12)</p>
+<p class="Normal">
+- Rebuilt solvers and utilities against Intel MKL 10.3 R11<br />
+- Updated solvers to return #FuncEvals where possible<br />
+- Changed info field 'StatusString' to 'Status'<br />
+- Updates to SymBuilder</p>
+<p class="Heading3">
+v1.60 (18/06/12)</p>
+<p class="Normal">
+- Updated error catching on MATLAB callbacks<br />
+- Updated BONMIN to v1.6.0<br />
+- Updated CBC to v2.7.7<br />
+- Fixed bug in autoJac with atan<br />
+- Added couple of small utilities (SymBuilder + Visual Studio Builder)</p>
+<p class="Heading3">
+v1.58 (20/05/12)</p>
+<p class="Normal">
+- Tidied up Hessian specification (few bugs here)<br />
+- Updated fmincon interface to use Hessian<br />
+- Updated amplRead to add Hessian information by default<br />
+- Updated demos to reflect Hessian changes<br />
+- Rebuilt all MEX files against R2012a<br />
+- Removed Hmul from problem description</p>
+<p class="Heading3">
+v1.57 (14/05/12)</p>
+<p class="Normal">
+- Fixed memory bug in amplRead QP reader</p>
+<p class="Heading3">
+v1.56 (11/05/12)</p>
+<p class="Normal">
+- Added optiset option iterfun for iteration callbacks<br />
+- Updated all NLP and NLS solvers to utilize iteration callbacks<br />
+- Removed solverset functions including solver name</p>
+<p class="Heading3">
+v1.55 (04/05/12)</p>
+<p class="Normal">
+- Added optiset option maxfeval<br />
+- Added functionality to solve MIQP / QCQP / MIQCQP as NLP / MINLP<br />
+- Changed opti constructor to now allow problem parameters directly (remains 
+backwards compatible)<br />
+- Changed optiset option tolfun to tolrfun and tolafun<br />
+- Changed solverset functions to include solver name for option checking<br />
+- Changed optiprob display format + added probtype to override OPTI ptype 
+decision<br />
+- Updated all examples and documentation to the new opti constructor format<br />
+- Updated nlopt interface to include display + ctrl c exit<br />
+- Updated all compatible solvers with new maxfeval and tol options<br />
+- Updated checkSolver to include a 'config' option for checking options<br />
+- Updated many nonlinear solver opti_* interfaces for easier user access<br />
+- Updated NLS plotting routine<br />
+- Updated warning message to avoid stacktrace<br />
+- Removed OPTI mfile solvers (not competitive)<br />
+- Removed convert() method</p>
+<p class="Heading3">
+v1.50 (26/04/12)</p>
+<p class="Normal">
+- Added NOMAD Global NLP solver<br />
+- Added ability to specify linear constraints in row form (rl &lt;= Ax &lt;= ru)<br />
+- Added ability to specify nonlinear constraints in row form (cl &lt;= c(x) &lt;= cu)<br />
+- Updated clp, cbc, ooqp and ipopt to use row linear constraints<br />
+- Updated coinRead, coinWrite, amplRead to use row linear constraints<br />
+- Updated ipopt to use row nonlinear constraints<br />
+- Updated amplRead to use row nonlinear constraints<br />
+- Updated most constrained solvers to return lambda (Lagrange multipliers at 
+solution)<br />
+- Updated pswarm to enable vectorized function calls<br />
+- Added interface to MATLAB Global Optimization Toolbox<br />
+- Fixed constraint gradient bug in MATLAB fmincon interface<br />
+- Changed checkSolver to require 'nls' instead of 'all_nls'<br />
+- Updates to uninstaller<br />
+- Small bug fixes</p>
+<p class="Heading3">
+v1.34 (14/03/12)</p>
+<p class="Normal">
+- Changed install test to check relative error<br />
+- Updated checkSolver to display solver version and constraint information</p>
+<p class="Heading3">
+v1.33 (13/03/12)</p>
+<p class="Normal">
+- Added PSwarm global optimization solver<br />
+- Added interface to MOSEK<br />
+- Added intefaced solver installation guide<br />
+- Fixed bug with row LHS linear equality constraints</p>
+<p class="Heading3">
+v1.31 (02/03/12)</p>
+<p class="Normal">
+- Added Intel MKL Trust Region Bounded NLS Solver</p>
+<p class="Heading3">
+v1.30 (01/03/12)</p>
+<p class="Normal">
+- Updated BONMIN to v1.5.2<br />
+- Updated IPOPT to v3.10.2<br />
+- Updated GLPK to v4.47<br />
+- Updated CBC to v2.7.6<br />
+- Updated CLP to v1.14.6<br />
+- Updated CoinUtils to v2.8.6<br />
+- Fixed bug with MINLP problems with no bounds<br />
+- Fixed bug with GMPL reader<br />
+- Added objective and gradient pre-checks to IPOPT interface</p>
+<p class="Heading3">
+v1.28 (22/02/12)</p>
+<p class="Normal">
+- Fixed bug with checkSolver locating .m instead of .mex</p>
+<p class="Heading3">
+v1.27 (03/02/12)</p>
+<p class="Normal">
+- Fixed bug with HELP location</p>
+<p class="Heading3">
+v1.26 (18/12/11)</p>
+<p class="Normal">
+- Fixed bug with SOS constraints in CBC + LPSOLVE wrappers</p>
+<p class="Heading3">
+v1.25 (15/12/11)</p>
+<p class="Normal">
+- Minor updates to MINPACK + NL2SOL solvers<br />
+- Added Matlab Overloads demo<br />
+- Added Basic Functionality demo</p>
+<p class="Heading3">
+v1.24 (12/12/11)</p>
+<p class="Normal">
+- Setup NL2SOL + LM_DER to solve SNLE problems<br />
+- Added OS check<br />
+- Added VC++ 2010 pre-req check</p>
+<p class="Heading3">
+v1.23 (09/12/11)</p>
+<p class="Normal">
+- Added SNLE problems<br />
+- Added HYBRJ<br />
+- Added Special Ordered Sets (SOS)<br />
+- Added SOS handling to CPLEX, CBC &amp; LP_SOLVE interfaces<br />
+- Added opti_mintprog<br />
+- Upgraded File IO (MPS) to read / write SOS<br />
+- Upgraded CLP to v1.14.5<br />
+- Upgraded CBC to v2.7.5<br />
+- Upgraded CoinUtils to v2.8.5 (File IO)</p>
+<p class="Heading3">
+v1.20 (11/11/11)</p>
+<p class="Normal">
+- Added Matlab Optimization Toolbox Overloads<br />
+- Added m-file help documentation to MEX functions<br />
+- MEX files rebuilt in 2011b</p>
+<p class="Heading3">
+v1.15b (19/10/11)</p>
+<p class="Normal">
+- OPTI Toolbox released under the BSD 3 Clause License</p>
+<p class="Heading3">
+v1.15 (15/10/11)</p>
+<p class="Normal">
+- Added NL2SOL<br />
+- Added amplRead<br />
+- Added AMPL documentation<br />
+- Updated display<br />
+- Fixed opti_miqp fval bug</p>
+<p class="Heading3">
+v1.13 (05/10/11)</p>
+<p class="Normal">
+- Added MINPACK LM_DER</p>
+<p class="Heading3">
+v1.12 (03/10/11)</p>
+<p class="Normal">
+- Added NLS problems<br />
+- Added LEVMAR<br />
+- Updated display</p>
+<p class="Heading3">
+v1.10 (12/09/11)</p>
+<p class="Normal">
+- Fixed bug in opti_minlp with split integer variables<br />
+- Added BONMIN<br />
+- Added OOQP built against Intel MKL PARDISO<br />
+- Added L-BFGS-B</p>
+<p class="Heading3">
+v1.05 (31/08/11)</p>
+<p class="Normal">
+- Added adiff for automatic differentiation, re -organised diff folder<br />
+- Added differentiation demo<br />
+- Fixed bug in uninstaller removing control toolbox options path (oops)</p>
+<p class="Heading3">
+v1.00 (25/08/11)</p>
+<p class="Normal">
+- Added hatching to quadratic and nonlinear constraints<br />
+- Fixed display iterations requiring Matlab drawnow<br />
+- Added Ctrl-C detection to compatible solvers<br />
+- Added CBC<br />
+- Added Post Install Test<br />
+- Fixed qsoptmex bug editing Matlab bounds<br />
+- Separated qsopt to separate distribution due to academic license</p>
+<p class="Heading3">
+v0.95 (20/08/11)</p>
+<p class="Normal">
+- Identified bug in R2010a/b with opti_mumps fortran error. Tried rebuilding 
+from R2010a still crashes, tried rebuilding using Ifort 2011 release 5, still 
+crashes, not sure here...<br />
+- Added MKL djacobi for nonlinear gradient and Jacobian estimation<br />
+- Completely overhauled options setup, now more flexible for all solvers, and 
+more powerful for NLP solvers.<br />
+- Added convert to convert between NLP problem formats<br />
+- Added coinRead to read MPS, QPS, GMPL, GAMS and LP problem formats using 
+CoinUtils + GLPK.<br />
+- Added coinWrite to write MPS, QPS and LP problem formats using CoinUtils.<br />
+- Formalized SLE problems<br />
+- Added MIQCQP problems<br />
+- Templated SNLE + SCNLE problems<br />
+- Added NL plotting<br />
+- Added UNO problems<br />
+- Updated HTML documentation<br />
+- Overhauled plotting of problems, now a common file controls overlays<br />
+- Fixed bug(s) in linear constraint drawing<br />
+- Changed all examples to demos, added to documentation<br />
+- Added linear -&gt; nonlinear constraint conversion for NLPs<br />
+- Added automatic infeasible x0 moving for bounded NLPs with NLOPT<br />
+- Finally finished opti_minlp!</p>
+<p class="Heading3">
+v0.9 (05/08/11)</p>
+<p class="Normal">
+- Another pre-release<br />
+- Updates and bug fixes to opti_readMPS<br />
+- Added MIQP problems + OPTI MIQP solver<br />
+- Added plotting of MIQP problems<br />
+- Updated clpmex.cpp to handle sparse A + quadratic objective<br />
+- Added QSOPT<br />
+- Added html documentation (under development)<br />
+- Re-organised utilities folder structure<br />
+- Updated CLP to v1.14.0 + build info<br />
+- Updated IPOPT to v3.10.0 + build info</p>
+<p class="Heading3">
+v0.85 (27/07/11)</p>
+<p class="Normal">
+- Another pre-release<br />
+- Added nlp_HS to auto generate HS NLP problems<br />
+- Added test_Solver for individual solver benchmarking<br />
+- Added getSymJac for symbolic generation of Jacobian<br />
+- Added LP, QP, MILP, NLP examples<br />
+- Re-wrote optiBench<br />
+- Added extra optiset options (under development)<br />
+- Added opti_readMPS to read MPS/QPS files (under development)</p>
+<p class="Heading3">
+v0.81 (24/07/11)</p>
+<p class="Normal">
+- Another pre-release<br />
+- Small updates to display<br />
+- Removed need for numdif if derivative free optimizer used</p>
+<p class="Heading3">
+v0.8 (22/07/11)</p>
+<p class="Normal">
+- Another pre-release<br />
+- Added NLOPT (still under development)<br />
+- Removed all .lib files from distribution (licensing problems + size)<br />
+- Fixed opti_ipopt bug with constraint bounds<br />
+- Added display information to opti object (under development)</p>
+<p class="Heading3">
+v0.7 (17/07/11)</p>
+<p class="Normal">
+- Another pre-release<br />
+- Added IPOPT + OOQP<br />
+- Rewrote checkSolver<br />
+- Updated optiBench<br />
+- Added convMatlab to return fmincon structure<br />
+- Added NLP solving functionality<br />
+- Rewrote optiset</p>
+<p class="Heading3">
+v0.5 (11/07/11)</p>
+<p class="Normal">
+- Another pre-release<br />
+- Added CLP + MUMPS<br />
+- Added detailed solver compiling instructions<br />
+- OPTI milp solver re-written</p>
+<p class="Heading3">
+v0.3 (08/07/11)</p>
+<p class="Normal">
+- Another pre-release<br />
+- Added GLPK + LP_Solve<br />
+- Added optiobj and opticon<br />
+- Re-organised folder structure</p>
+<p class="Heading3">
+v0.1 (23/06/11)</p>
+<p class="Normal">
+- First pre-release of OPTI Toolbox for DIW.</p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+
+</body>
+<!-- #EndTemplate -->
+</html>

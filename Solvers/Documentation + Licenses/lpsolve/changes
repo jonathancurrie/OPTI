@@ -1,0 +1,24 @@
+18.12.04 version 5.1.0.0 released
+        This is the first release of this new MATLAB lpsolve driver.
+        It uses ideas from the lpmex implementation for lp_solve 2.3 from Jeffrey C. Kantor
+        but it was redesigned completely by Peter Notebaert for performance, functionality
+        and complete support of the lp_solve 5.1 API.
+
+28.07.05 version 5.5.0.0 released
+
+12.11.05 version 5.5.0.1 released
+      - set_outputfile(lp0, ""); added to disable messages on console
+      - For routines that return an integer,
+        CreateDoubleMatrix and SetDoubleMatrix replaced by CreateLongMatrix and SetLongMatrix
+
+19.11.05 version 5.5.0.2 released
+      - For routines that need an lp handle, this handle can now also be the model name.
+      - New call get_handle to get handle from model name.
+
+09.03.05 version 5.5.0.3 released
+      - When sensitivity is not known (integer models), but requested then a crash occured.
+        This is fixed.
+      - get_mat can now also return a sparse matrix. This is determined by the third argument
+        of this routine.
+29.03.07
+      - Made changes to make driver 64-bit complient by replacing int with mwSize and mwIndex

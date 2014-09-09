@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>opti</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">opti</p>
+<p class="Normal">Create a OPTI optimization object</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">optiObj = opti('param1',value1,'param2',value2,...)</p>
+<p class="Syntax">optiObj = opti(...,'options',opts)</p>
+<p class="Syntax">opti</p>
+<p class="Syntax">optiObj = opti(prob)</p>
+<p class="Syntax">optiObj = opti(prob,opts)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal"><span class="Copyright">Note from v1.53 the opti constructor 
+now accepts arguments in an identical manner to
+<a class="Code" href="optiprob.html">optiprob</a>, allowing for one line object 
+creation.</span></p>
+<p class="Normal">In all methods listed below, OPTI will automatically determine 
+the problem type being solved and set defaults according to the problem. The 
+constructor also checks the inputs for errors and displays warnings where the 
+user should change the input format.&nbsp;To customize what settings and solver are 
+used, use <a class="Code" href="optiset.html">optiset</a> to generate an options 
+structure.</p>
+<p class="Normal"><span class="Code">optiObj = opti('param1',value1,'param2',value2,...)</span> 
+creates an OPTI object with the parameters '<span class="Code">param</span>' set 
+to their corresponding values in '<span class="Code">value</span>'. Parameters 
+not specified will be set to the OPTI default.</p>
+<p class="Normal"><span class="Code">optiObj = opti(...,'options',opts)</span> 
+creates the object with optiset options supplied to the OPTI constructor.</p>
+<p class="Normal"><span class="Code">opti</span> with no input or output 
+arguments displays a complete list of parameters with their valid names.</p>
+<p class="Normal"><span class="Code">optiObj = opti(prob)</span> creates an OPTI 
+object using the problem structure <span class="Code">prob</span> created from
+<a href="optiprob.html">optiprob</a>. </p>
+<p class="Normal"><span class="Code">optiObj = opti(prob,opts)</span> creates 
+the object using the options structure <span class="Code">opts</span> created 
+from <a href="optiset.html">optiset</a>. </p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

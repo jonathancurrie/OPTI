@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>opti_lsqcurvefit</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">opti_lsqcurvefit</p>
+<p class="Normal">Solve a 
+<a href="http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/NLS">NLS</a> 
+using an OPTI solver 
+(e.g. LM_DER)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">x = opti_lsqcurvefit(fun,x0,xdata,ydata)</p>
+<p class="Syntax">x = opti_lsqcurvefit(fun,x0,xdata,ydata,lb,ub)</p>
+<p class="Syntax">[x,fval,exitflag,info,Opt] = opti_lsqcurvefit(fun,x0,xdata,ydata,lb,ub,opts)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal"><span class="Code">x = opti_lsqcurvefit(fun,x0,xdata,ydata)</span> solves the 
+nonlinear least squares problem with fitting function specified by <span class="Code">fun</span>, 
+initial guess <span class="Code">x0</span>, subject to the fitting data, <span class="Code">
+xdata</span>,
+<span class="Code">ydata</span>.</p>
+<p class="Normal"><span class="Code">x = opti_lsqcurvefit(fun,x0,xdata,ydata,lb,ub)</span> 
+solves the constrained nonlinear least squares problem with bounds specified by
+<span class="Code">lb</span>, <span class="Code">ub</span>. This will 
+automatically use a constrained NLS solver such as NL2SOL or MKLTRNLS.</p>
+<p class="Normal"><span class="Code">[x,fval,exitflag,info,Opt] = 
+opti_lsqcurvefit(fun,x0,xdata,ydata,lb,ub,opts)</span> 
+allows the user to specify additional options via <span class="Code">opts</span>, 
+created from <span class="Code"><a href="../opti/optiset.html">optiset</a></span>. 
+This includes being able to specify the solver used via the 'solver' field. Also returned is the function value at the solution, exitflag, 
+plus information structure and internally created OPTI object.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Typical Use</p>
+<p class="Normal">This function is provided for users who are familiar with the 
+Matlab Optimization Toolbox and its routines, and wish to experiment with OPTI 
+toolbox routines without major code changes. It is suggested once you are 
+familiar with the OPTI class and creating it, to use it explicitly rather than 
+calling this function.</p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

@@ -1,0 +1,34 @@
+Major Changes in OOQP 0.99.10
+- --scale option introduced (scale variables to ensure that Hessian
+  diagonals are a reasonable size)
+Major Changes in OOQP 0.99.09
+- ooqp-ampl prints the objective value
+- The CInterface routines have been changed to return the objective
+  value.
+Major Changes in OOQP 0.99.08
+- Retired the storage.C and storage.h files because the functionality
+  in these files is better handled by instances of SimpleVector and
+  DenseStorage.
+- Updated the Petsc interface to work with either Petsc version 2.1.0
+  or 2.1.1.
+- Version information is now available to the code in
+  OoqpVersion.[Ch]. The qpgen executables now print the version.
+- Configure works properly with f2c, and instructions on using f2c
+  were added to the install files.
+- Introduction of a Windows port
+
+Major Changes in OOQP 0.99.07
+
+- Introduction of the StartStrategy classes that allow programmers to
+set the starting point.
+- Introduction of ooqp-start to allow users to experiment with starting
+points within matlab.
+- Introduction of the print-level option in ampl the ampl interface.
+
+Major Changes in OOQP 0.99.06
+
+- Updated the interface to MA27 to use the new MA27 interface. 
+- Added a test to configure.in to make sure the old MA27 libraries are
+  not being used.
+- Added a NEWS file ;-)
+

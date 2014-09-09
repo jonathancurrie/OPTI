@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>optiset</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">optiset</p>
+<p class="Normal">Create or edit OPTI options structure</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">options = optiset(&#39;param1&#39;,value1,&#39;param2&#39;,value2,...)</p>
+<p class="Syntax">optiset</p>
+<p class="Syntax">options = optiset</p>
+<p class="Syntax">options = optiset(oldopts,&#39;param1&#39;,value1,...)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal">The function <span class="Code">optiset</span> creates an 
+options structure that you can pass to <a class="Code" href="opti.html">opti</a> 
+for customizing the building and solving of a optimization problem. These 
+options will always override any other options specified via other option 
+functions, and are thus the 'master' options set.</p>
+<p class="Normal"><span class="Code">options = optiset(&#39;param1&#39;,value1,&#39;param2&#39;,value2,...)</span> 
+creates a OPTI options structure in which the specified parameters (<span class="Code">param</span>) 
+have the specified values (<span class="Code">value</span>).</p>
+<p class="Normal"><span class="Code">optiset</span> with no input or output 
+arguments displays a complete list of parameters with their valid names.</p>
+<p class="Normal"><span class="Code">options = optiset</span> with no input 
+arguments creates a default options structure</p>
+<p class="Normal"><span class="Code">options = optiset(oldopts,&#39;param1&#39;,value1,...)</span> 
+updates the existing object structure, <span class="Code">oldopts</span>, with 
+the new values specified.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Options</p>
+<p class="Normal">The following table lists the available options for
+<span class="Code">optiset</span>:</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="height: 25px; width: 144px"><strong>Parameter</strong></td>
+		<td style="height: 25px; width: 158px"><strong>Value</strong></td>
+		<td style="height: 25px; width: 629px"><strong>Description</strong></td>
+		<td style="height: 25px"><strong>Default</strong></td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px">solver</td>
+		<td style="width: 158px">string</td>
+		<td style="width: 629px">The name of the solver to use. See
+		<a class="Code" href="../optiutil/checkSolver.html">checkSolver</a> for 
+		available solvers.</td>
+		<td>&#39;AUTO&#39;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px; height: 25px;">maxiter</td>
+		<td style="width: 158px; height: 25px;">double scalar</td>
+		<td style="width: 629px; height: 25px;">The maximum number of iterations 
+		a solver can run</td>
+		<td style="height: 25px">1500</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px; height: 25px">maxfeval</td>
+		<td style="height: 25px; width: 158px">double scalar</td>
+		<td style="width: 629px; height: 25px">The maximum number of function 
+		evaluations a solver can call</td>
+		<td style="height: 25px">10000</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px; height: 25px">maxnodes</td>
+		<td style="height: 25px; width: 158px">double scalar</td>
+		<td style="width: 629px; height: 25px">The maximum number of nodes to 
+		search in a mixed integer problem</td>
+		<td style="height: 25px">10000</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px; height: 25px">maxtime</td>
+		<td style="height: 25px; width: 158px">double scalar</td>
+		<td style="width: 629px; height: 25px">The maximum runtime of a solver 
+		in seconds</td>
+		<td style="height: 25px">1000</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px; height: 25px">tolrfun</td>
+		<td style="height: 25px; width: 158px">double scalar</td>
+		<td style="width: 629px; height: 25px">The relative convergence 
+		tolerance of the objective function</td>
+		<td style="height: 25px">1e-7</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px; height: 25px">tolafun</td>
+		<td style="width: 158px">double scalar</td>
+		<td style="width: 629px">The absolute convergence tolerance of the objective function</td>
+		<td>1e-7</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px; height: 25px">tolint</td>
+		<td style="width: 158px">double scalar</td>
+		<td style="width: 629px">The rounding tolerance on the absolute value of 
+		an integer in a mixed integer problem</td>
+		<td>1e-5</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px; height: 25px">solverOpts</td>
+		<td style="width: 158px">structure</td>
+		<td style="width: 629px">Additional options to pass to the solver, e.g. 
+		an options structure from
+		<a class="Code" href="../configset/ipoptset.html">ipoptset</a>.</td>
+		<td class="Code">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px; height: 25px">dynamicOpts</td>
+		<td style="width: 158px">structure</td>
+		<td style="width: 629px">Additional options to pass for dynamic 
+		optimization from
+		<a class="Code" href="optidynset.html">optidynset</a>.</td>
+		<td class="Code">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px; height: 25px">iterfun</td>
+		<td style="width: 158px">function handle</td>
+		<td style="width: 629px">Iteration callback function (see
+		<a href="#Iteration_Callback_Function">below</a>)</td>
+		<td class="Code">[]</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px; height: 25px">warnings</td>
+		<td style="width: 158px">string</td>
+		<td style="width: 629px">Display OPTI warnings (&#39;all&#39;, 
+		'critical', &#39;none&#39;)</td>
+		<td>'critical'</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px; height: 25px">display</td>
+		<td style="width: 158px">string</td>
+		<td style="width: 629px">Print Level settings (&#39;iter', 'final', 
+		'off')</td>
+		<td>&#39;off&#39;</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 144px; height: 25px">derivCheck</td>
+		<td style="width: 158px">string</td>
+		<td style="width: 629px">Checks user supplied derivatives against a 
+		numerical approximation ('on', 'off')</td>
+		<td>'off'</td>
+	</tr>
+</table>
+<p class="Normal">Note these settings are not been implemented in all solvers. Use <span class="Code">&gt;&gt; 
+configSolver('config')</span><span class="Normal"> for a list of which solvers 
+support which options.</span></p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2"><a name="Iteration_Callback_Function">Iteration Callback 
+Function</a></p>
+<p class="Normal">Most nonlinear solvers allow a callback method to be 
+automatically called at every iteration (or function evaluation, depending on 
+the solver). The callback function must have the following form:</p>
+<p class="CodeIndent"><span class="Function">function </span>stop = myCallback(iter,fval,x)</p>
+<p class="Normal">Where the input arguments are:</p>
+<p class="NormalIndent"><span class="Code">iter </span>- The current iteration 
+or function evaluation<br />
+<span class="Code">fval </span>- The current objective function value<br />
+<span class="Code">x </span>- The current solution vector (not available from 
+all solvers, or may return a structure with more information) </p>
+<p class="Normal">And the output arguments are:</p>
+<p class="NormalIndent"><span class="Code">stop </span>- Set this to
+<span class="Function">true</span> to stop the solver when the function returns. 
+The default is <span class="Function">false</span> (continue). Do not attempt to 
+set it to 0 or 1, only logical values are accepted. (not available from all 
+solvers)</p>
+<p class="Normal">The callback function can be used to set customized stopping 
+criteria, customized iteration display, or for plotting. OPTI provides a default 
+plotting function for plotting the objective value vs iteration. This can be set 
+as follows:</p>
+<p class="CodeIndent">opts = optiset(<span class="String">'iterfun'</span>,@optiplotfval)</p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

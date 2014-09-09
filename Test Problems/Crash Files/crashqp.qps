@@ -1,0 +1,19 @@
+NAME          opti    
+ROWS
+ N  OBJROW
+ L  R0000000
+ L  R0000001
+COLUMNS
+    C0000000  R0000000  1.             R0000001  1.          
+    C0000001  R0000000  1.             R0000001   -1.        
+RHS
+    RHS       R0000000  1.5            R0000001  1.2         
+BOUNDS
+ LO BOUND     C0000000   -0.5       
+ UP BOUND     C0000000   -0.35      
+ LO BOUND     C0000001  0.85        
+ UP BOUND     C0000001  1.          
+QUADOBJ
+    C0000000  C0000000  1.          
+    C0000001  C0000001  1.          
+ENDATA

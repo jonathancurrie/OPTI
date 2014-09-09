@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>testSolver</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">testSolver</p>
+<p class="Normal">Test a particular solver against a set of test problems</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">[times,results] = testSolver(prob_type,solver)</p>
+<p class="Syntax">[times,results] = testSolver(prob_type,solver,no)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal"><span class="Code">[times,results] = testSolver(prob_type,solver)</span> 
+uses the solver specified by <span class="Code">solver</span> to run all tests 
+of problem type <span class="Code">prob_type</span>. The function will return a 
+vector of execution times, as well a cell array of structures with fields 
+detailing the success or failure of the solver for each problem.</p>
+<p class="Normal"><span class="Code">[times,results] = testSolver(prob_type,solver,no)</span> 
+runs <span class="Code">no</span> number of tests for the problem type.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Example</p>
+<p class="Normal">To run all MILP test problems against GLPK use the following:</p>
+<p class="Code">&gt;&gt; [times,results] = testSolver(<span class="String">'MILP'</span>,<span class="String">'GLPK'</span>);</p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

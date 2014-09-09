@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>solve</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">solve</p>
+<p class="Normal">Solve an OPTI optimization problem</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">x = solve(optiObj)</p>
+<p class="Syntax">x = solve(optiObj,x0)</p>
+<p class="Syntax">[x,fval,exitflag,info] = solve(optiObj,x0)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal"><span class="Code">x = solve(optiObj)</span> solves the 
+optimization problem specified by the OPTI object <span class="Code">optiObj</span>, 
+and returns the solution <span class="Code">x</span>.</p>
+<p class="Normal"><span class="Code">x = solve(optiObj,x0)</span> uses the 
+supplied starting guess <span class="Code">x0</span> as the initial solution for the solver.
+<span class="Code">x0</span> can also be supplied via <a href="optiprob.html">
+optiprob</a>, therefore use the calling strategy above. If <span class="Code">x0</span> 
+is not supplied, the solver will attempt to find its own initial solution unless 
+the problem is an NLP - in which case <span class="Code">x0</span> must be 
+supplied.</p>
+<p class="Normal"><span class="Code">[x,fval,exitflag,info] = solve(optiObj,x0)</span> 
+also returns the objective function value at the solution, an exitflag 
+indicating the solver&#39;s reason for returning, as well as an information 
+structure, described below.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Return Arguments</p>
+<p class="Normal">A common system is used across all solvers to indicate the 
+solver exit status and provide runtime information. This is described below:</p>
+<p class="Heading3">exitflag</p>
+<p class="Normal">A number indicating the solver return status:</p>
+<table cellpadding="2" class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 150px"><strong>Value</strong></td>
+		<td><strong>Description</strong></td>
+	</tr>
+	<tr>
+		<td style="width: 150px">1</td>
+		<td>Optimal Solution [As determined by the solver - may be locally 
+		optimal]</td>
+	</tr>
+	<tr>
+		<td style="width: 150px">0</td>
+		<td>Iteration / Time limit / Function Evaluation Limit reached</td>
+	</tr>
+	<tr>
+		<td style="width: 150px">-1</td>
+		<td>Infeasible Problem</td>
+	</tr>
+	<tr>
+		<td style="width: 150px">-2</td>
+		<td>Unbounded / Solver Error</td>
+	</tr>
+	<tr>
+		<td style="width: 150px">-3 and below</td>
+		<td>Solver specific errors</td>
+	</tr>
+</table>
+<p class="Heading3">info</p>
+<p class="Normal">A structure containing the following fields (only available 
+fields will be returned):</p>
+<table class="Normal" style="width: 100%">
+	<tr>
+		<td style="width: 150px"><strong>Field</strong></td>
+		<td><strong>Description</strong></td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 150px">Iterations</td>
+		<td>The number of iterations taken by the solver</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 150px">FuncEvals</td>
+		<td>The number of function evaluations used by the solver (not including 
+		gradients)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 150px">Nodes</td>
+		<td>The number of nodes searched by the solver (MIP)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 150px">Time</td>
+		<td>The execution time of the solver as measured by Matlab (tic + toc)</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 150px">Algorithm</td>
+		<td>The solver and algorithm used</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 150px">Status</td>
+		<td>A status string indicating the solver specific exit message</td>
+	</tr>
+	<tr>
+		<td class="Code" style="width: 150px">Lambda</td>
+		<td>Lagrange multipliers at the solution (if available)</td>
+	</tr>
+</table>
+
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

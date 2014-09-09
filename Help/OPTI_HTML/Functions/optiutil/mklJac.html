@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>mklJac</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">mklJac</p>
+<p class="Normal">Estimate the gradient or Jacobian of a function via numerical 
+differences</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">jac = mklJac(fun,x)</p>
+<p class="Syntax">jac = mklJac(fun,x,nrow)</p>
+<p class="Syntax">jac = mklJac(fun,x,nrow,tol)</p>
+<p class="Syntax">[jac,status] = mklJac(fun,x,nrow,tol)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal">This function uses the Intel MKL<sup>[1]</sup> method 
+<span class="Code">djacobi</span> to estimate the gradient or Jacobian at a 
+value of <span class="Code">x</span> using central differences. By default if 
+you do not supply the gradient / Jacobian to a nonlinear optimizer that requires 
+it, this method will be used.</p>
+<p class="Normal"><span class="Code">jac = mklJac(fun,x)</span> uses the 
+function handle <span class="Code">fun</span> and the current state vector
+<span class="Code">x</span> to estimate the gradient of the function.</p>
+<p class="Normal"><span class="Code">jac = mklJac(fun,x,nrow)</span> specifies 
+the number of rows in the vector returned from <span class="Code">fun</span>, used to 
+determine the return size of the Jacobian. If the number of rows is not 
+specified then a function call is used in order to determine the number of rows. </p>
+<p class="Normal"><span class="Code">jac = mklJac(fun,x,nrow,tol)</span> 
+specifies the tolerance of the numerical difference algorithm across all 
+variables. By default <span class="Code">tol</span> is 1e-6.</p>
+<p class="Normal"><span class="Code">[jac,status] = mklJac(fun,x,nrow,tol)</span> 
+also returns 1 if the algorithm was successful, or 0 if it failed.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Example</p>
+<p class="Normal">Estimate the Jacobian of the following nonlinear constraint 
+function at x = [1 1 1 1]<sup>T</sup>:</p>
+<p class="Code">
+nlcon = @(x) [8 - x(1)^2 - x(2)^2 - x(3)^2 - x(4)^2 - x(1) + x(2) - x(3) + x(4);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+10 - x(1)^2 - 2*x(2)^2 - x(3)^2 - 2*x(4)^2 + x(1) + x(4);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+5 - 2*x(1)^2 - x(2)^2 - x(3)^2 - 2*x(1) + x(2) + x(4)];</p>
+<p class="Code">
+x = [1;1;1;1];</p>
+<p class="Code">
+jac = mklJac(nlcon,x,3)</p>
+<p class="Code">
+&nbsp;&nbsp;</p>
+<p class="Code">
+jac =<br />
+<br />
+-3.0000 -1.0000 -3.0000 -1.0000<br />
+-1.0000 -4.0000 -2.0000 -3.0000<br />
+-6.0000 -1.0000 -2.0000&nbsp; 1.0000</p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

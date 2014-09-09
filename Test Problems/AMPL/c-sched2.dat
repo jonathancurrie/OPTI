@@ -1,0 +1,103 @@
+# data file for cyclic scheduling (c-sched.mod)
+# Example 2
+# AMPL coding: S. Leyffer, University of Dundee, March 2000.
+data;
+# ... index sets
+set feeds    := A B C D E F G;
+set furnaces := 1 2 3 4;
+
+param K := 10;				# upper bound on No. subcycles
+param U := 100;				# upper bound on processing time
+
+# ... changeover time [days]
+param tau(tr): 	A 	B 	C 	D	E	F	G := 	
+      	1	2	3	3 	3	1	2	3
+	2	3	1	2	2	2	1	1
+	3	1	3	1	1	2	1	2
+	4	2	1	3	2	2	1	1 ;
+
+# ... processing rate [tons/day]
+param D(tr): 	A 	B 	C 	D	E	F	G := 	
+      	1	1300	1200	1100	800	1300	300	700
+	2	1100	1050	1000	1000	1200	400	600
+	3	900	800	800	1200	1000	300	850
+	4	1200	1000	800	700	1200	400	600 ;
+
+# ... conversion parameters [1/day]
+param a(tr): 	A 	B 	C 	D	E	F	G := 	
+      	1	0.3	0.4	0.35	0.32	0.29	0.35	0.31
+	2	0.32	0.38	0.33	0.31	0.28	0.4	0.34
+	3	0.31	0.35	0.36	0.36	0.29	0.37	0.31
+	4	0.31	0.36	0.35	0.36	0.28	0.39	0.32 ;
+
+param b:	1	2	3	4 :=
+	A	0.1	0.2	0.3	0.2
+	B	0.2	0.1	0.2	0.2
+	C	0.1	0.2	0.3	0.15
+	D	0.2	0.25	0.27	0.25
+	E	0.23	0.29	0.28	0.29
+	F	0.34	0.27	0.29	0.22
+	G	0.20	0.30	0.25	0.28 ;
+
+param c(tr): 	A 	B 	C 	D	E	F	G := 	
+	1	0.20	0.18	0.21	0.20	0.3	0.26	0.16
+	2	0.21	0.19	0.23	0.25	0.31	0.27	0.17
+	3	0.19	0.18	0.21	0.23	0.30	0.25	0.18
+	4	0.20	0.19	0.21	0.24	0.31	0.26	0.17 ;
+
+# ... price parameter [$/ton]
+param P(tr): 	A 	B 	C 	D	E	F	G := 	
+	1	123	105	110	123	105	110	120
+	2	114	132	129	114	132	129	113
+	3	110	122	120	110	122	120	117
+	4	120	125	129	115	115	128	115 ;
+
+
+# ... setup/cleaning cost [$]
+param Cs(tr): 	A 	B 	C 	D	E	F	G := 	
+	1	100	90	80	75	90	93	78
+	2	80	85	75	90	94	78	70
+	3	90	90	90	85	93	92	75
+	4	80	90	85	80	92	85	72 ;
+
+# ... lower/upper bnd on flow rate
+param: 	Flo,	Fup := 			
+     A	300	600	
+     B	400	700
+     C	300	600
+     D	500	800
+     E	500	800
+     F	100	400
+     G	600	900 ;
+
+let Tcycle := 100;
+
+# ... solution from Jain & Grossmann
+### fix y[ "A" , 1 , 1 ] := 1;
+### fix y[ "B" , 1 , 0 ] := 1;
+### fix y[ "C" , 1 , 1 ] := 1;
+### fix y[ "D" , 1 , 0 ] := 1;
+### fix y[ "E" , 1 , 2 ] := 1;
+### fix y[ "F" , 1 , 0 ] := 1;
+### fix y[ "G" , 1 , 0 ] := 1;
+### fix y[ "A" , 2 , 0 ] := 1;
+### fix y[ "B" , 2 , 4 ] := 1;
+### fix y[ "C" , 2 , 0 ] := 1;
+### fix y[ "D" , 2 , 0 ] := 1;
+### fix y[ "E" , 2 , 1 ] := 1;
+### fix y[ "F" , 2 , 0 ] := 1;
+### fix y[ "G" , 2 , 0 ] := 1;
+### fix y[ "A" , 3 , 0 ] := 1;
+### fix y[ "B" , 3 , 0 ] := 1;
+### fix y[ "C" , 3 , 0 ] := 1;
+### fix y[ "D" , 3 , 3 ] := 1;
+### fix y[ "E" , 3 , 0 ] := 1;
+### fix y[ "F" , 3 , 0 ] := 1;
+### fix y[ "G" , 3 , 1 ] := 1;
+### fix y[ "A" , 4 , 0 ] := 1;
+### fix y[ "B" , 4 , 0 ] := 1;
+### fix y[ "C" , 4 , 0 ] := 1;
+### fix y[ "D" , 4 , 0 ] := 1;
+### fix y[ "E" , 4 , 1 ] := 1;
+### fix y[ "F" , 4 , 1 ] := 1;
+### fix y[ "G" , 4 , 2 ] := 1;

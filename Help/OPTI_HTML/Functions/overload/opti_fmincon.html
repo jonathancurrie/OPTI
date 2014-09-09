@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "../../Main/Opti_Fx.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>opti_fmincon</title>
+<!-- #EndEditable -->
+<link href="../../Main/Opti_Styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!-- #BeginEditable "FunctionTop" -->
+<p class="CodeHeading1">opti_fmincon</p>
+<p class="Normal">Solve a 
+<a href="http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/NLP">NLP</a> 
+using an OPTI solver 
+(e.g. IPOPT)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Syntax" -->
+<p class="Heading2">Syntax</p>
+<p class="Syntax">x = opti_fmincon(fun,x0,A,b)</p>
+<p class="Syntax">x = opti_fmincon(fun,x0,A,b,Aeq,beq)</p>
+<p class="Syntax">x = opti_fmincon(fun,x0,A,b,Aeq,beq,lb,ub)</p>
+<p class="Syntax">x = opti_fmincon(fun,x0,A,b,Aeq,beq,lb,ub,nonlcon)</p>
+<p class="Syntax">[x,fval,exitflag,info,Opt] = opti_fmincon(fun,x0,A,b,Aeq,beq,lb,ub,nonlcon,opts)</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Description" -->
+<p class="Heading2">Description</p>
+<p class="Normal"><span class="Code">x = opti_fmincon(fun,x0,A,b)</span> solves the 
+constrained nonlinear optimization with nonlinear objective specified by <span class="Code">fun</span>, 
+using initial guess <span class="Code">x0</span><span class="Normal">, subject 
+to linear inequality constraints </span><span class="Code">A</span><span class="Normal">,</span><span class="Code"> 
+b</span><span class="Normal">.</span></p>
+<p class="Normal"><span class="Code">x = opti_fmincon(fun,x0,A,b,Aeq,beq)</span> 
+solves subject to the linear equality constraints, <span class="Code">Aeq</span>,
+<span class="Code">beq</span>.</p>
+<p class="Normal"><span class="Code">x = opti_fmincon(fun,x0,A,b,Aeq,beq,lb,ub)</span> 
+solves subject to the decision variable bounds <span class="Code">lb</span>,
+<span class="Code">ub</span>.</p>
+<p class="Normal"><span class="Code">x = opti_fmincon(fun,x0,A,b,Aeq,beq,lb,ub,nonlcon)</span> 
+solves subject to the nonlinear constraints, specified by <span class="Code">
+nonlcon</span>. See below for a description on how to specify these.</p>
+<p class="Normal"><span class="Code">[x,fval,exitflag,info,Opt] = opti_fmincon(fun,x0,A,b,Aeq,beq,lb,ub,nonlcon,opts)</span> 
+allows the user to specify additional options via <span class="Code">opts</span>, 
+created from <span class="Code"><a href="../opti/optiset.html">optiset</a></span>. 
+This includes being able to specify the solver used via the 'solver' field. Also returned is the function value at the solution, exitflag, 
+plus information structure and internally created OPTI object.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Typical Use</p>
+<p class="Normal">This function is provided for users who are familiar with the 
+Matlab Optimization Toolbox and its routines, and wish to experiment with OPTI 
+toolbox routines without major code changes. It is suggested once you are 
+familiar with the OPTI class and creating it, to use it explicitly rather than 
+calling this function.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Specifying a Gradient</p>
+<p class="Normal">In order to specify the gradient of the objective function, it 
+can be supplied in Matlab format as a second output argument of
+<span class="Code">fun</span>, for example:</p>
+<p class="CodeIndent"><span class="Function">function </span>[fun,grad] = myfun(x)</p>
+<p class="Normal">Unlike the Matlab equivalent, the OPTI function will 
+automatically determine the second argument and use it as the first derivative 
+in the internal solver algorithm.</p>
+<table class="TableBreakLine"><tr><td></td></tr></table><p class="Heading2">Nonlinear Constraints</p>
+<p class="Normal">In order to specify nonlinear inequality and equality 
+constraints, they can be supplied in Matlab format as a two return argument 
+function, as follows:</p>
+<p class="CodeIndent"><span class="Function">function </span>[ineq,eq] = mycon(x)</p>
+<p class="CodeIndent"><span class="Comment">%Inequalities of the form: ineq(x) 
+&lt;= 0</span></p>
+<p class="CodeIndent"><span class="Comment">%Equalities of the form: eq(x) == 0</span></p>
+<p class="Normal">Currently Jacobians can not be supplied of the constraints.</p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2013 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+</body>
+
+<!-- #EndTemplate -->
+
+</html>

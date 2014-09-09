@@ -1,0 +1,26 @@
+# trimlon4.dat
+# AMPL coding: S. Leyffer, January 1999.
+#
+# Data file for trimlon.mod; Example with 4 product types
+#
+# Number of variables:   24 (all integer)
+# Number of constraints: 27
+# Objective linear
+# Quadratic constraints
+data;
+param Bmax  := 1900.0;      # width of raw paper roll
+param Delta :=  200.0;      # tolerance for width
+param Nmax  :=    5.0;      # max number of products in cut
+param M     :=   12.0;      # max number of repeats of any pattern
+
+param:  I:  b,     nord :=  # width & # orders of product roll-type i
+        1   330.0   8
+        2   360.0   7
+        3   385.0  12
+        4   415.0  11;
+
+param:  J:  c,     C    :=  # cost factors
+        1   1      0.1
+        2   1      0.2
+        3   1      0.3
+        4   1      0.4;
