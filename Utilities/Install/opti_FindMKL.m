@@ -9,6 +9,10 @@ else
 end
 
 %Known MKL path locations (Modify to suit your system by adding to cell arrays, or create a new structure for other versions)
+MKL11_2.compiler = {'C:\Program Files\Intel\Composer XE 2015\compiler\','C:\Program Files (x86)\Intel\Composer XE 2015\compiler\'};
+MKL11_2.mkl = {'C:\Program Files\Intel\Composer XE 2015\mkl\','C:\Program Files (x86)\Intel\Composer XE 2015\mkl\'};
+MKL11_2.ver = '11.2';
+
 MKL11_1.compiler = {'C:\Program Files\Intel\Composer XE 2013 SP1\compiler\','C:\Program Files (x86)\Intel\Composer XE 2013 SP1\compiler\'};
 MKL11_1.mkl = {'C:\Program Files\Intel\Composer XE 2013 SP1\mkl\','C:\Program Files (x86)\Intel\Composer XE 2013 SP1\mkl\'};
 MKL11_1.ver = '11.1';
@@ -26,7 +30,7 @@ MKL10_3.mkl = {'C:\Program Files\Intel\ComposerXE-2011\mkl\','C:\Program Files (
 MKL10_3.ver = '10.3';
 
 %Add any new structures to below
-MKLLIB = {MKL11_1,MKL11,MKL10_3_1,MKL10_3};
+MKLLIB = {MKL11_2,MKL11_1,MKL11,MKL10_3_1,MKL10_3};
 
 
 %DO NOT MODIFY BELOW HERE

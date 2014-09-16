@@ -9,7 +9,8 @@ current_version = 2.11;
 
 %History
 
-%2.11 (..)
+%2.11 (16/09/14)
+% - Rebuilt all solvers against MKL v11.2 R0
 % - Added SymBuilder Examples page
 % - Added extra error information to SCIP function processing
 % - Fixed bug in SCNLE sparse test (Stephen)

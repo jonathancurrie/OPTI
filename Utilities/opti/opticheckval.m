@@ -334,8 +334,10 @@ classdef opticheckval
             %Relative Error Check between two scalars (v1 calc, v2 true)
             if(nargin < 4 || isempty(tol)), tol = 1e-6; end
             if(nargin < 3), str = []; end
-             
-            if(v1==0 || v2==0)
+            
+            if(v2 < eps(class(v2)))
+                err = 0;
+            elseif(v1==0 || v2==0)
                 err = abs(v1-v2);
             else
                 err = abs(v1-v2)/v1;

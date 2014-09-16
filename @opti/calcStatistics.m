@@ -194,6 +194,7 @@ if(~isempty(stats.Cov))
             if(nargin(prob.misc.fitFun)==2)
                 %if function has two input arguments, try a numerical gradient
                 try
+                    if(~isempty(strfind(char(prob.misc.fitFun),'odeEstim'))), error('no luck'); end %integrator most likely has set time points it is expecting
                     xd = linspace(min(prob.xdata),max(prob.xdata),max(10*length(prob.xdata),1e2))';
                     Xb = mklJac(@(x) prob.misc.fitFun(x,xd),x);
                     ypred = prob.misc.fitFun(x,xd);

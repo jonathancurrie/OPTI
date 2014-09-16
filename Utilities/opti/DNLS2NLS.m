@@ -493,15 +493,19 @@ switch(dopts.dfdz_method)
         dfdz = cstepJac(@(z) ode(t,z,theta),z(1:dopts.n));
 end
 %Get dfdp
-switch(dopts.dfdp_method)
-    case 0 %numerical differentiation
-        dfdp = mklJac(@(theta) ode(t,z(1:dopts.n),theta),theta);
-    case 1 %automatic differentiation
-        dfdp = autoJac(@(theta) ode(t,z(1:dopts.n),theta),theta);
-    case 2 %user supplied
-        dfdp = dopts.dfdp(t,z,theta);
-    case 3 %complex step
-        dfdp = cstepJac(@(theta) ode(t,z(1:dopts.n),theta),theta);
+if(dopts.np > 0)
+    switch(dopts.dfdp_method)
+        case 0 %numerical differentiation
+            dfdp = mklJac(@(theta) ode(t,z(1:dopts.n),theta),theta);
+        case 1 %automatic differentiation
+            dfdp = autoJac(@(theta) ode(t,z(1:dopts.n),theta),theta);
+        case 2 %user supplied
+            dfdp = dopts.dfdp(t,z,theta);
+        case 3 %complex step
+            dfdp = cstepJac(@(theta) ode(t,z(1:dopts.n),theta),theta);
+    end
+else
+   dfdp = []; 
 end
 %Complete sensitivity differential equation
 S = dfdz*reshape(z(dopts.n+1:end),dopts.n,dopts.nz0+dopts.np) + [dfdp zeros(dopts.n,dopts.nz0)];
