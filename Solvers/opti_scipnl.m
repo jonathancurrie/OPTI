@@ -107,8 +107,7 @@ if(~isempty(nlcon))
     try
         n = nlcon(x);
     catch ME
-        ex = MException('OPTI:SCIPVAR',['There was an error processing a constraint function into SCIP compatible form.\n'...
-                                        'Please examine the below error to correct your function:\n\n%s\n\n(Remember SCIP only supports a subset of MATLAB commands)\n\n'],ME.message); 
+        ex = processEqErr(ME,'a constraint'); 
         throwAsCaller(ex);
     end
     if(numel(n) > 1) %multiple constraints
@@ -146,8 +145,7 @@ if(~isempty(fun))
     try
         f = fun(x);
     catch ME
-        ex = MException('OPTI:SCIPVAR',['There was an error processing the objective function into SCIP compatible form.\n'...
-                                        'Please examine the below error to correct your function:\n\n%s\n\n(Remember SCIP only supports a subset of MATLAB commands)\n\n'],ME.message); 
+        ex = processEqErr(ME,'the objective');
         throwAsCaller(ex);
     end    
     if(isnumeric(f)) %read as number
@@ -222,3 +220,27 @@ switch(lower(lev))
     case 'final'
         print_level = 3;
 end
+
+function ex = processEqErr(ME,name)
+
+str = [];
+for i = 1:length(ME.stack)
+    if(i==1)
+        if(length(ME.stack)>1 && strcmpi(ME.stack(2).name,'opti_scipnl'))
+            str = sprintf('%sError using "%s" (line %d)\n%s\n',str,ME.stack(i).name,ME.stack(i).line,ME.message);
+        else
+            str = sprintf('%sError using "%s" (line %d)\n%s\n\nError Trace:\n',str,ME.stack(i).name,ME.stack(i).line,ME.message);
+        end
+    else
+        if(strcmpi(ME.stack(i).name,'opti_scipnl'))
+            break;
+        end
+        str = sprintf('%s- Error in "%s" (line %d)\n',str,ME.stack(i).name,ME.stack(i).line);
+    end
+end
+
+ex = MException('OPTI:SCIPVAR',['There was an error processing %s function into SCIP compatible form.\n'...
+                                'Please examine the below error to correct your function:\n\n%s\nRemember '...
+                                'SCIP only supports a subset of MATLAB commands. Use:\n>> methods(scipvar)\n\nto see compatible functions and operators.\n\n'],name,str);
+
+                           

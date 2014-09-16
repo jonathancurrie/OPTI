@@ -11,6 +11,7 @@ current_version = 2.11;
 
 %2.11 (..)
 % - Added SymBuilder Examples page
+% - Added extra error information to SCIP function processing
 % - Fixed bug in SCNLE sparse test (Stephen)
 % - Fixed bug in confidence bound plotting with unsorted xdata
 % - Fixed bug in DNLS problems with initialT ignored for single sampling rate problems
