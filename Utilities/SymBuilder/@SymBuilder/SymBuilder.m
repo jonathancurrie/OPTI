@@ -311,6 +311,7 @@ classdef SymBuilder < handle
             ind = B.conlin == 1; 
             %Check we have some constraints
             if(B.noCons && sum(ind) > 0)
+                if(isempty(B.objbias)), B.objbias = zeros(size(ind)); end %HACK
                 %Get Linear Jacobian
                 prob.A = sparse(double(B.jac(ind,:)));
                 prob.rl = B.cl(ind) - B.objbias(ind);
