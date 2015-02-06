@@ -1,13 +1,18 @@
-function fun = sym2fun(sobj,svar,var)
+function fun = sym2fun(sobj,svar,var,skipSubs)
 % SYM2FUN  Convert Symbolic Expression into Matlab Function Handle    
 
 if(nargin < 3 || isempty(var)), var = 'x'; end
+if(nargin < 4 || isempty(skipSubs)), skipSubs = false; end
 
 %Build cell array to store indexed vars
 ivar = convIndex(svar);
 
 %Subs out individual symbolic variables into our indexed list
-eq = subs(sobj,svar,ivar);
+if(~skipSubs)
+    eq = subs(sobj,svar,ivar);
+else
+    eq = sobj;
+end
 
 %Build a MATLAB function
 str = char(eq);

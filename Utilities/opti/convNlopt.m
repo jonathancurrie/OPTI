@@ -100,7 +100,7 @@ if(~eq && prob.sizes.nnleq)
     else
         alg = 'LN_AUGLAG';
     end
-    if(warn)
+    if(warn && isfield(mprob,'algorithm'))
         optiwarn('opti_nlopt:uncon','Conv NLOPT - The currently selected NLOPT algorithm (%s) cannot solve problems with nonlinear equality constraints, using %s instead',...
                 upper(nloptSolver(mprob.algorithm)),alg);
     end

@@ -69,7 +69,7 @@ try
     p = which('optiver.m');
     if(~isempty(p))
         %Print Version
-        if(checkSolver('qsopt',0)), str = 'Academic'; else str = 'Open Source'; end
+        if(checkSolver('scip',0)), str = 'Academic'; else str = 'Open Source'; end
         fprintf(fid,'\nOPTI: v%4.2f (%s)\n',optiver,str);
         %Print Install Location
         fprintf(fid,'Install Location: %s\n',which('opti_Install.m'));

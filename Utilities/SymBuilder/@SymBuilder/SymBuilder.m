@@ -972,7 +972,7 @@ classdef SymBuilder < handle
         %Build C Code function file
         cb = buildCFun(mode,sobj,svar,opts,nocon);
         %Convert symbolic expression into matlab function
-        fun = sym2fun(sobj,svar,var);     
+        fun = sym2fun(sobj,svar,var,skipSubs);     
         
         %Check we have a compiler suitable for use with Cppad
         function ok = CheckCppADCompile(doerr)

@@ -14,7 +14,7 @@
 % Download the .zip file for use on Windows.
 
 % 2) Compile FILTERSD + FILTERSDSP
-% The easiest way to compile DSDP is to use the Visual Studio Project
+% The easiest way to compile FILTERSD is to use the Visual Studio Project
 % Builder included with OPTI. Use the following commands, substituting the
 % required path on your computer (you will need Intel MKL):
 
