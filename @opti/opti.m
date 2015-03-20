@@ -131,6 +131,13 @@ classdef opti < handle
                     asl('close');
                 end
             end
+            
+            %If less that 3 output arguments, user may not know if not
+            %solved correctly. Depending on warning level, show a warning
+            %to the user
+            if(nargout < 3 && exitflag ~= 1 && optiWarnLevel(optObj.opts.warnings) >= 1 && isfield(info,'Status') && strcmpi(optObj.opts.display,'off'))
+                optiwarn('Your problem may not have solved correctly. Solver status:\n  %s\nPlease enable solver output via the optiset setting ''display'' to see more information.\n',info.Status);
+            end
         end
         
         
