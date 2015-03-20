@@ -12,7 +12,7 @@ haveLinearSolverLoader = 0; %Dynamically Load HSL Solvers (you must compile them
 %Misc Defines
 vsdir = 'C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE'; %Visual Studio Install Directory (for devenv.exe)
 bthdr = [cdir '/Solvers/Source/Include/BuildTools']; %Build Tools Headers for Coin Solvers
-intc = 'Intel C++ Compiler XE 14.0'; %Intel C++ Compiler Name & Version
+intc = 'Intel C++ Compiler XE 15.0'; %Intel C++ Compiler Name & Version
 
 projs = [];
 
