@@ -27,33 +27,40 @@ end
                                nlprob.nlcon,nlprob.cl,nlprob.cu,nlprob.xtype,x0,nlprob.options);
 
 %Collect Results
-info.BBNodes = inf.BaR_Iterations;
+if(~isempty(inf))
+    info.BBNodes = inf.BaR_Iterations;
+end
 info.Time = toc(t);
 info.Algorithm = 'BARON: Branch And Reduce Optimization Navigator';
 info.AllSol = allsol;
-switch(ef)
-    case 1
-        exitflag = 1;
-        info.Status = inf.Model_Status;
-    case 2
-        exitflag = -1;
-        info.Status = inf.Model_Status;
-    case 3
-        exitflag = -2;
-        info.Status = inf.Model_Status;
-    case 4
-        exitflag = -3;
-        info.Status = inf.Model_Status;
-    otherwise
-        switch(lower(inf.BARON_Status))
-            case {'max nodes in memory exceeded','max iterations exceeded','max cpu time exceeded'}
-                exitflag = 0;
-                info.Status = inf.BARON_Status;
-            case 'run interrupted by user'
-                exitflag = -5;
-                info.Status = inf.BARON_Status;
-            otherwise
-                exitflag = -4;
-                info.Status = inf.BARON_Status;
-        end
+if(isempty(inf) || ~isfield(inf,'BARON_Status'))
+    info.Status = 'Unknown';
+    exitflag = -4;
+else
+    switch(ef)
+        case 1
+            exitflag = 1;
+            info.Status = inf.Model_Status;
+        case 2
+            exitflag = -1;
+            info.Status = inf.Model_Status;
+        case 3
+            exitflag = -2;
+            info.Status = inf.Model_Status;
+        case 4
+            exitflag = -3;
+            info.Status = inf.Model_Status;
+        otherwise
+            switch(lower(inf.BARON_Status))
+                case {'max nodes in memory exceeded','max iterations exceeded','max cpu time exceeded'}
+                    exitflag = 0;
+                    info.Status = inf.BARON_Status;
+                case 'run interrupted by user'
+                    exitflag = -5;
+                    info.Status = inf.BARON_Status;
+                otherwise
+                    exitflag = -4;
+                    info.Status = inf.BARON_Status;                    
+            end
+    end
 end
