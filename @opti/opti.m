@@ -135,8 +135,9 @@ classdef opti < handle
             %If less that 3 output arguments, user may not know if not
             %solved correctly. Depending on warning level, show a warning
             %to the user
-            if(nargout < 3 && exitflag ~= 1 && optiWarnLevel(optObj.opts.warnings) >= 1 && isfield(info,'Status') && strcmpi(optObj.opts.display,'off'))
-                optiwarn('Your problem may not have solved correctly. Solver status:\n  %s\nPlease enable solver output via the optiset setting ''display'' to see more information.\n',info.Status);
+            if(nargout < 3 && ~isempty(exitflag) && exitflag ~= 1 && optiWarnLevel(optObj.opts.warnings) >= 1 && isfield(info,'Status') && strcmpi(optObj.opts.display,'off'))
+                optiwarn(['Your problem may not have solved correctly. Solver status:\n>> %s\n\nPlease enable solver output by changing the optiset setting ''display'' to ''iter'' to see more information.\n',...
+                          'Alternatively you can avoid this warning by returning all four return arguments from solve(opti_obj).\n'],info.Status);
             end
         end
         

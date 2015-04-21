@@ -22,7 +22,7 @@
 dsdppath = 'C:\Solvers\DSDP5.8'; % FULL path to DSDP
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('DSDP',dsdppath,cd);
+%opti_VSBuild('DSDP',dsdppath,cd,'VS2013');
 
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and

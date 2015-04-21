@@ -27,7 +27,7 @@ else %Must be QP
     %Const H Part
     Hc = 0.5*(H + H');
     %Gradient
-    prob.f = @(x) Hc*x + f;
+    prob.f = @(x) (Hc*x + f)'; %transpose to keep derivative checker happy
     %Hessian
     prob.H = @(x,sigma,lambda) sparse(sigma*Hc);
     %Hessian Structure is based on the sum of H and Q

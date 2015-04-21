@@ -13,7 +13,7 @@ try
 catch
     havVC = false;
 end
-%Check for IC 2013
+%Check for IC 2013 [not req from OPTI v >= 2.12]
 try
     a = clp; %#ok<NASGU>
 catch

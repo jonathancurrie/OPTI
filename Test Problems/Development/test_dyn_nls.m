@@ -1693,7 +1693,7 @@ h = plot(tm1, zm1,'o', tfit, zfit(:,1),'-', tfit0, zfit0(:,1),'-');  % raw data
 set(h(3),'color',0.8*[1,1,1]); 
 errf = norm(theta-param_fit); 
 title(sprintf('A true = %2g, Afit = %2g, b true = %2.2g, bfit = %2.2g, Norm(err) = %2.2f %%',A,param_fit(1), b, param_fit(2), errf))
-set(gca,'XTickl',''); 
+% set(gca,'XTickl',''); 
  
 subplot(2,1,2); 
 h = plot(tm2, zm2,'o', tfit, zfit(:,2),'-', tfit0, zfit0(:,2),'-');  % raw data 

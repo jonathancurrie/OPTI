@@ -19,11 +19,11 @@ clc
 % Builder included with OPTI. Use the following commands, substituting the
 % required paths on your computer:
 
-clppath = 'C:\Solvers\Clp-1.15.6\Clp'; % FULL path to CLP
+clppath = 'C:\Solvers\Clp-1.16.5\Clp'; % FULL path to CLP
 glpkpath = 'C:\Solvers\glpk-4.48'; % FULL path to GLPK(or leave blank [MAX VER 4.48])
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('CLP',{clppath,glpkpath},cd);
+% opti_VSBuild('CLP',{clppath,glpkpath},cd,'VS2013');
 
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and
@@ -34,7 +34,7 @@ glpkpath = 'C:\Solvers\glpk-4.48'; % FULL path to GLPK(or leave blank [MAX VER 4
 clear clp
 
 %Enable for Aboca Build (must compile using Intel C++ & VS2012 Linker)
-haveABC = true;
+haveABC = false;
 
 % Get Arch Dependent Library Path
 libdir = opti_GetLibPath();

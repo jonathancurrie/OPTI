@@ -22,7 +22,7 @@
 lpspath = 'C:\Solvers\lp_solve_5.5'; % FULL path to LP_SOLVE
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('LPSOLVE',lpspath,cd);
+% opti_VSBuild('LPSOLVE',lpspath,cd,'VS2013');
 
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and

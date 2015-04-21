@@ -1,10 +1,10 @@
-%% OPTI MEX Install Script
+y%% OPTI MEX Install Script
 
 % This file enables me to quickly rebuild all solvers - it is not intended
 % to be called by the user!
 
 % My build platform:
-% - Windows 8 x64
+% - Windows 7 x64
 % - Visual Studio 2012
 % - Intel Compiler XE (C++ & FORTRAN)
 % - Intel Math Kernel Library
@@ -14,18 +14,21 @@
 addpath([cd '/Solvers/Source'])
 addpath([cd '/Utilities/Source'])
 
-%% -- Intel C++ Solvers --
-clc
-fprintf(2,'Please Specify Intel C++ as your Compiler with VS2012 Linker (Option 3, Don''t Look for Installed Compilers)...\n\n');
-mex -setup
-%% CLP
-opti_CLP_Install
+% %% -- Intel C++ Solvers --
+% clc
+% fprintf(2,'Please Specify Intel C++ as your Compiler with VS2012 Linker (Option 3, Don''t Look for Installed Compilers)...\n\n');
+% mex -setup
+% %% CLP
+% opti_CLP_Install
 
 
 %% -- VS2012 Solvers --
 clc
 fprintf(2,'Please Specify Visual Studio 2012 as your Compiler...\n\n');
 mex -setup
+%% CLP
+opti_CLP_Install
+
 %% BONMIN
 opti_BONMIN_Install
 

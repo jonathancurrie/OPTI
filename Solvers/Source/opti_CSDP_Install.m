@@ -22,7 +22,7 @@
 csdppath = 'C:\Solvers\CSDP 6.2beta'; % FULL path to CSDP
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('CSDP',csdppath,cd);
+%opti_VSBuild('CSDP',csdppath,cd,'VS2013');
 
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and

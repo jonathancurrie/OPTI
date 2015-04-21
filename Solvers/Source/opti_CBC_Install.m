@@ -21,10 +21,10 @@
 % Builder included with OPTI. Use the following commands, substituting the
 % required path on your computer:
 
-cbcpath = 'C:\Solvers\Cbc-2.8.9\Cbc'; % FULL path to CBC
+cbcpath = 'C:\Solvers\Cbc-2.9.3\Cbc'; % FULL path to CBC
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('CBC',cbcpath,cd);
+% opti_VSBuild('CBC',cbcpath,cd,'VS2013');
 
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and

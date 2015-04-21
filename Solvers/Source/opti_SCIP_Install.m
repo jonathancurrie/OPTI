@@ -28,9 +28,9 @@
 % %% Visual Studio Builder Commands [LATEST SCIP REQ C++11]
 % %NOTE  - the PaxHeader folders change - update as required
 % clear
-% path = 'C:\Solvers\scipoptsuite-3.0.2\scip-3.0.2'; %e.g. 'C:\Solvers\SCIP'
-% splxpath = 'C:\Solvers\scipoptsuite-3.0.2\soplex-1.7.2'; %e.g. 'C:\Solvers\SOPLEX'
-% ipoptpath = 'C:\Solvers\Ipopt-3.11.8\Ipopt'; %e.g. 'C:\Solvers\IPOPT'
+% path = 'C:\Solvers\scipoptsuite-3.1.1\scip-3.1.1'; %e.g. 'C:\Solvers\SCIP'
+% splxpath = 'C:\Solvers\scipoptsuite-3.1.1\soplex-2.0.1'; %e.g. 'C:\Solvers\SOPLEX'
+% ipoptpath = 'C:\Solvers\Ipopt-3.12.1\Ipopt'; %e.g. 'C:\Solvers\IPOPT'
 % n = 1;
 % % SCIP
 % sdir = [path '\src'];
@@ -62,7 +62,8 @@
 % name = 'scip';
 % opts = [];
 % opts.exPP = {'IPOPT_BUILD','_CRT_SECURE_NO_WARNINGS','NO_RAND_R','NO_SIGACTION','NO_STRERROR_R',...
-%              'NO_STRTOK_R','NO_NEXTAFTER','ROUNDING_MS','NPARASCIP'};     
+%              'NO_STRTOK_R','ROUNDING_MS','NPARASCIP'};
+%              %'NO_NEXTAFTER' not used in 3.1.1
 % opts.include = {'cppmain.cpp'};
 % opts.console = true;
 % opts.linklib = {'libscip.lib','libsoplex.lib','libipopt.lib','blas.lib','lapack.lib','libdmumps_c.lib','libdmumps_f.lib','libseq_c.lib','libseq_f.lib','libmetis.lib','libpord.lib'};
@@ -87,12 +88,17 @@
 %       - FIND #include "dijkstra/      REPLACE #include "../dijkstra/
 %       - FIND #include <cppad/         REPLACE #include <../cppad/
 %       - FIND # include <cppad/        REPLACE # include <../cppad/
-%   b) In src/cppad/configure.hpp for 32bit change lines 87 and 101 to
+%   b) In src/cppad/configure.hpp for 32bit change lines 120 and 101 to
 %           # define CPPAD_SIZE_T_SAME_UNSIGNED_INT 1
 %           # define CPPAD_TAPE_ADDR_TYPE unsigned int
 %      while for 64bit change it to
 %           # define CPPAD_SIZE_T_SAME_UNSIGNED_INT 0
 %           # define CPPAD_TAPE_ADDR_TYPE size_t
+
+%   SOPLEX Changes
+%       - settings.cpp add "Settings::" to fucntions on lines
+%       340,350,360,378,404,668
+
 %   c) Build a Win32 or x64 Release of each project to compile the code.
 %   d) Copy the generated .lib files to the following folder:
 %

@@ -22,7 +22,7 @@
 glpkpath = 'C:\Solvers\glpk-4.48'; % FULL path to GLPK [MAX VER 4.48]
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('GLPK',glpkpath,cd);
+%opti_VSBuild('GLPK',glpkpath,cd,'VS2013');
 
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and

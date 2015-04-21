@@ -23,7 +23,7 @@
 levpath = 'C:\Solvers\levmar-2.6'; %FULL path to LEVMAR
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('LEVMAR',levpath,cd);
+% opti_VSBuild('LEVMAR',levpath,cd,'VS2013');
 
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and

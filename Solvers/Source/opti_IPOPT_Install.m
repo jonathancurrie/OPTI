@@ -28,11 +28,11 @@
 % Builder included with OPTI. Use the following commands, substituting the
 % required path on your computer:
 
-ipoptpath = 'C:\Solvers\Ipopt-3.11.8\Ipopt'; %FULL path to IPOPT
+ipoptpath = 'C:\Solvers\Ipopt-3.12.1\Ipopt'; %FULL path to IPOPT
 mumpspath = 'C:\Solvers\MUMPS_4.10.0'; %FULL path to MUMPS (or leave blank to skip linking MUMPS)
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('IPOPT',{ipoptpath,mumpspath},cd);
+opti_VSBuild('IPOPT',{ipoptpath,mumpspath},cd,'VS2013');
 
 % 3) IF LINKING MUMPS -> Complete MUMPS Compilation
 % Complete opti_MUMPS_Install.m in Solvers/Source IF REQUIRED.

@@ -3,14 +3,27 @@ function current_version = optiver
 %  Return OPTI software version. This file also contains version update
 %  information.
 
-%   Copyright (C) 2011-2014 Jonathan Currie (I2C2)
+%   Copyright (C) 2011-2015 Jonathan Currie (I2C2)
 
-current_version = 2.12;
+current_version = 2.13;
 
 %History
 
-%2.12 (..)
+%2.13 (20/04/15)
+% - Fixed bug in convBonmin when supplying options from another solver (G.Tsoukalas)
+% - Fixed bug in >=R2014b when plotting OPTI plots with bounds
+% - Fixed bug in >=R2014b when plotting quadratic constraints
+% - Fixed bug with bintprog no longer available in R2014b
+% - Fixed bug with orange line in data fitting plots in R2014b
+
+%2.12 (23/03/15)
 % - Added warning to problems which did not solve correctly.
+% - Updated CLP to v1.16.5, removed Aboca support
+% - Updated CBC to v2.9.3
+% - Updated IPOPT to v3.12.1
+% - Updated BONMIN to 1.8.1
+% - Re-added CLP to be able to solve QPs (earlier bug appears fixed)
+% - Rebuilt all solvers against MKL v11.2 R2
 
 %2.11 (16/09/14)
 % - Rebuilt all solvers against MKL v11.2 R0

@@ -20,39 +20,18 @@
 % the source. 
 
 % 2) Compile BONMIN
-% The easiest way to compile CLP is to use the Visual Studio Project
+% The easiest way to compile BONMIN is to use the Visual Studio Project
 % Builder included with OPTI. Use the following commands, substituting the
 % required path on your computer:
 
-bminpath = 'C:\Solvers\Bonmin-1.7.4\Bonmin'; %FULL path to BONMIN
-ipoptpath = 'C:\Solvers\Ipopt-3.11.8\Ipopt'; %FULL path to IPOPT
+bminpath = 'C:\Solvers\Bonmin-1.8.1\Bonmin'; %FULL path to BONMIN
+ipoptpath = 'C:\Solvers\Ipopt-3.12.1\Ipopt'; %FULL path to IPOPT
 mumpspath = 'C:\Solvers\MUMPS_4.10.0'; %FULL path to MUMPS (or leave blank to skip linking MUMPS)
-cbcpath = 'C:\Solvers\Cbc-2.8.9\Cbc'; % FULL path to CBC
-clppath = 'C:\Solvers\Clp-1.15.6\Clp'; % FULL path to CLP
+cbcpath = 'C:\Solvers\Cbc-2.9.3\Cbc'; % FULL path to CBC
+clppath = 'C:\Solvers\Clp-1.16.5\Clp'; % FULL path to CLP
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('BONMIN',{bminpath,ipoptpath,mumpspath,cbcpath,clppath},cd);
-
-% Once complete, you will have a directory called BONMIN/libbonmin. Open the
-% Visual Studio 2012 solution file, then complete the following steps:
-%   a) In libbonmin open Interfaces/config_default.h and comment the line 
-%   #define COIN_HAS_ASL 1
-%   b) In libosicpx under project properties -> C/C++ -> General add the
-%   Osi\src\Osi folder as an additional include directory.
-%   a) Build a Win32 or x64 Release of each project to compile the code.
-%   b) Copy the generated .lib files to the following folder:
-%
-%   OPTI/Solvers/bonmin/Source/lib/win32 or win64
-%
-%   You will also need to copy header files from the following directories
-%   (keeping the same folder structure)
-%   following folder:
-%       - Algorithms
-%       - Algorithms/OaGenerators
-%       - CbcBonmin
-%       - Interfaces
-%   to:
-%   OPTI/Solvers/bonmin/Source/Include/
+%opti_VSBuild('BONMIN',{bminpath,ipoptpath,mumpspath,cbcpath,clppath},cd);
 
 % 4) Compile the MEX File
 % The code below will automatically include all required libraries and
