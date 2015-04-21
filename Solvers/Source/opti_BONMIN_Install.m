@@ -31,7 +31,7 @@ cbcpath = 'C:\Solvers\Cbc-2.9.3\Cbc'; % FULL path to CBC
 clppath = 'C:\Solvers\Clp-1.16.5\Clp'; % FULL path to CLP
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-%opti_VSBuild('BONMIN',{bminpath,ipoptpath,mumpspath,cbcpath,clppath},cd);
+%opti_VSBuild('BONMIN',{bminpath,ipoptpath,mumpspath,cbcpath,clppath},cd,'VS2013');
 
 % 4) Compile the MEX File
 % The code below will automatically include all required libraries and

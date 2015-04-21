@@ -10,7 +10,7 @@
 #undef HAVE_BSDGETTIMEOFDAY
 
 /* Define if the copysign function/macro is available. */
-#define HAVE_COPYSIGN
+#undef HAVE_COPYSIGN
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
@@ -31,10 +31,10 @@
 #undef HAVE_INTTYPES_H
 
 /* Define if the isinf() function/macro is available. */
-#define HAVE_ISINF
+#undef HAVE_ISINF
 
 /* Define if the isnan() function/macro is available. */
-#define HAVE_ISNAN
+#undef HAVE_ISNAN
 
 /* Define to 1 if you have the `m' library (-lm). */
 #undef HAVE_LIBM

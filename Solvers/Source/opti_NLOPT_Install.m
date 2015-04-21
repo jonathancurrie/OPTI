@@ -22,7 +22,7 @@
 nloptpath = 'C:\Solvers\nlopt-2.4.2'; % FULL path to NLOPT
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('NLOPT',nloptpath,cd);
+%opti_VSBuild('NLOPT',nloptpath,cd,'VS2013');
 
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and

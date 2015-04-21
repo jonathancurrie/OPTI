@@ -641,7 +641,11 @@ switch(lower(solver))
         [~,hdrs] = VS_BuildFileList([nloptpath '/api']);
         copyHeaders(hdrs,[cdir '/Solvers/Source/Include/Nlopt/']);  
         %Copy config.h
-        copyfile([cd '/Solvers/Source/nlopt/config.h'],[nloptpath '\api\config.h'],'f');
+        if(strcmpi(vsver,'VS2013'))
+            copyfile([cd '/Solvers/Source/nlopt/config.h'],[nloptpath '\api\config.h'],'f');
+        else
+            copyfile([cd '/Solvers/Source/nlopt/config12.h'],[nloptpath '\api\config.h'],'f');
+        end
         n=1;
         sdir = nloptpath;
         name = 'libnlopt';

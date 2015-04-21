@@ -23,6 +23,7 @@
 #include "Status.h"
 #include <exception>
 #include <time.h>
+#include <algorithm>
 
 #ifdef HAVE_PARDISO
     #include "mkl.h"

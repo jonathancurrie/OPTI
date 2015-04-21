@@ -24,7 +24,7 @@
 ooqppath = 'C:\Solvers\OOQP-0.99.22'; % FULL path to OOQP
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('OOQP',ooqppath,cd);
+%opti_VSBuild('OOQP',ooqppath,cd,'VS2013');
 
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and

@@ -21,7 +21,7 @@
 nmdpath = 'C:\Solvers\NOMAD-3.6.2'; % FULL path to NOMAD
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('Nomad',nmdpath,cd);
+%opti_VSBuild('Nomad',nmdpath,cd,'VS2013');
 
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and

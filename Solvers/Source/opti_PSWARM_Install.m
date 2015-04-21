@@ -22,7 +22,7 @@
 pswmpath = 'C:\Solvers\PPSwarm_v1_5'; % FULL path to PSwarm 
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('PSwarm',pswmpath,cd);
+% opti_VSBuild('PSwarm',pswmpath,cd,'VS2013');
 
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and
