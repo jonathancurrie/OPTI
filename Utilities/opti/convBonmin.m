@@ -71,7 +71,7 @@ end
 %Setup Integer Vars
 mprob.options.var_type = prob.int.ind; %uses -1, 0, 1 format
 %Setup Nonlinear Vars
-if(isempty(opts.solverOpts.var_lin) || any(isnan(opts.solverOpts.var_lin)))
+if(~isfield(opts.solverOpts,'var_lin') || isempty(opts.solverOpts.var_lin) || any(isnan(opts.solverOpts.var_lin)))
     mprob.options.var_lin = zeros(prob.sizes.ndec,1); %for now assuming all nonlinear
 else
     varlin = opts.solverOpts.var_lin;
@@ -92,7 +92,7 @@ if(prob.sizes.nnlrow) %bug fix when bonmin solves with double-sided nonlinear ro
 else
     nnlcon = prob.sizes.nnlineq + prob.sizes.nnleq + prob.sizes.nqc;
 end
-if(isempty(opts.solverOpts.cons_lin) || any(isnan(opts.solverOpts.cons_lin)))
+if(~isfield(opts.solverOpts,'cons_lin') || isempty(opts.solverOpts.cons_lin) || any(isnan(opts.solverOpts.cons_lin)))
    mprob.options.cons_lin = [zeros(nnlcon,1); ones(nlincon,1)]; %augment both kinds
 else
     conslin = opts.solverOpts.cons_lin;
