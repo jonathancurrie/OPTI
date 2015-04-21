@@ -7,7 +7,7 @@ function solPath = VS_WriteSol(projStruct,toolset)
 if(~isstruct(projStruct))
     error('The supplied argument must be a structure');
 end
-if(nargin < 2), toolset = 'v110'; end
+if(nargin < 2), toolset = 'v120'; end
 len = numel(projStruct);
 PATHS = cell(len,1);
 IDS = cell(len,1);
@@ -39,7 +39,9 @@ solPath = [PATHS{1} filesep projStruct(1).name '.sln'];
 fid = fopen(solPath,'w+');
 if(fid < 0), error('Error writing solution file'); end  
 try
-    if(strcmpi(toolset,'v110'))
+    if(strcmpi(toolset,'v120'))
+        fprintf(fid,'Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio 2013\n');  
+    elseif(strcmpi(toolset,'v110'))
         fprintf(fid,'Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio 2012\n');        
     elseif(strcmpi(toolset,'v100'))
         fprintf(fid,'Microsoft Visual Studio Solution File, Format Version 11.00\n# Visual Studio 2010\n');

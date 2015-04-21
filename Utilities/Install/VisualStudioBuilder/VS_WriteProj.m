@@ -21,7 +21,7 @@ function [projPath,guid] = VS_WriteProj(srcpath,projName,incpath,opts)
 %                       'openMP'   true / false {false}
 %                       'mkl'      true / false to include MKL headers {false}
 %                       'charset'  Character Set {'unicode'}, 'multibyte'
-%                       'toolset'  'v100' for VS2010, 'v110' for VS2012 {v110}
+%                       'toolset'  'v100' for VS2010, 'v110' for VS2012, v120 for VS2013 {v120}
 %                       'ifortver' Intel Fortran version {11.0}
 %                       'exclude'  cell array of source files to exclude from project {[]}
 %                       'exFilter' cell array of filtered source files (e.g. abc*) to exclude from project {[]}
@@ -53,8 +53,8 @@ if(~isfield(opts,'exPP')), opts.exPP = []; end
 if(~isfield(opts,'openMP')), opts.openMP = false; end
 if(~isfield(opts,'charset')), opts.charset = 'unicode'; end
 if(~isfield(opts,'mkl')), opts.mkl = false; end
-if(~isfield(opts,'toolset')), opts.toolset = 'v110'; end
-if(~isfield(opts,'ifortver')), opts.ifortver = '11.0'; end
+if(~isfield(opts,'toolset')), opts.toolset = 'v120'; end
+if(~isfield(opts,'ifortver')), opts.ifortver = '13.0'; end
 if(~isfield(opts,'include')), opts.include = []; end
 if(~isfield(opts,'exclude')), opts.exclude = []; end
 if(~isfield(opts,'exFolder')), opts.exFolder = []; end
@@ -176,7 +176,11 @@ if(opts.cpp)
     docNode = com.mathworks.xml.XMLUtils.createDocument('Project');
     p = docNode.getDocumentElement;
     p.setAttribute('DefaultTargets','Build');
-    p.setAttribute('ToolsVersion','4.0');
+    if(strcmpi(opts.toolset,'v120'))
+        p.setAttribute('ToolsVersion','12.0');
+    else
+        p.setAttribute('ToolsVersion','4.0');
+    end
     p.setAttribute('xmlns','http://schemas.microsoft.com/developer/msbuild/2003');
     %Project Configuration
     pc = createSection(docNode,'ItemGroup','ProjectConfigurations');

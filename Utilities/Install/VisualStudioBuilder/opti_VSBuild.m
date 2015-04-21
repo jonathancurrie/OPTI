@@ -1,16 +1,36 @@
-function opti_VSBuild(solver,paths,cdir)
+function opti_VSBuild(solver,paths,cdir,vsver)
 %Build a Visual Studio Solution/Project for a Selected Solver
 
 if(~iscell(paths)), paths = {paths}; end
 if(nargin < 3 || isempty(cdir)), cdir = cd; end
+if(nargin < 4 || isempty(vsver)), vsver = 'VS2013'; end
 
 %IPOPT + BONMIN Settings
 havePardiso = 'MKL'; %'BASEL' or 'MKL' Pardiso version to compile against
 haveMA57 = 1; %MATLAB's MA57
 haveLinearSolverLoader = 0; %Dynamically Load HSL Solvers (you must compile them yourself)
 
+%Find Visual Studio devenv.exe
+switch(lower(vsver))
+    case 'vs2013'
+        vsdir = 'C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE';
+        if(~exist([vsdir '\devenv.exe'],'file'))
+            error('Could not find Visual Studio 2013 Install - Looked in ''%s''',vsdir);
+        end
+    case 'vs2012'
+        vsdir = 'C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE';
+        if(~exist([vsdir '\devenv.exe'],'file'))
+            error('Could not find Visual Studio 2012 Install - Looked in ''%s''',vsdir);
+        end
+    case 'vs2010'
+        vsdir = 'C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE';
+        if(~exist([vsdir '\devenv.exe'],'file'))
+            error('Could not find Visual Studio 2010 Install - Looked in ''%s''',vsdir);
+        end
+    otherwise
+        error('Unknown Visual Studio Version - Use VS2010, VS2012 or VS2013');
+end
 %Misc Defines
-vsdir = 'C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE'; %Visual Studio Install Directory (for devenv.exe)
 bthdr = [cdir '/Solvers/Source/Include/BuildTools']; %Build Tools Headers for Coin Solvers
 intc = 'Intel C++ Compiler XE 15.0'; %Intel C++ Compiler Name & Version
 
@@ -861,7 +881,7 @@ end
 %Compile Projects             
 if(~isempty(projs))
     try
-        compileProjects(vsdir,projs,comps,solpath);
+        compileProjects(vsdir,projs,comps,solpath,vsver);
         %Copy out compiled libraries
         copyLibs(solpath,projs,comps,cdir);
     catch ME
@@ -910,8 +930,8 @@ for i = 1:length(projs)
     try
         copyfile(w64lib,[cdir '/' d '/Source/lib/win64/' projs{i} '.lib'],'f');
         ok64 = 1;
-    catch
-       fprintf(2,'\nCould not find 64-bit library - ensure it compiled without error. [Error: %s]\n',ME.message);
+    catch ME
+        fprintf(2,'\nCould not find 64-bit library - ensure it compiled without error. [Error: %s]\n',ME.message);
         ok64 = 0;
     end
     if(ok32&&ok64)
@@ -921,25 +941,33 @@ end
 fprintf('\n');
 
 
-function compileProjects(vsdir,projs,comps,solpath)
+function compileProjects(vsdir,projs,comps,solpath,vsver)
 
-fprintf('Compiling Visual Studio Projects [This May Take a Few Minutes]:\n');
+fprintf('Compiling Visual Studio Projects using %s [This May Take a Few Minutes]:\n',upper(vsver));
 ccdir = cd;
 cd(vsdir);
-estr = ['!devenv ' solpath ' /build Release /project ']; n = 1;
+%estr = ['!devenv ' solpath ' /build Release /project ']; 
+n = 1;
 for i = 1:length(projs)
     switch(comps{i})
         case 'vc'
-            estr = ['!devenv "' solpath '" /build Release /project ' projs{i} ' /projectconfig Release'];
+            if(strcmpi(vsver,'vs2013'))
+                estr32 = ['!devenv "' solpath '" /build "Release|Win32" /project ' projs{i} ' /projectconfig "Release|Win32"'];
+                estr64 = ['!devenv "' solpath '" /build "Release|x64" /project ' projs{i} ' /projectconfig "Release|x64"'];
+            else
+                estr32 = ['!devenv "' solpath '" /build Release /project ' projs{i} ' /projectconfig Release|Win32'];
+                estr64 = ['!devenv "' solpath '" /build Release /project ' projs{i} ' /projectconfig Release|x64'];
+            end
         case 'ic'
             idx = strfind(solpath,filesep); %assume not main project
             spath = solpath(1:idx(end-1));
-            estr = ['!devenv "' spath projs{i} filesep projs{i} '.vcxproj" /build Release'];
+            estr32 = ['!devenv "' spath projs{i} filesep projs{i} '.vcxproj" /build Release|Win32'];
+            estr64 = ['!devenv "' spath projs{i} filesep projs{i} '.vcxproj" /build Release|x64'];
     end
     fprintf('Compiling Project (%d of %d) ''%s'' [Win32]...',n,2*length(projs),projs{i}); n = n + 1;
-    eval([estr '|Win32']);
+    eval(estr32);
     fprintf('Done!\nCompiling Project (%d of %d) ''%s'' [Win64]...',n,2*length(projs),projs{i}); n = n + 1;
-    eval([estr '|x64']);
+    eval(estr64);
     fprintf('Done!\n');
 end
 cd(ccdir); 
