@@ -16,8 +16,15 @@ if(iscell(Q))
 else
     no = 1;
 end
+%>= 2014b requires more points...
+if(~verLessThan('matlab','8.4'))
+    nmul = 4;
+else
+    nmul = 1;
+end
+
 %Generate Constraint Surface Points
-[x1,x2] = meshgrid(linspace(xl(1),xl(2),data.npts),linspace(yl(1),yl(2),data.npts));
+[x1,x2] = meshgrid(linspace(xl(1),xl(2),data.npts*nmul),linspace(yl(1),yl(2),data.npts*nmul));
 
 %For each quadratic constraint, plot
 for i = 1:no

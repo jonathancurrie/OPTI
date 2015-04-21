@@ -134,7 +134,7 @@ end
 
 function plotProblem(prob,xb,data)    
 %Plot Objective Contour
-data.npts = plotObj(prob,xb,data);
+[data.npts,objlim] = plotObj(prob,xb,data);
 
 %If we have search space (i.e. multisolve has been run), also plot
 if(strcmp(data.mode,'multi') && isfield(prob,'multi') && ~isempty(prob.multi))
@@ -197,6 +197,9 @@ end
 if(isfield(prob.int,'ind') && any(prob.int.ind))
     plotIntCon(prob,data);
 end
+
+%Reset plot bounds
+xlim(objlim.xl); ylim(objlim.yl);
 
 %Plot Optimum
 if(~isempty(xb))

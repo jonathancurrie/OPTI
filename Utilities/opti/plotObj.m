@@ -1,4 +1,4 @@
-function npts = plotObj(prob,xb,data)
+function [npts,lims] = plotObj(prob,xb,data)
 %PLOTOBJ Plot the objective function contour
 %   plotObj(prob,xb,data)
 
@@ -17,7 +17,7 @@ if(isempty(npts))
     switch(lower(prob.type))
         case {'lp','milp','bilp'}
             npts = 5;
-        case {'qp','qcqp','miqp','miqcqp','sdp','misdp'}
+        case {'qp','miqp','sdp','misdp','qcqp','miqcqp'}
             npts = 30;
         case {'snle','scnle','nls','uno','nlp','minlp'}
             npts = 50;
@@ -133,5 +133,9 @@ end
 data.fval = fval;
 title(plotTitle(prob,xb,data));
 hold off;
+
+%Save Limits of Plot
+lims.xl = xlim;
+lims.yl = ylim;
 end
 

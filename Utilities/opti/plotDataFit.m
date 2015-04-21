@@ -6,9 +6,11 @@ function plotDataFit(prob,xb,confStats,doLog)
 %Measurement Plot Color & Style
 if(~isempty(confStats))
     measC = [0 0 1];
+    fitC = [1 0 0];
     measS = 'o';
 else
     measC = [0.4 0.4 0.4];
+    fitC = [0    0.4470    0.7410];
     measS = 'o';
 end
 
@@ -17,12 +19,6 @@ if(isfield(prob.misc,'funorig') && ~isempty(prob.misc.funorig))
     fun = prob.misc.funorig;
 else
     fun = prob.fun;
-end
-
-if(isempty(prob.xdata) || (size(prob.xdata,1) > 1 && size(prob.xdata,2) > 1))
-    x = 1:length(prob.ydata);
-else
-    x = prob.xdata;
 end
 
 %Plot confidence lines if present
@@ -42,7 +38,7 @@ if(nargin(fun) == 2)
             t = 1:length(prob.ydata);
             y = fun(xb,prob.xdata);
             hl(1) = plot(t,prob.ydata,measS,'color',measC); 
-            hold on; hl(2) = plot(t,y); hold off;
+            hold on; hl(2) = plot(t,y,'color',fitC); hold off;
         else
             if(length(prob.xdata) ~= length(prob.ydata))
                 optiwarn('opti:dfit','Cannot plot data fit as xdata and ydata are not the same length!');
@@ -52,7 +48,7 @@ if(nargin(fun) == 2)
                 x = linspace(min(prob.xdata),max(prob.xdata),1e3);
                 y = fun(xb,x);
                 hl(1) = plot(prob.xdata,prob.ydata,measS,'color',measC);
-                hold on; hl(2) = plot(x,y); hold off;
+                hold on; hl(2) = plot(x,y,'color',fitC); hold off;
             catch %just use user supplied data                               
                 hl(1) = plot(prob.xdata,prob.ydata,measS,'color',measC);
                 hold on; hl(2) = plot(prob.xdata,fun(xb,prob.xdata),'.:'); hold off;
@@ -69,7 +65,7 @@ if(nargin(fun) == 2)
 else
     t = 1:length(prob.ydata);
     hl(1) = plot(t,prob.ydata,measS,'color',measC); ylabel('y');
-    hold on; hl(2) = plot(t,fun(xb),'.:'); hold off;
+    hold on; hl(2) = plot(t,fun(xb),'.:','color',fitC); hold off;
     if(~isempty(prob.weighting))
         tstr = (['NLS Curve Fit - SSE: ' num2str(sum(((fun(xb)-prob.ydata).*prob.weighting).^2))]);
     else
