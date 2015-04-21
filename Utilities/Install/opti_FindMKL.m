@@ -46,7 +46,7 @@ error('Could not find the Intel MKL Location on your computer. Please modify thi
 
 function [ok,mkl_link,mkl_forstr,mkl_inc,mkl_lib,mkl_cmplr,mkl_ver] = checkMKLVer(mklstr,seq)
 %Local check function
-ok = false;
+ok = false; mkl_link ='';
 %Find MKL
 for i = 1:length(mklstr.mkl)
     if(exist(mklstr.mkl{i},'dir'))
@@ -102,4 +102,8 @@ for i = 1:length(mklstr.compiler)
         mkl_forstr = ' -lifconsol -llibifcoremd -llibifportmd -llibmmd -llibirc -lsvml_disp -lsvml_dispmd ';
         break;
     end
+end
+
+if(isempty(mkl_link))
+    error('Could Not Find Intel MKL On Your System! Modify this file to locate it on your PC.');
 end
