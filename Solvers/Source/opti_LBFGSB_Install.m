@@ -25,8 +25,8 @@
 lbfgsbpath = 'C:\Solvers\Lbfgsb.3.0'; % FULL path to L-BFGS-B
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('LBFGSB',lbfgsbpath,cd);
-
+opti_VSBuild('LBFGSB',lbfgsbpath,cd,'VS2013');
+%%
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and
 % directories to build the L-BFGS-B MEX file. Once you have completed all the
