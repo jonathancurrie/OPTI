@@ -190,7 +190,10 @@ opts.objbias = prob.objbias;
 function [prob,opts,nlprob] = setupGMATLAB(prob,opts,warn)
 %Build optimset struct, adding any passed options (ignored by optimset if not recognised)
 opts.solverOpts = optimset(opts.solverOpts,'Display',opts.display,'MaxIter',opts.maxiter,'MaxFunEvals',opts.maxfeval,...
-                            'MaxTime',opts.maxtime,'TolFun',opts.tolrfun,'TolXInteger',opts.tolint);
+                            'MaxTime',opts.maxtime,'TolFun',opts.tolrfun);
+try %#ok<TRYNC>
+   opts.solverOpts = optimset(opts.solverOpts,'TolXInteger',opts.tolint); 
+end
 %Build NLP
 prob = fixLin('gen',prob,warn,'GMATLAB'); %Check & Fix Linear Constraints
 prob = fixNlin('gen',prob,warn,'GMATLAB'); %Check & Fix Nonlinear Constraints
@@ -317,7 +320,7 @@ prob = fixLin('gen',prob,warn,'MATLAB'); %Check & Fix Linear Constraints
 p = which('quadprog.m');
 if(~isempty(p))
     %intlinprog requires its own setup
-    if(~isempty(which('intlinprog.m')) && strcmpi(prob.type,'milp'))
+    if((~verLessThan('matlab','8.4') && strcmpi(prob.type,'bilp')) || (~isempty(which('intlinprog.m')) && strcmpi(prob.type,'milp'))) %bintprog not available and bilp OR intlinprog available and milp
         if(~isempty(opts.solverOpts))
             opts.solverOpts = optimoptions('intlinprog',opts.solverOpts);
         else
@@ -325,11 +328,23 @@ if(~isempty(p))
         end
         opts.solverOpts = optimoptions(opts.solverOpts,'Display',opts.display,'MaxTime',opts.maxtime,...
                                 'TolInteger',opts.tolint,'MaxNodes',opts.maxnodes);
+        %If BILP using intlinprog, we haven't set binary variables yet, set now
+        if(strcmpi(prob.type,'bilp'))
+            nv = length(prob.f);
+            prob.int.str = repmat('I',1,nv);
+            prob.int.idx = 1:nv;
+            prob.int.ind = true(1,nv);
+            prob.lb = zeros(nv,1);
+            prob.ub = ones(nv,1);
+        end
     else
         opts.solverOpts = optimset(opts.solverOpts,'Diagnostics',diagState(opts.display),...
                                 'Display',opts.display,'MaxIter',opts.maxiter,'MaxTime',opts.maxtime,...
-                                'MaxFunEvals',opts.maxfeval,'TolFun',opts.tolrfun,'TolRLPFun',opts.tolrfun,'TolXInteger',opts.tolint,...
+                                'MaxFunEvals',opts.maxfeval,'TolFun',opts.tolrfun,...
                                 'MaxNodes',opts.maxnodes);
+        try %#ok<TRYNC>
+            opts.solverOpts = optimset(opts.solverOpts,'TolRLPFun',opts.tolrfun,'TolXInteger',opts.tolint); %old options
+        end
     end
     %Check Settings for QP or Build NLP
     switch(lower(prob.type))
