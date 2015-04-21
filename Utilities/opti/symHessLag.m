@@ -83,7 +83,7 @@ end
 symhess = sym('sigma')*symPartialDer(symobj,var,nvar,indo,true);
 
 %For each constraint equation, multiply by lambda(i) then add to our hessian
-parfor i = 1:length(symcon)
+for i = 1:length(symcon)
     symhess = symhess + sym(sprintf('lambda(%d)',i))*symPartialDer(symcon(i),var,nvar,[],true);
 end
 
