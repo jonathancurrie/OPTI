@@ -208,15 +208,15 @@ if(~havVC)
 else
     fprintf('Found the Microsoft VC++ 2012 %s Redistributable\n',arch); 
 end
-if(~havIC)
-    fprintf(2,'Cannot find the Intel C++ XE 2013 %s Redistributable!\n',arch);
-else
-    fprintf('Found the Intel C++ XE 2013 %s Redistributable\n',arch); 
-end
+% if(~havIC) %[not req from OPTI v >= 2.12]
+%     fprintf(2,'Cannot find the Intel C++ XE 2013 %s Redistributable!\n',arch);
+% else
+%     fprintf('Found the Intel C++ XE 2013 %s Redistributable\n',arch); 
+% end
 if(~havIF)
-    fprintf(2,'Cannot find the Intel Fortran XE 2013 %s Redistributable!\n',arch);
+    fprintf(2,'Cannot find the Intel Fortran XE 2015 %s Redistributable!\n',arch);
 else
-    fprintf('Found the Intel Fortran XE 2013 %s Redistributable\n',arch); 
+    fprintf('Found the Intel Fortran XE 2015 %s Redistributable\n',arch); 
 end    
 
 %Install Instructions for each Package
@@ -228,15 +228,15 @@ if(missing)
         fprintf(2,'  - When prompted, select the ''%s'' package. Once downloaded, install it.\n\n',arch);
     end
     
-    if(~havIC)
-        fprintf(2,' Intel C++ XE 2013:\n  - Download from: http://software.intel.com/en-us/articles/redistributable-libraries-for-intel-c-and-visual-fortran-composer-xe-2013-sp1-for-windows\n');
-        fprintf(2,'  - The download page will contain multiple links. Download the latest (highest number) update from the ''Intel C++ Composer XE 2013 for Windows Table''\n');
-        fprintf(2,'  - The download package will contain two files. Install the ''%s'' package.\n\n',icarch);
-    end
+%     if(~havIC) %[not req from OPTI v >= 2.12]
+%         fprintf(2,' Intel C++ XE 2013:\n  - Download from: http://software.intel.com/en-us/articles/redistributable-libraries-for-intel-c-and-visual-fortran-composer-xe-2013-sp1-for-windows\n');
+%         fprintf(2,'  - The download page will contain multiple links. Download the latest (highest number) update from the ''Intel C++ Composer XE 2013 for Windows Table''\n');
+%         fprintf(2,'  - The download package will contain two files. Install the ''%s'' package.\n\n',icarch);
+%     end
     
-    if(~havIF)
-        fprintf(2,' Intel Fortran XE 2013:\n  - Download from: http://software.intel.com/en-us/articles/redistributable-libraries-for-intel-c-and-visual-fortran-composer-xe-2013-for-windows\n');
-        fprintf(2,'  - The download page will contain multiple links. Download the latest (highest number) update from the ''Intel Visual Fortran Composer XE 2013 for Windows Table''\n');
+    if(~havIF) 
+        fprintf(2,' Intel Fortran XE 2015:\n  - Download from: https://software.intel.com/en-us/articles/redistributables-for-intel-parallel-studio-xe-2015-composer-edition-for-windows\n');
+        fprintf(2,'  - The download page will contain multiple links. Download the latest (highest number) update from the ''Intel Fortran Composer for Windows Table''\n');
         fprintf(2,'  - The download package will contain two files. Install the ''%s'' package.\n\n',icarch);
     end
     
