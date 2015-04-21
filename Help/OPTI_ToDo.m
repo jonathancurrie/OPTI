@@ -1,3 +1,14 @@
+%% BUG FIXES
+
+% cbc problems lift and project cuts
+% https://projects.coin-or.org/Cbc/ticket/135
+
+% LEVMAR single inequality problem
+% OPTI problems\ParameterEstimationProblem
+
+% MOSEK SDP support
+
+
 %% Ideas of functionality to add to OPTI Toolbox.
 % The below will be added as time allows. Alternatively if you have an
 % excellent student looking for a suitable project, I would be happy to

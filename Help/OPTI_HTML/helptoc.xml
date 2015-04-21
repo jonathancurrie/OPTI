@@ -70,9 +70,6 @@
 		<tocitem target="http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Examples/Examples" image="$toolbox/matlab/icons/help_ex.png">Examples
         </tocitem>
 		
-		<tocitem target="Main/Demos.html" image="$toolbox/matlab/icons/help_ex.png">Demos
-        </tocitem>
-		
 		<tocitem target="Main/release_notes.html" image = "$toolbox/matlab/icons/help_rn.png">Release notes
         </tocitem>
         <tocitem target="Main/Contact.html" image ="Main/Images/opti_email.png">Contact</tocitem>
