@@ -4,3 +4,4 @@ Utilities/Source/Include/
 _vti_cnf/
 _vti_pvt/
 *.mexw64
+*.mexw32
