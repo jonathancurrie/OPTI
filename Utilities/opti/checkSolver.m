@@ -48,7 +48,7 @@ SLE = {'matlab','MUMPS'};
 LP = {'CPLEX','clp','mosek','scip','ooqp','glpk','lp_solve','MATLAB','csdp','dsdp','SeDuMi'};
 MILP = {'CPLEX','cbc','mosek','scip','glpk','lp_solve','MATLAB'};
 BILP = {'CPLEX','cbc','mosek','scip','glpk','lp_solve','MATLAB'};
-QP = {'CPLEX','ooqp','mosek','scip','ipopt','MATLAB'}; %NOTE 'clp' removed in v2.05 due to heap corruption (see https://projects.coin-or.org/Clp/ticket/60#no1)
+QP = {'CPLEX','ooqp','clp','mosek','scip','ipopt','MATLAB'}; 
 QCQP = {'CPLEX','mosek','scip','ipopt'};
 MIQP = {'CPLEX','mosek','scip','bonmin'};
 MIQCQP = {'CPLEX','mosek','scip','bonmin'};
@@ -159,8 +159,15 @@ function ok = check(name,err,ptype)
 if(nargin < 3), ptype = []; end
 switch(name)
     case 'MATLAB'
-        if(~isempty(ptype) && strcmpi(ptype,'milp'))
-            c = which('intlinprog.m');
+        if(~isempty(ptype) && strcmpi(ptype,'milp'))                        
+            c = which('intlinprog.m'); %only available >= 2014a (8.3)
+        elseif(~isempty(ptype) && strcmpi(ptype,'bilp'))
+            %bintprog removed in 2014b, used intlinprog instead if available
+            if(verLessThan('matlab','8.4')) %2014b
+                c = which('bintprog.m');
+            else
+                c = which('intlinprog.m');
+            end                                         
         else
             c = which('fmincon'); %using ver is quite slow
         end
@@ -483,7 +490,11 @@ switch(lower(type))
     case 'qp'
         str = 'quadprog';
     case 'bilp'
-        str = 'bintprog';
+        if(verLessThan('matlab','8.4')) %2014b
+            str = 'bintprog';
+        else
+            str = 'intlinprog';
+        end
     case 'milp'
         str = 'intlinprog';
     case 'nlp'

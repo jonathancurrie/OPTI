@@ -184,9 +184,15 @@ switch(opts.solver)
     case 'cbc'
         [x,fval,exitflag,info] = opti_cbc([],p.f,p.A,p.rl,p.ru,p.lb,p.ub,p.int.str,p.sos,p.x0,opts);
     case 'matlab'
-        t = tic;
-        [x,fval,exitflag,output] = bintprog(p.f,p.A,p.b,p.Aeq,p.beq,p.x0,opts.solverOpts);
-        info = matlabInfo(output,[],toc(t),'BINTPROG');       
+        if(verLessThan('matlab','8.4')) %2014b
+            t = tic;
+            [x,fval,exitflag,output] = bintprog(p.f,p.A,p.b,p.Aeq,p.beq,p.x0,opts.solverOpts);
+            info = matlabInfo(output,[],toc(t),'BINTPROG');  
+        else
+            t = tic;
+            [x,fval,exitflag,output] = intlinprog(p.f,p.int.idx,p.A,p.b,p.Aeq,p.beq,p.lb,p.ub,opts.solverOpts);
+            info = matlabInfo(output,[],toc(t),'INTLINPROG');
+        end
     case 'bonmin'
         [x,fval,exitflag,info] = opti_bonmin(nl,nl.x0);    
     otherwise
@@ -213,8 +219,8 @@ else
             [x,fval,exitflag,info] = mosekqp(p.H,p.f,p.A,p.rl,p.ru,p.lb,p.ub,p.x0,opts.solverOpts);
         case 'ooqp'
             [x,fval,exitflag,info] = opti_ooqp(p.H,p.f,p.A,p.rl,p.ru,p.Aeq,p.beq,p.lb,p.ub,opts);
-%         case 'clp'
-%             [x,fval,exitflag,info] = opti_clp(p.H,p.f,p.A,p.rl,p.ru,p.lb,p.ub,opts);
+        case 'clp'
+            [x,fval,exitflag,info] = opti_clp(p.H,p.f,p.A,p.rl,p.ru,p.lb,p.ub,opts);
         case 'scip'
             [x,fval,exitflag,info] = opti_scip(p.H,p.f,p.A,p.rl,p.ru,p.lb,p.ub,[],[],[],opts);
         case 'baron'
