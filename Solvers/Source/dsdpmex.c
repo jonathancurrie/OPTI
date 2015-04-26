@@ -9,9 +9,13 @@
 /* Based in parts on dsdpmex.c supplied with DSDP 5.8 */
 
 #include "mex.h"
-#include "mkl.h"
 #include "dsdp5.h"
 #include "time.h"
+#include "opti_util.h"
+
+#ifdef LINK_MKL
+    #include "mkl.h"
+#endif
 
 //Enable for Debug print out
 // #define DEBUG
@@ -723,13 +727,16 @@ static int DSDPMonitor(DSDP dsdp, void* dummy)
 //Print Solver Information
 void printSolverInfo()
 {    
+    char vbuf[6]; getVSVer(vbuf);  
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" DSDP: Software for Semidefinite Programming [v%s, Built %s]\n",DSDP_VERSION,__DATE__);
+    mexPrintf(" DSDP: Software for Semidefinite Programming [v%s, Built %s, VS%s]\n",DSDP_VERSION,__DATE__,vbuf);
     mexPrintf("  - Copyright 2004 University of Chicago: http://www.mcs.anl.gov/hs/software/DSDP/Copyright.txt\n");
     mexPrintf("  - Source available from: http://www.mcs.anl.gov/hs/software/DSDP/\n\n");
     
     mexPrintf(" This binary is statically linked to the following software:\n");
-    mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
+    #ifdef LINK_MKL
+        mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
+    #endif
 
     mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.i2c2.aut.ac.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");

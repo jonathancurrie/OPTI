@@ -9,9 +9,13 @@
 /* NOTE: This interface expects the primal form SDP */
 
 #include "mex.h"
-#include "mkl.h"
 #include "declarations.h"
 #include "time.h"
+#include "opti_util.h"
+
+#ifdef LINK_MKL
+    #include "mkl.h"
+#endif
 
 //Enable for Debug print out
 // #define DEBUG
@@ -905,13 +909,16 @@ int user_exit(int n, int k, struct blockmatrix C, double *a, double dobj, double
 //Print Solver Information
 void printSolverInfo()
 {    
+    char vbuf[6]; getVSVer(vbuf);    
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" CSDP: A C Library for Semidefinite Programming [v%s, Built %s]\n",CSDP_VERSION,__DATE__);
+    mexPrintf(" CSDP: A C Library for Semidefinite Programming [v%s, Built %s, VS%s]\n",CSDP_VERSION,__DATE__,vbuf);
     mexPrintf("  - Released under the Eclipse Public License: http://opensource.org/licenses/eclipse-1.0\n");
     mexPrintf("  - Source available from: https://projects.coin-or.org/Csdp/\n\n");
     
     mexPrintf(" This binary is statically linked to the following software:\n");
-    mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
+    #ifdef LINK_MKL
+        mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
+    #endif
 
     mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.i2c2.aut.ac.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");

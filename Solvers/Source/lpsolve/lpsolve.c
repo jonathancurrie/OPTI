@@ -52,6 +52,7 @@
 #include <stdio.h>
 #include <signal.h>
 #include <string.h>
+#include "opti_util.h"
 
 #include "lpsolvecaller.h"
 
@@ -4734,9 +4735,10 @@ void printSolverInfo()
 {    
     int majorversion, minorversion, release, build;
     lp_solve_version(&majorversion, &minorversion, &release, &build);
+    char vbuf[6]; getVSVer(vbuf); 
     
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" LP_SOLVE: Mixed Integer Linear Programming Solver [%d.%d.%d.%d, Built %s]\n",majorversion,minorversion,release,build,__DATE__);              
+    mexPrintf(" LP_SOLVE: Mixed Integer Linear Programming Solver [%d.%d.%d.%d, Built %s, VS%s]\n",majorversion,minorversion,release,build,__DATE__,vbuf);              
     mexPrintf("  - Released under the GNU Lesser General Public License: http://lpsolve.sourceforge.net/5.5/LGPL.htm\n");
     mexPrintf("  - Source available from: http://lpsolve.sourceforge.net/5.5/index.htm\n");
     

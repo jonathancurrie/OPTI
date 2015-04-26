@@ -14,6 +14,7 @@
 
 #include "nlopt.h"
 #include "config.h"
+#include "opti_util.h"
 
 #define FLEN 256 /* max length of user function name */
 #define MAXRHS 2 /* max nrhs for user function */    
@@ -809,11 +810,12 @@ bool checkIdentX(const double *x, double *X, int n)
 //Print Solver Information
 void printSolverInfo()
 {    
+    char vbuf[6]; getVSVer(vbuf);    
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" NLOPT: Nonlinear Optimization [v%s, Built %s]\n",PACKAGE_VERSION,__DATE__);              
+    mexPrintf(" NLOPT: Nonlinear Optimization [v%s, Built %s, VS%s]\n",PACKAGE_VERSION,__DATE__,vbuf);              
     mexPrintf("  - Released under the GNU Lesser General Public License: http://www.gnu.org/copyleft/lesser.html\n");
     mexPrintf("  - Source available from: http://ab-initio.mit.edu/wiki/index.php/NLopt\n");
-    
+
     mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.i2c2.aut.ac.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

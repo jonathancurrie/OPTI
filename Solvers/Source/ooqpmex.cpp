@@ -24,8 +24,9 @@
 #include <exception>
 #include <time.h>
 #include <algorithm>
+#include "opti_util.h"
 
-#ifdef HAVE_PARDISO
+#ifdef LINK_MKL
     #include "mkl.h"
 #endif
 
@@ -253,17 +254,17 @@ void mexFunction( int nlhs, mxArray * plhs[], int nrhs, const mxArray * prhs[] )
     switch(linSolver)
     {
         case USE_PARDISO:
-            #ifndef HAVE_PARDISO
+            #ifndef LINK_PARDISO
                 mexErrMsgTxt("PARDISO is selected as the linear solver but is not available in this build");
             #endif
             break;
         case USE_MA57:
-            #ifndef HAVE_MA57
+            #ifndef LINK_ML_MA57 || LINK_MA57
                 mexErrMsgTxt("MA57 is selected as the linear solver but is not available in this build");
             #endif
             break;
         case USE_MA27:
-            #ifndef HAVE_MA27
+            #ifndef LINK_MA27
                 mexErrMsgTxt("MA27 is selected as the linear solver but is not available in this build");
             #endif
             break;
@@ -482,7 +483,7 @@ void mexFunction( int nlhs, mxArray * plhs[], int nrhs, const mxArray * prhs[] )
         //Create Problem, fill in data and make variables
         switch(linSolver)
         {
-            #ifdef HAVE_PARDISO
+            #ifdef LINK_PARDISO
             case USE_PARDISO:
                 qpPD = new QpGenSparsePardiso((int)ndec,(int)neq,(int)nin,(int)nnzH,(int)nnzAeq,(int)nnzA);
                 prob = (QpGenData*) qpPD->makeData( f, iH_jc, iH_ir, Ht, qp_lb, ilb, qp_ub, iub, iAeq_jc, iAeq_ir, Aeqt, beq, iA_jc, iA_ir, At, qp_rl, irl, qp_ru, iru);
@@ -491,7 +492,7 @@ void mexFunction( int nlhs, mxArray * plhs[], int nrhs, const mxArray * prhs[] )
                 break;
             #endif
                 
-            #ifdef HAVE_MA27
+            #ifdef LINK_MA27
             case USE_MA27:
                 qp27 = new QpGenSparseMa27((int)ndec,(int)neq,(int)nin,(int)nnzH,(int)nnzAeq,(int)nnzA);
                 prob = (QpGenData*) qp27->makeData( f, iH_jc, iH_ir, Ht, qp_lb, ilb, qp_ub, iub, iAeq_jc, iAeq_ir, Aeqt, beq, iA_jc, iA_ir, At, qp_rl, irl, qp_ru, iru);
@@ -500,7 +501,7 @@ void mexFunction( int nlhs, mxArray * plhs[], int nrhs, const mxArray * prhs[] )
                 break;
             #endif
             
-            #ifdef HAVE_MA57
+            #ifdef LINK_MA57 || LINK_ML_MA57
             case USE_MA57:
                 qp57 = new QpGenSparseMa57((int)ndec,(int)neq,(int)nin,(int)nnzH,(int)nnzAeq,(int)nnzA);
                 prob = (QpGenData*) qp57->makeData( f, iH_jc, iH_ir, Ht, qp_lb, ilb, qp_ub, iub, iAeq_jc, iAeq_ir, Aeqt, beq, iA_jc, iA_ir, At, qp_rl, irl, qp_ru, iru);
@@ -794,20 +795,26 @@ void checkInputs(const mxArray *prhs[], int nrhs)
 
 //Print Solver Information
 void printSolverInfo()
-{                
+{             
+    char vbuf[6]; getVSVer(vbuf);  
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" OOQP: Object Orientated Quadratic Programming [v%d.%02d.%02d, Built %s]\n",OOQPVERSIONMAJOR,OOQPVERSIONMINOR,OOQPVERSIONPATCHLEVEL,__DATE__);              
+    mexPrintf(" OOQP: Object Orientated Quadratic Programming [v%d.%02d.%02d, Built %s, VS%s]\n",OOQPVERSIONMAJOR,OOQPVERSIONMINOR,OOQPVERSIONPATCHLEVEL,__DATE__,vbuf);              
     mexPrintf("  - (C) 2001 University of Chicago\n");
     mexPrintf("  - Source available from: http://pages.cs.wisc.edu/~swright/ooqp/\n\n");
     
-    mexPrintf(" This binary is statically linked to the following software:\n");
-    #ifdef HAVE_PARDISO
+    #ifdef LINK_MKL || LINK_MA27 || LINK_MA57
+        mexPrintf(" This binary is statically linked to the following software:\n");
+    #endif
+    #ifdef LINK_MKL
         mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
     #endif
-    #ifdef HAVE_MA27
+    #ifdef LINK_MA27
+        mexPrintf("  - MA27 \n");
+    #endif        
+    #ifdef LINK_MA57
         mexPrintf("  - MA27 \n");
     #endif
-    #ifdef HAVE_MA57
+    #ifdef LINK_ML_MA57
         mexPrintf("\n This binary is dynamically linked to the following software:\n");
         mexPrintf("  - MA57   [v3.0] (Included as part of the MATLAB distribution)\n");
     #endif

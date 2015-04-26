@@ -15,6 +15,7 @@
 #include "ClpEventHandler.hpp"
 #include <exception>
 #include <time.h>
+#include "opti_util.h"
 
 #ifdef CLP_HAS_ABC
  #include "AbcSimplex.hpp"
@@ -554,11 +555,13 @@ void checkInputs(const mxArray *prhs[], int nrhs)
 //Print Solver Information
 void printSolverInfo()
 {     
+    char vbuf[6];   
     mexPrintf("\n-----------------------------------------------------------\n");
     #ifdef CLP_HAS_ABC
         mexPrintf(" CLP: COIN-OR Linear Programming [v%s, Built %s] with ABOCA (A Bit of Coin-Or Accelerated)\n",CLP_VERSION,__DATE__);
     #else
-        mexPrintf(" CLP: COIN-OR Linear Programming [v%s, Built %s]\n",CLP_VERSION,__DATE__);
+        getVSVer(vbuf);  
+        mexPrintf(" CLP: COIN-OR Linear Programming [v%s, Built %s, VS%s]\n",CLP_VERSION,__DATE__,vbuf);
     #endif
     mexPrintf("  - Released under the Eclipse Public License: http://opensource.org/licenses/eclipse-1.0\n");
     mexPrintf("  - Source available from: https://projects.coin-or.org/Clp\n\n");

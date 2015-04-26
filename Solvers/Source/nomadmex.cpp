@@ -81,6 +81,7 @@ typedef struct {
     
 //Argument Enums (in expected order of arguments)
 #ifdef OPTI_VERSION
+    #include "opti_util.h"
     enum {eFUN, eX0, eLB, eUB, eNLCON, eNLRHS, eXTYPE, eOPTS};
 #else //GERAD VERSION
     enum {eFUN, eX0, eLB, eUB, eOPTS};
@@ -1273,7 +1274,12 @@ double getStatus(int stat)
 void printSolverInfo()
 {    
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" NOMAD: Nonlinear Optimization using the MADS Algorithm [v%s, Built %s]\n",NOMAD::VERSION.c_str(),__DATE__);              
+    #ifdef OPTI_VERSION
+        char vbuf[6]; getVSVer(vbuf); 
+        mexPrintf(" NOMAD: Nonlinear Optimization using the MADS Algorithm [v%s, Built %s, VS%s]\n",NOMAD::VERSION.c_str(),__DATE__,vbuf);
+    #else
+        mexPrintf(" NOMAD: Nonlinear Optimization using the MADS Algorithm [v%s, Built %s]\n",NOMAD::VERSION.c_str(),__DATE__);              
+    #endif
     mexPrintf("  - Released under the GNU Lesser General Public License: http://www.gnu.org/copyleft/lesser.html\n");
     mexPrintf("  - Source available from: http://www.gerad.ca/NOMAD/Project/Home.html\n");
 

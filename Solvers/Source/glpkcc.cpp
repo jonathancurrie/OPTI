@@ -36,6 +36,7 @@ using namespace std;
 
 // From Matlab
 #include "mex.h"
+#include "opti_util.h"
 
 extern "C" {
   #include <glpk.h>
@@ -1059,8 +1060,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
 //Print Solver Information
 void printSolverInfo()
 {    
+    char vbuf[6]; getVSVer(vbuf);  
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" GLPK: GNU Linear Programming Kit [v%s, Built %s]\n",glp_version(),__DATE__);
+    mexPrintf(" GLPK: GNU Linear Programming Kit [v%s, Built %s, VS%s]\n",glp_version(),__DATE__,vbuf);
     mexPrintf("  - Released under the GNU General Public License: http://www.gnu.org/licenses/gpl.html\n");
     mexPrintf("  - Source available from: http://www.gnu.org/software/glpk/\n");
     

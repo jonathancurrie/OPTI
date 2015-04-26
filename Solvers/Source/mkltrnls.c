@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include "opti_util.h"
 
 //Function handle structure
 #define FLEN 128 /* max length of user function name */
@@ -603,8 +604,9 @@ double getStatus(int stat)
 //Print Solver Information
 void printSolverInfo()
 {    
+    char vbuf[6]; getVSVer(vbuf); 
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" MKLTRNLS: Intel MKL Trust Region Nonlinear Least Squares [v%d.%d R%d, Built %s]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__,__DATE__);              
+    mexPrintf(" MKLTRNLS: Intel MKL Trust Region Nonlinear Least Squares [v%d.%d R%d, Built %s, VS%s]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__,__DATE__,vbuf);              
     mexPrintf("  - Released as part of the Intel Math Kernel Library\n  - http://software.intel.com/en-us/intel-mkl\n");
     
     mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.i2c2.aut.ac.nz)\n");
