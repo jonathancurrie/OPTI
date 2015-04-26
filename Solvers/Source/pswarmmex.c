@@ -10,6 +10,7 @@
 #include "mex.h"
 #include "pswarm.h"
 #include <time.h>
+#include "opti_util.h"
 
 #define PSWARM_VERSION "1.5"
 
@@ -483,8 +484,9 @@ double getStatus(int stat, int iter, int fevals)
 //Print Solver Information
 void printSolverInfo()
 {    
+    char vbuf[6]; getVSVer(vbuf);  
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" PSWARM: Particle Swarm and Pattern Based Optimization [v%s, Built %s]\n",PSWARM_VERSION,__DATE__);              
+    mexPrintf(" PSWARM: Particle Swarm and Pattern Based Optimization [v%s, Built %s, VS%s]\n",PSWARM_VERSION,__DATE__,vbuf);              
     mexPrintf("  - Released under the GNU Lesser General Public License: http://lpsolve.sourceforge.net/5.5/LGPL.htm\n");
     mexPrintf("  - Source available from: http://www.norg.uminho.pt/aivaz/pswarm/\n\n");
     

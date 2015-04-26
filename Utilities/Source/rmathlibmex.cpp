@@ -10,6 +10,7 @@
 #include <Rmath.h>
 #include <string>
 #include <ppl.h>
+#include "opti_util.h"
 
 using namespace Concurrency;
 
@@ -478,8 +479,9 @@ namespace RMathlibMEX
     //Print Solver Information
     void printSolverInfo()
     {    
+        char vbuf[6]; getVSVer(vbuf);  
         mexPrintf("\n-----------------------------------------------------------\n");
-        mexPrintf(" RMATHLIB: R Math Library [v%s, Built %s]\n",R_VERSION_STRING,__DATE__);              
+        mexPrintf(" RMATHLIB: R Math Library [v%s, Built %s, VS%s]\n",R_VERSION_STRING,__DATE__,vbuf);              
         mexPrintf("  - Released under the GNU General Public License: http://www.gnu.org/licenses/gpl-2.0.html\n");
         mexPrintf("  - Source available from: http://cran.stat.sfu.ca/\n");
 
