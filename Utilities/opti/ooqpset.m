@@ -54,5 +54,5 @@ if(~isempty(err)), throw(err); end
 function printfields()
 %Print out fields with defaults
 fprintf('     algorithm: [ OOQP Solver Algorithm: {''Gondzio''}, ''Mehrotra'' ] \n');
-fprintf(' linear_solver: [ OOQP Sparse Linear Solver: ''PARDISO'', {''MA57''}, ''MA27''} ] \n');
+fprintf(' linear_solver: [ OOQP Sparse Linear Solver: ''PARDISO'', {''MA57''}, ''MA27'' ] \n');
 fprintf('\n');
