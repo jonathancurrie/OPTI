@@ -5,7 +5,7 @@
 
 % My build platform:
 % - Windows 7 SP1 x64
-% - Visual Studio 2010
+% - Visual Studio 2013
 
 % 1) Compile Clp as per opti_CLP_Install.m in Solvers/Source
 
@@ -15,44 +15,33 @@
 % the above steps, simply run this file to compile! You MUST BE in 
 % the base directory of OPTI!
 
-clear coinR coinW
 
-% Get Arch Dependent Library Path
-libdir = opti_GetLibPath();
-% Dependency Paths
-solverdir = '..\..\Solvers\Source\';
+%COIN READ
+%MEX Interface Source Files
+src = 'coinR.cpp';
+%Include Directories
+inc = {'..\..\Solvers\Source\Include\Coin','..\..\Solvers\Source\Include\Glpk'};
+%Lib Names [static libraries to link against]
+libs = {'libcoinutilsgmpl','libglpk'};
+%Options
+opts = [];
+opts.verb = false;
+opts.util = true;
 
-fprintf('\n------------------------------------------------\n');
-fprintf('COINUTILS MEX FILE INSTALL\n\n');
+%Compile
+opti_solverMex('coinR',src,inc,libs,opts);
 
-%Get COIN Libraries (NOTE I have called CoinUtils with GMPL libCoinUtilsGMPL)!!
-post = [' -I' solverdir 'Include\Coin -I' solverdir 'Include\Glpk -L' solverdir libdir];
-post = [post ' -llibcoinutilsgmpl -lglpk -DCOIN_MSVS '];
-% post = [post ' -L' solverdir libdir ' -lglpk -I' solverdir '\Include\ '];
+%COIN WRITE
+%MEX Interface Source Files
+src = 'coinW.cpp';
+%Include Directories
+inc = '..\..\Solvers\Source\Include\Coin';
+%Lib Names [static libraries to link against]
+libs = {'libcoinutils'};
+%Options
+opts = [];
+opts.verb = false;
+opts.util = true;
 
-%CD to Source Directory
-cdir = cd;
-cd 'Utilities/Source';
-
-%Compile & Move
-pre = 'mex -v -largeArrayDims coinR.cpp';
-try
-    eval([pre post])
-     movefile(['coinR.' mexext],'../','f')
-    fprintf('Done!\n');
-catch ME
-    cd(cdir);
-    error('opti:coin','Error Compiling COINUTILS Read!\n%s',ME.message);
-end
-%Compile & Move
-pre = 'mex -v -largeArrayDims coinW.cpp';
-try
-    eval([pre post])
-     movefile(['coinW.' mexext],'../','f')
-    fprintf('Done!\n');
-catch ME
-    cd(cdir);
-    error('opti:coin','Error Compiling COINUTILS Write!\n%s',ME.message);
-end
-cd(cdir);
-fprintf('------------------------------------------------\n');
+%Compile
+opti_solverMex('coinW',src,inc,libs,opts);

@@ -28,6 +28,7 @@ THIS SOFTWARE.
 
 #include "mex.h"
 #include "asl_pfgh.h"
+#include "opti_util.h"
 
 //Defines
 #define FLEN 512 /* max length of command */
@@ -626,8 +627,9 @@ static bool comp_x(double *xbase, double *xnew, int n)
 
 void printUtilityInfo()
 {
+    char vbuf[6]; getVSVer(vbuf);  
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" ASL: AMPL Solver Library [v%d, Built %s]\n",ASLdate_ASL,__DATE__);
+    mexPrintf(" ASL: AMPL Solver Library [v%d, Built %s, %s]\n",ASLdate_ASL,__DATE__,vbuf);
     mexPrintf("  - Source available from: http://www.netlib.org/ampl/solvers/\n");
 
     mexPrintf("\n MEX Interface J.Currie 2013 (www.i2c2.aut.ac.nz)\n");

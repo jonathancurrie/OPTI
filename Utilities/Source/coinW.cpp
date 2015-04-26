@@ -8,6 +8,7 @@
 #include "CoinLpIO.hpp"
 #include "CoinModel.hpp"
 #include "config_coinutils_default.h"
+#include "opti_util.h"
 
 using namespace std;
 void printUtilityInfo();
@@ -238,8 +239,9 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
 
 void printUtilityInfo()
 {
+    char vbuf[6]; getVSVer(vbuf); 
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" COINUTILS: COIN-OR Utilities [v%s, Built %s]\n",COINUTILS_VERSION,__DATE__);
+    mexPrintf(" COINUTILS: COIN-OR Utilities [v%s, Built %s, VS%s]\n",COINUTILS_VERSION,__DATE__,vbuf);
     mexPrintf("  - Released under the Eclipse Public License: http://opensource.org/licenses/eclipse-1.0\n");
     mexPrintf("  - Source available from: https://projects.coin-or.org/CoinUtils\n");
 

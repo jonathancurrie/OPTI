@@ -5,6 +5,7 @@
 #include <mex.h>
 #include <mkl.h>
 #include <string.h>
+#include "opti_util.h"
 
 //Matlab Data Structure
 typedef struct {
@@ -14,6 +15,7 @@ typedef struct {
 
 void checkInputs(int nrhs, const mxArray *prhs[]);
 MKL_INT dummyCallForSize(const mxArray *prhs[]);
+void printSolverInfo();
 
 void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
 {
@@ -31,7 +33,7 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
     
     //Check Inputs
     if(nrhs < 1) {
-        mexPrintf("This is a MEX interface to Intel MKL %d.%d R%d djacobi function\n\nUsage: [jac,status] = mklJac(fun,x,nrow)\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
+        printSolverInfo();
         return;
     }
     checkInputs(nrhs,prhs);    
@@ -128,4 +130,18 @@ MKL_INT dummyCallForSize(const mxArray *prhs[])
     m = (MKL_INT)mxGetNumberOfElements(mdata.plhs[0]);
     mxDestroyArray(mdata.plhs[0]);
     return m;
+}
+
+//Print Solver Information
+void printSolverInfo()
+{    
+    char vbuf[6]; getVSVer(vbuf); 
+    mexPrintf("\n-----------------------------------------------------------\n");
+    mexPrintf(" mklJac: Intel djacobi [v%d.%d R%d, Built %s, VS%s]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__,__DATE__,vbuf);              
+    mexPrintf("  - Released as part of the Intel Math Kernel Library\n  - http://software.intel.com/en-us/intel-mkl\n");
+    
+    mexPrintf("\n Usage: [jac,status] = mklJac(fun,x,nrow)\n");
+    
+    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.i2c2.aut.ac.nz)\n");
+    mexPrintf("-----------------------------------------------------------\n");
 }

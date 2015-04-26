@@ -22,30 +22,13 @@
 % the above steps, simply run this file to compile! You MUST BE in the 
 % base directory of OPTI!
 
-clear mklJac
+%MEX Interface Source Files
+src = 'mkljac.c';
+%Options
+opts = [];
+opts.verb = false;
+opts.blas = 'MKL_SEQ';
+opts.util = true;
 
-% Modify below function if it cannot find Intel MKL on your system.
-mkl_link = opti_FindMKL('seq'); %NOTE sequential only build!
-
-fprintf('\n------------------------------------------------\n');
-fprintf('MKL JAC MEX FILE INSTALL\n\n');
-
-%Get MKL Includes & MKL Libraries (for DJACOBI)
-post = mkl_link;
-
-%CD to Source Directory
-cdir = cd;
-cd 'Utilities/Source';
-
-%Compile & Move
-pre = 'mex -v -largeArrayDims mklJac.c';
-try
-    eval([pre post])
-    movefile(['mklJac.' mexext],'../','f')
-    fprintf('Done!\n');
-catch ME
-    cd(cdir);
-    error('opti:mkljac','Error Compiling MKL JAC!\n%s',ME.message);
-end
-cd(cdir);
-fprintf('------------------------------------------------\n');
+%Compile
+opti_solverMex('mklJac',src,[],[],opts);

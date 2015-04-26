@@ -8,7 +8,7 @@
 
 % My build platform:
 % - Windows 7 x64
-% - Visual Studio 2012
+% - Visual Studio 2013
 
 % 1) Get AMPL Solver Library
 % The generic NL reader for AMPL is available free from Netlib 
@@ -24,10 +24,9 @@
 % Builder included with OPTI. Use the following commands, substituting the
 % required path on your computer:
 
-aslpath = 'C:\Solvers\ASL'; % FULL path to ASL
-
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('ASL',aslpath,cd);
+% path = 'C:\Solvers\ASL'; % FULL path to ASL
+% opti_VSBuild('ASL',path);
 
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and
@@ -35,29 +34,17 @@ aslpath = 'C:\Solvers\ASL'; % FULL path to ASL
 % the above steps, simply run this file to compile! You MUST BE in 
 % the base directory of OPTI!
 
-clear asl
+%MEX Interface Source Files
+src = 'amplmex.c';
+%Include Directories
+inc = 'Include/Asl';
+%Lib Names [static libraries to link against]
+libs = 'libasl';
+%Options
+opts = [];
+opts.verb = false;
+opts.util = true;
+opts.pp = 'NO_STDIO1';
 
-% Get Arch Dependent Library Path
-libdir = opti_GetLibPath();
-
-fprintf('\n------------------------------------------------\n');
-fprintf('AMPL MEX FILE INSTALL\n\n');
-
-post = [' -IInclude/Asl -L' libdir ' -llibasl -DNO_STDIO1 -output asl'];
-
-%CD to Source Directory
-cdir = cd;
-cd 'Utilities/Source';
-
-%Compile & Move
-pre = 'mex -v -largeArrayDims amplmex.c';
-try
-    eval([pre post])
-     movefile(['asl.' mexext],'../','f')
-    fprintf('Done!\n');
-catch ME
-    cd(cdir);
-    error('opti:ampl','Error Compiling AMPL!\n%s',ME.message);
-end
-cd(cdir);
-fprintf('------------------------------------------------\n');
+%Compile
+opti_solverMex('asl',src,inc,libs,opts);
