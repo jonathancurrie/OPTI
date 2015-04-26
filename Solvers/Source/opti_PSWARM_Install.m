@@ -5,7 +5,7 @@
 
 % My build platform:
 % - Windows 7 x64
-% - Visual Studio 2012
+% - Visual Studio 2013
 % - Intel Math Kernel Library
 
 % To recompile you will need to get / do the following:
@@ -19,10 +19,9 @@
 % Builder included with OPTI. Use the following commands, substituting the 
 % required path on your computer:
 
-pswmpath = 'C:\Solvers\PPSwarm_v1_5'; % FULL path to PSwarm 
-
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('PSwarm',pswmpath,cd,'VS2013');
+% path = 'C:\Solvers\PPSwarm_v1_5'; % FULL path to PSwarm
+% opti_VSBuild('PSwarm',path);
 
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and
@@ -30,34 +29,16 @@ pswmpath = 'C:\Solvers\PPSwarm_v1_5'; % FULL path to PSwarm
 % above steps, simply run this file to compile PSwarm! You MUST BE in the 
 % base directory of OPTI!
 
-clear pswarm
+%MEX Interface Source Files
+src = 'pswarmmex.c';
+%Include Directories
+inc = 'Include/Pswarm';
+%Lib Names [static libraries to link against]
+libs = 'libpswarm';
+%Options
+opts = [];
+opts.verb = false;
+opts.blas = 'MKL';
 
-% Modify below function if it cannot find Intel MKL on your system.
-mkl_link = opti_FindMKL();
-% Get Arch Dependent Library Path
-libdir = opti_GetLibPath();
-
-fprintf('\n------------------------------------------------\n');
-fprintf('PSwarm MEX FILE INSTALL\n\n');
-
-%Get PSwarm Libraries
-post = [' -IInclude/Pswarm -L' libdir ' -llibpswarm -llibut -output pswarm'];
-%Get MKL Libraries (for BLAS)
-post = [post mkl_link];
-
-%CD to Source Directory
-cdir = cd;
-cd 'Solvers/Source';
-
-%Compile & Move
-pre = 'mex -v -largeArrayDims pswarmmex.c';
-try
-    eval([pre post])
-    movefile(['pswarm.' mexext],'../','f')
-    fprintf('Done!\n');
-catch ME
-    cd(cdir);
-    error('opti:pswarm','Error Compiling PSwarm!\n%s',ME.message);
-end
-cd(cdir);
-fprintf('------------------------------------------------\n');
+%Compile
+opti_solverMex('pswarm',src,inc,libs,opts);

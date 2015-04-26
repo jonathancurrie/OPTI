@@ -6,7 +6,7 @@ clc
 
 % My build platform:
 % - Windows 7 x64
-% - Visual Studio 2012
+% - Visual Studio 2013
 
 % To recompile you will need to get / do the following:
 
@@ -19,11 +19,11 @@ clc
 % Builder included with OPTI. Use the following commands, substituting the
 % required paths on your computer:
 
-clppath = 'C:\Solvers\Clp-1.16.5\Clp'; % FULL path to CLP
-glpkpath = 'C:\Solvers\glpk-4.48'; % FULL path to GLPK(or leave blank [MAX VER 4.48])
-
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('CLP',{clppath,glpkpath},cd,'VS2013');
+% path = 'C:\Solvers\Clp-1.16.5\Clp'; % FULL path to CLP
+% opts = [];
+% opts.expath = 'C:\Solvers\glpk-4.48'; % FULL path to GLPK (or leave blank [MAX VER 4.48])
+% opti_VSBuild('CLP',path,opts);
 
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and
@@ -31,39 +31,27 @@ glpkpath = 'C:\Solvers\glpk-4.48'; % FULL path to GLPK(or leave blank [MAX VER 4
 % the above steps, simply run this file to compile CLP! You MUST BE in 
 % the base directory of OPTI!
 
-clear clp
-
-%Enable for Aboca Build (must compile using Intel C++ & VS2012 Linker)
+%Enable for Aboca Build (must compile using Intel C++ & VS2012/2013 Linker)
 haveABC = false;
 
-% Get Arch Dependent Library Path
-libdir = opti_GetLibPath();
+%MEX Interface Source Files
+src = 'clpmex.cpp';
+%Include Directories
+inc = {'Include/Clp','Include/Coin'};
+%Lib Names [static libraries to link against]
+libs = {'libCoinUtils','libosi'};
+%Options
+opts = [];
+opts.pp = {'COIN_MSVS'};
+opts.verb = false;
 
-fprintf('\n------------------------------------------------\n');
-fprintf('CLP MEX FILE INSTALL\n\n');
-
-%Get CLP Libraries
-post = [' -IInclude/Clp -IInclude/Coin -L' libdir ' -llibCoinUtils -llibut -llibosi -DCOIN_MSVS -output clp'];
-%Get Optional Aboca
+%Optional Aboca Setup
 if(haveABC)
-    post = [post ' -llibclpabc -DINTEL_COMPILER -DCLP_HAS_ABC=4 -D__BYTE_ORDER=__LITTLE_ENDIAN']; 
+    opts.pp = [opts.pp, 'INTEL_COMPILER', 'CLP_HAS_ABC=4', '__BYTE_ORDER=__LITTLE_ENDIAN'];
+    libs = [libs, 'libclpabc'];
 else
-    post = [post ' -llibclp'];
+    libs = [libs, 'libclp'];
 end
 
-%CD to Source Directory
-cdir = cd;
-cd 'Solvers/Source';
-
-%Compile & Move
-pre = 'mex -v -largeArrayDims clpmex.cpp';
-try
-    eval([pre post])
-     movefile(['clp.' mexext],'../','f')
-    fprintf('Done!\n');
-catch ME
-    cd(cdir);
-    error('opti:clp','Error Compiling CLP!\n%s',ME.message);
-end
-cd(cdir);
-fprintf('------------------------------------------------\n');
+%Compile
+opti_solverMex('clp',src,inc,libs,opts);

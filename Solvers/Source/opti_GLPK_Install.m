@@ -6,7 +6,7 @@
 
 % My build platform:
 % - Windows 7 x64
-% - Visual Studio 2012
+% - Visual Studio 2013
 
 % To recompile you will need to get / do the following:
 
@@ -19,10 +19,9 @@
 % Builder included with OPTI. Use the following commands, substituting the
 % required path on your computer:
 
-glpkpath = 'C:\Solvers\glpk-4.48'; % FULL path to GLPK [MAX VER 4.48]
-
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-%opti_VSBuild('GLPK',glpkpath,cd,'VS2013');
+% path = 'C:\Solvers\glpk-4.48'; % FULL path to GLPK [MAX VER 4.48]
+% opti_VSBuild('GLPK',path);
 
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and
@@ -30,33 +29,15 @@ glpkpath = 'C:\Solvers\glpk-4.48'; % FULL path to GLPK [MAX VER 4.48]
 % above steps, simply run this file to compile GLPK! You MUST BE in the 
 % base directory of OPTI!
 
-clear glpk
+%MEX Interface Source Files
+src = 'glpkcc.cpp';
+%Include Directories
+inc = 'Include/Glpk';
+%Lib Names [static libraries to link against]
+libs = 'libglpk';
+%Options
+opts = [];
+opts.verb = false;
 
-% Get Arch Dependent Library Path
-libdir = opti_GetLibPath();
-
-fprintf('\n------------------------------------------------\n');
-fprintf('GLPK MEX FILE INSTALL\n\n');
-
-%Get GLPK Libraries
-post = [' -IInclude/Glpk -L' libdir ' -llibglpk -llibut -output glpk'];
-
-%CD to Source Directory
-cdir = cd;
-cd 'Solvers/Source';
-
-%Compile & Move
-pre = 'mex -v -largeArrayDims glpkcc.cpp';
-try
-    eval([pre post])
-    movefile(['glpk.' mexext],'../','f')
-    fprintf('Done!\n');
-catch ME
-    cd(cdir);
-    error('opti:glpk','Error Compiling GLPK!\n%s',ME.message);
-end
-cd(cdir);
-fprintf('------------------------------------------------\n');
-
-
-
+%Compile
+opti_solverMex('glpk',src,inc,libs,opts);

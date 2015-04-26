@@ -5,7 +5,7 @@
 
 % My build platform:
 % - Windows 7 x64
-% - Visual Studio 2012
+% - Visual Studio 2013
 % - Intel Math Kernel Library
 
 % To recompile you will need to get / do the following:
@@ -19,10 +19,9 @@
 % Builder included with OPTI. Use the following commands, substituting the
 % required path on your computer:
 
-csdppath = 'C:\Solvers\CSDP 6.2beta'; % FULL path to CSDP
-
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-%opti_VSBuild('CSDP',csdppath,cd,'VS2013');
+% path = 'C:\Solvers\CSDP 6.2beta'; % FULL path to CSDP
+% opti_VSBuild('CSDP',path); %note I have modified some of the CSDP source files, see opti_VSBuild for details
 
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and
@@ -30,35 +29,18 @@ csdppath = 'C:\Solvers\CSDP 6.2beta'; % FULL path to CSDP
 % above steps, simply run this file to compile CSDP! You MUST BE in the 
 % base directory of OPTI!
 
-clear csdp
+%MEX Interface Source Files
+src = 'csdpmex.c';
+%Include Directories
+inc = 'Include/Csdp';
+%Lib Names [static libraries to link against]
+libs = 'libcsdp';
+%Options
+opts = [];
+opts.verb = false;
+opts.blas = 'MKL';
+opts.pp = {'NOSHORTS'};
+opts.expre = 'LINKFLAGS="$LINKFLAGS /NODEFAULTLIB:vcompd.lib /NODEFAULTLIB:vcomp.lib"'; %don't link against default VC++ OpenMP Lib, use Intel One (remove if not using Intel MKL)
 
-% Modify below function if it cannot find Intel MKL on your system.
-mkl_link = opti_FindMKL();
-% Get Arch Dependent Library Path
-libdir = opti_GetLibPath();
-
-fprintf('\n------------------------------------------------\n');
-fprintf('CSDP MEX FILE INSTALL\n\n');
-
-%Get Libraries
-post = [' -IInclude/Csdp -L' libdir ' -llibcsdp -llibut -output csdp'];
-%Get MKL Libraries (for BLAS)
-post = [post mkl_link];
-
-
-%CD to Source Directory
-cdir = cd;
-cd 'Solvers/Source';
-
-%Compile & Move (NOTE don't link against default VC++ OpenMP Lib as requires DLLs)
-pre = 'mex -v -largeArrayDims LINKFLAGS="$LINKFLAGS /NODEFAULTLIB:vcomp.lib" -DNOSHORTS csdpmex.c';
-try
-    eval([pre post])
-    movefile(['csdp.' mexext],'../','f')
-    fprintf('Done!\n');
-catch ME
-    cd(cdir);
-    error('opti:csdp','Error Compiling CSDP!\n%s',ME.message);
-end
-cd(cdir);
-fprintf('------------------------------------------------\n');
+%Compile
+opti_solverMex('csdp',src,inc,libs,opts);

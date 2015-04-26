@@ -6,7 +6,7 @@
 
 % My build platform:
 % - Windows 7 x64
-% - Visual Studio 2012
+% - Visual Studio 2013
 
 % To recompile you will need to get / do the following:
 
@@ -21,10 +21,9 @@
 % Builder included with OPTI. Use the following commands, substituting the
 % required path on your computer:
 
-cbcpath = 'C:\Solvers\Cbc-2.9.3\Cbc'; % FULL path to CBC
-
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('CBC',cbcpath,cd,'VS2013');
+% path = 'C:\Solvers\Cbc-2.9.3\Cbc'; % FULL path to CBC
+% opti_VSBuild('CBC',path);
 
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and
@@ -32,33 +31,16 @@ cbcpath = 'C:\Solvers\Cbc-2.9.3\Cbc'; % FULL path to CBC
 % the above steps, simply run this file to compile CBC! You MUST BE in 
 % the base directory of OPTI!
 
-clear cbc
+%MEX Interface Source Files
+src = 'cbcmex.cpp';
+%Include Directories
+inc = {'Include/Cbc','Include/Osi','Include/Cgl','Include/Clp','Include/Coin'};
+%Lib Names [static libraries to link against]
+libs = {'libcbc','libosi','libcgl','libclp','libcoinutils'};
+%Options
+opts = [];
+opts.verb = false;
+opts.pp = {'COIN_MSVS'};
 
-% Get Arch Dependent Library Path
-libdir = opti_GetLibPath();
-
-fprintf('\n------------------------------------------------\n');
-fprintf('CBC MEX FILE INSTALL\n\n');
-
-%Get CBC Libraries
-post = [' -IInclude\Cbc -IInclude\Osi -IInclude\Cgl -L' libdir ' -llibcbc -llibcgl -llibut'];
-%Get CLP and Osi libraries
-post = [post ' -IInclude\Clp -IInclude\Coin -IInclude\Osi -IInclude\Cgl -IInclude\Cbc'];
-post = [post ' -llibclp -llibcoinutils -llibosi -DCOIN_MSVS -output cbc'];
-
-%CD to Source Directory
-cdir = cd;
-cd 'Solvers/Source';
-
-%Compile & Move
-pre = 'mex -v -largeArrayDims cbcmex.cpp';
-try
-    eval([pre post])
-    movefile(['cbc.' mexext],'../','f')
-    fprintf('Done!\n');
-catch ME
-    cd(cdir);
-    error('opti:cbc','Error Compiling CBC!\n%s',ME.message);
-end
-cd(cdir);
-fprintf('------------------------------------------------\n');
+%Compile
+opti_solverMex('cbc',src,inc,libs,opts);

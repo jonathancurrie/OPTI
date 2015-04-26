@@ -18,10 +18,9 @@
 % Builder included with OPTI. Use the following commands, substituting the
 % required path on your computer:
 
-nmdpath = 'C:\Solvers\NOMAD-3.6.2'; % FULL path to NOMAD
-
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-%opti_VSBuild('Nomad',nmdpath,cd,'VS2013');
+% path = 'C:\Solvers\NOMAD-3.6.2'; % FULL path to NOMAD
+% opti_VSBuild('Nomad',path);
 
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and
@@ -29,30 +28,16 @@ nmdpath = 'C:\Solvers\NOMAD-3.6.2'; % FULL path to NOMAD
 % above steps, simply run this file to compile NOMAD! You MUST BE in the 
 % base directory of OPTI!
 
-clear nomad
+%MEX Interface Source Files
+src = 'nomadmex.cpp';
+%Include Directories
+inc = 'Include/Nomad';
+%Lib Names [static libraries to link against]
+libs = 'libnomad';
+%Options
+opts = [];
+opts.verb = false;
+opts.pp = 'OPTI_VERSION';
 
-% Get Arch Dependent Library Path
-libdir = opti_GetLibPath();
-
-fprintf('\n------------------------------------------------\n');
-fprintf('NOMAD MEX FILE INSTALL\n\n');
-
-%Get NOMAD Libraries
-post = [' -IInclude/Nomad -L' libdir ' -llibnomad -llibut -output nomad -DOPTI_VERSION'];
-
-%CD to Source Directory
-cdir = cd;
-cd 'Solvers/Source';
-
-%Compile & Move
-pre = 'mex -v -largeArrayDims nomadmex.cpp';
-try
-    eval([pre post])
-    movefile(['nomad.' mexext],'../','f')
-    fprintf('Done!\n');
-catch ME
-    cd(cdir);
-    error('opti:nomad','Error Compiling NOMAD!\n%s',ME.message);
-end
-cd(cdir);
-fprintf('------------------------------------------------\n');
+%Compile
+opti_solverMex('nomad',src,inc,libs,opts);

@@ -5,7 +5,7 @@
 
 % My build platform:
 % - Windows 7 x64
-% - Visual Studio 2012
+% - Visual Studio 2013
 
 % To recompile you will need to get / do the following:
 
@@ -19,10 +19,9 @@
 % Builder included with OPTI. Use the following commands, substituting the 
 % required path on your computer:
 
-lpspath = 'C:\Solvers\lp_solve_5.5'; % FULL path to LP_SOLVE
-
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('LPSOLVE',lpspath,cd,'VS2013');
+% path = 'C:\Solvers\lp_solve_5.5'; % FULL path to LP_SOLVE
+% opti_VSBuild('LPSOLVE',path);
 
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and
@@ -30,30 +29,16 @@ lpspath = 'C:\Solvers\lp_solve_5.5'; % FULL path to LP_SOLVE
 % the above steps, simply run this file to compile LP_SOLVE! You MUST BE in 
 % the base directory of OPTI!
 
-clear lp_solve
+%MEX Interface Source Files
+src = {'lpsolve/lpsolve.c','lpsolve/matlab.c'};
+%Include Directories
+inc = {'Include/Lpsolve','lpsolve/Include'};
+%Lib Names [static libraries to link against]
+libs = 'liblpsolve';
+%Options
+opts = [];
+opts.verb = false;
+opts.pp = {'LPSOLVEAPIFROMLIB','MATLAB','WIN32'};
 
-% Get Arch Dependent Library Path
-libdir = opti_GetLibPath();
-
-fprintf('\n------------------------------------------------\n');
-fprintf('LP_SOLVE MEX FILE INSTALL\n\n');
-
-%Get LP_SOLVE Libraries
-post = [' -IInclude\Lpsolve -Ilpsolve/Include -L' libdir ' -lliblpsolve -DMATLAB -DWIN32 -DLPSOLVEAPIFROMLIB -output lp_solve'];
-
-%CD to Source Directory
-cdir = cd;
-cd 'Solvers/Source';
-
-%Compile & Move
-pre = 'mex -v -largeArrayDims lpsolve/lpsolve.c lpsolve/matlab.c';
-try
-    eval([pre post])
-    movefile(['lp_solve.' mexext],'../','f')
-    fprintf('Done!\n');
-catch ME
-    cd(cdir);
-    error('opti:lpsolve','Error Compiling LP_SOLVE!\n%s',ME.message);
-end
-cd(cdir);
-fprintf('------------------------------------------------\n');
+%Compile
+opti_solverMex('lp_solve',src,inc,libs,opts);
