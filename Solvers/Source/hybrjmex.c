@@ -8,8 +8,12 @@
 
 
 #include "mex.h"
-#include "mkl.h"
 #include <time.h>
+#include "opti_util.h"
+
+#ifdef LINK_MKL
+    #include "mkl.h"
+#endif
 
 //Function handle structure
 #define FLEN 128 /* max length of user function name */
@@ -516,13 +520,11 @@ double getStatus(int stat)
 //Print Solver Information
 void printSolverInfo()
 {    
+	char vbuf[6]; getVSVer(vbuf);
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" HYBRJ + HYBRD: Powell-Hybrid Nonlinear Equation Solver [Built %s]\n",__DATE__);              
+    mexPrintf(" HYBRJ + HYBRD: Powell-Hybrid Nonlinear Equation Solver [Built %s, VS%s]\n",__DATE__,vbuf);              
     mexPrintf("  - Released as part of the MINPACK project: http://www.netlib.org/minpack/disclaimer\n");
     mexPrintf("  - Source available from: http://www.netlib.org/minpack/\n\n");
-    
-    mexPrintf(" This binary is statically linked to the following software:\n");
-    mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
 
     mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.i2c2.aut.ac.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");

@@ -5,10 +5,13 @@
 // Based largely on parts by Dr. Peter Carbonetto
 
 #include "mex.h"
-#include "mkl.h"
 #include "lbfgsb.h"
 #include "lbfgsb_program.h"
 #include <exception>
+#include "opti_util.h"
+#ifdef LINK_MKL
+    #include "mkl.h"
+#endif
 
 #define LBFGSB_VERSION "3.0"
 
@@ -167,13 +170,19 @@ void checkInputs(const mxArray *prhs[], int nrhs)
 //Print Solver Information
 void printSolverInfo()
 {    
+    char vbuf[6]; getVSVer(vbuf);  
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" L-BFGS-B: Limited Memory Broyden-Fletcher-Goldfarb-Shanno Bounded Optimization [%s, Built %s]\n",LBFGSB_VERSION,__DATE__);
+    mexPrintf(" L-BFGS-B: Limited Memory Broyden-Fletcher-Goldfarb-Shanno Bounded Optimization [%s, Built %s, VS%s]\n",LBFGSB_VERSION,__DATE__,vbuf);
     mexPrintf("  - Released under the BSD 3 Clause License: http://en.wikipedia.org/wiki/BSD_licenses\n");
     mexPrintf("  - Source available from: http://users.eecs.northwestern.edu/~nocedal/lbfgsb.html\n\n");
     
     mexPrintf(" This binary is statically linked to the following software:\n");
-    mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
+    #ifdef LINK_MKL
+        mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
+    #endif
+    #ifdef LINK_NETLIB_BLAS
+        mexPrintf("  - NETLIB BLAS: http://www.netlib.org/blas/\n  - NETLIB LAPACK: http://www.netlib.org/lapack/\n");
+    #endif
     
     mexPrintf("\n MEX Interface P.Carbonetto [Modified by J.Currie 2013]\n");
     mexPrintf("-----------------------------------------------------------\n");

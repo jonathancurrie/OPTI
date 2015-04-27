@@ -5,7 +5,7 @@
 
 % My build platform:
 % - Windows 7 x64
-% - Visual Studio 2012
+% - Visual Studio 2013
 % - Intel Compiler XE (FORTRAN)
 % - Intel Math Kernel Library
 
@@ -21,45 +21,25 @@
 % Builder included with OPTI. Use the following commands, substituting the
 % required path on your computer (you will need Intel MKL):
 
-m1qpath = 'C:\Solvers\m1qn3-3.3-distrib'; % FULL path to M1QN3
-
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('M1QN3',m1qpath,cd);
+% path = 'C:\Solvers\m1qn3-3.3-distrib'; % FULL path to M1QN3
+% opti_VSBuild('M1QN3',path);
 
 % 4) Compile the MEX File
 % The code below will automatically include all required libraries and
-% directories to build the NL2SOL MEX file. Once you have completed all the
+% directories to build the M1QN3 MEX file. Once you have completed all the
 % above steps, simply run this file to compile M1QN3! You MUST BE in the 
 % base directory of OPTI!
 
-clear m1qn3
+%MEX Interface Source Files
+src = 'm1qn3mex.c';
+%Lib Names [static libraries to link against]
+libs = 'libm1qn3';
+%Options
+opts = [];
+opts.verb = false;
+opts.blas = 'MKL';
+opts.ifort = true;
 
-% Modify below function if it cannot find Intel MKL on your system.
-[mkl_link,mkl_for_link] = opti_FindMKL();
-% Get Arch Dependent Library Path
-libdir = opti_GetLibPath();
-
-fprintf('\n------------------------------------------------\n');
-fprintf('M1QN3 MEX FILE INSTALL\n\n');
-
-%Get M1QN3 Libraries
-post = [' -L' libdir ' -llibm1qn3 -llibut -output m1qn3'];
-%Get Intel Fortran Libraries (for M1QN3 build) & MKL Libraries (for BLAS)
-post = [post mkl_link mkl_for_link];
-
-%CD to Source Directory
-cdir = cd;
-cd 'Solvers/Source';
-
-%Compile & Move
-pre = 'mex -v -largeArrayDims m1qn3mex.c';
-try
-    eval([pre post])
-    movefile(['m1qn3.' mexext],'../','f')
-    fprintf('Done!\n');
-catch ME
-    cd(cdir);
-    error('opti:m1qn3','Error Compiling M1QN3!\n%s',ME.message);
-end
-cd(cdir);
-fprintf('------------------------------------------------\n');
+%Compile
+opti_solverMex('m1qn3',src,[],libs,opts);

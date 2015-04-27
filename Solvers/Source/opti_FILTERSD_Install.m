@@ -5,7 +5,7 @@
 
 % My build platform:
 % - Windows 7 x64
-% - Visual Studio 2012
+% - Visual Studio 2013
 % - Intel Compiler XE (FORTRAN)
 % - Intel Math Kernel Library
 
@@ -18,10 +18,9 @@
 % Builder included with OPTI. Use the following commands, substituting the
 % required path on your computer (you will need Intel MKL):
 
-fsdpath = 'C:\Solvers\filterSD-1.0.0'; % FULL path to FilterSD
-
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('FilterSD',fsdpath,cd);
+% path = 'C:\Solvers\filterSD-1.0.0'; % FULL path to FilterSD [note I have modified quite a bit of the filterSD source for OPTI]
+% opti_VSBuild('FilterSD',path);
 
 % 3) FILTERSD MEX Interface
 % The FILTERSD MEX Interface is a simple MEX interface I wrote to use
@@ -33,49 +32,28 @@ fsdpath = 'C:\Solvers\filterSD-1.0.0'; % FULL path to FilterSD
 % above steps, simply run this file to compile FILTERSD! You MUST BE in the 
 % base directory of OPTI!
 
-clear filtersd filtersdsp
+%FILTERSD Dense MEX Interface Source Files
+src = 'filtersdmex.c';
+%Lib Names [static libraries to link against]
+libs = 'libfiltersd';
+%Options
+opts = [];
+opts.verb = false;
+opts.ifort = true;
 
-% Modify below function if it cannot find Intel MKL on your system.
-[mkl_link,mkl_for_link] = opti_FindMKL();
-% Get Arch Dependent Library Path
-libdir = opti_GetLibPath();
+%Compile
+opti_solverMex('filtersd',src,[],libs,opts);
 
-fprintf('\n------------------------------------------------\n');
-fprintf('FILTERSD MEX FILE INSTALL\n\n');
 
-%Get FILTERSD Libraries
-post = [' -L' libdir ' -llibfilterSD -llibut'];
-%Get Intel Fortran Libraries (for ifort build) & MKL Libraries (for BLAS)
-post = [post mkl_link mkl_for_link];
-%Common Args
-post = [post ' -output filtersd'];   
+%FILTERSD Sparse MEX Interface Source Files
+src = 'filtersdmex.c';
+%Lib Names [static libraries to link against]
+libs = 'libfiltersdsp';
+%Options
+opts = [];
+opts.verb = false;
+opts.pp = {'SPARSEVER'};
+opts.ifort = true;
 
-%CD to Source Directory
-cdir = cd;
-cd 'Solvers/Source';
-
-%Compile & Move
-pre = 'mex -v -largeArrayDims filtersdmex.c';
-try
-    eval([pre post])
-    movefile(['filtersd.' mexext],'../','f')
-    fprintf('Done!\n');
-catch ME
-    cd(cdir);
-    error('opti:filtersd','Error Compiling FILTERSD!\n%s',ME.message);
-end
-
-%Compile & Move Sparse Version
-post = regexprep(post,'-llibfilterSD','-llibfilterSDsp');
-post = regexprep(post,'-output filtersd','-output filtersdsp');
-try
-    eval([pre post ' -DSPARSEVER'])
-    movefile(['filtersdsp.' mexext],'../','f')
-    fprintf('Done!\n');
-catch ME
-    cd(cdir);
-    error('opti:filtersd','Error Compiling FILTERSD SPARSE!\n%s',ME.message);
-end
-
-cd(cdir);
-fprintf('------------------------------------------------\n');
+%Compile
+opti_solverMex('filtersdsp',src,[],libs,opts);

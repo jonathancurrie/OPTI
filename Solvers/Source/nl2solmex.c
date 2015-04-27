@@ -7,10 +7,10 @@
  */
 
 #include "mex.h"
-#include "mkl.h"
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include "opti_util.h"
 
 #define NL2SOL_VERSION "2.3"
 
@@ -570,12 +570,10 @@ double getStatus(int stat)
 //Print Solver Information
 void printSolverInfo()
 {    
+    char vbuf[6]; getVSVer(vbuf);    
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" NL2SOL: Adaptive Nonlinear Least Squares [v%s, Built %s]\n",NL2SOL_VERSION,__DATE__);              
-    mexPrintf("  - Source available from: http://people.sc.fsu.edu/~jburkardt/f_src/nl2sol/nl2sol.html\n\n");
-    
-    mexPrintf(" This binary is statically linked to the following software:\n");
-    mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
+    mexPrintf(" NL2SOL: Adaptive Nonlinear Least Squares [v%s, Built %s, VS%s]\n",NL2SOL_VERSION,__DATE__,vbuf);              
+    mexPrintf("  - Source available from: http://netlib.sandia.gov/cgi-bin/netlib/netlibfiles.tar?filename=netlib/port\n\n");
 
     mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.i2c2.aut.ac.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");

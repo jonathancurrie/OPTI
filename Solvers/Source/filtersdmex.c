@@ -17,9 +17,13 @@
  */
 
 #include "mex.h"
-#include "mkl.h"
 #include <time.h>
 #include <string.h>
+#include "opti_util.h"
+
+#ifdef LINK_MKL
+    #include "mkl.h"
+#endif
 
 //FILTERSD Version
 #define FILTERSD_VERSION "1.0"
@@ -925,17 +929,15 @@ void sparseTranspose(mwIndex *sJc, mwIndex *sIr, double *sPr, mwIndex *dJc, mwIn
 //Print Solver Information
 void printSolverInfo()
 {    
+	char vbuf[6]; getVSVer(vbuf);
     mexPrintf("\n-----------------------------------------------------------\n");
     #ifdef SPARSEVER
-        mexPrintf(" FILTERSD: FilterSD [Sparse Version] Nonlinear Optimizer [v%s, Built %s]\n",FILTERSD_VERSION,__DATE__);
+        mexPrintf(" FILTERSD: FilterSD [Sparse Version] Nonlinear Optimizer [v%s, Built %s, VS%s]\n",FILTERSD_VERSION,__DATE__,vbuf);
     #else
-        mexPrintf(" FILTERSD: FilterSD [Dense Version] Nonlinear Optimizer [v%s, Built %s]\n",FILTERSD_VERSION,__DATE__);
+        mexPrintf(" FILTERSD: FilterSD [Dense Version] Nonlinear Optimizer [v%s, Built %s, VS%s]\n",FILTERSD_VERSION,__DATE__,vbuf);
     #endif           
     mexPrintf("  - Released under the Eclipse Public License: http://opensource.org/licenses/eclipse-1.0\n");
     mexPrintf("  - Source available from: https://projects.coin-or.org/filterSD\n\n");
-    
-    mexPrintf(" This binary is statically linked to the following software:\n");
-    mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
 
     mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.i2c2.aut.ac.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
