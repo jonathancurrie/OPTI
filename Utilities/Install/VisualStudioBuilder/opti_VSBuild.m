@@ -12,13 +12,23 @@ function opti_VSBuild(solver,paths,opts)
 %      - path:              FULL path to the solver source directory
 %      - opts_structure:    structure with the following fields:          
 %           expath:         FULL paths to extra required source directories (cell array)
-%           vsver:          Visual Studio Version (default find the highest version, otherwise VS2013, VS2010 and VS2012 supported)
-%           ifortver:       Intel Fortran Version (default XE15, XE13 and XE11 also supported)
+%           vsver:          Visual Studio Version (default find the highest version, otherwise 'VS2013', 'VS2010' and 'VS2012' supported)
+%           ifortver:       Intel Fortran Version (default find the highest version, otherwise 'XE15', 'XE13SP1', 'XE13', 'XE11SP1' and 'XE11' also supported)
+%           ma57            Include MA57 in build {[]} ('HSL' - HSL Fortran source version, 'Matlab' - DLL included with MATLAB) [see opti_MISC_Install]
+%           ma27            Include MA27 in build {[]} ('HSL' - HSL Fortran source version) [see opti_MISC_Install]
+%           pardiso         Include PARDISO in build {[]} ('Basel' - DLL from Official PARDISO Site, 'MKL' - Version included with Intel MKL)
+%           mumps           Include MUMPS in build {false}
+%           linloader       Include IPOPT Linear System Loader DLL Code {false}
 
 %Constants (modify to suit your PC)
-vs13dir = 'C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE';
-vs12dir = 'C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE';
-vs10dir = 'C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE';
+vs13dir     = 'C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE';
+vs12dir     = 'C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE';
+vs10dir     = 'C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE';
+if15dir     = 'C:\Program Files (x86)\Intel\Composer XE 2015\compiler';
+if13SP1dir  = 'C:\Program Files (x86)\Intel\Composer XE 2013 SP1\compiler';
+if13dir     = 'C:\Program Files (x86)\Intel\Composer XE 2013\compiler';
+if11SP1dir  = 'C:\Program Files (x86)\Intel\Composer XE 2011 SP1\compiler';
+if11dir     = 'C:\Program Files (x86)\Intel\Composer XE 2011\compiler';
 
 %Default Options
 if(nargin < 3 || isempty(opts))
@@ -27,6 +37,17 @@ if(nargin < 3 || isempty(opts))
     opts.pardiso = [];
     opts.ma57 = [];  
     opts.ma27 = [];
+    opts.linloader = false;
+end
+
+%Special paths
+if(nargin < 2)
+    switch(lower(solver))
+        case 'mwma57'
+            paths = {[cd '\Solvers\Source\opti']};
+        otherwise
+            error('You must supply the FULL path to the solver as the second argument!');
+    end
 end
 
 %Extract options
@@ -38,10 +59,11 @@ if(isfield(opts,'expaths') && ~isempty(opts.expaths))
         paths = [paths opts.expaths];
     end   
 end
-if(~isfield(opts,'ifortver') || isempty(opts.ifortver)), ifortver = 'XE15'; else ifortver = opts.ifortver; end
 if(~isfield(opts,'pardiso')), PARDISO = []; else PARDISO = opts.pardiso; end
 if(~isfield(opts,'ma57')), MA57 = []; else MA57 = opts.ma57; end
 if(~isfield(opts,'ma27')), MA27 = []; else MA27 = opts.ma27; end
+if(~isfield(opts,'mumps') || isempty(opts.mumps)), MUMPS = []; else MUMPS = opts.mumps; end
+if(~isfield(opts,'linloader') || isempty(opts.linloader)), LINLOADER = false; else LINLOADER = opts.linloader; end
 
 %Visual Studio Setup
 if(isfield(opts,'vsver') && ~isempty(opts.vsver))
@@ -49,15 +71,38 @@ if(isfield(opts,'vsver') && ~isempty(opts.vsver))
 else %find suitable version
     if(exist([vs13dir '\devenv.exe'],'file'))
         vsver = 'VS2013';
-    elseif(~exist([vs12dir '\devenv.exe'],'file'))
+    elseif(exist([vs12dir '\devenv.exe'],'file'))
         vsver = 'VS2012';
-    elseif(~exist([vs10dir '\devenv.exe'],'file'))
+    elseif(exist([vs10dir '\devenv.exe'],'file'))
         vsver = 'VS2010';
     else
         error('Cannot find a suitable version of Visual Studio!');
     end
 end
-
+%Intel Fortran Setup
+if(isfield(opts,'ifortver') && ~isempty(opts.ifortver))
+    ifortver = opts.ifortver;
+else %find suitable version
+    if(exist(if15dir,'dir'))
+        ifortver = 'XE15';
+    elseif(exist(if13dir,'dir') || exist(if13SP1dir,'dir'))
+        ifortver = 'XE13';
+    elseif(exist(if11dir,'dir') || exist(if11SP1dir,'dir'))
+        ifortver = 'XE11';
+    else
+        ifortver = [];
+    end
+end
+if(~isempty(ifortver)) %ensure compatible with visual studio builder
+    switch(lower(ifortver))
+        case {'11.2','xe15'}
+            ifortver = 'XE15';
+        case {'11.1','11.0','11','xe13','xe13sp1'}
+            ifortver = 'XE13';
+        case {'10.3sp1','10.3 sp1','xe11','xe11sp1'}
+            ifortver = 'XE11';
+    end
+end
 %Current working directory
 cdir = cd;
 
@@ -260,9 +305,8 @@ switch(lower(solver))
         projs = {'libcbc','libcgl'};  
         comps = {'vc','vc'};
         
-    case 'mumps'
-        mumpspath = paths{1};
-        metispath = paths{2};
+    case 'metis'
+        metispath = paths{1};
         %Comment strings.h
         str = fileread([metispath '/Lib/metis.h']);
         if(isempty(strfind(str,'//#include <strings.h>')))
@@ -270,20 +314,41 @@ switch(lower(solver))
             fp = fopen([metispath '/Lib/metis.h'],'w');
             fprintf(fp,'%s',str); fclose(fp);
         end
-%   	- Open proto.h and uncomment line 435 (void GKfree...)
-%       - (METIS >= v5 only) in metis.h define REALTYPEWIDTH 64
-%       - (METIS >= v5 only) in metis.h define USE_GKREGEX
+        %   	- Open proto.h and uncomment line 435 (void GKfree...)
+        %       - (METIS >= v5 only) in metis.h define REALTYPEWIDTH 64
+        %       - (METIS >= v5 only) in metis.h define USE_GKREGEX
         %Copy Header Files
-        if(~exist([cdir '/Solvers/Source/Include/Mumps'],'dir'))
-            mkdir([cdir '/Solvers/Source/Include/Mumps']);
+        if(~exist([cdir '/Solvers/Source/Include/metis'],'dir'))            
             mkdir([cdir '/Solvers/Source/Include/metis']);
         end
-        %Mumps Headers
-        [~,hdrs] = VS_BuildFileList([mumpspath '/include']);
-        copyHeaders(hdrs,[cdir '/Solvers/Source/Include/Mumps/']);
         %Metis Headers
         [~,hdrs] = VS_BuildFileList([metispath '/Lib']);
         copyHeaders(hdrs,[cdir '/Solvers/Source/Include/metis/']);
+        % METIS
+        n = 1;
+        sdir = [metispath '\Lib'];
+        name = 'libmetis';
+        opts = [];
+        opts.exPP = {'_CRT_SECURE_NO_WARNINGS','_CRT_NONSTDC_NO_DEPRECATE','__STDC__','__VC__'};
+        VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = []; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
+        %Write the Solution File
+        solpath = VS_WriteSol(VSPRJ,vsver);
+        %List of projects to compile and move
+        projs = {'libmetis'};  
+        comps = {'vc'};
+        
+    case 'mumps'
+        mumpspath = paths{1};
+        if(length(paths) > 1) %assume metis path 2nd
+            opti_VSBuild('metis',paths{2}); %build METIS first
+        end
+        %Copy Header Files
+        if(~exist([cdir '/Solvers/Source/Include/Mumps'],'dir'))
+            mkdir([cdir '/Solvers/Source/Include/Mumps']);
+        end
+        %Mumps Headers
+        [~,hdrs] = VS_BuildFileList([mumpspath '/include']);
+        copyHeaders(hdrs,[cdir '/Solvers/Source/Include/Mumps/']);       
         n = 1;
         % DMUMPS_C
         sdir = [mumpspath '\src'];
@@ -336,21 +401,19 @@ switch(lower(solver))
         opts = [];
         opts.exPP = {'_CRT_SECURE_NO_WARNINGS','_CRT_NONSTDC_NO_DEPRECATE'};
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = hdrs; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
-        % METIS
-        sdir = [metispath '\Lib'];
-        name = 'libmetis';
-        opts = [];
-        opts.exPP = {'_CRT_SECURE_NO_WARNINGS','_CRT_NONSTDC_NO_DEPRECATE','__STDC__','__VC__'};
-        VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = hdrs; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libdmumps_c','libzmumps_c','libseq_c','libmetis','libpord','libdmumps_f','libzmumps_f','libseq_f'};  
-        comps = {'vc','if','vc','if','vc','if','vc','vc'};
+        projs = {'libdmumps_c','libzmumps_c','libseq_c','libpord','libdmumps_f','libzmumps_f','libseq_f'};  
+        comps = {'vc','vc','vc','if','if','if','if'};
         
     case 'ipopt'
         ipoptpath = paths{1};
-        mumpspath = paths{2};
+        if(length(paths) > 1)
+            mumpspath = paths{2};
+        else
+            mumpspath = [];
+        end
         %Comment hsl & asl defines
         str = fileread([ipoptpath '/src/Common/config_default.h']);
         if(isempty(strfind(str,'//#define COIN_HAS_ASL 1')))
@@ -372,53 +435,59 @@ switch(lower(solver))
         hdrs = {bthdr};
         name = 'libipopt';
         opts = [];
-        opts.exFolder = {};
+        opts.exFolder = {}; opts.exclude = [];
         opts.exPP = {'IPOPT_BUILD','_CRT_SECURE_NO_WARNINGS'};
-        if(~haveLinearSolverLoader) %can't have both dynamic and static linking (for now)
-            switch(havePardiso)
-                case 'BASEL'
-                    opts.exPP = [opts.exPP,'HAVE_PARDISO','HAVE_PARDISO_PARALLEL'];
-                case 'MKL'
-                    opts.exPP = [opts.exPP,'HAVE_PARDISO','HAVE_PARDISO_OLDINTERFACE','HAVE_PARDISO_MKL'];
+        if(~LINLOADER) %can't have both dynamic and static linking (for now)
+            if(~isempty(PARDISO))
+                switch(lower(PARDISO))
+                    case 'basel'
+                        opts.exPP = [opts.exPP,'HAVE_PARDISO','HAVE_PARDISO_PARALLEL'];
+                    case 'mkl'
+                        opts.exPP = [opts.exPP,'HAVE_PARDISO','HAVE_PARDISO_OLDINTERFACE','HAVE_PARDISO_MKL'];
+                end
             end
-            if(haveMA57)
-                opts.exPP = [opts.exPP,'FUNNY_MA57_FINT','COINHSL_HAS_MA57'];
+            if(~isempty(MA57))
+                switch(lower(MA57))
+                    case 'hsl'
+                        opts.exPP = [opts.exPP,'COINHSL_HAS_MA57'];
+                    case 'matlab'
+                        checkLibMWMA57;
+                        opts.exPP = [opts.exPP,'FUNNY_MA57_FINT','COINHSL_HAS_MA57'];
+                end
             end
-            if(~isempty(mumpspath))
+            if(~isempty(MA27))
+                switch(lower(MA27))
+                    case 'hsl'
+                        opts.exPP = [opts.exPP,'COINHSL_HAS_MA27'];
+                end
+            end
+            if(~isempty(mumpspath) && MUMPS)
+                checkLibMUMPS(paths(2:end));
                 hdrs = [hdrs [mumpspath '\include'], [mumpspath '\libseq']];
                 opts.exPP = [opts.exPP,'COIN_HAS_METIS','COIN_HAS_MUMPS'];
+            else
+                opts.exclude = {'IpMumpsSolverInterface.cpp'};
             end
-            opts.exFolder = [opts.exFolder,'contrib\LinearSolverLoader'];
+            opts.exFolder = {'contrib\LinearSolverLoader'};
         else
             hdrs = [hdrs [ipoptpath '\..\ThirdParty\HSL']];
             opts.exPP = [opts.exPP,'HAVE_LINEARSOLVERLOADER','HAVE_WINDOWS_H','SHAREDLIBEXT="dll"','COINHSL_HSL2013'];
+            %post = [post ' -L' libdir ' -llibipoptdyn -llibma28part -DHAVE_LINEARSOLVERLOADER'];
             opts.charset = 'multibyte';    
             opts.outname = 'libipoptdyn';
         end
         opts.exFolder = [opts.exFolder,'Apps','Algorithm\Inexact']; 
-        opts.exclude = 'AmplTNLP.cpp';
-        VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = hdrs; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
-        %Build IPOPT with NO PARDISO but with MUMPS + MA57 (typically to link against BONMIN + SCIP)
-        sdir = [ipoptpath '\src'];
-        hdrs = {bthdr};
-        name = 'libipoptnopardiso';
-        opts = [];
-        opts.exFolder = {};
-        opts.exPP = {'IPOPT_BUILD','_CRT_SECURE_NO_WARNINGS'};
-        opts.exPP = [opts.exPP,'FUNNY_MA57_FINT','COINHSL_HAS_MA57'];
-        if(~isempty(mumpspath))
-            hdrs = [hdrs [mumpspath '\include'], [mumpspath '\libseq']];
-            opts.exPP = [opts.exPP,'COIN_HAS_METIS','COIN_HAS_MUMPS'];
+        if(~isempty(opts.exclude)) %assume cell
+            opts.exclude = [opts.exclude 'AmplTNLP.cpp'];
+        else
+            opts.exclude = 'AmplTNLP.cpp';
         end
-        opts.exFolder = [opts.exFolder,'contrib\LinearSolverLoader'];
-        opts.exFolder = [opts.exFolder,'Apps','Algorithm\Inexact']; 
-        opts.exclude = 'AmplTNLP.cpp';
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = hdrs; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libipopt','libipoptnopardiso'};  
-        comps = {'vc','vc'};
+        projs = {'libipopt'};
+        comps = {'vc'};
         
     case 'bonmin'
         bminpath = paths{1};
@@ -636,7 +705,7 @@ switch(lower(solver))
         sdir = [m1qpath '\src'];
         name = 'libm1qn3';
         opts = [];       
-        opts.cpp = false; opts.ifortver = ifortver;
+        opts.cpp = false; opts.ifortver = ifortver;        
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = []; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
@@ -748,7 +817,7 @@ switch(lower(solver))
         projs = {'libnomad'};  
         comps = {'vc'};
         
-    case 'ooqp'
+    case 'ooqp'       
         ooqppath = paths{1};
         %Copy Header Files
         if(~exist([cdir '/Solvers/Source/Include/Ooqp'],'dir'))
@@ -789,6 +858,8 @@ switch(lower(solver))
             copyfile([cd '/Solvers/Source/ooqp/Ma57/Ma57Solver.h'],[ooqppath '\src\LinearSolvers\Ma57Solver\Ma57Solver.h'],'f');
             if(strcmpi(MA57,'MATLAB'))
                 opts.ex64PP = 'MA57_64BIT_INT'; %64bit integers in API, OPTI MA57 compiled with 32bit ints
+                %Check libmwma57 exists, build if required
+                checkLibMWMA57();
             end
         end
         if(~isempty(PARDISO))
@@ -797,6 +868,9 @@ switch(lower(solver))
             copyfile([cd '/Solvers/Source/ooqp/Pardiso/PardisoSolver.h'],[ooqppath '\src\LinearSolvers\Pardiso\PardisoSolver.h'],'f');
             copyfile([cd '/Solvers/Source/ooqp/Pardiso/QpGenSparsePardiso.cpp'],[ooqppath '\src\QpGen\QpGenSparsePardiso.cpp'],'f');
             copyfile([cd '/Solvers/Source/ooqp/Pardiso/QpGenSparsePardiso.h'],[ooqppath '\src\QpGen\QpGenSparsePardiso.h'],'f');
+            if(strcmpi(PARDISO,'mkl'))
+                opts.mkl = true; %required for mkl pardiso
+            end
         end
         rmdir([cd '/Solvers/Source/ooqp/Pardiso'],'s');
         rmdir([cd '/Solvers/Source/ooqp/Ma57'],'s');
@@ -959,6 +1033,9 @@ switch(lower(solver))
         comps = {'if'};
         
     case 'ma57'
+        if(length(paths) > 1) %assume metis path 2nd
+            opti_VSBuild('metis',paths{2}); %build METIS first
+        end
         n = 1;
         sdir = [paths{1} '\src'];
         name = 'libma57';
@@ -999,7 +1076,16 @@ switch(lower(solver))
         comps = {'if'};    
         
     case 'mwma57'
-        unzip([cd '/Solvers/Source/opti/libmwma57.zip'],[cd '/Solvers/Source/opti/libmwma57']);
+        paths = [cd '\Solvers\Source\opti\libmwma57'];
+        unzip([cd '/Solvers/Source/opti/libmwma57.zip'],paths);        
+        n = 1;
+        sdir = paths;
+        name = 'libmwma57';
+        opts = [];       
+        opts.dll = true; opts.def = 'libmwma57.def';
+        VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = []; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
+        %Write the Solution File
+        solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
         projs = {'libmwma57'};  
         comps = {'vc'}; 
@@ -1016,6 +1102,7 @@ if(~isempty(projs))
         copyLibs(solpath,projs,comps,cdir);
         %Special case of mwma57, delete unzipped dir
         if(strcmpi(projs{1},'libmwma57'))
+            pause(0.1); rehash;
             rmdir([cd '/Solvers/Source/opti/libmwma57'],'s');
         end
     catch ME
@@ -1125,7 +1212,38 @@ try
 catch
     fprintf(2,'There was an error copying the header files for the selected solver - you will have to manually copy ALL Solver .h/.hpp files to OPTI/Solvers/Source/Include/$SOLVERNAME$\n');
 end
-    
+
+
+function checkLibMWMA57
+%Check to see if libmwma57 exists (pretend library file to allow linking against MATLAB's MA57)
+p = [cd '/Solvers/Source/lib'];
+switch(computer)
+    case 'PCWIN'
+        p = [p '/win32/libmwma57.lib'];
+    case 'PCWIN64'
+        p = [p '/win64/libmwma57.lib'];
+end
+if(~exist(p,'file'))
+    opti_VSBuild('mwma57'); %build it
+end
+
+function checkLibMUMPS(path)
+%Check to see if libmwma57 exists (pretend library file to allow linking against MATLAB's MA57)
+p = [cd '/Solvers/Source/lib'];
+switch(computer)
+    case 'PCWIN'
+        p = [p '/win32/libdmumps_c.lib'];
+    case 'PCWIN64'
+        p = [p '/win64/libdmumps_c.lib'];
+end
+if(~exist(p,'file'))
+    if(length(path) > 1)
+        opts.expaths = path{2};
+    else
+        error('OPTI Tried to build MUMPS automatically for you, but you need to specify the METIS path when calling opti_VSBuild');
+    end
+    opti_VSBuild('MUMPS',path,opts); %build it
+end
 
 % %% OLD CODE
 % BONMIN CODE

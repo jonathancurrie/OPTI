@@ -14,7 +14,11 @@ function opti_solverMex(name,src,inc,libs,opts)
 %           blas:       BLAS/LAPACK libraries to link against ({[]}, MKL, NETLIB)
 %           pardiso:    Pardiso Library to link against ({[]}, MKL, Basel)
 %           ma57:       MA57 Library to link against ({[]}, MATLAB, HSL)
+%           ma27:       MA27 Library to link against ({[]}, HSL)
+%           mumps:      Link MUMPS (true/{false})
 %           expre:      Extra arguments for mex before source file (one string)
+%           ifort:      Link against Intel Fortran Dynamic Libraries {false}
+%           util:       Utility, not a solver, includes extra paths
 
 
 %Process Options
@@ -24,16 +28,24 @@ if(nargin > 4)
     if(~isfield(opts,'blas')), opts.blas = []; end
     if(~isfield(opts,'pardiso')), opts.pardiso = []; end
     if(~isfield(opts,'ma57')), opts.ma57 = []; end
+    if(~isfield(opts,'ma27')), opts.ma27 = []; end
+    if(~isfield(opts,'mumps') || isempty(opts.mumps)), opts.mumps = false; end
     if(~isfield(opts,'pp')), opts.pp = []; end
     if(~isfield(opts,'expre')), opts.expre = []; end
     if(~isfield(opts,'util') || isempty(opts.util)), opts.util = false; end
+    if(~isfield(opts,'ifort') || isempty(opts.ifort)), opts.ifort = false; end
 else
     opts.verb = false;
     opts.debug = false;
     opts.blas = [];
+    opts.pardiso = [];
+    opts.ma57 = [];
+    opts.ma27 = [];
+    opts.mumps = false;
     opts.pp = [];
     opts.expre = [];
     opts.util = false;
+    opts.ifort = false;
 end
 
 %Check conflicting BLAS/PARDISO
@@ -75,7 +87,7 @@ end
 if(opts.util)
     inc_str = [inc_str ' -I..\..\Solvers\Source\Include\opti '];
 else
-    inc_str = [inc_str ' -IInclude\opti '];
+    inc_str = [inc_str ' -Iopti '];
 end
 
 %Build Library String
@@ -129,6 +141,9 @@ if(isfield(opts,'blas') && ~isempty(opts.blas))
             post = [post ' -DLINK_MKL ' opti_FindMKL];
         case {'mkl_seq','mklseq'}
             post = [post ' -DLINK_MKL ' opti_FindMKL('seq')];
+        case 'netlib'
+            post = [post ' -DLINK_NETLIB_BLAS -lblas -llapack '];
+            opts.ifort = true; %assume compiled with OPTI + Ifort
         otherwise
             error('%s not yet supported for BLAS',opts.blas);
     end
@@ -137,26 +152,26 @@ end
 if(isfield(opts,'pardiso') && ~isempty(opts.pardiso))
     switch(lower(opts.pardiso))
         case {'mkl','intel','intelmkl'}
-            post = [post ' -DLINK_PARDISO ']; %mkl linked above as blas
+            post = [post ' -DLINK_MKL_PARDISO ']; %mkl linked above as blas
         case {'basel'}
             post = [post ' -DLINK_PARDISO -llibpardiso '];
         otherwise
             error('%s not yet supported for PARDISO',opts.pardiso);
     end
 end
-
 %MA57 Linking
 if(isfield(opts,'ma57') && ~isempty(opts.ma57))
     switch(lower(opts.ma57))
         case {'hsl'}
             post = [post ' -DLINK_MA57 -llibma57 '];
+            post = [post ' -DLINK_METIS -llibmetis ']; %assumed included in build of MA57
+            opts.ifort = true; %assume compiled with OPTI + Ifort            
         case {'matlab','ml'}
             post = [post ' -DLINK_ML_MA57 -llibmwma57 '];
         otherwise
             error('%s not yet supported for MA57',opts.ma57);
     end
 end
-
 %MA27 Linking
 if(isfield(opts,'ma27') && ~isempty(opts.ma27))
     switch(lower(opts.ma27))
@@ -164,6 +179,23 @@ if(isfield(opts,'ma27') && ~isempty(opts.ma27))
             post = [post ' -DLINK_MA27 -llibma27 '];
         otherwise
             error('%s not yet supported for MA27',opts.ma27);
+    end
+end
+%MUMPS Linking
+if(isfield(opts,'mumps') && ~isempty(opts.mumps))
+    if(opts.mumps)
+        post = [post ' -DLINK_MUMPS -IInclude\Mumps -llibdmumps_c -llibdmumps_f -llibseq_c -llibseq_f -llibmetis -llibpord '];
+        opts.ifort = true; %assume compiled with OPTI + Ifort  
+    end
+end
+%Intel Fortran Linking
+if(isfield(opts,'ifort') && ~isempty(opts.ifort) && opts.ifort)
+    if(isempty(strfind(lower(opts.blas),'mkl'))) %link MKL as well
+        [~,fstr,~,~,cmplr] = opti_FindMKL();
+        post = [post ' -L"' cmplr '" ' fstr ' '];
+    else
+        [~,fstr] = opti_FindMKL();
+        post = [post ' ' fstr ' '];
     end
 end
 

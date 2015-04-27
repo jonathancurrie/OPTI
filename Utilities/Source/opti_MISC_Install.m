@@ -38,9 +38,11 @@ opti_VSBuild('ma27',path)
 % MA57 is a new sparse linear solver which replaces MA27. Download from HSL:
 % http://www.hsl.rl.ac.uk/download/MA57/3.9.0/
 
-% Build VS Ifort Solution to build .lib (note MeTiS from the MUMPS install is always assumed linked later) [32bit int version]
+% Build VS Ifort Solution to build .lib [32bit int version]
 path = 'C:\Solvers\ma57-3.7.0';
-opti_VSBuild('ma57',path)
+metispath = 'C:\Solvers\metis-4.0.3'; % FULL path to METIS [max version 4.0.3]
+opts = []; opts.expaths = metispath;
+opti_VSBuild('ma57',path,opts)
 
 
 %% MATLAB's MA57 Wrapper

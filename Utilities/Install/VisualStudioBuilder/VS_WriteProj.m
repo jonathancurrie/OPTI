@@ -23,7 +23,7 @@ function [projPath,guid] = VS_WriteProj(srcpath,projName,incpath,opts)
 %                       'mkl'      true / false to include MKL headers {false}
 %                       'charset'  Character Set {'unicode'}, 'multibyte'
 %                       'toolset'  'v100' for VS2010, 'v110' for VS2012, v120 for VS2013 {v120}
-%                       'ifortver' Intel Fortran version 'XE11' for XE2011, 'XE13' for XE2013, 'XE15' for XE2015 {15.0}
+%                       'ifortver' Intel Fortran version 'XE11' for XE2011/SP1, 'XE13' for XE2013/SP1, 'XE15' for XE2015 {XE15}
 %                       'exclude'  cell array of source files to exclude from project {[]}
 %                       'exFilter' cell array of filtered source files (e.g. abc*) to exclude from project {[]}
 %                       'exFolder' cell array of source folders to exclude from project {[]}
