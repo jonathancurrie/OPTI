@@ -1,5 +1,9 @@
 #include "mex.h"
-#include "mkl.h"
+#include "opti_util.h"
+
+#ifdef LINK_MKL
+    #include "mkl.h"
+#endif
 
 #define MUMPS_ARITH_d 2
 #define MUMPS_ARITH_z 8
@@ -624,17 +628,23 @@ void mexFunction(int nlhs, mxArray *plhs[ ],
 //Print Solver Information
 void printSolverInfo()
 {    
+	char vbuf[6]; getVSVer(vbuf);
     mexPrintf("\n-----------------------------------------------------------\n");
     #if MUMPS_ARITH == MUMPS_ARITH_d
-        mexPrintf(" MUMPS: A Multifrontal Massively Parallel Sparse Direct Solver [DOUBLE PRECISION v%s, Built %s]\n",MUMPS_VERSION,__DATE__);
+        mexPrintf(" MUMPS: A Multifrontal Massively Parallel Sparse Direct Solver [DOUBLE PRECISION v%s, Built %s, VS%s]\n",MUMPS_VERSION,__DATE__,vbuf);
     #elif MUMPS_ARITH == MUMPS_ARITH_z
-        mexPrintf(" MUMPS: A Multifrontal Massively Parallel Sparse Direct Solver [COMPLEX DOUBLE PRECISION v%s, Built %s]\n",MUMPS_VERSION,__DATE__);
+        mexPrintf(" MUMPS: A Multifrontal Massively Parallel Sparse Direct Solver [COMPLEX DOUBLE PRECISION v%s, Built %s, VS%s]\n",MUMPS_VERSION,__DATE__,vbuf);
     #endif
     mexPrintf("  - Source available from: http://graal.ens-lyon.fr/MUMPS/index.php?page=home\n\n");
     
     mexPrintf(" This binary is statically linked to the following software:\n");
     mexPrintf("  - METIS  [v4.0.3] Copyright University of Minnesota\n");
-    mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
+    #ifdef LINK_MKL
+        mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
+    #endif
+    #ifdef LINK_NETLIB_BLAS
+        mexPrintf("  - NETLIB BLAS: http://www.netlib.org/blas/\n  - NETLIB LAPACK: http://www.netlib.org/lapack/\n");
+    #endif
 
     mexPrintf("\n MEX Interface MUMPS Team\n");
     mexPrintf("-----------------------------------------------------------\n");

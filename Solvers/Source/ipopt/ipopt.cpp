@@ -21,11 +21,13 @@
 #include "IpJournalist.hpp"
 #include "IpIpoptApplication.hpp"
 #include "IpSolveStatistics.hpp"
-
-#ifdef haveMKL
+#include "opti_util.h"
+#if defined(LINK_MKL) || defined(LINK_MKL_PARDISO)
     #include "mkl.h"
 #endif
-#include "dmumps_c.h"
+#ifdef LINK_MUMPS
+    #include "dmumps_c.h"
+#endif 
 
 using Ipopt::IsValid;
 using Ipopt::RegisteredOption;
@@ -125,8 +127,8 @@ void mexFunction (int nlhs, mxArray *plhs[],
     }
       
     /*** EDIT FOR LIBMWMA57 ***/
-    //If using MA57 assume MathWorks version, disable MeTiS use (crashes on uncon problem)
-    #ifdef haveMA57
+    //If using ML MA57, disable MeTiS use (crashes on uncon problem)
+    #ifdef LINK_ML_MA57
         if (!options.ipoptOptions().usingMA57()) {
             int value;
             app.Options()->GetIntegerValue("ma57_pivot_order",value,"");
@@ -182,27 +184,41 @@ void mexFunction (int nlhs, mxArray *plhs[],
 //Print Solver Information
 void printSolverInfo()
 {    
+    char vbuf[6]; getVSVer(vbuf); 
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" IPOPT: Interior Point Optimizer [v%s, Built %s]\n",IPOPT_VERSION,__DATE__);
+    mexPrintf(" IPOPT: Interior Point Optimizer [v%s, Built %s, VS%s]\n",IPOPT_VERSION,__DATE__,vbuf);
     mexPrintf("  - Released under the Eclipse Public License: http://opensource.org/licenses/eclipse-1.0\n");
     mexPrintf("  - Source available from: https://projects.coin-or.org/Ipopt\n\n");
     
     mexPrintf(" This binary is statically linked to the following software:\n");
-    mexPrintf("  - MUMPS  [v%s]\n",MUMPS_VERSION);
-    mexPrintf("  - METIS  [v4.0.3] (Copyright University of Minnesota)\n");
-    #ifdef haveMKL
+    #ifdef LINK_MUMPS
+        mexPrintf("  - MUMPS  [v%s]\n",MUMPS_VERSION);
+        mexPrintf("  - METIS  [v4.0.3] (Copyright University of Minnesota)\n");
+    #endif
+    #ifdef LINK_NETLIB_BLAS
+        mexPrintf("  - NETLIB BLAS: http://www.netlib.org/blas/\n  - NETLIB LAPACK: http://www.netlib.org/lapack/\n");
+    #endif
+    #ifdef LINK_MKL
         mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);        
     #endif
-    #ifdef haveMKLPARDISO
-        mexPrintf("  - MKL PARDISO\n");
+    #ifdef LINK_MKL_PARDISO
+        mexPrintf("  - Intel MKL PARDISO [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);  
     #endif
-    
-    #if defined haveMA57 | havePARDISO
+    #ifdef LINK_MA27
+        mexPrintf("  - HSL MA27 (This Binary MUST NOT BE REDISTRIBUTED)\n");
+    #endif        
+    #ifdef LINK_MA57
+        mexPrintf("  - HSL MA57 (This Binary MUST NOT BE REDISTRIBUTED)\n");
+        #if defined(LINK_METIS) && !defined(LINK_MUMPS)
+            mexPrintf("  - MeTiS [v4.0.3] Copyright University of Minnesota\n");
+        #endif
+    #endif    
+    #if defined(LINK_ML_MA57) || defined(LINK_PARDISO)
         mexPrintf("\n And is dynamically linked to the following software:\n");
-        #ifdef haveMA57
+        #ifdef LINK_ML_MA57
             mexPrintf("  - MA57    [v3.0] (Included as part of the MATLAB distribution)\n");
         #endif
-        #ifdef havePARDISO
+        #ifdef LINK_PARDISO //BASEL VERSION
             mexPrintf("  - PARDISO [v4.1.2]\n");
         #endif
     #endif

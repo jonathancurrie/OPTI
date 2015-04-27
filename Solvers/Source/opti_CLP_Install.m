@@ -21,8 +21,8 @@ clc
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
 % path = 'C:\Solvers\Clp-1.16.5\Clp'; % FULL path to CLP
-% opts = [];
-% opts.expath = 'C:\Solvers\glpk-4.48'; % FULL path to GLPK (or leave blank [MAX VER 4.48])
+% glpkpath = 'C:\Solvers\glpk-4.48'; % FULL path to GLPK (or leave blank [MAX VER 4.48])
+% opts = []; opts.expath = glpkpath;
 % opti_VSBuild('CLP',path,opts);
 
 % 3) Compile the MEX File

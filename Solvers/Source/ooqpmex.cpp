@@ -812,7 +812,7 @@ void printSolverInfo()
         mexPrintf("  - Intel MKL PARDISO [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
     #endif
     #ifdef LINK_MA27
-        mexPrintf("  - HSL MA27 \n");
+        mexPrintf("  - HSL MA27 (This Binary MUST NOT BE REDISTRIBUTED)\n");
     #endif        
     #ifdef LINK_MA57
         mexPrintf("  - HSL MA57 (This Binary MUST NOT BE REDISTRIBUTED)\n");

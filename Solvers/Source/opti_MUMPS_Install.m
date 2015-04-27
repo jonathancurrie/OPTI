@@ -9,7 +9,7 @@
 
 % My build platform:
 % - Windows 7 x64
-% - Visual Studio 2012
+% - Visual Studio 2013
 % - Intel Compiler XE (FORTRAN)
 % - Intel Math Kernel Library
 
@@ -28,11 +28,11 @@
 % Builder included with OPTI. Use the following commands, substituting the
 % required path on your computer:
 
-mumpspath = 'C:\Solvers\MUMPS_4.10.0'; % FULL path to MUMPS
-metispath = 'C:\Solvers\metis-4.0.3'; % FULL path to METIS
-
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('MUMPS',{mumpspath,metispath},cd);
+% path = 'C:\Solvers\MUMPS_4.10.0'; % FULL path to MUMPS
+% metispath = 'C:\Solvers\metis-4.0.3'; % FULL path to METIS [max version 4.0.3]
+% opts = []; opts.expaths = metispath;
+% opti_VSBuild('MUMPS',path,opts);
 
 % 4) Compile the MEX File
 % The code below will automatically include all required libraries and
@@ -40,76 +40,39 @@ metispath = 'C:\Solvers\metis-4.0.3'; % FULL path to METIS
 % above steps, simply run this file to compile MUMPS! You MUST BE in the 
 % base directory of OPTI!
 
-clear mumps
+%Double MEX Interface Source Files
+src = 'mumpsmex.c';
+%Include Directories
+inc = 'Include/Mumps';
+%Lib Names [static libraries to link against]
+libs = {'libdmumps_c','libdmumps_f','libpord','libseq_c','libseq_f','libmetis'};
+%Options
+opts = [];
+opts.verb = false;
+opts.blas = 'MKL';
+opts.pp = {'MUMPS_ARITH=2'};
+opts.ifort = true;
 
-% Modify below function if it cannot find Intel MKL on your system.
-[mkl_link,mkl_for_link] = opti_FindMKL();
-% Get Arch Dependent Library Path
-libdir = opti_GetLibPath();
+%Compile
+opti_solverMex('mumps',src,inc,libs,opts);
 
-fprintf('\n------------------------------------------------\n');
-fprintf('MUMPS MEX FILE INSTALL\n\n');
+%Complex Double MEX Interface Source Files
+src = 'mumpsmex.c';
+%Include Directories
+inc = 'Include/Mumps';
+%Lib Names [static libraries to link against]
+libs = {'libzmumps_c','libzmumps_f','libpord','libseq_c','libseq_f','libmetis'};
+%Options
+opts = [];
+opts.verb = false;
+opts.blas = 'MKL';
+opts.pp = {'MUMPS_ARITH=8'};
+opts.ifort = true;
 
-%Get MUMPS Libraries
-post = [' -IInclude/Mumps -L' libdir ' -llibdmumps_c -llibdmumps_f -llibpord -llibseq_c -llibseq_f -llibmetis -DMUMPS_ARITH=2'];
-%Get Intel Fortran Libraries (for MUMPS build) & MKL Libraries (for BLAS)
-post = [post mkl_link mkl_for_link];
-%Common
-post = [post ' -output mumps'];
-
-%CD to Source Directory
-cdir = cd;
-cd 'Solvers/Source';
-
-%Compile & Move
-pre = 'mex -v -largeArrayDims mumpsmex.c';
-try
-    eval([pre post])
-    movefile(['mumps.' mexext],'../','f')
-    fprintf('Done!\n');
-catch ME
-    cd(cdir);
-    error('opti:mumps','Error Compiling MUMPS!\n%s',ME.message);
-end
-cd(cdir);
-fprintf('------------------------------------------------\n');
+%Compile
+opti_solverMex('zmumpsmex',src,inc,libs,opts);
 
 % METIS Reference:
 % “A Fast and Highly Quality Multilevel Scheme for Partitioning Irregular 
 % Graphs”. George Karypis and Vipin Kumar. SIAM Journal on Scientific 
 % Computing, Vol. 20, No. 1, pp. 359—392, 1999.
-
-% Optional ZMUMPS Install
-clear zmumpsmex
-
-% Modify below function if it cannot find Intel MKL on your system.
-[mkl_link,mkl_for_link] = opti_FindMKL();
-% Get Arch Dependent Library Path
-libdir = opti_GetLibPath();
-
-fprintf('\n------------------------------------------------\n');
-fprintf('ZMUMPS MEX FILE INSTALL\n\n');
-
-%Get MUMPS Libraries
-post = [' -IInclude/Mumps -L' libdir ' -llibzmumps_c -llibzmumps_f -llibpord -llibseq_c -llibseq_f -llibmetis -DMUMPS_ARITH=8'];
-%Get Intel Fortran Libraries (for MUMPS build) & MKL Libraries (for BLAS)
-post = [post mkl_link mkl_for_link];
-%Common
-post = [post ' -output zmumpsmex'];
-
-%CD to Source Directory
-cdir = cd;
-cd 'Solvers/Source';
-
-%Compile & Move
-pre = 'mex -v -largeArrayDims mumpsmex.c';
-try
-    eval([pre post])
-    movefile(['zmumpsmex.' mexext],'../','f')
-    fprintf('Done!\n');
-catch ME
-    cd(cdir);
-    error('opti:mumps','Error Compiling ZMUMPS!\n%s',ME.message);
-end
-cd(cdir);
-fprintf('------------------------------------------------\n');
