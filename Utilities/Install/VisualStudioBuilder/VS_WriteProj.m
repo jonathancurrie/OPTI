@@ -18,11 +18,12 @@ function [projPath,guid] = VS_WriteProj(srcpath,projName,incpath,opts)
 %   options         - structue with fields: (optional)
 %                       'cpp'      read C++ and C files (true), read FORTRAN files (false) {true}
 %                       'exPP'     cell array of extra preprocessor definitions {[]}
+%                       'ex64PP'   cell array of extra preprocessor definitions for 64 bit builds (in addition to exPP) {[]}
 %                       'openMP'   true / false {false}
 %                       'mkl'      true / false to include MKL headers {false}
 %                       'charset'  Character Set {'unicode'}, 'multibyte'
 %                       'toolset'  'v100' for VS2010, 'v110' for VS2012, v120 for VS2013 {v120}
-%                       'ifortver' Intel Fortran version {11.0}
+%                       'ifortver' Intel Fortran version 'XE11' for XE2011, 'XE13' for XE2013, 'XE15' for XE2015 {15.0}
 %                       'exclude'  cell array of source files to exclude from project {[]}
 %                       'exFilter' cell array of filtered source files (e.g. abc*) to exclude from project {[]}
 %                       'exFolder' cell array of source folders to exclude from project {[]}
@@ -50,11 +51,12 @@ if(nargin < 2 || isempty(projName)), projName = '.lib'; end
 if(nargin < 3), incpath = []; end
 if(~isfield(opts,'cpp')), opts.cpp = true; end
 if(~isfield(opts,'exPP')), opts.exPP = []; end
+if(~isfield(opts,'ex64PP')), opts.ex64PP = []; end
 if(~isfield(opts,'openMP')), opts.openMP = false; end
 if(~isfield(opts,'charset')), opts.charset = 'unicode'; end
 if(~isfield(opts,'mkl')), opts.mkl = false; end
 if(~isfield(opts,'toolset')), opts.toolset = 'v120'; end
-if(~isfield(opts,'ifortver')), opts.ifortver = '13.0'; end
+if(~isfield(opts,'ifortver')), opts.ifortver = 'XE15'; end
 if(~isfield(opts,'include')), opts.include = []; end
 if(~isfield(opts,'exclude')), opts.exclude = []; end
 if(~isfield(opts,'exFolder')), opts.exFolder = []; end
@@ -232,12 +234,16 @@ if(opts.cpp)
             p.appendChild(pc);
         end
     end
-else
+else %FORTRAN
     docNode = com.mathworks.xml.XMLUtils.createDocument('VisualStudioProject');
     p = docNode.getDocumentElement;
     p.setAttribute('ProjectType','typeStaticLibrary');
     p.setAttribute('ProjectCreator','Intel Fortran');
-    p.setAttribute('Keyword','StaticLibrary');
+    if(strcmpi(opts.ifortver,'XE15'))
+        p.setAttribute('Keyword','Static Library');
+    else
+        p.setAttribute('Keyword','StaticLibrary');
+    end
     p.setAttribute('Version','11.0');
     p.setAttribute('ProjectIdGuid',['{' guid '}']);
     pc = createSection(docNode,'Platforms');
@@ -350,13 +356,26 @@ else
     opts.def64 = opts.def;
 end
 
+%Combine pp for win32 and win64
+if(isempty(opts.exPP))
+    opts.ex32PP = [];    
+elseif(~isempty(opts.exPP) && isempty(opts.ex64PP))
+    opts.ex32PP = opts.exPP;
+    opts.ex64PP = opts.exPP;
+elseif(~isempty(opts.exPP) && ~isempty(opts.ex64PP))
+    opts.ex32PP = opts.exPP;
+    if(~iscell(opts.exPP)), opts.exPP = {opts.exPP}; end
+    if(~iscell(opts.ex64PP)), opts.ex64PP = {opts.ex64PP}; end
+    opts.ex64PP = [opts.exPP opts.ex64PP];
+end 
+
 if(opts.cpp)
     %Debug Detailed Settings
-    p.appendChild(writeDebugDetail(docNode,allpaths,hdr,'Win32',opts.exPP,opts.openMP,opts.console,opts.link32lib,opts.link32path,opts.def32,opts.compileAsCpp,opts.ExcepwCExtern));
-    p.appendChild(writeDebugDetail(docNode,allpaths,hdr,'x64',opts.exPP,opts.openMP,opts.console,opts.link64lib,opts.link64path,opts.def64,opts.compileAsCpp,opts.ExcepwCExtern));
+    p.appendChild(writeDebugDetail(docNode,allpaths,hdr,'Win32',opts.ex32PP,opts.openMP,opts.console,opts.link32lib,opts.link32path,opts.def32,opts.compileAsCpp,opts.ExcepwCExtern));
+    p.appendChild(writeDebugDetail(docNode,allpaths,hdr,'x64',opts.ex64PP,opts.openMP,opts.console,opts.link64lib,opts.link64path,opts.def64,opts.compileAsCpp,opts.ExcepwCExtern));
     %Release Detailed Settings
-    p.appendChild(writeReleaseDetail(docNode,allpaths,hdr,'Win32',opts.exPP,opts.openMP,opts.console,opts.link32lib,opts.link32path,opts.def32,opts.compileAsCpp,opts.ExcepwCExtern));
-    p.appendChild(writeReleaseDetail(docNode,allpaths,hdr,'x64',opts.exPP,opts.openMP,opts.console,opts.link64lib,opts.link64path,opts.def64,opts.compileAsCpp,opts.ExcepwCExtern));
+    p.appendChild(writeReleaseDetail(docNode,allpaths,hdr,'Win32',opts.ex32PP,opts.openMP,opts.console,opts.link32lib,opts.link32path,opts.def32,opts.compileAsCpp,opts.ExcepwCExtern));
+    p.appendChild(writeReleaseDetail(docNode,allpaths,hdr,'x64',opts.ex64PP,opts.openMP,opts.console,opts.link64lib,opts.link64path,opts.def64,opts.compileAsCpp,opts.ExcepwCExtern));
 
     %Write VS Filters
     VS_WriteFilters(projPath,projName,allpaths,src,projhdr);
@@ -371,13 +390,13 @@ if(opts.cpp)
     pc = docNode.createElement('ImportGroup');
     pc.setAttribute('Label','ExtensionTargets');
     p.appendChild(pc);
-else
+else %FORTRAN
     %Configurations
     pc = createSection(docNode,'Configurations');
-    pc.appendChild(writeIFortConfig(docNode,'Debug','Win32',opts.exPP,incpaths));
-    pc.appendChild(writeIFortConfig(docNode,'Release','Win32',opts.exPP,incpaths));
-    pc.appendChild(writeIFortConfig(docNode,'Debug','x64',opts.exPP,incpaths));
-    pc.appendChild(writeIFortConfig(docNode,'Release','x64',opts.exPP,incpaths));
+    pc.appendChild(writeIFortConfig(docNode,'Debug','Win32',opts.ex32PP,incpaths,opts.ifortver));
+    pc.appendChild(writeIFortConfig(docNode,'Release','Win32',opts.ex64PP,incpaths,opts.ifortver));
+    pc.appendChild(writeIFortConfig(docNode,'Debug','x64',opts.ex32PP,incpaths,opts.ifortver));
+    pc.appendChild(writeIFortConfig(docNode,'Release','x64',opts.ex64PP,incpaths,opts.ifortver));
     p.appendChild(pc);
     %Write VS Filters
 %     VS_WriteFilters(projPath,projName,allpaths,src,projhdr);
@@ -506,7 +525,7 @@ addElemText(docNode,pc,'Configuration',config)
 addElemText(docNode,pc,'Platform',plat);
 
 %Write Fortran Configuration Section
-function pc = writeIFortConfig(docNode,config,plat,exPP,exInc)
+function pc = writeIFortConfig(docNode,config,plat,exPP,exInc,ifortver)
 pc = docNode.createElement('Configuration');
 pc.setAttribute('Name',[config '|' plat]);
 if(strcmpi(plat,'x64'))
@@ -538,12 +557,40 @@ else
     tl.setAttribute('RuntimeLibrary','rtMultiThreadedDLL');
 end
 pc.appendChild(tl);
-if(strcmpi(plat,'x64'))
-    tl = docNode.createElement('Tool');
+if(strcmpi(ifortver,'XE15'))
+    tl = docNode.createElement('Tool'); %seem to need all these now
+    tl.setAttribute('Name','VFLibrarianTool');
+    pc.appendChild(tl);
+    tl = docNode.createElement('Tool'); 
+    tl.setAttribute('Name','VFResourceCompilerTool');
+    pc.appendChild(tl);
+    tl = docNode.createElement('Tool'); 
     tl.setAttribute('Name','VFMidlTool');
     tl.setAttribute('SuppressStartupBanner','true');
-    tl.setAttribute('TargetEnvironment','midlTargetAMD64');
+    if(strcmpi(plat,'x64'))
+        tl.setAttribute('TargetEnvironment','midlTargetAMD64');
+    end    
     pc.appendChild(tl);
+    tl = docNode.createElement('Tool'); 
+    tl.setAttribute('Name','VFCustomBuildTool');
+    pc.appendChild(tl);
+    tl = docNode.createElement('Tool'); 
+    tl.setAttribute('Name','VFPreLinkEventTool');
+    pc.appendChild(tl);
+    tl = docNode.createElement('Tool'); 
+    tl.setAttribute('Name','VFPreBuildEventTool');
+    pc.appendChild(tl);
+    tl = docNode.createElement('Tool'); 
+    tl.setAttribute('Name','VFPostBuildEventTool');
+    pc.appendChild(tl);
+else
+    if(strcmpi(plat,'x64'))
+        tl = docNode.createElement('Tool');
+        tl.setAttribute('Name','VFMidlTool');
+        tl.setAttribute('SuppressStartupBanner','true');
+        tl.setAttribute('TargetEnvironment','midlTargetAMD64');
+        pc.appendChild(tl);
+    end
 end
 
 
