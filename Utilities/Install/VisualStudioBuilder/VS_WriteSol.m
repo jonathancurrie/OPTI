@@ -1,4 +1,4 @@
-function solPath = VS_WriteSol(projStruct,toolset)
+function solPath = VS_WriteSol(projStruct,vsver)
 %VS_WriteSol  Create a Visual Studio Solution from Passed Project Structures
 %
 %   This function attempts to automatically create a Visual Studio Solution
@@ -7,11 +7,23 @@ function solPath = VS_WriteSol(projStruct,toolset)
 if(~isstruct(projStruct))
     error('The supplied argument must be a structure');
 end
-if(nargin < 2), toolset = 'v120'; end
+if(nargin < 2), vsver = 'VS2013'; end
 len = numel(projStruct);
 PATHS = cell(len,1);
 IDS = cell(len,1);
 s = warning('off','MATLAB:MKDIR:DirectoryExists');
+%Convert toolset into MS ver
+switch(lower(vsver))
+    case {'vs2010','2010','v100'}
+        toolset = 'v100';
+    case {'vs2012','2012','v110'}
+        toolset = 'v110';
+    case {'vs2013','2013','v120'}
+        toolset = 'v120';
+    otherwise
+        error('Unknown Visual Studio Version! Only VS2010, VS2012 and VS2013 accepted');
+end
+
 fprintf('Generating Visual Studio Projects and Solution:\n');
 try
     %For each structure
@@ -22,6 +34,9 @@ try
         %Add required fields
         if(~isfield(pStr,'hdrs')), pStr.hdrs = []; end
         if(~isfield(pStr,'opts')), pStr.opts = []; end
+        if(~isfield(pStr.opts,'toolset') || isempty(pStr.opts.toolset))
+            pStr.opts.toolset = toolset; %configure compiler
+        end
         %Build Each Project
         fprintf('Writing Project ''%s'' (%d of %d)... ',pStr.name,i,len);
         [PATHS{i},IDS{i}] = VS_WriteProj(pStr.sdir,pStr.name,pStr.hdrs,pStr.opts);
