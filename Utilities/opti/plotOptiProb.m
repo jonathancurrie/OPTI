@@ -16,6 +16,9 @@ if(nargin < 4), confStats = []; end
 if(nargin < 3), xb = []; end
 if(nargin < 2), error('This function requires two inputs (prob, opts)'); end
 
+%Ensure xb is a column
+if(size(xb,2) > 1), xb = xb'; end
+
 %Assume all problem types can be plotted
 
 %Check for SD problem in SeDuMi format

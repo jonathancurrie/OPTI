@@ -232,7 +232,7 @@ switch(name)
         c = which([name '.' mexext]); %bug fix 22/2/12
         if(~isempty(c)) %ensure mex file is OK
             try
-                eval(lower(name));
+                a = eval(lower(name)); %#ok<NASGU>
             catch
                 c = [];
             end
