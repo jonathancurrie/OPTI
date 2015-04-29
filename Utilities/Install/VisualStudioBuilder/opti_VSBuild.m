@@ -38,6 +38,7 @@ if(nargin < 3 || isempty(opts))
     opts.ma57 = [];  
     opts.ma27 = [];
     opts.linloader = false;
+    opts.libname = ['lib' lower(solver)];
 end
 
 %Special paths
@@ -64,6 +65,7 @@ if(~isfield(opts,'ma57')), MA57 = []; else MA57 = opts.ma57; end
 if(~isfield(opts,'ma27')), MA27 = []; else MA27 = opts.ma27; end
 if(~isfield(opts,'mumps') || isempty(opts.mumps)), MUMPS = []; else MUMPS = opts.mumps; end
 if(~isfield(opts,'linloader') || isempty(opts.linloader)), LINLOADER = false; else LINLOADER = opts.linloader; end
+if(~isfield(opts,'libname') || isempty(opts.libname)), LIBNAME = ['lib' lower(solver)]; else LIBNAME = opts.libname; end
 
 %Visual Studio Setup
 if(isfield(opts,'vsver') && ~isempty(opts.vsver))
@@ -161,7 +163,7 @@ switch(lower(solver))
         %CLP
         sdir = [clppath '\src'];
         hdrs = {[clppath '\..\CoinUtils\src'], [clppath '\..\Osi\src'], bthdr}; 
-        name = 'libclp';
+        name = LIBNAME;
         opts = [];
         opts.exPP = {'CLP_BUILD','_CRT_SECURE_NO_WARNINGS'};
         opts.exclude = {'MyEventHandler.cpp','MyMessageHandler.cpp','unitTest.cpp','CbcOrClpParam.cpp',...
@@ -216,7 +218,7 @@ switch(lower(solver))
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libcoinutils','libosi','libclp'};  %,'libclpabc'
+        projs = {'libcoinutils','libosi',LIBNAME};  %,'libclpabc'
         comps = {'vc','vc','vc'};
         if(~isempty(glpkpath))
             projs = [projs 'libcoinutilsgmpl'];
@@ -240,7 +242,7 @@ switch(lower(solver))
         % CBC
         sdir = [cbcpath '\src'];
         hdrs = {[cbcpath '\..\CoinUtils\src'], [cbcpath '\..\Cgl\src'], [cbcpath '\..\Clp\src'], [cbcpath '\..\Osi\src'], bthdr};
-        name = 'libcbc';
+        name = LIBNAME;
         opts = [];
         opts.exPP = {'CBC_BUILD','USE_CBCCONFIG','COIN_NO_TEST_DUPLICATE','_CRT_SECURE_NO_WARNINGS'};
         opts.exclude = {'unitTest.cpp','CoinSolve.cpp','CbcGeneric.cpp','CbcBranchBase.cpp'};
@@ -271,7 +273,7 @@ switch(lower(solver))
         opts.exPP = {'CLP_BUILD','_CRT_SECURE_NO_WARNINGS','CLP_HAS_ABC=4','__BYTE_ORDER=__LITTLE_ENDIAN','INTEL_COMPILER'};
         opts.exclude = {'MyEventHandler.cpp','MyMessageHandler.cpp','unitTest.cpp','CbcOrClpParam.cpp',...
                         'ClpCholeskyMumps.cpp','ClpCholeskyUfl.cpp','ClpCholeskyWssmp.cpp','ClpCholeskyWssmpKKT.cpp','ClpMain.cpp'};
-        opts.toolset = intc;
+        opts.toolset = 'IntelC++';
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = hdrs; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
         % CoinUtils
         sdir = [cbcpath '\..\CoinUtils\src'];
@@ -302,7 +304,7 @@ switch(lower(solver))
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libcbc','libcgl'};  
+        projs = {LIBNAME,'libcgl'};  
         comps = {'vc','vc'};
         
     case 'metis'
@@ -327,14 +329,14 @@ switch(lower(solver))
         % METIS
         n = 1;
         sdir = [metispath '\Lib'];
-        name = 'libmetis';
+        name = LIBNAME;
         opts = [];
         opts.exPP = {'_CRT_SECURE_NO_WARNINGS','_CRT_NONSTDC_NO_DEPRECATE','__STDC__','__VC__'};
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = []; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libmetis'};  
+        projs = {LIBNAME};  
         comps = {'vc'};
         
     case 'mumps'
@@ -433,7 +435,7 @@ switch(lower(solver))
         %Build IPOPT
         sdir = [ipoptpath '\src'];
         hdrs = {bthdr};
-        name = 'libipopt';
+        name = LIBNAME;
         opts = [];
         opts.exFolder = {}; opts.exclude = [];
         opts.exPP = {'IPOPT_BUILD','_CRT_SECURE_NO_WARNINGS'};
@@ -486,15 +488,22 @@ switch(lower(solver))
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libipopt'};
+        projs = {LIBNAME};
         comps = {'vc'};
         
     case 'bonmin'
         bminpath = paths{1};
         ipoptpath = paths{2};
-        mumpspath = paths{3};
-        cbcpath = paths{4};
-        clppath = paths{5};
+        cbcpath = paths{3};
+        clppath = paths{4};
+        if(length(paths) > 5)
+            mumpspaths = paths(5:end);
+        else
+            mumpspaths = [];
+        end
+        %Build IPOPT with the solver settings specified
+        iopts = opts; iopts.expaths = mumpspaths; iopts.libname = 'libipoptbm';
+        opti_VSBuild('ipopt',ipoptpath,iopts);
         %Comment asl define
         str = fileread([bminpath '/src/Interfaces/config_default.h']);
         if(isempty(strfind(str,'//#define COIN_HAS_ASL 1')))
@@ -513,39 +522,39 @@ switch(lower(solver))
         %BONMIN
         sdir = [bminpath '\src'];
         hdrs = {[cbcpath '\..\Cgl\src'],[cbcpath '\src'],[clppath '\src'],[clppath '\..\CoinUtils\src'],[ipoptpath '\src'],[clppath '\..\Osi\src'], bthdr};
-        name = 'libbonmin';
+        name = LIBNAME;
         opts = [];
         opts.exFolder = {};
-        opts.exPP = {'BONMIN_BUILD','IPOPT_BUILD','_CRT_SECURE_NO_WARNINGS'};
-        if(~haveLinearSolverLoader) %can't have both dynamic and static linking (for now)
-            switch(havePardiso)
-                case 'BASEL'
-                    opts.exPP = [opts.exPP,'HAVE_PARDISO','HAVE_PARDISO_PARALLEL'];
-                case 'MKL'
-                    opts.exPP = [opts.exPP,'HAVE_PARDISO','HAVE_PARDISO_OLDINTERFACE','HAVE_PARDISO_MKL'];
-            end
-            if(haveMA57)
-                opts.exPP = [opts.exPP,'FUNNY_MA57_FINT','COINHSL_HAS_MA57'];
-            end
-            if(~isempty(mumpspath))
-                hdrs = [hdrs [mumpspath '\include'], [mumpspath '\libseq']];
-                opts.exPP = [opts.exPP,'COIN_HAS_METIS','COIN_HAS_MUMPS'];
-            end
-            opts.exFolder = [opts.exFolder,'contrib\LinearSolverLoader'];
-        else
-            hdrs = [hdrs [ipoptpath '\..\ThirdParty\HSL']];
-            opts.exPP = [opts.exPP,'HAVE_LINEARSOLVERLOADER','HAVE_WINDOWS_H','SHAREDLIBEXT="dll"','COINHSL_HSL2013'];
-            opts.charset = 'multibyte';    
-            opts.outname = 'libipoptdyn';
-        end
+        opts.exPP = {'BONMIN_BUILD','IPOPT_BUILD','_CRT_SECURE_NO_WARNINGS'};        
         opts.exclude = {'BonCurvatureEstimator.cpp','BonCurvBranchingSolver.cpp'};
         opts.exFolder = {'Apps','Interfaces\Ampl','Interfaces\Filter','Algorithms\Ampl'};
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = hdrs; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;        
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libbonmin'};  
+        projs = {LIBNAME};  
         comps = {'vc'};
+        
+        % %BUILD CPLEX BONMIN VERSION
+        % if(haveCPLEX)
+        %     % Modify below function it it cannot find IBM ILOG CPLEX on your system
+        %     [CPLX_link] = opti_FindCplex();
+        %     post = [post CPLX_link ' -llibosicpx -DHAVE_CPLEX' ];
+        %     % Include BONMIN build with CPLEX
+        %     post = regexprep(post,' -llibbonmin -output bonmin',' -llibbonminCplex -output bonminCplex');
+        %     
+        %     %Compile & Move
+        %     pre = ['mex -v -largeArrayDims bonminmex.cpp iterate.cpp options.cpp bonminoptions.cpp matlabinfo.cpp '...
+        %            'callbackfunctions.cpp matlabexception.cpp matlabfunctionhandle.cpp matlabprogram.cpp matlabjournal.cpp sparsematrix.cpp'];
+        %     try
+        %         eval([pre post])
+        %         movefile(['bonminCplex.' mexext],'../','f')
+        %         fprintf('Done!\n');
+        %     catch ME
+        %         cd(cdir);
+        %         error('opti:bonmin','Error Compiling BONMIN CPLEX Version!\n%s',ME.message);
+        %     end
+        % end
         
     case 'dsdp'
         dsdppath = paths{1};
@@ -559,14 +568,14 @@ switch(lower(solver))
         n = 1;
         sdir = [dsdppath '\src'];
         hdrs = [dsdppath '\include'];
-        name = 'libdsdp';
+        name = LIBNAME;
         opts = [];
         opts.exPP = {'_CRT_SECURE_NO_WARNINGS'};
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = hdrs; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;        
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libdsdp'};  
+        projs = {LIBNAME};  
         comps = {'vc'};
 
     case 'filtersd'
@@ -610,33 +619,33 @@ switch(lower(solver))
         n=1;
         sdir = [glpkpath '\src'];
         hdrs = [];
-        name = 'libglpk';
+        name = LIBNAME;
         opts = [];
         opts.exPP = {'_CRT_SECURE_NO_WARNINGS'};
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = hdrs; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libglpk'};  
+        projs = {LIBNAME};  
         comps = {'vc'};
         
     case 'minpack'
         n = 1;
         sdir = paths{1};
-        name = 'libminpack';
+        name = LIBNAME;
         opts = [];       
         opts.cpp = false; opts.ifortver = ifortver;
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = []; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libminpack'};  
+        projs = {LIBNAME};  
         comps = {'if'};
         
     case 'lbfgsb'
         n = 1;
         sdir = paths{1};
-        name = 'liblbfgsb';
+        name = LIBNAME;
         opts = [];       
         opts.cpp = false; opts.ifortver = ifortver;
         opts.include = {'lbfgsb.f','timer.f','linpack.f'};
@@ -644,7 +653,7 @@ switch(lower(solver))
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'liblbfgsb'};  
+        projs = {LIBNAME};  
         comps = {'if'};
         
     case 'levmar'
@@ -658,7 +667,7 @@ switch(lower(solver))
         copyHeaders(hdrs,[cdir '/Solvers/Source/Include/Levmar/']); 
         n = 1;
         sdir = levpath;
-        name = 'liblevmar';
+        name = LIBNAME;
         opts = [];
         opts.exPP = {'_CRT_SECURE_NO_WARNINGS'};
         opts.exclude = {'expfit.c','Axb_core.c','lm_core.c','lmbc_core.c','lmblec_core.c','lmbleic_core.c','lmlec_core.c','misc_core.c'};
@@ -667,7 +676,7 @@ switch(lower(solver))
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'liblevmar'};  
+        projs = {LIBNAME};  
         comps = {'vc'};
         
     case 'lpsolve'
@@ -685,7 +694,7 @@ switch(lower(solver))
         n = 1;
         sdir = lpspath;
         hdrs = [lpspath '\bfp\bfp_LUSOL\LUSOL'];
-        name = 'liblpsolve';
+        name = LIBNAME;
         opts = [];
         opts.exPP = {'PARSER_LP','INVERSE_ACTIVE=INVERSE_LUSOL','RoleIsExternalInvEngine',...
                      '_CRT_SECURE_NO_WARNINGS','_CRT_NONSTDC_NO_DEPRECATE','LoadableBlasLib=0'};
@@ -696,21 +705,21 @@ switch(lower(solver))
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'liblpsolve'};  
+        projs = {LIBNAME};  
         comps = {'vc'};
         
     case 'm1qn3'
         m1qpath = paths{1};
         n = 1;
         sdir = [m1qpath '\src'];
-        name = 'libm1qn3';
+        name = LIBNAME;
         opts = [];       
         opts.cpp = false; opts.ifortver = ifortver;        
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = []; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libm1qn3'};  
+        projs = {LIBNAME};  
         comps = {'if'};
         
     case 'nl2sol'
@@ -731,7 +740,7 @@ switch(lower(solver))
         fprintf(fp,'%s',str); fclose(fp);
         n=1;
         sdir = portpath;
-        name = 'libnl2sol';
+        name = LIBNAME;
         opts = [];       
         opts.cpp = false; opts.ifortver = ifortver;
         opts.include = {'dn2f.f','dn2g.f','dn2fb.f','dn2gb.f','dn2rdp.f','dv7scp.f','divset.f','Mach\d1mach.f','Mach\r1mach.f',...
@@ -749,7 +758,7 @@ switch(lower(solver))
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libnl2sol'};  
+        projs = {LIBNAME};  
         comps = {'if'};
         
     case 'nlopt'
@@ -776,7 +785,7 @@ switch(lower(solver))
         end
         n=1;
         sdir = nloptpath;
-        name = 'libnlopt';
+        name = LIBNAME;
         opts = [];
         opts.exPP = {'_CRT_SECURE_NO_WARNINGS'};
         opts.exclude = {'testfuncs.c','tst.cc','tstc.c','testros.cc','prog.cc','redblack_test.c','DIRparallel.c'};
@@ -785,7 +794,7 @@ switch(lower(solver))
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libnlopt'};  
+        projs = {LIBNAME};  
         comps = {'vc'};
         
     case 'nomad'
@@ -806,7 +815,7 @@ switch(lower(solver))
         end
         n=1;
         sdir = nmdpath;
-        name = 'libnomad';
+        name = LIBNAME;
         opts = [];
         opts.exPP = {'_CRT_SECURE_NO_WARNINGS'};
         opts.exclude = 'nomad.cpp';
@@ -814,7 +823,7 @@ switch(lower(solver))
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libnomad'};  
+        projs = {LIBNAME};  
         comps = {'vc'};
         
     case 'ooqp'       
@@ -839,7 +848,7 @@ switch(lower(solver))
         end
         n=1;
         sdir = [ooqppath '\src'];
-        name = 'libooqp';
+        name = LIBNAME;
         opts = [];  
         opts.exPP = {'_CRT_SECURE_NO_WARNINGS'};        
         opts.exclude = {'QpGenSparseOblio.C','QpGenSparseSuperLu.C','OoqpPetscMonitor.C',...
@@ -878,7 +887,7 @@ switch(lower(solver))
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libooqp'};  
+        projs = {LIBNAME};  
         comps = {'vc'};
         
     case 'pswarm'
@@ -907,7 +916,7 @@ switch(lower(solver))
         copyHeaders(hdrs,[cdir '/Solvers/Source/Include/Pswarm/']);
         n = 1;
         sdir = pswmpath;
-        name = 'libpswarm';
+        name = LIBNAME;
         opts = [];
         opts.exPP = {'LINEAR','_CRT_SECURE_NO_WARNINGS','_CRT_NONSTDC_NO_DEPRECATE'};
         opts.exclude = {'showcache.c','user.c','pswarm_main.c','pswarm_py.c','pswarm_r.c','cache.c'};
@@ -915,7 +924,7 @@ switch(lower(solver))
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libpswarm'};  
+        projs = {LIBNAME};  
         comps = {'vc'};
         
     case 'csdp'
@@ -937,7 +946,7 @@ switch(lower(solver))
         n = 1;        
         sdir = [csdppath '\lib'];
         hdrs = [csdppath '\include'];
-        name = 'libcsdp';
+        name = LIBNAME;
         opts.exPP = {'_CRT_SECURE_NO_WARNINGS','USEOPENMP','NOSHORTS'};
         opts.openMP = true;
         opts.exclude = 'user_exit.c';
@@ -945,7 +954,7 @@ switch(lower(solver))
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libcsdp'};  
+        projs = {LIBNAME};  
         comps = {'vc'};
         
 %           a) In order to accommodate more features of CSDP from MEX I modified 
@@ -1000,7 +1009,7 @@ switch(lower(solver))
         copyfile([aslpath '/opcode.hd'],[cdir '/Utilities/Source/Include/Asl/opcode.hd'],'f');
         n=1;
         sdir = aslpath;
-        name = 'libasl';
+        name = LIBNAME;
         opts = [];
         opts.exPP = {'Arith_Kind_ASL=1','Sscanf=sscanf','Printf=printf','Sprintf=sprintf',...
                      'Fprintf=fprintf','snprintf=_snprintf','NO_STDIO1','_CRT_SECURE_NO_WARNINGS','_CRT_NONSTDC_NO_DEPRECATE'};
@@ -1012,7 +1021,7 @@ switch(lower(solver))
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libasl'};  
+        projs = {LIBNAME};  
         comps = {'vc'};
         
     case 'rmathlib'
@@ -1021,7 +1030,7 @@ switch(lower(solver))
     case 'ma27'
         n = 1;
         sdir = paths{1};
-        name = 'libma27';
+        name = LIBNAME;
         opts = [];       
         opts.cpp = false; opts.ifortver = ifortver;
         opts.include = {'ma27.f'};
@@ -1029,7 +1038,7 @@ switch(lower(solver))
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libma27'};  
+        projs = {LIBNAME};  
         comps = {'if'};
         
     case 'ma57'
@@ -1038,7 +1047,7 @@ switch(lower(solver))
         end
         n = 1;
         sdir = [paths{1} '\src'];
-        name = 'libma57';
+        name = LIBNAME;
         opts = [];       
         opts.cpp = false; opts.ifortver = ifortver;
         opts.include = {'ma57d.f','ddeps.f'};
@@ -1046,33 +1055,33 @@ switch(lower(solver))
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libma57'};  
+        projs = {LIBNAME};  
         comps = {'if'};
         
     case 'blas'
         n = 1;
         sdir = paths{1};
-        name = 'libblas';
+        name = LIBNAME;
         opts = [];       
         opts.cpp = false; opts.ifortver = ifortver;
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = []; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libblas'};  
+        projs = {LIBNAME};  
         comps = {'if'};
         
     case 'lapack'
         n = 1;
         sdir = paths{1};
-        name = 'liblapack';
+        name = LIBNAME;
         opts = [];       
         opts.cpp = false; opts.ifortver = ifortver;
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = []; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'liblapack'};  
+        projs = {LIBNAME};  
         comps = {'if'};    
         
     case 'mwma57'
@@ -1080,14 +1089,14 @@ switch(lower(solver))
         unzip([cd '/Solvers/Source/opti/libmwma57.zip'],paths);        
         n = 1;
         sdir = paths;
-        name = 'libmwma57';
+        name = LIBNAME;
         opts = [];       
         opts.dll = true; opts.def = 'libmwma57.def';
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = []; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
-        projs = {'libmwma57'};  
+        projs = {LIBNAME};  
         comps = {'vc'}; 
         
     otherwise
