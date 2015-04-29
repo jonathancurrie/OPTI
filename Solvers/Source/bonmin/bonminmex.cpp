@@ -13,8 +13,16 @@
 #include "config_clp_default.h"
 #include "config_coinutils_default.h"
 #include "config_osi_default.h"
-#include "mkl.h"
-#include "dmumps_c.h"  
+#include "opti_util.h"
+#if defined(LINK_MKL) || defined(LINK_MKL_PARDISO)
+    #include "mkl.h"
+#endif
+#ifdef LINK_MUMPS
+    #include "dmumps_c.h"
+#endif 
+#ifdef LINK_CPLEX
+   #include "cpxconst.h"
+#endif   
 
 #include "iterate.hpp"
 #include "options.hpp"
@@ -31,11 +39,6 @@
 #include "BonBabSetupBase.hpp"
 
 #include "CoinMessageHandler.hpp"
-
-#ifdef HAVE_CPLEX
-   #include "cpxconst.h"
-#endif        
-
 #include <exception>
       
         
@@ -231,8 +234,9 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
 //Print Solver Information
 void printSolverInfo()
 {    
+    char vbuf[6]; getVSVer(vbuf); 
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" BONMIN: Basic Open Source Nonlinear Mixed Integer Optimizer [v%s, Built %s]\n",BONMIN_VERSION,__DATE__);
+    mexPrintf(" BONMIN: Basic Open Source Nonlinear Mixed Integer Optimizer [v%s, Built %s, VS%s]\n",BONMIN_VERSION,__DATE__,vbuf);
     mexPrintf("  - Released under the Eclipse Public License: http://opensource.org/licenses/eclipse-1.0\n");
     mexPrintf("  - Source available from: https://projects.coin-or.org/Bonmin\n\n");
     
@@ -241,19 +245,46 @@ void printSolverInfo()
     mexPrintf("  - CBC    [v%s] (Eclipse Public License)\n",CBC_VERSION);
     mexPrintf("  - CGL    [v%s] (Eclipse Public License)\n",CGL_VERSION);
     mexPrintf("  - CLP    [v%s] (Eclipse Public License)\n",CLP_VERSION);
-    mexPrintf("  - MUMPS  [v%s]\n",MUMPS_VERSION);
-    mexPrintf("  - METIS  [v4.0.3] (Copyright University of Minnesota)\n");
     mexPrintf("  - CoinUtils [v%s] (Eclipse Public License)\n",COINUTILS_VERSION);
     mexPrintf("  - OSI    [v%s] (Eclipse Public License)\n",OSI_VERSION);
-    mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
-    #ifdef haveMKLPARDISO
-        mexPrintf("  - MKL PARDISO\n");
+    #ifdef LINK_MUMPS
+        mexPrintf("  - MUMPS  [v%s]\n",MUMPS_VERSION);
+        mexPrintf("  - METIS  [v4.0.3] (Copyright University of Minnesota)\n");
     #endif
-    
-    mexPrintf("\n And is dynamically linked to the following software:\n");
-    mexPrintf("  - MA57   [v3.0] (Included as part of the MATLAB distribution)\n");
-    #ifdef HAVE_CPLEX
-        mexPrintf("  - CPLEX  [v%d.%d.%d]\n",CPX_VERSION_VERSION,CPX_VERSION_RELEASE,CPX_VERSION_MODIFICATION);
+    #ifdef LINK_NETLIB_BLAS
+        mexPrintf("  - NETLIB BLAS: http://www.netlib.org/blas/\n  - NETLIB LAPACK: http://www.netlib.org/lapack/\n");
+    #endif
+    #ifdef LINK_MKL
+        mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);        
+    #endif
+    #ifdef LINK_MKL_PARDISO
+        mexPrintf("  - Intel MKL PARDISO [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);  
+    #endif
+    #ifdef LINK_MA27
+        mexPrintf("  - HSL MA27 (This Binary MUST NOT BE REDISTRIBUTED)\n");
+    #endif        
+    #ifdef LINK_MA57
+        mexPrintf("  - HSL MA57 (This Binary MUST NOT BE REDISTRIBUTED)\n");
+        #if defined(LINK_METIS) && !defined(LINK_MUMPS)
+            mexPrintf("  - MeTiS [v4.0.3] Copyright University of Minnesota\n");
+        #endif
+    #endif
+            
+    #if defined(LINK_ML_MA57) || defined(LINK_PARDISO) || defined(LINK_CPLEX)
+        mexPrintf("\n And is dynamically linked to the following software:\n");
+        #ifdef LINK_ML_MA57
+            mexPrintf("  - MA57    [v3.0] (Included as part of the MATLAB distribution)\n");
+        #endif
+        #ifdef LINK_PARDISO //BASEL VERSION
+            mexPrintf("  - PARDISO [v4.1.2]\n");
+        #endif
+        #ifdef LINK_CPLEX
+            mexPrintf("  - CPLEX  [v%d.%d.%d]\n",CPX_VERSION_VERSION,CPX_VERSION_RELEASE,CPX_VERSION_MODIFICATION);
+        #endif
+    #endif
+            
+    #ifdef HAVE_LINEARSOLVERLOADER
+        mexPrintf("\n Dynamically Linked to libhsl.dll containing the HSL Numerical Routines (MA27, MA77, etc)\n   (NOTE: This must exist on the MATLAB path)\n");
     #endif
     
     mexPrintf("\n MEX Interface P.Carbonetto [Modified by J.Currie 2013]\n");

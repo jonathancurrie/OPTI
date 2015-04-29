@@ -32,12 +32,12 @@ clc
 opts = [];
 opts.pardiso = 'MKL'; %use Intel MKL's Pardiso Library (empty to not use pardiso)
 opts.ma57 = 'Matlab'; %use MATLAB's supplied MA57 library (empty to not use ma57)
-opts.mumps = true; %link MUMPS (add path below)
+opts.mumps = true; %link MUMPS (add path below when compiling lib)
 opts.ma27 = ''; %do not link ma27
 opts.linloader = false; %do not use HSL's linear solver dynamically loaded library (you must compile this separately)
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% path = 'C:\Solvers\Ipopt-3.12.1\Ipopt'; %FULL path to IPOPT
+% path = 'C:\Solvers\Ipopt-3.12.3\Ipopt'; %FULL path to IPOPT
 % mumpspath = 'C:\Solvers\MUMPS_4.10.0'; %FULL path to MUMPS (or leave blank to skip linking MUMPS)
 % metispath = 'C:\Solvers\metis-4.0.3'; % FULL path to METIS (leave blank if not linking MUMPS) [max version 4.0.3]
 % opts.expaths = {mumpspath,metispath};
@@ -58,9 +58,26 @@ inc = {'Include/Ipopt','ipopt/Include','Include/BuildTools'};
 %Lib Names [static libraries to link against]
 libs = 'libipopt';
 %Options (note options from above used here too)
-opts.verb = true;
+opts.verb = false;
 opts.pp = 'IPOPT_BUILD';
 opts.blas = 'MKL'; 
 
 %Compile
 opti_solverMex('ipopt',src,inc,libs,opts);
+
+%% Reproducible Results with IPOPT
+% By default IPOPT is compiled above with the multi-threaded MKL libraries.
+% Due to threading order affecting the order of floating point operations,
+% consecutive runs of the SAME problem may produce DIFFERENT results. This
+% effect is problem and platform dependent.
+
+% To obtain reproducible results, you must remove all multi-threading from
+% IPOPT. The easiest way to do this is to only use MUMPS, and compile
+% against MKL_SEQ or NETLIB as the BLAS library. Do not use MA57 or
+% PARDISO. Note however you will have a substantial speed-hit for doing
+% this.
+
+
+
+
+
