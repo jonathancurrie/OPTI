@@ -35,6 +35,8 @@ function [projPath,guid] = VS_WriteProj(srcpath,projName,incpath,opts)
 %                       'outname'  Output file name (rather than proj_name above)
 %                       'dll'      true / false to build as a DLL {false}
 %                       'def'      module definition file (only compatible with DLL projects) {[]}
+%                       'compileAsCpp' compile .c as cpp
+%                       'ExcepwCExtern' Accept C exceptions as extern
 
 %Extract first source path if multiple paths specified (first is assumed base)
 allpaths = srcpath;

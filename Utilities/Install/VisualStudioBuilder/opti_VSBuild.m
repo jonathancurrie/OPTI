@@ -1073,10 +1073,15 @@ switch(lower(solver))
         
     case 'lapack'
         n = 1;
-        sdir = paths{1};
+        sdir = [paths{1} '/SRC'];
         name = LIBNAME;
         opts = [];       
         opts.cpp = false; opts.ifortver = ifortver;
+        opts.exFolder = {'VARIANTS'};
+%         opts.exclude = {'zerrsyx.f','zerrgex.f','serrgex.f','second_INT_CPU_TIME.f','second_EXT_ETIME_.f',...
+%                         'second_NONE.f','second_INT_ETIME.f','secondtst.f','tstiee.f','slamchtst.f',...
+%                         'slamchf77.f','dlamchf77.f','dlamchtst.f','dsecnd_INT_CPU_TIME.f','dsecnd_EXT_ETIME_.f',...
+%                         'dsecnd_INT_ETIME.f','dsecnd_NONE.f','dsecndtst.f'};
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = []; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
         %Write the Solution File
         solpath = VS_WriteSol(VSPRJ,vsver);

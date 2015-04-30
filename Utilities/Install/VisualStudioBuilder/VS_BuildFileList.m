@@ -56,6 +56,21 @@ for m = 1:size(directory,1)
                 end
             end
         end
+        %Try again, this time just searching start folder
+        for i = 1:length(ps)
+            if(length(ps{i}) > len)
+                ind = strfind(ps{i}(len:end),filesep);
+                if(~isempty(ind))
+                    pa = ps{i}(len:len+ind(1)-2);
+                    for j = 1:length(exFolder)
+                        if(strcmp(pa,exFolder{j}))
+                            ps{i} = [];
+                            break;
+                        end
+                    end
+                end
+            end
+        end
     end
 
     for i = 1:length(ps)
