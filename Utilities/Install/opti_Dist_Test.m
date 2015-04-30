@@ -84,9 +84,9 @@ test_sdpio;
 
 %Run other tests
 test_objc;
-
 test_sym_diff;
 test_sparse_snle;
+test_rmathlib_formal;
 
 %Plot tests
 test_1dplots;
