@@ -337,13 +337,17 @@ classdef opticheckval
             
             if(v2 < eps(class(v2)))
                 err = 0;
-            elseif(v1==0 || v2==0)
+            elseif(all(v1==0) || all(v2==0))
                 err = abs(v1-v2);
             else
-                err = abs(v1-v2)/v1;
+                err = abs(v1-v2)./abs(v1);
             end
-            if(err > tol)
-                throwAsCaller(MException('OPTI:RelativeErrorCheck','Error when comparing parameter ''%s'' - Relative Error %g%%\n',str,err*100));
+            if(any(err > tol))
+                if(length(err) > 1)
+                    throwAsCaller(MException('OPTI:RelativeErrorCheck','Error when comparing parameter ''%s'' - Max Relative Error %g%%\n',str,max(err)*100));
+                else
+                    throwAsCaller(MException('OPTI:RelativeErrorCheck','Error when comparing parameter ''%s'' - Relative Error %g%%\n',str,err*100));
+                end
             end
         end
     end

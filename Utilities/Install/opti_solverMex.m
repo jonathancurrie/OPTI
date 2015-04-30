@@ -85,7 +85,7 @@ else
     inc_str = '';
 end
 if(opts.util)
-    inc_str = [inc_str ' -I..\..\Solvers\Source\Include\opti '];
+    inc_str = [inc_str ' -I..\..\Solvers\Source\opti '];
 else
     inc_str = [inc_str ' -Iopti '];
 end

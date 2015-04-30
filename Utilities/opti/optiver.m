@@ -5,11 +5,17 @@ function current_version = optiver
 
 %   Copyright (C) 2011-2015 Jonathan Currie (I2C2)
 
-current_version = 2.13;
+current_version = 2.15;
 
 %History
 
-%2.13 (20/04/15)
+%2.15 (...)
+% - Rebuilt all solvers against MKL v11.2 R3 and Visual Studio 2013
+% - Updated CLP to 1.16.6
+% - Updated CBC to 2.9.4
+% - Updated IPOPT to 3.12.3
+% - Updated BONMIN to 1.8.2
+% - Updated SCIP to
 % - Fixed bug in convBonmin when supplying options from another solver (G.Tsoukalas)
 % - Fixed bug in >=R2014b when plotting OPTI plots with bounds
 % - Fixed bug in >=R2014b when plotting quadratic constraints
