@@ -9,9 +9,13 @@
 /* Based in parts on levmar.c supplied with LEVMAR */
 
 #include "mex.h"
-#include "mkl.h"
 #include <levmar.h>
 #include <float.h>
+#include "opti_util.h"
+
+#ifdef LINK_MKL
+    #include "mkl.h"
+#endif
 
 //Function handle structure
 #define FLEN 128 /* max length of user function name */
@@ -520,13 +524,16 @@ void checkInputs(const mxArray *prhs[], int nrhs, int *conMode)
 //Print Solver Information
 void printSolverInfo()
 {    
+    char vbuf[6]; getVSVer(vbuf);    
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" LEVMAR: Levenberg-Marquardt Nonlinear Least Squares in C/C++ [v%s, Built %s]\n",LM_VERSION,__DATE__);
+    mexPrintf(" LEVMAR: Levenberg-Marquardt Nonlinear Least Squares in C/C++ [v%s, Built %s, VS%s]\n",LM_VERSION,__DATE__,vbuf);
     mexPrintf("  - Released under the GNU General Public License: http://www.gnu.org/copyleft/gpl.html\n");
     mexPrintf("  - Source available from: http://www.ics.forth.gr/~lourakis/levmar/\n\n");
     
     mexPrintf(" This binary is statically linked to the following software:\n");
-    mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
+    #ifdef LINK_MKL
+        mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
+    #endif
     
     mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.i2c2.aut.ac.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");

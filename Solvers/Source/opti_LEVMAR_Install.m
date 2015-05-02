@@ -20,10 +20,9 @@
 % Builder included with OPTI. Use the following commands, substituting the 
 % required path on your computer:
 
-levpath = 'C:\Solvers\levmar-2.6'; %FULL path to LEVMAR
-
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% opti_VSBuild('LEVMAR',levpath,cd,'VS2013');
+% path = 'C:\Solvers\levmar-2.6'; %FULL path to LEVMAR
+% opti_VSBuild('LEVMAR',path);
 
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and
@@ -31,36 +30,16 @@ levpath = 'C:\Solvers\levmar-2.6'; %FULL path to LEVMAR
 % above steps, simply run this file to compile LEVMAR! You MUST BE in the 
 % base directory of OPTI!
 
-clear levmar
+%MEX Interface Source Files
+src = 'levmarmex.c';
+%Include Directories
+inc = {'Include\Levmar'};
+%Lib Names [static libraries to link against]
+libs = 'liblevmar';
+%Options
+opts = [];
+opts.verb = false;
+opts.blas = 'mkl';
 
-% Modify below function if it cannot find Intel MKL on your system.
-mkl_link = opti_FindMKL();
-% Get Arch Dependent Library Path
-libdir = opti_GetLibPath();
-
-fprintf('\n------------------------------------------------\n');
-fprintf('LEVMAR MEX FILE INSTALL\n\n');
-
-%Get LEVMAR Libraries
-post = [' -IInclude/Levmar -L' libdir ' -lliblevmar'];
-%Get MKL Libraries (for BLAS & LAPACK)
-post = [post mkl_link];
-%Common outputs
-post = [post ' -output levmar'];
-
-%CD to Source Directory
-cdir = cd;
-cd 'Solvers/Source';
-
-%Compile & Move
-pre = 'mex -v -largeArrayDims levmarmex.c';
-try
-    eval([pre post])
-    movefile(['levmar.' mexext],'../','f')
-    fprintf('Done!\n');
-catch ME
-    cd(cdir);
-    error('opti:levmar','Error Compiling LEVMAR!\n%s',ME.message);
-end
-cd(cdir);
-fprintf('------------------------------------------------\n');
+%Compile
+opti_solverMex('levmar',src,inc,libs,opts);
