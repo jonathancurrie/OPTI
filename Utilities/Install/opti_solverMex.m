@@ -16,6 +16,7 @@ function opti_solverMex(name,src,inc,libs,opts)
 %           ma57:       MA57 Library to link against ({[]}, MATLAB, HSL)
 %           ma27:       MA27 Library to link against ({[]}, HSL)
 %           mumps:      Link MUMPS (true/{false})
+%           asl:        Link AMPL Solver Library (true/{false})
 %           expre:      Extra arguments for mex before source file (one string)
 %           ifort:      Link against Intel Fortran Dynamic Libraries {false}
 %           util:       Utility, not a solver, includes extra paths
@@ -30,6 +31,7 @@ if(nargin > 4)
     if(~isfield(opts,'ma57')), opts.ma57 = []; end
     if(~isfield(opts,'ma27')), opts.ma27 = []; end
     if(~isfield(opts,'mumps') || isempty(opts.mumps)), opts.mumps = false; end
+    if(~isfield(opts,'asl') || isempty(opts.asl)), opts.asl = false; end
     if(~isfield(opts,'pp')), opts.pp = []; end
     if(~isfield(opts,'expre')), opts.expre = []; end
     if(~isfield(opts,'util') || isempty(opts.util)), opts.util = false; end
@@ -42,6 +44,7 @@ else
     opts.ma57 = [];
     opts.ma27 = [];
     opts.mumps = false;
+    opts.asl = false;
     opts.pp = [];
     opts.expre = [];
     opts.util = false;
@@ -186,6 +189,15 @@ if(isfield(opts,'mumps') && ~isempty(opts.mumps))
     if(opts.mumps)
         post = [post ' -DLINK_MUMPS -IInclude\Mumps -llibdmumps_c -llibdmumps_f -llibseq_c -llibseq_f -llibmetis -llibpord '];
         opts.ifort = true; %assume compiled with OPTI + Ifort  
+    end
+end
+%ASL Linking
+if(isfield(opts,'asl') && ~isempty(opts.asl))
+    if(opts.asl)
+        post = [post ' -DLINK_ASL -DNO_STDIO1 -I..\..\Utilities\Source\Include\Asl -L..\..\Utilities\Source\' getLibPath ' -llibasl'];
+        if(strcmpi(name,'scip'))
+            src_str = [src_str ' scip/ASL/reader_nl.c ']; %include Stefan's ASL reader
+        end
     end
 end
 %Intel Fortran Linking
