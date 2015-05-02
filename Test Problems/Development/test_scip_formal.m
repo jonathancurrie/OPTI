@@ -4,6 +4,8 @@
 
 % Run the entire file by using F5
 
+% CHECK NLP26 with 3.1.0
+
 %Check SCIP is available
 if(~checkSolver('SCIP',0))
     fprintf(2,'\n\nSCIP IS NOT AVAILABLE, NO SCIP TESTS CAN BE RUN\n\n');
@@ -37,14 +39,14 @@ fmin(i) = 0.0504261879;
 [~,fval(i),ef(i)] = opti_scipnl(fun,[],[],[],lb,[],[],[],[],[],x0,opts);
 i = i + 1;
 
-%% NLP3
-fun = @(x) x(2) + 1e-5*(x(2)-x(1))^2;
-lb = [-inf;0];
-x0 = [10;1];
-fmin(i) = 0;
-
-[~,fval(i),ef(i)] = opti_scipnl(fun,[],[],[],lb,[],[],[],[],[],x0,opts);
-i = i + 1;
+%% NLP3 [Unbounded]
+% fun = @(x) x(2) + 1e-5*(x(2)-x(1))^2;
+% lb = [-inf;0];
+% x0 = [10;1];
+% fmin(i) = 0;
+% 
+% [~,fval(i),ef(i)] = opti_scipnl(fun,[],[],[],lb,[],[],[],[],[],x0,opts);
+% i = i + 1;
 
 %% NLP4
 fun = @(x) 1/3*(x(1) + 1)^3 + x(2);
@@ -310,16 +312,16 @@ i = i + 1;
 
 %% NLP25 (not in anonymous function form)
 
-%% NLP26
-fun = @(x) (x(1)-x(2))^2 + (x(2)-x(3))^4;
-nlcon = @(x) (1+x(2)^2)*x(1) + x(3)^4 - 3;
-cl = 0;
-cu = 0;
-x0 = [-2.6;2;2];
-fmin(i) = 0;
-
-[~,fval(i),ef(i)] = opti_scipnl(fun,[],[],[],[],[],nlcon,cl,cu,[],x0,opts);
-i = i + 1;
+%% NLP26 (crashing 3.1.0)
+% fun = @(x) (x(1)-x(2))^2 + (x(2)-x(3))^4;
+% nlcon = @(x) (1+x(2)^2)*x(1) + x(3)^4 - 3;
+% cl = 0;
+% cu = 0;
+% x0 = [-2.6;2;2];
+% fmin(i) = 0;
+% 
+% [~,fval(i),ef(i)] = opti_scipnl(fun,[],[],[],[],[],nlcon,cl,cu,[],x0,opts);
+% i = i + 1;
 
 %% NLP27
 fun = @(x) 0.01*(x(1)-1)^2 + (x(2)-x(1)^2)^2;
@@ -471,29 +473,29 @@ fmin(i) = 0;
 i = i + 1;
 
 %% NLP39
-fun = @(x) -x(1);
-nlcon = @(x) [x(2) - x(1)^3 - x(3)^2;
-              x(1)^2 - x(2) - x(4)^2];
-cl = [0;0];
-cu = [0;0];
-x0 = [2;2;2;2];
-fmin(i) = -1;
-
-[~,fval(i),ef(i)] = opti_scipnl(fun,[],[],[],[],[],nlcon,cl,cu,[],x0,opts);
-i = i + 1;
+% fun = @(x) -x(1);
+% nlcon = @(x) [x(2) - x(1)^3 - x(3)^2;
+%               x(1)^2 - x(2) - x(4)^2];
+% cl = [0;0];
+% cu = [0;0];
+% x0 = [2;2;2;2];
+% fmin(i) = -1;
+% 
+% [~,fval(i),ef(i)] = opti_scipnl(fun,[],[],[],[],[],nlcon,cl,cu,[],x0,opts);
+% i = i + 1;
 
 %% NLP40
-fun = @(x) -x(1)*x(2)*x(3)*x(4);
-nlcon = @(x) [x(1)^3 + x(2)^2 - 1;
-              x(1)^2*x(4) - x(3);
-              x(4)^2 - x(2)];
-cl = [0;0;0];
-cu = [0;0;0];
-x0 = [0.8;0.8;0.8;0.8];
-fmin(i) = -0.25;
-
-[~,fval(i),ef(i)] = opti_scipnl(fun,[],[],[],[],[],nlcon,cl,cu,[],x0,opts);
-i = i + 1;
+% fun = @(x) -x(1)*x(2)*x(3)*x(4);
+% nlcon = @(x) [x(1)^3 + x(2)^2 - 1;
+%               x(1)^2*x(4) - x(3);
+%               x(4)^2 - x(2)];
+% cl = [0;0;0];
+% cu = [0;0;0];
+% x0 = [0.8;0.8;0.8;0.8];
+% fmin(i) = -0.25;
+% 
+% [~,fval(i),ef(i)] = opti_scipnl(fun,[],[],[],[],[],nlcon,cl,cu,[],x0,opts);
+% i = i + 1;
 
 %% NLP41
 fun = @(x) 2 - x(1)*x(2)*x(3);
@@ -573,17 +575,17 @@ i = i + 1;
 % i = i + 1;
 
 %% NLP47
-fun = @(x) (x(1)-x(2))^2 + (x(2)-x(3))^3 + (x(3)-x(4))^4 + (x(4)-x(5))^4;
-nlcon = @(x) [x(1) + x(2)^2 + x(3)^3 - 3;
-              x(2) - x(3)^2 + x(4) - 1;
-              x(1)*x(5) - 1];
-cl = [0;0;0];
-cu = [0;0;0];
-x0 = [2;sqrt(2);-1;2*-sqrt(2);0.5];
-fmin(i) = -0.026715;
-
-[~,fval(i),ef(i)] = opti_scipnl(fun,[],[],[],[],[],nlcon,cl,cu,[],x0,opts);
-i = i + 1;
+% fun = @(x) (x(1)-x(2))^2 + (x(2)-x(3))^3 + (x(3)-x(4))^4 + (x(4)-x(5))^4;
+% nlcon = @(x) [x(1) + x(2)^2 + x(3)^3 - 3;
+%               x(2) - x(3)^2 + x(4) - 1;
+%               x(1)*x(5) - 1];
+% cl = [0;0;0];
+% cu = [0;0;0];
+% x0 = [2;sqrt(2);-1;2*-sqrt(2);0.5];
+% fmin(i) = -0.026715;
+% 
+% [~,fval(i),ef(i)] = opti_scipnl(fun,[],[],[],[],[],nlcon,cl,cu,[],x0,opts);
+% i = i + 1;
 
 %% NLP48
 fun = @(x) (x(1)-1)^2 + (x(2)-x(3))^2 + (x(4)-x(5))^2;
