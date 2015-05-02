@@ -81,10 +81,9 @@ opticheckval.relErrorCheck(rmathlib('qpois',p,lambda),icdf('Poisson',p,lambda),'
 opticheckval.relErrorCheck(rmathlib('dpois',x,lambda),pdf('Poisson',x,lambda),'Poisson pdf',tol);
 opticheckval.relErrorCheck(rmathlib('ppois',q,lambda),cdf('Poisson',q,lambda),'Poisson cdf',tol);
 
-%% Log Normal Distribution
+%% Weibull Distribution
 fprintf('Comparing Weibull Distribution\n');
-x = [-2 -1 0 1 2]; q = [-2,-1,0,1,2]; p = [0.1,0.25,0.5,0.75,0.9]; mu = 0.5; sig = 1;
-opticheckval.relErrorCheck(rmathlib('qweibull',p,mu,sig),icdf('Weibull',p,mu,sig),'Weibull icdf',tol);
-opticheckval.relErrorCheck(rmathlib('dweibull',x,mu,sig),pdf('Weibull',x,mu,sig),'Weibull pdf',tol);
-opticheckval.relErrorCheck(rmathlib('pweibull',q,mu,sig),cdf('Weibull',q,mu,sig),'Weibull cdf',tol);
-
+x = [-2 -1 0 1 2]; q = [-2,-1,0,1,2]; p = [0.1,0.25,0.5,0.75,0.9]; shape = 0.5; scale = 1;
+opticheckval.relErrorCheck(rmathlib('qweibull',p,shape,scale),icdf('Weibull',p,scale,shape),'Weibull icdf',tol);
+opticheckval.relErrorCheck(rmathlib('dweibull',x,shape,scale),pdf('Weibull',x,scale,shape),'Weibull pdf',tol);
+opticheckval.relErrorCheck(rmathlib('pweibull',q,shape,scale),cdf('Weibull',q,scale,shape),'Weibull cdf',tol);

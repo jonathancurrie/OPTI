@@ -5,8 +5,8 @@
 % with MATLAB. 
 
 % My build platform:
-% - Windows 8 SP1 x64
-% - Visual Studio 2012
+% - Windows 7 x64
+% - Visual Studio 2013
 
 % To recompile you will need to get / do the following:
 
