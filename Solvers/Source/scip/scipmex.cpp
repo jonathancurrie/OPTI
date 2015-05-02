@@ -19,10 +19,15 @@
 #include "scipmex.h"
 #include "config_ipopt_default.h"
 #include "cppad/configure.hpp"
-#include "mkl.h"
-#include "dmumps_c.h"
+#include "opti_util.h"
+#ifdef LINK_MKL
+    #include "mkl.h"
+#endif
+#ifdef LINK_MUMPS
+    #include "dmumps_c.h"
+#endif
 
-#ifdef HAVE_ASL
+#ifdef LINK_ASL
  #include "asl_pfgh.h"
  #include "ASL/reader_nl.h"
  struct SCIP_ProbData //probably should be declared in the above?
@@ -117,7 +122,7 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
     //Check Inputs
     checkInputs(prhs,nrhs); 
     
-    #ifdef HAVE_ASL
+    #ifdef LINK_ASL
     //Assume AMPL mode if first arg is a string
     if(mxIsChar(pH))
         aslMode = true;
@@ -570,7 +575,7 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
             }        
         }
     }
-    #ifdef HAVE_ASL
+    #ifdef LINK_ASL
     //Read problem if in ASL mode
     else {
         //Include Stefan's .nl reader
@@ -620,7 +625,14 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
     //Solve Problem if not in testing mode or gams writing mode
     if(tm==0 && strlen(gamsfile)==0  && strlen(cipfile)==0)
     {
-        SCIP_ERR( SCIPsolve(scip), "Error solving SCIP problem!");
+        SCIP_RETCODE rc = SCIPsolve(scip);
+        if(rc != SCIP_OKAY) {
+            //Clean up general SCIP memory
+            SCIP_ERR( SCIPfree(&scip), "Error releasing SCIP problem");
+            //Display Error
+            sprintf(msgbuf,"Error Solving SCIP Problem, Error: %s (Code: %d)",scipErrCode(rc),rc); 
+            mexErrMsgTxt(msgbuf);
+        }
 
         //Assign Return Arguments
         if(SCIPgetNSols(scip) > 0 ) 
@@ -635,7 +647,7 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
             *iter = (double)SCIPgetNLPIterations(scip);
             *nodes = (double)SCIPgetNTotalNodes(scip);
             *gap = SCIPgetGap(scip);
-            #ifdef HAVE_ASL
+            #ifdef LINK_ASL
             if(aslMode) //write ampl solution by default
                 SCIPwriteAmplSolReaderNl(scip,NULL);
             #endif
@@ -688,7 +700,7 @@ void checkInputs(const mxArray *prhs[], int nrhs)
 {
     size_t ndec, ncon;    
     
-    #ifdef HAVE_ASL
+    #ifdef LINK_ASL
     //Check For Path as first argument
     if(mxIsChar(prhs[0]))
     {
@@ -889,8 +901,9 @@ void getStrOption(const mxArray *opts, const char *option, char *str)
 //Print Solver Information
 void printSolverInfo()
 {    
+    char vbuf[6]; getVSVer(vbuf); 
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" SCIP: Solving Constraint Integer Programs [v%d.%d.%d, Built %s]\n",SCIPmajorVersion(),SCIPminorVersion(),SCIPtechVersion(),__DATE__);
+    mexPrintf(" SCIP: Solving Constraint Integer Programs [v%d.%d.%d, Built %s, VS%s]\n",SCIPmajorVersion(),SCIPminorVersion(),SCIPtechVersion(),__DATE__,vbuf);
     mexPrintf("  - Released under the ZIB Academic License: http://scip.zib.de/academic.txt\n");
     mexPrintf("  - Source available from: http://scip.zib.de/\n\n");
     
@@ -899,19 +912,73 @@ void printSolverInfo()
     mexPrintf("  - Ipopt  [v%s] (Eclipse Public License)\n",IPOPT_VERSION);
     strcpy(msgbuf,&CPPAD_PACKAGE_STRING[6]);
     mexPrintf("  - CppAD  [v%s] (Eclipse Public License)\n",msgbuf);  
-    mexPrintf("  - MUMPS  [v%s]\n",MUMPS_VERSION);
-    mexPrintf("  - METIS  [v4.0.3] (Copyright University of Minnesota)\n");
-    #ifdef HAVE_ASL
+    #ifdef LINK_MUMPS
+        mexPrintf("  - MUMPS  [v%s]\n",MUMPS_VERSION);
+        mexPrintf("  - METIS  [v4.0.3] (Copyright University of Minnesota)\n");
+    #endif
+    #ifdef LINK_ASL
         mexPrintf("  - ASL    [v%d] (Netlib)\n",ASLdate_ASL);
     #endif
-    mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
-    #ifdef haveMKLPARDISO
-        mexPrintf("  - MKL PARDISO\n");
+    #ifdef LINK_NETLIB_BLAS
+        mexPrintf("  - NETLIB BLAS: http://www.netlib.org/blas/\n  - NETLIB LAPACK: http://www.netlib.org/lapack/\n");
+    #endif
+    #ifdef LINK_MKL
+        mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);        
+    #endif
+    #ifdef LINK_MKL_PARDISO
+        mexPrintf("  - Intel MKL PARDISO [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);  
+    #endif
+    #ifdef LINK_MA27
+        mexPrintf("  - HSL MA27 (This Binary MUST NOT BE REDISTRIBUTED)\n");
+    #endif        
+    #ifdef LINK_MA57
+        mexPrintf("  - HSL MA57 (This Binary MUST NOT BE REDISTRIBUTED)\n");
+        #if defined(LINK_METIS) && !defined(LINK_MUMPS)
+            mexPrintf("  - MeTiS [v4.0.3] Copyright University of Minnesota\n");
+        #endif
     #endif
     
-    mexPrintf("\n And is dynamically linked to the following software:\n");
-    mexPrintf("  - MA57   [v3.0] (Included as part of the MATLAB distribution)\n");
+    #if defined(LINK_ML_MA57) || defined(LINK_PARDISO) || defined(LINK_CPLEX)
+        mexPrintf("\n And is dynamically linked to the following software:\n");
+        #ifdef LINK_ML_MA57
+            mexPrintf("  - MA57    [v3.0] (Included as part of the MATLAB distribution)\n");
+        #endif
+        #ifdef LINK_PARDISO //BASEL VERSION
+            mexPrintf("  - PARDISO [v4.1.2]\n");
+        #endif
+        #ifdef LINK_CPLEX
+            mexPrintf("  - CPLEX  [v%d.%d.%d]\n",CPX_VERSION_VERSION,CPX_VERSION_RELEASE,CPX_VERSION_MODIFICATION);
+        #endif
+    #endif
     
     mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.i2c2.aut.ac.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
+}
+
+//Error Code Method
+char *scipErrCode(int x)
+{
+    switch(x)
+    {
+        case SCIP_OKAY: return "Normal Termination";
+        case SCIP_ERROR: return "Unspecified Error";
+        case SCIP_NOMEMORY: return "Insufficient Memory Error";
+        case SCIP_READERROR: return "Read Error";
+        case SCIP_WRITEERROR: return "Write Error";
+        case SCIP_NOFILE: return "File Not Found Error";
+        case SCIP_FILECREATEERROR: return "Cannot Create File";
+        case SCIP_LPERROR: return "Error in LP Solver";
+        case SCIP_NOPROBLEM: return "No Problem Exists";
+        case SCIP_INVALIDCALL: return "Method Cannot Be Called at This Time in Solution Process";
+        case SCIP_INVALIDDATA: return "Error In Input Data";
+        case SCIP_INVALIDRESULT: return "Method Returned An Invalid Result Code";
+        case SCIP_PLUGINNOTFOUND: return "A required plugin was not found";
+        case SCIP_PARAMETERUNKNOWN: return "The parameter with the given name was not found";
+        case SCIP_PARAMETERWRONGTYPE: return "The parameter is not of the expected type";
+        case SCIP_PARAMETERWRONGVAL: return "The value is invalid for the given parameter";
+        case SCIP_KEYALREADYEXISTING: return "The given key is already existing in table";
+        case SCIP_MAXDEPTHLEVEL: return "Maximal branching depth level exceeded";
+        case SCIP_BRANCHERROR: return "No branching could be created";
+        default: return "Unknown Error Code";
+    }
 }

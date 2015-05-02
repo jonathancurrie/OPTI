@@ -92,7 +92,11 @@ if(isempty(x0))
     x0 = randn(ndec,1); 
 end
 
-warn = strcmpi(opts.warnings,'all');
+if(isfield(opts,'warnings'))
+    warn = strcmpi(opts.warnings,'all');
+else
+    warn = 0;
+end
 %Check for NaNs
 if(any(isnan(x0)))
     if(warn)
@@ -172,7 +176,11 @@ if(~isempty(A) && ~issparse(A))
 end
 
 %Setup Printing
-opts.display = dispLevel(opts.display);
+if(isfield(opts,'display'))
+    opts.display = dispLevel(opts.display);
+else
+    opts.display = 0;
+end
 
 %Run SCIP
 [x,fval,exitflag,stats] = scip([],zeros(ndec,1),A,rl,ru,lb,ub,xint,[],[],nl,opts);

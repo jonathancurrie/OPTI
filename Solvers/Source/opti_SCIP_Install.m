@@ -28,9 +28,9 @@
 % %% Visual Studio Builder Commands [LATEST SCIP REQ C++11]
 % %NOTE  - the PaxHeader folders change - update as required
 % clear
-% path = 'C:\Solvers\scipoptsuite-3.1.1\scip-3.1.1'; %e.g. 'C:\Solvers\SCIP'
-% splxpath = 'C:\Solvers\scipoptsuite-3.1.1\soplex-2.0.1'; %e.g. 'C:\Solvers\SOPLEX'
-% ipoptpath = 'C:\Solvers\Ipopt-3.12.1\Ipopt'; %e.g. 'C:\Solvers\IPOPT'
+% path = 'C:\Solvers\scipoptsuite-3.1.0\scip-3.1.0'; %e.g. 'C:\Solvers\SCIP'
+% splxpath = 'C:\Solvers\scipoptsuite-3.1.0\soplex-2.0.0'; %e.g. 'C:\Solvers\SOPLEX'
+% ipoptpath = 'C:\Solvers\Ipopt-3.12.3\Ipopt'; %e.g. 'C:\Solvers\IPOPT'
 % n = 1;
 % % SCIP
 % sdir = [path '\src'];
@@ -39,14 +39,14 @@
 % name = 'libscip';
 % opts = [];
 % opts.exPP = {'IPOPT_BUILD','_CRT_SECURE_NO_WARNINGS','NO_RAND_R','NO_SIGACTION','NO_STRERROR_R',...
-%              'NO_STRTOK_R','NO_NEXTAFTER','ROUNDING_MS','NPARASCIP'};          
+%              'NO_STRTOK_R','ROUNDING_MS','NPARASCIP'};          
 % opts.exclude = {'exprinterpret_none.c','nlpi_ipopt_dummy.c','nlpi_xyz.c','lpi_none.c',...
 %                 'lpi_clp.cpp','lpi_cpx.c','lpi_grb.c','lpi_msk.c','lpi_qso.c',...
-%                 'lpi_spx121.cpp','lpi_spx132.cpp','lpi_xprs.c','sorttpl.c','cmain.c',...
+%                 'lpi_spx.cpp','lpi_spx121.cpp','lpi_spx132.cpp','lpi_xprs.c','sorttpl.c','cmain.c',...
 %                 'cppmain.cpp','disp_xyz.c','branch_xyz.c','event_xyz.c','cons_xyz.c',...
 %                 'heur_xyz.c','presol_xyz.c','prop_xyz.c','pricer_xyz.c','nodesel_xyz.c',...
 %                 'relax_xyz.c','reader_xyz.c','sepa_xyz.c','dialog_xyz.c'};
-% opts.exFolder = {'PaxHeaders.29102'};            
+% opts.exFolder = {'PaxHeaders.13647'};            
 % VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = hdrs; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
 % % SOPLEX
 % sdir = [splxpath '\src'];
@@ -54,20 +54,20 @@
 % opts = [];
 % opts.exPP = {'_CRT_SECURE_NO_WARNINGS'};
 % opts.exclude = {'soplexmain.cpp','simpleexample.cpp'};
-% opts.exFolder = {'PaxHeaders.1628'}; 
+% opts.exFolder = {'PaxHeaders.20720'}; 
 % VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = []; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
-% % SCIP executable
+% % SCIP executable (to use this, copy all the .libs listed below into the respective .lib directories in libscip)
 % sdir = [path '\src'];
 % hdrs = {[ipoptpath '\src'], [cd '\Solvers\Source\Include\BuildTools'], [splxpath '\src'], cppadpath};
 % name = 'scip';
 % opts = [];
 % opts.exPP = {'IPOPT_BUILD','_CRT_SECURE_NO_WARNINGS','NO_RAND_R','NO_SIGACTION','NO_STRERROR_R',...
 %              'NO_STRTOK_R','ROUNDING_MS','NPARASCIP'};
-%              %'NO_NEXTAFTER' not used in 3.1.1
 % opts.include = {'cppmain.cpp'};
 % opts.console = true;
-% opts.linklib = {'libscip.lib','libsoplex.lib','libipopt.lib','blas.lib','lapack.lib','libdmumps_c.lib','libdmumps_f.lib','libseq_c.lib','libseq_f.lib','libmetis.lib','libpord.lib'};
+% opts.linklib = {'libscip.lib','libsoplex.lib','libipoptbm.lib','libdmumps_c.lib','libdmumps_f.lib','libseq_c.lib','libseq_f.lib','libmetis.lib','libpord.lib','libma57.lib'};
 % opts.linkpath = {'..\libscip'};
+% opts.mkllink = true;
 % VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = hdrs; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
 % %Write the Solution File
 % VS_WriteSol(VSPRJ)
@@ -83,14 +83,15 @@
 %       - FIND #include <blockmemshell/ REPLACE #include <../blockmemshell/
 %       - FIND #include "scip/          REPLACE #include "../scip/
 %       - FIND #include "nlpi/          REPLACE #include "../nlpi/
+%       - FIND #include "lpi/           REPLACE #include "../lpi/
 %       - FIND #include "objscip/       REPLACE #include "../objscip/
 %       - FIND #include "xml/           REPLACE #include "../xml/
 %       - FIND #include "dijkstra/      REPLACE #include "../dijkstra/
 %       - FIND #include <cppad/         REPLACE #include <../cppad/
 %       - FIND # include <cppad/        REPLACE # include <../cppad/
-%   b) In src/cppad/configure.hpp for 32bit change lines 120 and 101 to
+%   b) In src/cppad/configure.hpp for 32bit change lines 120 and 134
 %           # define CPPAD_SIZE_T_SAME_UNSIGNED_INT 1
-%           # define CPPAD_TAPE_ADDR_TYPE unsigned int
+%           # define CPPAD_TAPE_ADDR_TYPE size_t
 %      while for 64bit change it to
 %           # define CPPAD_SIZE_T_SAME_UNSIGNED_INT 0
 %           # define CPPAD_TAPE_ADDR_TYPE size_t
@@ -129,72 +130,21 @@
 % directories to build the SCIP MEX file. Once you have completed all the
 % above steps, simply run this file to compile SCIP! You MUST BE in the 
 % base directory of OPTI!
+ 
+%MEX Interface Source Files 
+src = {'scip/scipmex.cpp scip/scipeventmex.cpp scip/scipnlmex.cpp'};
+%Include Directories
+inc = {'scip/Include','Include/Scip','Include/scip/nlpi','Include/scip/blockmemshell',...
+       'Include/Ipopt'};
+%Lib Names [static libraries to link against]
+libs = {'libscip','libsoplex','libipoptbm'};
+%Options (note options from above used here too)
+opts = [];
+opts.verb = false;
+opts.blas = 'MKL'; 
+opts.ma57 = 'Matlab';
+opts.mumps = true;
+opts.asl = true; %link ASL library
 
-clear scip
-
-% Modify below function if it cannot find Intel MKL on your system.
-[mkl_link,mkl_for_link] = opti_FindMKL();
-% Get Arch Dependent Library Path
-libdir = opti_GetLibPath();
-% Dependency Paths
-asldir = '..\..\Utilities\Source\';
-% Compilation Options
-haveASL = true;
-haveMA57 = 1;
-havePARDISO = ''; %MKL or BASEL or empty
-
-fprintf('\n------------------------------------------------\n');
-fprintf('SCIP MEX FILE INSTALL\n\n');
-   
-post = '-Iscip/Include ';
-
-%Get IPOPT Libraries
-if(isempty(havePARDISO))
-    post = [post ' -IInclude/Ipopt -llibipoptnopardiso'];  
-else
-    post = [post ' -IInclude/Ipopt -llibipopt']; 
-end
-%Optionally Add MA57 and/or PARDISO
-if(haveMA57), post = [post ' -llibmwma57 -DhaveMA57']; end 
-%Optionally Add PARDISO
-switch(havePARDISO)
-    case 'MKL'  
-        post = [post ' -DhaveMKLPARDISO'];
-    case 'BASEL'
-        switch(computer)
-            case 'PCWIN'
-                post = [post ' -llibpardiso412-WIN-X86 -DhavePARDISO'];
-            case 'PCWIN64'
-                post = [post ' -llibpardiso412-WIN-X86-64 -DhavePARDISO'];
-        end
-end
-%Get ASL libraries
-if(haveASL)
-   post = [post ' -I"' asldir 'Include\Asl" -L"' asldir libdir(1:end-1) '" -llibasl -DHAVE_ASL -DNO_STDIO1'];
-end
-%Get MUMPS Libraries
-post = [post ' -IInclude/Mumps -llibdmumps_c -llibdmumps_f -llibseq_c -llibseq_f -llibmetis -llibpord'];
-%Get Intel Fortran Libraries (for MUMPS build) & MKL Libraries (for BLAS)
-post = [post mkl_link mkl_for_link];
-%Get SCIP Includes and Libraries
-post = [post ' -IInclude/Scip -IInclude/scip/nlpi -IInclude/scip/blockmemshell -L' libdir ' -llibscip -llibsoplex -llibut -output scip'];
-   
-%CD to Source Directory
-cdir = cd;
-cd 'Solvers/Source';
-
-%Compile & Move
-pre = 'mex -v -largeArrayDims scip/scipmex.cpp scip/scipeventmex.cpp scip/scipnlmex.cpp';
-if(haveASL)
-    pre = [pre ' scip/ASL/reader_nl.c ']; %include Stefan's ASL reader   
-end
-try
-    eval([pre post])
-    movefile(['scip.' mexext],'../','f')
-    fprintf('Done!\n');
-catch ME
-    cd(cdir);
-    error('opti:scip','Error Compiling SCIP!\n%s',ME.message);
-end
-cd(cdir);
-fprintf('------------------------------------------------\n');
+%Compile
+opti_solverMex('scip',src,inc,libs,opts);
