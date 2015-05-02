@@ -1,4 +1,4 @@
-y%% OPTI MEX Install Script
+%% OPTI MEX Install Script
 
 % This file enables me to quickly rebuild all solvers - it is not intended
 % to be called by the user!
@@ -24,7 +24,7 @@ addpath([cd '/Utilities/Source'])
 
 %% -- VS2012 Solvers --
 clc
-fprintf(2,'Please Specify Visual Studio 2012 as your Compiler...\n\n');
+fprintf(2,'Please Specify Visual Studio 2013 as your Compiler...\n\n');
 mex -setup
 %% CLP
 opti_CLP_Install
