@@ -15,7 +15,7 @@ current_version = 2.15;
 % - Updated CBC to 2.9.4
 % - Updated IPOPT to 3.12.3
 % - Updated BONMIN to 1.8.2
-% - Updated SCIP to
+% - Updated SCIP to 3.1.0
 % - Fixed bug in convBonmin when supplying options from another solver (G.Tsoukalas)
 % - Fixed bug in >=R2014b when plotting OPTI plots with bounds
 % - Fixed bug in >=R2014b when plotting quadratic constraints
