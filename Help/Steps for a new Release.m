@@ -2,11 +2,9 @@
 
 %Local
 % 1) Update optiver version, release notes and date
-% 2) Update documentation release notes and date
-% 3) Update contents.m version and date
-% 4) Rebuild help documentation
-% 5) Remove any testing files!
-% 6) Run opti_Dist_Test
+% 2) Update contents.m version and date
+% 3) Remove any testing files!
+% 4) Run opti_Dist_Test
 
 %Website
 % 1) Generate new packages and upload

@@ -6,20 +6,20 @@ havVC = true;
 havIC = true;
 havIF = true;
 
-%Check for VC++ 2012
+%Check for VC++ 2013
 if(doCD), cd('../../Solvers/'); end
 try
-    a = ipopt; %#ok<NASGU>
+    a = nlopt; %#ok<NASGU>
 catch
     havVC = false;
 end
-%Check for IC 2013 [not req from OPTI v >= 2.12]
+%Check for IC 2015 [not req from OPTI v >= 2.12]
 try
     a = clp; %#ok<NASGU>
 catch
     havIC = false;
 end
-%Check for IFort 2013
+%Check for IFort 2015
 try
     a = lmder; %#ok<NASGU>
 catch

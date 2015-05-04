@@ -1,7 +1,7 @@
 function stats = calcStatistics(optObj,limit)
 %Calculate confidence and variance statistics of an OPTI curve fitting problem
 %
-%   Called By opti stats
+%   Called By opti fitStats
 
 %   Copyright (C) 2011-2014 Jonathan Currie (I2C2)
 
