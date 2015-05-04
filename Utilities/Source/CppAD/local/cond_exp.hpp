@@ -1,9 +1,9 @@
-/* $Id: cond_exp.hpp 3170 2014-03-09 14:33:53Z bradbell $ */
+/* $Id: cond_exp.hpp 3607 2015-01-20 16:20:41Z bradbell $ */
 # ifndef CPPAD_COND_EXP_INCLUDED
 # define CPPAD_COND_EXP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -131,7 +131,7 @@ as well as forward and reverse derivatives calculations.
 There is one exception to this optimization; see
 $cref/wish list/WishList/Conditional Expressions/$$.
 
-$head Deprecated$$
+$head Deprecate 2005-08-07$$
 Previous versions of CppAD used 
 $codei%
 	CondExp(%flag%, %if_true%, %if_false%)

@@ -1,4 +1,4 @@
-/* $Id: sign_op.hpp 3301 2014-05-24 05:20:21Z bradbell $ */
+/* $Id: sign_op.hpp 3320 2014-09-11 23:06:21Z bradbell $ */
 # ifndef CPPAD_SIGN_OP_INCLUDED
 # define CPPAD_SIGN_OP_INCLUDED
 
@@ -42,7 +42,6 @@ inline void forward_sign_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SignOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SignOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
@@ -79,7 +78,6 @@ inline void forward_sign_op_dir(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SignOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SignOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < q );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 
@@ -113,7 +111,6 @@ inline void forward_sign_op_0(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SignOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SignOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < cap_order );
 
 	// Taylor coefficients corresponding to argument and result
@@ -146,7 +143,6 @@ inline void reverse_sign_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SignOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SignOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < cap_order );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 

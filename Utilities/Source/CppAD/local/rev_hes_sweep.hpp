@@ -1,9 +1,9 @@
-/* $Id: rev_hes_sweep.hpp 3301 2014-05-24 05:20:21Z bradbell $ */
+/* $Id: rev_hes_sweep.hpp 3638 2015-02-10 15:04:04Z bradbell $ */
 # ifndef CPPAD_REV_HES_SWEEP_INCLUDED
 # define CPPAD_REV_HES_SWEEP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -303,12 +303,6 @@ void RevHesSweep(
 			break;
 			// ---------------------------------------------------
 
-			case ComOp:
-			CPPAD_ASSERT_NARG_NRES(op, 4, 0)
-			CPPAD_ASSERT_UNKNOWN( arg[1] > 1 );
-			break;
-			// --------------------------------------------------
-
 			case CosOp:
 			// sin(x), cos(x)
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2)
@@ -357,6 +351,16 @@ void RevHesSweep(
 			break;
 			// -------------------------------------------------
 
+			case ErfOp:
+			// arg[1] is always the parameter 0
+			// arg[0] is always the parameter 2 / sqrt(pi)
+			CPPAD_ASSERT_NARG_NRES(op, 3, 5);
+			reverse_sparse_hessian_nonlinear_unary_op(
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
+			);
+			break;
+			// -------------------------------------------------
+
 			case ExpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1)
 			reverse_sparse_hessian_nonlinear_unary_op(
@@ -398,6 +402,20 @@ void RevHesSweep(
 				RevJac,
 				vecad_jac.data()
 			);
+			break;
+			// -------------------------------------------------
+
+			case EqpvOp:
+			case EqvvOp:
+			case LtpvOp:
+			case LtvpOp:
+			case LtvvOp:
+			case LepvOp:
+			case LevpOp:
+			case LevvOp:
+			case NepvOp:
+			case NevvOp:
+			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
 			break;
 			// -------------------------------------------------
 

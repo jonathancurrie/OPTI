@@ -1,4 +1,4 @@
-// $Id: cskip_op.hpp 3301 2014-05-24 05:20:21Z bradbell $
+// $Id: cskip_op.hpp 3370 2014-09-28 10:52:36Z bradbell $
 # ifndef CPPAD_CSKIP_OP_INCLUDED
 # define CPPAD_CSKIP_OP_INCLUDED
 
@@ -120,7 +120,8 @@ inline void forward_cskip_op_0(
 
 	Base left, right;
 	if( arg[1] & 1 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) <= i_z );
+	{	// If varialbe arg[2] <= i_z, it has already been computed,
+		// but it will be skipped for higher orders.
 		left = taylor[ arg[2] * cap_order + 0 ];
 		CPPAD_ASSERT_UNKNOWN( IdenticalPar(left) );
 	}
@@ -130,7 +131,8 @@ inline void forward_cskip_op_0(
 		CPPAD_ASSERT_UNKNOWN( IdenticalPar(left) );
 	}
 	if( arg[1] & 2 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) <= i_z );
+	{	// If varialbe arg[3] <= i_z, it has already been computed,
+		// but it will be skipped for higher orders.
 		right = taylor[ arg[3] * cap_order + 0 ];
 		CPPAD_ASSERT_UNKNOWN( IdenticalPar(right) );
 	}

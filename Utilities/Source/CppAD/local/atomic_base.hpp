@@ -1,9 +1,9 @@
-/* $Id: atomic_base.hpp 3232 2014-04-27 15:38:21Z bradbell $ */
+/* $Id: atomic_base.hpp 3607 2015-01-20 16:20:41Z bradbell $ */
 # ifndef CPPAD_ATOMIC_BASE_INCLUDED
 # define CPPAD_ATOMIC_BASE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -242,7 +242,7 @@ $icode%afun%.option(%option_value%)%$$
 $head atomic_sparsity$$
 $index atomic_sparsity$$
 $index sparsity, atomic$$
-You can used this option to set to type used for 
+You can used this option to set the type used for 
 $icode afun$$ sparsity patterns.
 This does not apply individual calls to $icode afun$$,
 but rather all its uses between when the sparsity pattern is set and when

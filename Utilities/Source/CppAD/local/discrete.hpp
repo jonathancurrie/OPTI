@@ -1,9 +1,9 @@
-/* $Id: discrete.hpp 3232 2014-04-27 15:38:21Z bradbell $ */
+/* $Id: discrete.hpp 3607 2015-01-20 16:20:41Z bradbell $ */
 # ifndef CPPAD_DISCRETE_INCLUDED
 # define CPPAD_DISCRETE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -147,7 +147,7 @@ functions to avoid retaping a calculation that requires interpolation.
 $cref interp_retape.cpp$$
 shows how interpolation can be done with retaping.)
 
-$head Deprecated$$
+$head CppADCreateDiscrete Deprecated 2007-07-28$$
 $index CppADCreateDiscrete, deprecated$$
 $index deprecated, CppADCreateDiscrete$$
 The preprocessor symbol $code CppADCreateDiscrete$$
@@ -229,7 +229,7 @@ public:
 	/*!
 	Constructor called for each invocation of CPPAD_DISCRETE_FUNCTION.
 
-	Put this objec in the list of all objects for this class and set
+	Put this object in the list of all objects for this class and set
 	the constant private data name_, f_, and index_.
 
 	\param Name

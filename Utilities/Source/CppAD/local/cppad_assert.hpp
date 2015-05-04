@@ -1,4 +1,4 @@
-/* $Id: cppad_assert.hpp 3232 2014-04-27 15:38:21Z bradbell $ */
+/* $Id: cppad_assert.hpp 3320 2014-09-11 23:06:21Z bradbell $ */
 # ifndef CPPAD_CPPAD_ASSERT_INCLUDED
 # define CPPAD_CPPAD_ASSERT_INCLUDED
 
@@ -195,6 +195,21 @@ execution is terminated and the source code line number is reported.
 		);                                                            \
 		assert_first_call = false;                                    \
 	}
+# endif
+
+/*!
+\def CPPAD_ASSERT_ARG_BEFORE_RESULT
+Check that operator arguments come before result.
+
+If \c NDEBUG is defined, this macro has no effect,
+otherwise it calls the function assert_arg_before_result.
+*/
+# ifdef NDEBUG
+# define CPPAD_ASSERT_ARG_BEFORE_RESULT(op, arg, result)
+# else
+# define CPPAD_ASSERT_ARG_BEFORE_RESULT(op, arg, result) \
+	assert_arg_before_result(op, arg, result)
+	
 # endif
 
 # endif

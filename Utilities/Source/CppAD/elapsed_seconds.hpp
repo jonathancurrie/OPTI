@@ -1,12 +1,12 @@
-/* $Id: elapsed_seconds.hpp 3232 2014-04-27 15:38:21Z bradbell $ */
+/* $Id: elapsed_seconds.hpp 3656 2015-02-19 05:31:44Z bradbell $ */
 # ifndef CPPAD_ELAPSED_SECONDS_INCLUDED
 # define CPPAD_ELAPSED_SECONDS_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -19,6 +19,7 @@ $spell
 	Microsoft
 	gettimeofday
 	std
+	chrono
 $$
 
 $section Returns Elapsed Number of Seconds$$
@@ -35,21 +36,24 @@ This routine is accurate to within .02 seconds
 (see $cref elapsed_seconds.cpp$$).
 It does not necessary work for time intervals that are greater than a day.
 $list number$$
-If running under the Microsoft compiler, it uses 
-$code ::GetSystemTime$$ for timing.
+If the C++11 $code std::chrono::high_resolution_clock$$ is available,
+it will be used for timing.
 $lnext
-Otherwise, if $code gettimeofday$$ is available, it is used.
+Otherwise, if running under the Microsoft compiler,
+$code ::GetSystemTime$$ will be used for timing.
 $lnext
-Otherwise, $code std::clock()$$ is used.
+Otherwise, if $code gettimeofday$$ is available, it is used for timing.
+$lnext
+Otherwise, $code std::clock()$$ will be used for timing.
 $lend
 
 $head s$$
-is a $code double$$ equal to the 
+is a $code double$$ equal to the
 number of seconds since the first call to $code elapsed_seconds$$.
 
 $head Microsoft Systems$$
-It you are using the Microsoft C++ compiler,
-you will need to link in the external routine 
+It you are using $code ::GetSystemTime$$,
+you will need to link in the external routine
 called $cref microsoft_timer$$.
 
 $children%
@@ -64,26 +68,29 @@ $end
 -----------------------------------------------------------------------
 */
 
-// For some unknown reason under Fedora (which needs to be understood), 
-// if you move this include for cppad_assert.hpp below include for define.hpp, 
+// For some unknown reason under Fedora (which needs to be understood),
+// if you move this include for cppad_assert.hpp below include for define.hpp,
 //		cd work/speed/example
 //		make test.sh
 // fails with the error message 'gettimeofday' not defined.
 # include <cppad/local/cppad_assert.hpp>
-
-# ifdef _MSC_VER
-extern double microsoft_timer(void);
-# elif CPPAD_HAS_GETTIMEOFDAY 
-# include <sys/time.h>
-# else
-# include <ctime>
-# endif
 
 // define CPPAD_NULL
 # include <cppad/local/define.hpp>
 
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/thread_alloc.hpp>
+
+# if CPPAD_HAS_HIGH_RESOLUTION_CLOCK
+# include <chrono>
+# elif _MSC_VER
+extern double microsoft_timer(void);
+# elif CPPAD_HAS_GETTIMEOFDAY
+# include <sys/time.h>
+# else
+# include <ctime>
+# endif
+
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \file elapsed_seconds.hpp
@@ -106,13 +113,29 @@ Otherwise, \c std::clock() is used.
 The number of seconds since the first call to \c elapsed_seconds.
 */
 inline double elapsed_seconds(void)
-# ifdef _MSC_VER
+// --------------------------------------------------------------------------
+# if CPPAD_HAS_HIGH_RESOLUTION_CLOCK
+{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+	static bool first_ = true;
+	static std::chrono::time_point<std::chrono::high_resolution_clock> start_;
+	if( first_ )
+	{	start_ = std::chrono::high_resolution_clock::now();
+		first_ = false;
+		return 0.0;
+	}
+	std::chrono::time_point<std::chrono::high_resolution_clock> now;
+    now   = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> difference = now - start_;
+	return difference.count();
+}
+// --------------------------------------------------------------------------
+# elif _MSC_VER
 {	return microsoft_timer(); }
-
-# elif CPPAD_HAS_GETTIMEOFDAY 
+// --------------------------------------------------------------------------
+# elif CPPAD_HAS_GETTIMEOFDAY
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 	static bool           first_ = true;
-	static struct timeval tv_;		
+	static struct timeval tv_;
 	struct timeval        tv;
 	if( first_ )
 	{	gettimeofday(&tv_, CPPAD_NULL);
@@ -128,7 +151,8 @@ inline double elapsed_seconds(void)
 
 	return diff;
 }
-# else
+// --------------------------------------------------------------------------
+# else // Not CPPAD_HAS_HIGH_RESOLUTION_CLOCK or CPPAD_HAS_GETTIMEOFDAY
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 	static bool    first_ = true;
 	static double  tic_;
@@ -145,6 +169,6 @@ inline double elapsed_seconds(void)
 	return diff;
 }
 # endif
-
+// --------------------------------------------------------------------------
 } // END_CPPAD_NAMESPACE
 # endif

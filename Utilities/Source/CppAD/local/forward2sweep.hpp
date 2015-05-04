@@ -1,9 +1,9 @@
-/* $Id: forward2sweep.hpp 3301 2014-05-24 05:20:21Z bradbell $ */
+/* $Id: forward2sweep.hpp 3607 2015-01-20 16:20:41Z bradbell $ */
 # ifndef CPPAD_FORWARD2SWEEP_INCLUDED
 # define CPPAD_FORWARD2SWEEP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -134,12 +134,10 @@ load instruction.
 In the case where the index is zero,
 the instruction corresponds to a parameter (not variable).
 
-\return
-The return value is zero.
 */
 
 template <class Base>
-size_t forward2sweep(
+void forward2sweep(
 	const size_t                q,
 	const size_t                r,
 	const size_t                n,
@@ -169,9 +167,6 @@ size_t forward2sweep(
 
 	// operation argument indices
 	const addr_t*   arg = CPPAD_NULL;
-
-	// initialize the comparision operator (ComOp) counter
-	const size_t compareCount = 0;
 
 	// work space used by UserOp.
 	vector<bool> user_vx;        // empty vecotor
@@ -230,6 +225,7 @@ size_t forward2sweep(
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );  
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );  
 		CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
+		CPPAD_ASSERT_ARG_BEFORE_RESULT(op, arg, i_var);
 
 		// check if we are skipping this operation
 		while( cskip_op[i_op] )
@@ -237,6 +233,11 @@ size_t forward2sweep(
 			{	// CSumOp has a variable number of arguments 
 				play->forward_csum(op, arg, i_op, i_var);
 			}
+			CPPAD_ASSERT_UNKNOWN( op != CSkipOp );
+			// if( op == CSkipOp )
+			// {	// CSkip has a variable number of arguments
+			// 	play->forward_cskip(op, arg, i_op, i_var);
+			// }
 			play->forward_next(op, arg, i_op, i_var);
 			CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
 		}
@@ -285,11 +286,6 @@ size_t forward2sweep(
 			forward_cond_op_dir(
 				q, r, i_var, arg, num_par, parameter, J, taylor
 			);
-			break;
-			// ---------------------------------------------------
-
-			case ComOp:
-			CPPAD_ASSERT_UNKNOWN(q > 0 );
 			break;
 			// ---------------------------------------------------
 
@@ -380,12 +376,26 @@ size_t forward2sweep(
 				taylor
 			);
 			break;
+			// ---------------------------------------------------
+
+			case EqpvOp:
+			case EqvvOp:
+			case LtpvOp:
+			case LtvpOp:
+			case LtvvOp:
+			case LepvOp:
+			case LevpOp:
+			case LevvOp:
+			case NepvOp:
+			case NevvOp:
+			CPPAD_ASSERT_UNKNOWN(q > 0 );
+			break;
 			// -------------------------------------------------
 
 			case LogOp:
 			forward_log_op_dir(q, r, i_var, arg[0], J, taylor);
 			break;
-			// -------------------------------------------------
+			// ---------------------------------------------------
 
 			case MulvvOp:
 			forward_mulvv_op_dir(q, r, i_var, arg, parameter, J, taylor);
@@ -399,7 +409,7 @@ size_t forward2sweep(
 			// -------------------------------------------------
 
 			case ParOp:
-			k = i_var*(J-1)*r + i_var + (q-1)*r;
+			k = i_var*(J-1)*r + i_var + (q-1)*r + 1;
 			for(ell = 0; ell < r; ell++)
 				taylor[k + ell] = Base(0); 
 			break;
@@ -729,7 +739,7 @@ size_t forward2sweep(
 	CPPAD_ASSERT_UNKNOWN( user_state == user_start );
 	CPPAD_ASSERT_UNKNOWN( i_var + 1 == play->num_var_rec() );
 
-	return compareCount;
+	return;
 }
 
 // preprocessor symbols that are local to this file

@@ -1,12 +1,12 @@
-/* $Id: rev_jac_sweep.hpp 3301 2014-05-24 05:20:21Z bradbell $ */
+/* $Id: rev_jac_sweep.hpp 3638 2015-02-10 15:04:04Z bradbell $ */
 # ifndef CPPAD_REV_JAC_SWEEP_INCLUDED
 # define CPPAD_REV_JAC_SWEEP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -21,7 +21,7 @@ Compute Reverse mode Jacobian sparsity patterns.
 
 /*!
 \def CPPAD_REV_JAC_SWEEP_TRACE
-This value is either zero or one. 
+This value is either zero or one.
 Zero is the normal operational value.
 If it is one, a trace of every rev_jac_sweep computation is printed.
 */
@@ -38,7 +38,7 @@ otherwise, it respolves to
 \code
 	user_ok = user_atom->rev_sparse_jac
 \endcode
-This maco is undefined at the end of this file to facillitate is 
+This maco is undefined at the end of this file to facillitate is
 use with a different definition in other files.
 */
 # ifdef NDEBUG
@@ -53,7 +53,7 @@ RevJacSweep computes the sparsity pattern for all the independent variables.
 
 \tparam Base
 base type for the operator; i.e., this operation sequence was recorded
-using AD< \a Base > and computations by this routine are done using type 
+using AD< \a Base > and computations by this routine are done using type
 \a Base.
 
 \tparam Vector_set
@@ -96,15 +96,15 @@ the forward Jacobian sparsity pattern for variable i
 corresponds to the set with index i in \a var_sparsity.
 \b
 \b
-\b Input: 
+\b Input:
 For i = 0 , ... , \a numvar - 1,
 the forward Jacobian sparsity pattern for variable i is an input
 if i corresponds to a dependent variable.
-Otherwise the sparsity patten is empty. 
+Otherwise the sparsity patten is empty.
 \n
 \n
 \b Output: For j = 1 , ... , \a n,
-the sparsity pattern for the dependent variable with index (j-1) 
+the sparsity pattern for the dependent variable with index (j-1)
 is given by the set with index index j in \a var_sparsity.
 */
 
@@ -137,8 +137,8 @@ void RevJacSweep(
 	size_t limit = var_sparsity.end();
 
 	// vecad_sparsity contains a sparsity pattern for each VecAD object.
-	// vecad_ind maps a VecAD index (beginning of the VecAD object) 
-	// to the index of the corresponding set in vecad_sparsity. 
+	// vecad_ind maps a VecAD index (beginning of the VecAD object)
+	// to the index of the corresponding set in vecad_sparsity.
 	size_t num_vecad_ind   = play->num_vec_ind_rec();
 	size_t num_vecad_vec   = play->num_vecad_vec_rec();
 	Vector_set  vecad_sparsity;
@@ -152,7 +152,7 @@ void RevJacSweep(
 		{	// length of this VecAD
 			length   = play->GetVecInd(j);
 			// set to proper index for this VecAD
-			vecad_ind[j] = i; 
+			vecad_ind[j] = i;
 			for(k = 1; k <= length; k++)
 				vecad_ind[j+k] = num_vecad_vec; // invalid index
 			// start of next VecAD
@@ -292,12 +292,6 @@ void RevJacSweep(
 			break;
 			// ---------------------------------------------------
 
-			case ComOp:
-			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
-			CPPAD_ASSERT_UNKNOWN( arg[1] > 1 );
-			break;
-			// --------------------------------------------------
-
 			case CosOp:
 			// sin(x), cos(x)
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
@@ -346,6 +340,16 @@ void RevJacSweep(
 			break;
 			// -------------------------------------------------
 
+			case ErfOp:
+			// arg[1] is always the parameter 0
+			// arg[0] is always the parameter 2 / sqrt(pi)
+			CPPAD_ASSERT_NARG_NRES(op, 3, 5);
+			reverse_sparse_jacobian_unary_op(
+				i_var, arg[0], var_sparsity
+			);
+			break;
+			// -------------------------------------------------
+
 			case ExpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 			reverse_sparse_jacobian_unary_op(
@@ -382,6 +386,20 @@ void RevJacSweep(
 				var_sparsity,
 				vecad_sparsity
 			);
+			break;
+			// -------------------------------------------------
+
+			case EqpvOp:
+			case EqvvOp:
+			case LtpvOp:
+			case LtvpOp:
+			case LtvvOp:
+			case LepvOp:
+			case LevpOp:
+			case LevvOp:
+			case NepvOp:
+			case NevvOp:
+			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
 			break;
 			// -------------------------------------------------
 
@@ -564,7 +582,7 @@ void RevJacSweep(
 				user_atom  = atomic_base<Base>::class_object(user_index);
 # ifndef NDEBUG
 				if( user_atom == CPPAD_NULL )
-				{	std::string msg = 
+				{	std::string msg =
 						atomic_base<Base>::class_name(user_index)
 						+ ": atomic_base function has been deleted";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
@@ -601,7 +619,7 @@ void RevJacSweep(
 				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(arg[3]) );
 # ifndef NDEBUG
 				if( ! user_ok )
-				{	std::string msg = 
+				{	std::string msg =
 						atomic_base<Base>::class_name(user_index)
 						+ ": atomic_base.rev_sparse_jac: returned false";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
@@ -657,7 +675,7 @@ void RevJacSweep(
 			if( user_i == 0 )
 			{	// call users function for this operation
 				user_atom->set_id(user_id);
-				if( user_bool) 
+				if( user_bool)
 					CPPAD_ATOMIC_CALL(
 						user_q, bool_r, bool_s
 				);
@@ -686,7 +704,7 @@ void RevJacSweep(
 			if( user_i == 0 )
 			{	// call users function for this operation
 				user_atom->set_id(user_id);
-				if( user_bool) 
+				if( user_bool)
 					CPPAD_ATOMIC_CALL(
 						user_q, bool_r, bool_s
 				);
@@ -712,18 +730,18 @@ void RevJacSweep(
 			j          = var_sparsity.next_element();
 		}
 		printOp(
-			std::cout, 
+			std::cout,
 			play,
 			i_op,
 			i_var,
-			op, 
+			op,
 			arg
 		);
 		if( NumRes(op) > 0 && op != BeginOp ) printOpResult(
-			std::cout, 
-			0, 
+			std::cout,
+			0,
 			(CppAD::vectorBool *) CPPAD_NULL,
-			1, 
+			1,
 			&z_value
 		);
 		std::cout << std::endl;

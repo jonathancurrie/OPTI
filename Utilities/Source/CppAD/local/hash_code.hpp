@@ -1,9 +1,9 @@
-/* $Id: hash_code.hpp 3232 2014-04-27 15:38:21Z bradbell $ */
+/* $Id: hash_code.hpp 3638 2015-02-10 15:04:04Z bradbell $ */
 # ifndef CPPAD_HASH_CODE_INCLUDED
 # define CPPAD_HASH_CODE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -79,7 +79,7 @@ If it is not one of the following operartors, the operator is not
 hash coded and zero is returned:
 
 \li unary operators:
-AbsOp, AcosOp, AsinOp, AtanOp, CosOp, CoshOp, DisOp,
+AbsOp, AcosOp, AsinOp, AtanOp, CosOp, CoshOp
 ExpOp, LogOp, SinOp, SinhOp, SqrtOp, TanOp, TanhOp
 
 \li binary operators where first argument is a parameter:
@@ -88,7 +88,10 @@ AddpvOp, DivpvOp, MulpvOp, PowpvOp, SubpvOp,
 \li binary operators where second argument is a parameter:
 DivvpOp, PowvpOp, SubvpOp
 
-\li binary operators where both arguments are parameters:
+\li binary operators where first is an index and second is a variable:
+DisOp
+
+\li binary operators where both arguments are variables:
 AddvvOp, DivvvOp, MulvvOp, PowvvOp, SubvvOp
 
 \param arg
@@ -175,6 +178,10 @@ unsigned short hash_code(
 			code += v[i];
 		break;
 
+		// Binary operator where first argument is an index and
+		// second is a variable (same as both variables).
+		case DisOp:
+
 		// Binary operators where both arguments are variables
 		case AddvvOp:
 		case DivvvOp:
@@ -210,7 +217,7 @@ unsigned short hash_code(
 		case AtanOp:
 		case CosOp:
 		case CoshOp:
-		case DisOp:
+		case ErfOp:
 		case ExpOp:
 		case LogOp:
 		case SignOp:
@@ -219,6 +226,7 @@ unsigned short hash_code(
 		case SqrtOp:
 		case TanOp:
 		case TanhOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 || op == ErfOp );
 		v = reinterpret_cast<const unsigned short*>(arg + 0);
 		i = short_addr_t;
 		while(i--)

@@ -1,4 +1,4 @@
-/* $Id: base_float.hpp 2506 2012-10-24 19:36:49Z bradbell $ */
+/* $Id: base_float.hpp 3495 2014-12-24 01:16:15Z bradbell $ */
 # ifndef CPPAD_BASE_FLOAT_INCLUDED
 # define CPPAD_BASE_FLOAT_INCLUDED
 /* --------------------------------------------------------------------------
@@ -11,11 +11,14 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+# include <cppad/configure.hpp>
 # include <limits>
 
 /*
 $begin base_float.hpp$$
 $spell
+	erf
+	endif
 	abs_geq
 	acos
 	asin
@@ -143,6 +146,9 @@ namespace CppAD {
 	CPPAD_STANDARD_MATH_UNARY(float, sqrt)
 	CPPAD_STANDARD_MATH_UNARY(float, tan)
 	CPPAD_STANDARD_MATH_UNARY(float, tanh)
+# if CPPAD_COMPILER_HAS_ERF
+	CPPAD_STANDARD_MATH_UNARY(float, erf)
+# endif
 }
 /* $$
 The absolute value function is special because its $code std$$ name is 

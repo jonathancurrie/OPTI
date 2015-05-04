@@ -1,4 +1,4 @@
-/* $Id: base_complex.hpp 2765 2013-03-03 15:48:35Z bradbell $ */
+/* $Id: base_complex.hpp 3523 2014-12-29 15:22:30Z bradbell $ */
 # ifndef CPPAD_BASE_COMPLEX_INCLUDED
 # define CPPAD_BASE_COMPLEX_INCLUDED
 /* --------------------------------------------------------------------------
@@ -11,6 +11,7 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+# include <cppad/configure.hpp>
 # include <limits>
 # include <complex>
 
@@ -20,6 +21,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_complex.hpp$$
 $spell
+	endif
 	eps
 	abs_geq
 	Rel
@@ -53,19 +55,12 @@ $index double, complex Base$$
 
 $section Enable use of AD<Base> where Base is std::complex<double>$$
 
-$children%
-	example/complex_poly.cpp%
-	example/not_complex_ad.cpp
+$children%example/complex_poly.cpp
 %$$
-
 $head Example$$
 The file $cref complex_poly.cpp$$ contains an example use of
 $code std::complex<double>$$ type for a CppAD $icode Base$$ type.
 It returns true if it succeeds and false otherwise.
-
-$head See Also$$
-The file $cref not_complex_ad.cpp$$ contains an example using
-complex arithmetic where the function is not complex differentiable.
 
 $head Include Order$$
 This file is included before $code <cppad/cppad.hpp>$$
@@ -169,6 +164,18 @@ namespace CppAD {
 	{	return std::abs(x) >= std::abs(y); }
 }
 /* $$
+
+$head erf$$
+Complex types do not support the error function
+(use CPPAD_USER_MACRO define above).
+$codep */
+# if CPPAD_COMPILER_HAS_ERF
+namespace CppAD {
+	CPPAD_USER_MACRO(erf)
+}
+# endif
+/* $$
+
 
 $head Integer$$
 The implementation of this function must agree

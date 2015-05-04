@@ -1,8 +1,8 @@
-/* $Id: epsilon.hpp 2506 2012-10-24 19:36:49Z bradbell $ */
+/* $Id: epsilon.hpp 3607 2015-01-20 16:20:41Z bradbell $ */
 # ifndef CPPAD_EPSILON_INCLUDED
 # define CPPAD_EPSILON_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -27,7 +27,7 @@ $index epsilon, AD$$
 
 $section Machine Epsilon For AD Types$$
 
-$head Deprecated$$
+$head Deprecated 2012-06-17$$
 $index deprecated, epsilon$$
 This routine has bee deprecated.
 You should use the $cref/numeric_limits/limits/$$ $code epsilon$$ instead.

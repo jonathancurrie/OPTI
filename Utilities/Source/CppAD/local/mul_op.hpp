@@ -1,12 +1,12 @@
-/* $Id: mul_op.hpp 3301 2014-05-24 05:20:21Z bradbell $ */
+/* $Id: mul_op.hpp 3667 2015-03-01 04:00:15Z bradbell $ */
 # ifndef CPPAD_MUL_OP_INCLUDED
 # define CPPAD_MUL_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -36,8 +36,8 @@ and the argument \a parameter is not used.
 
 template <class Base>
 inline void forward_mulvv_op(
-	size_t        p           , 
-	size_t        q           , 
+	size_t        p           ,
+	size_t        q           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -47,8 +47,6 @@ inline void forward_mulvv_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(MulvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(MulvvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
@@ -80,8 +78,8 @@ and the argument \a parameter is not used.
 
 template <class Base>
 inline void forward_mulvv_op_dir(
-	size_t        q           , 
-	size_t        r           , 
+	size_t        q           ,
+	size_t        r           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -91,8 +89,6 @@ inline void forward_mulvv_op_dir(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(MulvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(MulvvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < q );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 
@@ -105,7 +101,7 @@ inline void forward_mulvv_op_dir(
 	size_t k, ell, m;
 	for(ell = 0; ell < r; ell++)
 	{	m = (q-1)*r + ell + 1;
-		z[m] = x[0] * y[m] + x[m] * y[0]; 
+		z[m] = x[0] * y[m] + x[m] * y[0];
 		for(k = 1; k < q; k++)
 			z[m] += x[(q-k-1)*r + ell + 1] * y[(k-1)*r + ell + 1];
 	}
@@ -136,8 +132,6 @@ inline void forward_mulvv_op_0(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(MulvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(MulvvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 
 	// Taylor coefficients corresponding to arguments and result
 	Base* x = taylor + arg[0] * cap_order;
@@ -163,7 +157,7 @@ and the argument \a parameter is not used.
 
 template <class Base>
 inline void reverse_mulvv_op(
-	size_t        d           , 
+	size_t        d           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -175,8 +169,6 @@ inline void reverse_mulvv_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(MulvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(MulvvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < cap_order );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
@@ -189,6 +181,13 @@ inline void reverse_mulvv_op(
 	Base* py = partial + arg[1] * nc_partial;
 	Base* pz = partial + i_z    * nc_partial;
 
+	// If pz is zero, make sure this operation has no effect
+	// (zero times infinity or nan would be non-zero).
+	bool skip(true);
+	for(size_t i_d = 0; i_d <= d; i_d++)
+		skip &= IdenticalZero(pz[i_d]);
+	if( skip )
+		return;
 
 	// number of indices to access
 	size_t j = d + 1;
@@ -196,7 +195,7 @@ inline void reverse_mulvv_op(
 	while(j)
 	{	--j;
 		for(k = 0; k <= j; k++)
-		{	
+		{
 			px[j-k] += pz[j] * y[k];
 			py[k]   += pz[j] * x[j-k];
 		}
@@ -218,8 +217,8 @@ this operations is for the case where x is a parameter and y is a variable.
 
 template <class Base>
 inline void forward_mulpv_op(
-	size_t        p           , 
-	size_t        q           , 
+	size_t        p           ,
+	size_t        q           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -229,7 +228,6 @@ inline void forward_mulpv_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(MulpvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(MulpvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
@@ -258,8 +256,8 @@ this operations is for the case where x is a parameter and y is a variable.
 
 template <class Base>
 inline void forward_mulpv_op_dir(
-	size_t        q           , 
-	size_t        r           , 
+	size_t        q           ,
+	size_t        r           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -269,7 +267,6 @@ inline void forward_mulpv_op_dir(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(MulpvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(MulpvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < q );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 
@@ -309,7 +306,6 @@ inline void forward_mulpv_op_0(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(MulpvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(MulpvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 
 	// Paraemter value
 	Base x = parameter[ arg[0] ];
@@ -336,7 +332,7 @@ this operations is for the case where x is a parameter and y is a variable.
 
 template <class Base>
 inline void reverse_mulpv_op(
-	size_t        d           , 
+	size_t        d           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -346,9 +342,8 @@ inline void reverse_mulpv_op(
 	Base*         partial     )
 {
 	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( NumArg(MulvvOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(MulvvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
+	CPPAD_ASSERT_UNKNOWN( NumArg(MulpvOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(MulpvOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( d < cap_order );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 

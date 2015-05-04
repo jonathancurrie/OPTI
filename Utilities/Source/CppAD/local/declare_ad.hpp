@@ -1,4 +1,4 @@
-/* $Id: declare_ad.hpp 2859 2013-05-28 06:03:21Z bradbell $ */
+/* $Id: declare_ad.hpp 3476 2014-12-16 17:15:01Z bradbell $ */
 # ifndef CPPAD_DECLARE_AD_INCLUDED
 # define CPPAD_DECLARE_AD_INCLUDED
 
@@ -12,6 +12,11 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+
+# include <cppad/configure.hpp>
+# if CPPAD_HAS_CSTDINT_8_TO_64
+# include <cstdint>
+# endif
 
 namespace CppAD {
 	// The conditional expression operator enum type

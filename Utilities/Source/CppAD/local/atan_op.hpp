@@ -1,12 +1,12 @@
-/* $Id: atan_op.hpp 3301 2014-05-24 05:20:21Z bradbell $ */
+/* $Id: atan_op.hpp 3667 2015-03-01 04:00:15Z bradbell $ */
 # ifndef CPPAD_ATAN_OP_INCLUDED
 # define CPPAD_ATAN_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -43,13 +43,12 @@ inline void forward_atan_op(
 	size_t q           ,
 	size_t i_z         ,
 	size_t i_x         ,
-	size_t cap_order   , 
+	size_t cap_order   ,
 	Base*  taylor      )
-{	
+{
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(AtanOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(AtanOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
@@ -100,13 +99,12 @@ inline void forward_atan_op_dir(
 	size_t r           ,
 	size_t i_z         ,
 	size_t i_x         ,
-	size_t cap_order   , 
+	size_t cap_order   ,
 	Base*  taylor      )
-{	
+{
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(AtanOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(AtanOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < q );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 
@@ -147,13 +145,12 @@ template <class Base>
 inline void forward_atan_op_0(
 	size_t i_z         ,
 	size_t i_x         ,
-	size_t cap_order   , 
+	size_t cap_order   ,
 	Base*  taylor      )
 {
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(AtanOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(AtanOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < cap_order );
 
 	// Taylor coefficients corresponding to argument and result
@@ -185,7 +182,7 @@ inline void reverse_atan_op(
 	size_t      d            ,
 	size_t      i_z          ,
 	size_t      i_x          ,
-	size_t      cap_order    , 
+	size_t      cap_order    ,
 	const Base* taylor       ,
 	size_t      nc_partial   ,
 	Base*       partial      )
@@ -193,7 +190,6 @@ inline void reverse_atan_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(AtanOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(AtanOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < cap_order );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
@@ -209,6 +205,14 @@ inline void reverse_atan_op(
 	const Base* b  = z  - cap_order; // called y in documentation
 	Base* pb       = pz - nc_partial;
 
+	// If pz is zero, make sure this operation has no effect
+	// (zero times infinity or nan would be non-zero).
+	bool skip(true);
+	for(size_t i_d = 0; i_d <= d; i_d++)
+		skip &= IdenticalZero(pz[i_d]);
+	if( skip )
+		return;
+
 	// number of indices to access
 	size_t j = d;
 	size_t k;
@@ -217,7 +221,7 @@ inline void reverse_atan_op(
 		pz[j] /= b[0];
 		pb[j] *= Base(2);
 
-		pb[0] -= pz[j] * z[j]; 
+		pb[0] -= pz[j] * z[j];
 		px[j] += pz[j] + pb[j] * x[0];
 		px[0] += pb[j] * x[j];
 

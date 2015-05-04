@@ -1,9 +1,9 @@
-/* $Id: op_code.hpp 3301 2014-05-24 05:20:21Z bradbell $ */
+/* $Id: op_code.hpp 3638 2015-02-10 15:04:04Z bradbell $ */
 # ifndef CPPAD_OP_CODE_INCLUDED
 # define CPPAD_OP_CODE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -64,7 +64,6 @@ enum OpCode {
 	// arg[3]     = index correspoding to right 
 	// arg[4]     = index correspoding to trueCase 
 	// arg[5]     = index correspoding to falseCase 
-	ComOp,    // Compare(cop, result, left, right)
 	CosOp,    //  cos(variable)
 	CoshOp,   // cosh(variable)
 	CSkipOp,  // Conditional skip
@@ -90,13 +89,24 @@ enum OpCode {
 	DivvpOp,  //      variable   / parameter
 	DivvvOp,  //      variable   / variable
 	EndOp,    //  used to mark the end of the tape
+	EqpvOp,   //  parameter  == variable
+	EqvvOp,   //  variable   == variable
+	ErfOp,    //  erf(variable)
 	ExpOp,    //  exp(variable)
 	InvOp,    //                             independent variable
 	LdpOp,    //    z[parameter]
 	LdvOp,    //    z[variable]
+	LepvOp,   //  parameter <= variable
+	LevpOp,   //  variable  <= parameter
+	LevvOp,   //  variable  <= variable
 	LogOp,    //  log(variable)
+	LtpvOp,   //  parameter < variable
+	LtvpOp,   //  variable  < parameter
+	LtvvOp,   //  variable  < variable
 	MulpvOp,  //      parameter  * variable
 	MulvvOp,  //      variable   * variable
+	NepvOp,   //  parameter  != variable
+	NevvOp,   //  variable   != variable
 	ParOp,    //      parameter
 	PowpvOp,  //  pow(parameter,   variable)
 	PowvpOp,  //  pow(variable,    parameter)
@@ -164,7 +174,6 @@ inline size_t NumArg( OpCode op)
 		1, // AtanOp
 		1, // BeginOp  offset first real argument to have index 1
 		6, // CExpOp
-		4, // ComOp
 		1, // CosOp
 		1, // CoshOp
 		0, // CSkipOp  (actually has a variable number of arguments, not zero)
@@ -174,13 +183,24 @@ inline size_t NumArg( OpCode op)
 		2, // DivvpOp
 		2, // DivvvOp
 		0, // EndOp
+		2, // EqpvOp
+		2, // EqvvOp
+		3, // ErfOp
 		1, // ExpOp
 		0, // InvOp
 		3, // LdpOp
 		3, // LdvOp
+		2, // LepvOp
+		2, // LevpOp
+		2, // LevvOp
 		1, // LogOp
+		2, // LtpvOp
+		2, // LtvpOp
+		2, // LtvvOp
 		2, // MulpvOp
 		2, // MulvvOp
+		2, // NepvOp
+		2, // NevvOp
 		1, // ParOp
 		2, // PowpvOp
 		2, // PowvpOp
@@ -254,7 +274,6 @@ inline size_t NumRes(OpCode op)
 		2, // AtanOp
 		1, // BeginOp  offsets first variable to have index one (not zero)
 		1, // CExpOp
-		0, // ComOp
 		2, // CosOp
 		2, // CoshOp
 		0, // CSkipOp
@@ -264,13 +283,24 @@ inline size_t NumRes(OpCode op)
 		1, // DivvpOp
 		1, // DivvvOp
 		0, // EndOp
+		0, // EqpvOp
+		0, // EqvvOp
+		5, // ErfOp
 		1, // ExpOp
 		1, // InvOp
 		1, // LdpOp
 		1, // LdvOp
+		0, // LepvOp
+		0, // LevpOp
+		0, // LevvOp
 		1, // LogOp
+		0, // LtpvOp
+		0, // LtvpOp
+		0, // LtvvOp
 		1, // MulpvOp
 		1, // MulvvOp
+		0, // NepvOp
+		0, // NevvOp
 		1, // ParOp
 		3, // PowpvOp
 		3, // PowvpOp
@@ -327,7 +357,6 @@ inline const char* OpName(OpCode op)
 		"Atan"  ,
 		"Begin" ,
 		"CExp"  ,
-		"Com"   ,
 		"Cos"   ,
 		"Cosh"  ,
 		"CSkip" ,
@@ -337,13 +366,24 @@ inline const char* OpName(OpCode op)
 		"Divvp" ,
 		"Divvv" ,
 		"End"   ,
+		"Eqpv"  ,
+		"Eqvv"  ,
+		"Erf"   ,
 		"Exp"   ,
 		"Inv"   ,
 		"Ldp"   ,
 		"Ldv"   ,
+		"Lepv"  ,
+		"Levp"  ,
+		"Levv"  ,
 		"Log"   ,
+		"Ltpv"  ,
+		"Ltvp"  ,
+		"Ltvv"  ,
 		"Mulpv" ,
 		"Mulvv" ,
+		"Nepv"  ,
+		"Nevv"  ,
 		"Par"   ,
 		"Powpv" ,
 		"Powvp" ,
@@ -490,7 +530,7 @@ void printOp(
 	if( NumRes(op) > 0 && op != BeginOp )
 		printOpField(os,  "v=",      i_var, 5);
 	else	printOpField(os,  "v=",      "",    5);
-	if( op == CExpOp || op == CSkipOp || op == ComOp )
+	if( op == CExpOp || op == CSkipOp )
 	{	printOpField(os, "", OpName(op), 5); 
 		printOpField(os, "", CompareOpName[ ind[0] ], 3);
 	}
@@ -601,6 +641,10 @@ void printOp(
 
 		case AddvvOp:
 		case DivvvOp:
+		case LevvOp:
+		case LtvvOp:
+		case EqvvOp:
+		case NevvOp:
 		case MulvvOp:
 		case PowvvOp:
 		case SubvvOp:
@@ -610,6 +654,10 @@ void printOp(
 		break;
 
 		case AddpvOp:
+		case LepvOp:
+		case LtpvOp:
+		case EqpvOp:
+		case NepvOp:
 		case SubpvOp:
 		case MulpvOp:
 		case PowpvOp:
@@ -620,6 +668,8 @@ void printOp(
 		break;
 
 		case DivvpOp:
+		case LevpOp:
+		case LtvpOp:
 		case PowvpOp:
 		case SubvpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
@@ -643,6 +693,13 @@ void printOp(
 		case TanOp:
 		case TanhOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+		printOpField(os, "  v=", ind[0], ncol);
+		break;
+
+		case ErfOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+		// ind[1] points to the parameter 0
+		// ind[2] points to the parameter 2 / sqrt(pi)
 		printOpField(os, "  v=", ind[0], ncol);
 		break;
 
@@ -712,20 +769,6 @@ void printOp(
 		else	printOpField(os, " pf=", play->GetPar(ind[5]), ncol);
 		break;
 
-		case ComOp:
-		CPPAD_ASSERT_UNKNOWN(ind[1] != 0);
-		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 4 );
-		if( ind[1] & 1 )
-			printOpField(os, "res=", 1, ncol);
-		else	printOpField(os, "res=", 0, ncol);
-		if( ind[1] & 2 )
-			printOpField(os, " vl=", ind[2], ncol);
-		else	printOpField(os, " pl=", play->GetPar(ind[2]), ncol);
-		if( ind[1] & 4 )
-			printOpField(os, " vr=", ind[3], ncol);
-		else	printOpField(os, " pr=", play->GetPar(ind[3]), ncol);
-		break;
-
 		default:
 		CPPAD_ASSERT_UNKNOWN(0);
 	}
@@ -776,6 +819,201 @@ void printOpResult(
 		os << "| fz[" << k << "]=" << fz[k];
 	for(k = 0; k < nrz; k++)
 		os << "| rz[" << k << "]=" << rz[k];
+}
+
+/*!
+If NDEBUG is not defined, assert that arguments come before result.
+
+\param op
+Operator for which we are checking order.
+All the operators are checked except for those of the form UserOp or Usr..Op.
+
+\param result
+is the variable index for the result.
+
+\param arg
+is a vector of lenght NumArg(op) pointing to the arguments
+for this operation.
+*/
+inline void assert_arg_before_result(
+	OpCode op, const addr_t* arg, size_t result
+)
+{
+	switch( op )
+	{
+
+		// These cases are not included below
+		case UserOp:
+		case UsrapOp:
+		case UsravOp:
+		case UsrrpOp:
+		case UsrrvOp:
+		break;
+		// ------------------------------------------------------------------
+
+		// 0 arguments
+		case CSkipOp:
+		case CSumOp:
+		case EndOp:
+		case InvOp:
+		break;
+		// ------------------------------------------------------------------
+
+		// 1 argument, but is not used
+		case BeginOp:
+		break;
+
+		// 1 argument , 1 result
+		case AbsOp:
+		case ExpOp:
+		case LogOp:
+		case ParOp:
+		case SignOp:
+		case SqrtOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < result );
+		break;
+
+		// 1 argument, 2 results
+		case AcosOp:
+		case AsinOp:
+		case AtanOp:
+		case CosOp:
+		case CoshOp:
+		case SinOp:
+		case SinhOp:
+		case TanOp:
+		case TanhOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) + 1 < result );
+		break;
+
+		// 1 argument, 5 results
+		case ErfOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) + 4 < result );
+		break;
+		// ------------------------------------------------------------------
+		// 2 arguments, no results
+		case LepvOp:
+		case LtpvOp:
+		case EqpvOp:
+		case NepvOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) <= result );
+		break;
+		// 
+		case LevpOp:
+		case LtvpOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= result );
+		break;
+		// 
+		case LevvOp:
+		case LtvvOp:
+		case EqvvOp:
+		case NevvOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= result );
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) <= result );
+		break;
+
+		// 2 arguments (both variables), 1 results
+		case AddvvOp:
+		case DivvvOp:
+		case MulvvOp:
+		case SubvvOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < result );
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < result );
+		break;
+
+		// 2 arguments (first variables), 1 results
+		case DivvpOp:
+		case SubvpOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < result );
+		break;
+
+		// 2 arguments (second variables), 1 results
+		case AddpvOp:
+		case DisOp:
+		case DivpvOp:
+		case MulpvOp:
+		case SubpvOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < result );
+		break;
+
+		// 2 arguments (both variables), 3 results
+		case PowvvOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) + 2 < result );
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) + 2 < result );
+		break;
+
+		// 2 arguments (first variable), 3 results
+		case PowvpOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) + 2 < result );
+		break;
+
+		// 2 arguments (second variable), 3 results
+		case PowpvOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) + 2 < result );
+		break;
+		// ------------------------------------------------------------------
+
+		// 3 arguments, none variables
+		case LdpOp:
+		case StppOp:
+		break;
+
+		// 3 arguments, second variable, 1 result
+		case LdvOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < result );
+		break;
+		
+		// 3 arguments, third variable, no result
+		case StpvOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) <= result );
+		break;
+
+		// 3 arguments, second variable, no result
+		case StvpOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) <= result );
+		break;
+
+		// 3 arguments, second and third variable, no result
+		case StvvOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) <= result );
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) <= result );
+		break;
+		// ------------------------------------------------------------------
+
+		// 5 arguments, no result
+		case PriOp:
+		if( arg[0] & 1 )
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) <= result );
+		}
+		if( arg[0] & 2 )
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) <= result );
+		}
+		break;
+		// ------------------------------------------------------------------
+
+		// 6 arguments, 1 result
+		case CExpOp:
+		if( arg[1] & 1 )
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < result );
+		}
+		if( arg[1] & 2 )
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < result );
+		}
+		if( arg[1] & 4 )
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < result );
+		}
+		if( arg[1] & 8 )
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < result );
+		}
+		break;
+		// ------------------------------------------------------------------
+
+		default:
+		CPPAD_ASSERT_UNKNOWN(false);
+		break;
+
+	}
+	return;
 }
 
 } // END_CPPAD_NAMESPACE

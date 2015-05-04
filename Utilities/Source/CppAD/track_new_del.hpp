@@ -1,9 +1,9 @@
-/* $Id: track_new_del.hpp 2506 2012-10-24 19:36:49Z bradbell $ */
+/* $Id: track_new_del.hpp 3607 2015-01-20 16:20:41Z bradbell $ */
 # ifndef CPPAD_TRACK_NEW_DEL_INCLUDED
 # define CPPAD_TRACK_NEW_DEL_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -31,7 +31,7 @@ $index delete, track$$
 $index track, new and delete$$
 $index memory, track$$
 
-$head Deprecated$$
+$head Deprecated 2007-07-23$$
 $index deprecated, track memory$$
 All these routines have been deprecated.
 You should use the $cref thread_alloc$$ memory allocator instead

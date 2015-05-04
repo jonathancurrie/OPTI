@@ -48,7 +48,7 @@ Does this compiler cupport c++11 rvalues; i.e., values with move semantics
 \def CPPAD_PACKAGE_STRING
 cppad-yyyymmdd as a C string where yyyy is year, mm is month, and dd is day.
 */
-# define CPPAD_PACKAGE_STRING "cppad-20140612"
+# define CPPAD_PACKAGE_STRING "cppad-20150429"
 
 /*!
 def CPPAD_HAS_COLPACK
