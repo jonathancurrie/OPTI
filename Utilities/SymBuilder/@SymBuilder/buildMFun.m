@@ -211,6 +211,7 @@ fprintf(fp,'\n\n');
 %Close file
 fclose(fp);
 if(opts.verbose), fprintf('Done\n'); end
+rehash; %a shame, but seems to be required
 
 
 %Convert variables from names to indexed strings [nominally m1 to m(1)]
