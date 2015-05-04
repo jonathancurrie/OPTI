@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- #BeginTemplate "Opti_Normal.dwt" -->
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- #BeginEditable "doctitle" -->
+<title>Functions</title>
+<!-- #EndEditable -->
+<link href="Opti_Styles.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+<!-- #BeginEditable "MainTitle" -->
+<p class="Heading1">Functions</p>
+<!-- #EndEditable -->
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<!-- #BeginEditable "Body" -->
+<p class="Heading2">Introduction</p>
+<p class="Normal">The OPTI Toolbox provides one main class: 
+<span class="Function">opti</span>. The opti class 
+provides functionality for building, solving and analyzing optimization problems 
+within MATLAB, and while fully optional (you can use the supplied solvers 
+directly if you prefer), it does provide a level of convenience and error 
+checking that can make solving optimization problems more reliable.</p>
+<p class="Normal">As the OPTI Toolbox has matured, more of the 
+documentation has moved to the <a href="http://www.i2c2.aut.ac.nz/Wiki/OPTI/">OPTI Wiki</a>, 
+available online. This should be your main source of documentation. In addition, 
+the Examples Folder included with OPTI contains many examples on how to use the 
+supplied functionality. It is noted however that not all low level functionality 
+is covered in these locations, so it is briefly covered below.</p>
+<p class="Heading3">Getting Help with OPTI Functions</p>
+<p class="Normal">All OPTI functions, whether part of the <span class="Code">
+opti</span><span class="Normal"> </span>class or not, are documented. This means 
+you can type:</p>
+<p class="Normal"><span class="Code">&gt;&gt; help optiprob</span></p>
+<p class="Normal">To obtain help for a specific function. If the function is a 
+method of a class, you can type:</p>
+<p class="Normal"><span class="Code">&gt;&gt; help opti/solve</span></p>
+<p class="Normal">which will return information on that method.</p>
+<p class="Heading2">&nbsp;</p>
+<p class="Heading2">OPTI Class Methods</p>
+<p class="Heading3"><span class="CodeHeading2">opti</span> [constructor]</p>
+<p class="Normal">The <span class="Function">opti</span> constructor is a 
+flexible constructor that can accept any number of arguments, using the
+<span class="String">&#39;parameter&#39;</span>, <span class="String">&#39;value&#39;</span> 
+pair format. It is used to create an optimization problem in a form suitable for 
+the selected solver. Use </p>
+<p class="Normal"><span class="Code">&gt;&gt; help opti</span></p>
+<p class="Normal">for more information. In addition, to view all compatible 
+argument pairs, use</p>
+<p class="Normal"><span class="Code">&gt;&gt; opti</span></p>
+<p class="Normal">which will print all argument options to the command window.</p>
+<p class="CodeHeading2">solve</p>
+<p class="Normal">Once an OPTI problem has been created using the constructor 
+above, it can be solved using the <span class="Function">solve</span> method. 
+Use</p>
+<p class="Normal"><span class="Code">&gt;&gt; help opti/solve</span></p>
+<p class="Normal">for more information.</p>
+<p class="CodeHeading2">checkSol</p>
+<p class="Normal">Once an OPTI problem has been solved you can verify the 
+solution return is infact feasible given the original constraints using the
+<span class="Function">checkSol</span> method. Use</p>
+<p class="Code">&gt;&gt; help opti/checkSol</p>
+<p class="Normal">for more information.</p>
+<p class="CodeHeading2">plot</p>
+<p class="Normal">Once an OPTI problem has been solved (or if bounded, it 
+doesn&#39;t have to be solved) you can plot the optimization objective and 
+constraint contours using <span class="Function">plot</span>. The method works 
+best for 2D problems, but also works for 1D-&gt;5D problems. Use</p>
+<p class="Code">&gt;&gt; help opti/plot</p>
+<p class="Normal">for more information.</p>
+<p class="CodeHeading2">fitStats</p>
+<p class="Normal">When solving parameter estimation problems (such as
+<a href="http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/NLS">NLS</a>,
+<a href="http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Dynamic/DNLS">DNLS</a>) 
+OPTI can calculate the fit statistics (e.g. confidence intervals, R-squared) 
+associated with the solution. Once the problem has been solved, use
+<span class="Function">fitStats</span> to calculate the statistics. In addition, 
+if you call <span class="Code">plot</span> after calling <span class="Code">
+fitStats</span>, it will plot (if available) the confidence bounds on the fitted 
+function. Use</p>
+<p class="Normal"><span class="Code">&gt;&gt; help opti/fitStats</span></p>
+<p class="Normal">for more information.</p>
+<p class="CodeHeading2">write</p>
+<p class="Normal">Once an OPTI problem has been entered using the constructor, 
+it can then be written to a common optimization file format (such as MPS, SDPA, 
+GAMS, etc) using the <span class="Function">write</span> method. Use</p>
+<p class="Normal"><span class="Code">&gt;&gt; help opti/write</span></p>
+<p class="Normal">for more information.</p>
+<p class="CodeHeading2">multisolve</p>
+<p class="Normal">OPTI implements a very naive multi-start solver for applying 
+local solvers to global optimization problems. Use <span class="Function">
+multisolve</span> to initiate the multi-start solver. Use</p>
+<p class="Normal"><span class="Code">&gt;&gt; help opti/multisolve</span></p>
+<p class="Normal">for more information.</p>
+<p class="CodeHeading2">multiplot</p>
+<p class="Normal">Once an OPTI problem has been solved used <span class="Code">
+multisolve</span>, you can use <span class="Function">multiplot</span> to view 
+the optimization problem contours overlayed with the regions searched by the 
+multi-start solver. Use</p>
+<p class="Normal"><span class="Code">&gt;&gt; help opti/multiplot</span></p>
+<p class="Normal">for more information.</p>
+<p class="Heading2">&nbsp;</p>
+<p class="Heading2">Solvers &amp; Settings</p>
+<p class="CodeHeading2">optiSolver</p>
+<p class="Normal">To see what solvers are available in your distribution of 
+OPTI, you can use the <span class="Function">optiSolver</span> function:</p>
+<p class="Code">&gt;&gt; optiSolver</p>
+<p class="Normal">To see which solvers solve which optimization problems:</p>
+<p class="Code">&gt;&gt; optiSolver(<span class="String">&#39;matrix&#39;</span>)</p>
+<p class="Normal">To see which solvers solve a particular optimization problem:</p>
+<p class="Code">&gt;&gt; optiSolver(<span class="String">&#39;prob_type&#39;</span>)</p>
+<p class="Normal">where <span class="Code">&#39;prob_type&#39;</span> is a standard 
+optimization type. For example, for a Linear Program (LP):</p>
+<p class="Code">&gt;&gt; optiSolver(<span class="String">&#39;lp&#39;</span>)</p>
+<p class="Normal">To see which solvers support which optimization options 
+(optiset below):</p>
+<p class="Code">&gt;&gt; optiSolver(<span class="String">&#39;config&#39;</span>)</p>
+<p class="Normal">For information on a particular solver use:</p>
+<p class="Code">&gt;&gt; optiSolver(<span class="String">&#39;solver&#39;</span>)</p>
+<p class="Normal">where <span class="Code">&#39;solver&#39;</span> is the name of the 
+solver you want information on. For example for CLP:</p>
+<p class="Code">&gt;&gt; optiSolver(<span class="String">&#39;clp&#39;</span>)</p>
+<p class="CodeHeading2">optiset</p>
+<p class="Normal">To create an options structure suitable for use with the opti 
+constructor, use <span class="Function">optiset</span>. It follows the same 
+argument format as the opti constructor (pairs). For more information on using
+<span class="Code">optiset</span> use:</p>
+<p class="Normal"><span class="Code">&gt;&gt; help optiset</span></p>
+<p class="Normal">To print all available options and their defaults, use:</p>
+<p class="Normal"><span class="Code">&gt;&gt; optiset</span></p>
+<p class="Normal">Visit the
+<a href="http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Advanced/Opts">optiset 
+Wiki page</a> for more information.</p>
+<p class="CodeHeading2"><em>solver</em>set</p>
+<p class="Normal">Most solvers support many more options than are listed in
+<span class="Code">optiset</span>. Optiset is provided to simplify using common 
+options, while for solver specific options, you need to use the
+<span class="Function">solverset</span> routines. The naming strategy is as 
+follows: [solver_name + set], i.e. options for Nomad are set via
+<span class="Code">nomadset</span>, and options for Ipopt and set via
+<span class="Code">ipoptset</span>. To see how to use a <span class="Code">
+solverset</span> method, use</p>
+<p class="Code">&gt;&gt; help solverset</p>
+<p class="Normal">for example for Ipopt:</p>
+<p class="Code">&gt;&gt; help ipoptset</p>
+<p class="Normal">To see all available options for a solver, use</p>
+<p class="Code">&gt;&gt; solverset</p>
+<p class="Normal">for example for Ipopt:</p>
+<p class="Code">&gt;&gt; ipoptset</p>
+<p class="Normal">To see which solvers have extra solver settings, use</p>
+<p class="Code">&gt;&gt; optiSolver(<span class="String">&#39;config&#39;</span>)</p>
+<p class="Normal">and examine the <span class="Code">sOpts</span> column. 
+Solvers with a <span class="Code">x</span> will&nbsp; have a respective
+<span class="Code">solverset</span> method. Solver Options are supplied via the
+<span class="String">&#39;solverOpts&#39;</span> field to <span class="Code">optiset</span>.</p>
+<!-- #EndEditable -->
+
+<table class="TableBreakLine"><tr><td></td></tr></table>
+<p class="Copyright">Copyright © 2011-2015 Jonathan Currie (I<sup>2</sup>C<sup>2</sup>) </p>
+
+</body>
+<!-- #EndTemplate -->
+</html>

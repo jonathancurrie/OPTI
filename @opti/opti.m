@@ -9,14 +9,14 @@ classdef opti < handle
 %   optObj = opti(...,'options',opts) creates the object with optiset
 %   options supplied to the OPTI constructor.
 %
-%   opti() prints a list of all possible fields and their function.
-%
 %   optObj = opti(prob) creates an opti object based on the optimization
 %   problem specified in prob. Use 'optiprob' to generate the structure
 %   'prob'.
 %
 %   optObj = opti(prob,opts) creates the opti object with specified 
 %   options. Use 'optiset' to generate the options structure 'opts'.
+%
+%   opti() prints a list of all possible fields and their function.
 %
 %
 %   Typical usage examples:
@@ -25,19 +25,19 @@ classdef opti < handle
 %   optObj = opti('f',f,'ineq',A,b,'bounds',lb,ub)
 %
 %   2) Bounded NLP
-%   optObj = opti('fun',fun,'bounds',lb,ub,'x0',x0)
+%   optObj = opti('obj',obj,'bounds',lb,ub,'x0',x0)
 %
 %   3) Option Setting
-%   optObj = opti('fun',fun,'options',optiset('solver','nlopt'))
+%   optObj = opti('obj',obj,'options',optiset('solver','nomad'))
 %
 %
 %   For HTML documentation type:
 %    >> web('Opti_Main.html','-helpbrowser')
 %
 %
-%   See also opti.solve optiprob optiset opti.plot 
+%   See also opti.solve optiset opti.plot 
 %
-%   Copyright (C) 2011-2013 Jonathan Currie (www.i2c2.aut.ac.nz)
+%   Copyright (C) 2011-2015 Jonathan Currie (www.i2c2.aut.ac.nz)
     
     properties (SetAccess = private)
         prob        % Problem Structure (optiprob)
@@ -390,9 +390,23 @@ classdef opti < handle
         function write(optObj,filename,type)
             %WRITE  Write an OPTI Problem to a MPS/QPS/LP/SDPA/SEDUMI/GAMS file
             %
-            %   write(optObj,filename)
+            %   write(optObj,filename) writes the OPTI problem to a
+            %   filetype specified by the extension of filename.
             %
-            %   write(optObj,filename,type)
+            %   write(optObj,filename,type) writes the OPTI problem to a
+            %   filetype specified by the type argument.
+            %
+            %   Valid File Types & Extensions:
+            %       Linear & Quadratic Problems
+            %           - MPS [.mps] (LP/MILP)
+            %           - QPS [.qps] (QP/MIQP)
+            %           - LP  [.lp]  (LP)
+            %       Semidefinite Problems
+            %           - SDPA, DAT [.dat] (Dense)
+            %           - SDPA-S, DAT-S [.dat-s] (Sparse)
+            %           - MAT [.mat] (SeDuMi Sparse)
+            %       General
+            %           - GMS [.gms] (GAMS)
             
             %Check class isn't empty
             if(isempty(optObj.prob)), error('You cannot write an empty OPTI object!'); end            

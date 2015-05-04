@@ -3,76 +3,10 @@
 
 <toc version="1.0">
 
-    <tocitem target="Main/Opti_main.html">OPTI Toolbox
-		<tocitem target="UsersGuide/usersguide.html" image = "$toolbox/matlab/icons/help_ug.png">User's Guide
-			<tocitem target="UsersGuide/ProductOverview.html">Product Overview</tocitem>	
-			<tocitem target="http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Examples/Examples">Optimization Problems</tocitem>		
-			<tocitem target="http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Solvers/Solvers">Optimization Solvers</tocitem>
-			<tocitem target="http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Utilities/Utilities">Optimization Utilities</tocitem>			
-			<tocitem target="UsersGuide/SolverConfig.html">Solver Configuration</tocitem>
-			<tocitem target="UsersGuide/Bugs.html">Bug Reporting</tocitem>
-			<tocitem target="UsersGuide/AddSolver.html">Adding Your Solver to OPTI</tocitem>
-		</tocitem>
-		
-        <tocitem target="Functions/Functions.html" image="$toolbox/matlab/icons/help_fx.png">Functions
-           	<tocitem target="Functions/Functions.html#Optimization_Problem">Optimization Problem
-            	<tocitem target="Functions/opti/opti.html" image="$toolbox/matlab/icons/help_fx.png">opti</tocitem>
-            	<tocitem target="Functions/opti/optiprob.html" image="$toolbox/matlab/icons/help_fx.png">optiprob</tocitem>
-            	<tocitem target="Functions/opti/optiset.html" image="$toolbox/matlab/icons/help_fx.png">optidynset</tocitem>
-            	<tocitem target="Functions/opti/optidynset.html" image="$toolbox/matlab/icons/help_fx.png">optiset</tocitem>
-            	<tocitem target="Functions/opti/solve.html" image="$toolbox/matlab/icons/help_fx.png">solve</tocitem>
-            	<tocitem target="Functions/opti/plot.html" image="$toolbox/matlab/icons/help_fx.png">plot</tocitem>
-				<tocitem target="Functions/opti/multisolve.html" image="$toolbox/matlab/icons/help_fx.png">multisolve</tocitem>            	
-            	<tocitem target="Functions/opti/multiplot.html" image="$toolbox/matlab/icons/help_fx.png">multiplot</tocitem>            	
-            	<tocitem target="Functions/opti/write.html" image="$toolbox/matlab/icons/help_fx.png">write</tocitem>
-            	<tocitem target="Functions/opti/checkSol.html" image="$toolbox/matlab/icons/help_fx.png">checkSol</tocitem>             	             	            	            	
-            </tocitem>
-            <tocitem target="Functions/Functions.html#Optimization_Utilities">Optimization Utilities
-            	<tocitem target="Functions/Functions.html#OPTI">OPTI         
-            		<tocitem target="Functions/optiutil/checkSolver.html" image="$toolbox/matlab/icons/help_fx.png">checkSolver</tocitem>
-            		<tocitem target="Functions/optiutil/x_prob.html" image="$toolbox/matlab/icons/help_fx.png">x_prob</tocitem>
-            	</tocitem>
-            	<tocitem target="Functions/Functions.html#Differentiation">Differentiation
-	            	<tocitem target="Functions/optiutil/autoJac.html" image="$toolbox/matlab/icons/help_fx.png">autoJac</tocitem>             	            	            	
-	            	<tocitem target="Functions/optiutil/mklJac.html" image="$toolbox/matlab/icons/help_fx.png">mklJac</tocitem>             	            	            	
-	            	<tocitem target="Functions/optiutil/symJac.html" image="$toolbox/matlab/icons/help_fx.png">symJac</tocitem>
-	            	<tocitem target="Functions/optiutil/symDynJac.html" image="$toolbox/matlab/icons/help_fx.png">symDynJac</tocitem>	            		            	
-	            	<tocitem target="Functions/optiutil/symHess.html" image="$toolbox/matlab/icons/help_fx.png">symHess</tocitem>             	            	            	
-	            	<tocitem target="Functions/optiutil/symHessLag.html" image="$toolbox/matlab/icons/help_fx.png">symHessLag</tocitem>	            	
-				</tocitem>
-				<tocitem target="Functions/Functions.html#File_IO">File IO            	
-            		<tocitem target="Functions/optiutil/coinRead.html" image="$toolbox/matlab/icons/help_fx.png">coinRead</tocitem>
-            		<tocitem target="Functions/optiutil/coinWrite.html" image="$toolbox/matlab/icons/help_fx.png">coinWrite</tocitem>
-            		<tocitem target="Functions/optiutil/amplRead.html" image="$toolbox/matlab/icons/help_fx.png">amplRead</tocitem>  
-            		<tocitem target="Functions/optiutil/sdpRead.html" image="$toolbox/matlab/icons/help_fx.png">sdpRead</tocitem>
-            		<tocitem target="Functions/optiutil/sdpWrite.html" image="$toolbox/matlab/icons/help_fx.png">sdpWrite</tocitem> 
-	           		<tocitem target="Functions/optiutil/gamsWrite.html" image="$toolbox/matlab/icons/help_fx.png">gamsWrite</tocitem>          		
-            	</tocitem>
-            	<tocitem target="Functions/Functions.html#Benchmarking">Benchmarking
-            		<tocitem target="Functions/optiutil/optiBench.html" image="$toolbox/matlab/icons/help_fx.png">optiBench</tocitem>
-            		<tocitem target="Functions/optiutil/testSolver.html" image="$toolbox/matlab/icons/help_fx.png">testSolver</tocitem>
-            		<tocitem target="Functions/optiutil/testProblem.html" image="$toolbox/matlab/icons/help_fx.png">testProblem</tocitem>
-            	</tocitem>          				
-            </tocitem>
-            <tocitem target="Functions/Functions.html#Solver_Configuration_Settings">Solver Configuration Settings</tocitem>
-			<tocitem target="Functions/Functions.html#Matlab_Optimization_Toolbox_Overloads">Matlab Optimization Toolbox Overloads
-            	<tocitem target="Functions/overload/opti_linprog.html" image="$toolbox/matlab/icons/help_fx.png">opti_linprog</tocitem>
-            	<tocitem target="Functions/overload/opti_bintprog.html" image="$toolbox/matlab/icons/help_fx.png">opti_bintprog</tocitem>
-            	<tocitem target="Functions/overload/opti_mintprog.html" image="$toolbox/matlab/icons/help_fx.png">opti_mintprog</tocitem>
-            	<tocitem target="Functions/overload/opti_quadprog.html" image="$toolbox/matlab/icons/help_fx.png">opti_quadprog</tocitem>
-            	<tocitem target="Functions/overload/opti_lsqcurvefit.html" image="$toolbox/matlab/icons/help_fx.png">opti_lsqcurvefit</tocitem>
-            	<tocitem target="Functions/overload/opti_fsolve.html" image="$toolbox/matlab/icons/help_fx.png">opti_fsolve</tocitem>
-            	<tocitem target="Functions/overload/opti_fminunc.html" image="$toolbox/matlab/icons/help_fx.png">opti_fminunc</tocitem>
-				<tocitem target="Functions/overload/opti_fmincon.html" image="$toolbox/matlab/icons/help_fx.png">opti_fmincon</tocitem>
-			</tocitem>         
-        </tocitem>
-		
-		<tocitem target="http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Examples/Examples" image="$toolbox/matlab/icons/help_ex.png">Examples
-        </tocitem>
-		
-		<tocitem target="Main/release_notes.html" image = "$toolbox/matlab/icons/help_rn.png">Release notes
-        </tocitem>
-        <tocitem target="Main/Contact.html" image ="Main/Images/opti_email.png">Contact</tocitem>
-        
+    <tocitem target="Opti_main.html">OPTI Toolbox		
+        <tocitem target="Functions.html" image="$toolbox/matlab/icons/help_fx.png">Functions</tocitem>
+		<tocitem target="http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Examples/Examples" image="$toolbox/matlab/icons/help_ex.png">Examples</tocitem>
+		<tocitem target="http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php" image="$toolbox/matlab/icons/help_rn.png">Release notes</tocitem>
+        <tocitem target="Contact.html">Contact</tocitem>        
     </tocitem>
 </toc>
