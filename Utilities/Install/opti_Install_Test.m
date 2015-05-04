@@ -42,7 +42,7 @@ for t = 1:length(tests)
     load([tests{t} '_test_results']); %load pre solved results 
     probs = eval([tests{t} '_tprob']);
     sols = eval([tests{t} '_sval']);
-    msolvers = checkSolver(tests{t}); 
+    msolvers = optiSolver(tests{t}); 
     ind = strcmpi(msolvers,'MATLAB'); msolvers(ind) = [];    
     ind = strcmpi(msolvers,'GMATLAB'); msolvers(ind) = [];
     %Check and remove solvers for certain problems

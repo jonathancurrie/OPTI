@@ -7,7 +7,7 @@
 % CHECK NLP26 with 3.1.0
 
 %Check SCIP is available
-if(~checkSolver('SCIP',0))
+if(~optiSolver('SCIP',0))
     fprintf(2,'\n\nSCIP IS NOT AVAILABLE, NO SCIP TESTS CAN BE RUN\n\n');
     return;
 end

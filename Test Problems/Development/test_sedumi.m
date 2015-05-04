@@ -3,7 +3,7 @@ clc
 clear
 
 %Check SEDUMI is available
-if(~checkSolver('sedumi',0))
+if(~optiSolver('sedumi',0))
     fprintf(2,'\n\nSEDUMI IS NOT AVAILABLE, NO SEDUMI TESTS CAN BE RUN\n\n');
     return;
 end

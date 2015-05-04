@@ -221,7 +221,7 @@ classdef opticheckval
             if(~ischar(value))
                 err = MException('OPTI:SetFieldError','Parameter ''%s'' should be a char array (string)',field);
             else
-                rub = checkSolver(value,1); %#ok<NASGU> 
+                rub = optiSolver(value,1); %#ok<NASGU> 
             end
         end
         

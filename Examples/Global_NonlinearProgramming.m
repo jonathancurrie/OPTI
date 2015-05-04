@@ -13,7 +13,7 @@ web('http://i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/GNLP');
 % OPTI Toolbox comes with a number of NLP solvers, thus to determine which
 % ones are available on your system you can type:
 clc
-checkSolver('NLP')
+optiSolver('NLP')
 
 % Note the columns DR and GL. A cross in DR indicates the solver requires
 % 1st (and perhaps 2nd) derivatives, while a cross in GL indicates the

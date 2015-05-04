@@ -11,6 +11,7 @@ current_version = 2.15;
 
 %2.15 (...)
 % - Rebuilt all solvers against MKL v11.2 R3 and Visual Studio 2013
+% - Changed checkSolver to optiSolver, same API
 % - Updated CLP to 1.16.6
 % - Updated CBC to 2.9.4
 % - Updated IPOPT to 3.12.3

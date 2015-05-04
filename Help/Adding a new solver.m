@@ -1,6 +1,6 @@
 %% Steps for Adding a New Solver
 
-% 1) Open checkSolver.m add to 
+% 1) Open optiSolver.m add to 
 %       - problem type list
 %       - description list
 %       - known solver switch statement

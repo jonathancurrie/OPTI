@@ -79,7 +79,7 @@ if(~isempty(err)), throw(err); end
 function printfields()
 %Print out fields with defaults
 
-solvers = [{'AUTO'} checkSolver('all')];
+solvers = [{'AUTO'} optiSolver('all')];
 len = length(solvers);
 str = '';
 for i = 1:len

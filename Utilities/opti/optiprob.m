@@ -328,9 +328,9 @@ switch lower(field)
         err = opticheckval.checkStruct(value,field);
     %Misc Strings
     case 'probtype'
-        err = opticheckval.checkValidString(value,field,checkSolver('ptypes'));
+        err = opticheckval.checkValidString(value,field,optiSolver('ptypes'));
     case 'solver'
-        err = opticheckval.checkValidString(value,field,checkSolver('all'));
+        err = opticheckval.checkValidString(value,field,optiSolver('all'));
     otherwise  
         err = MException('OPTI:SetFieldError','Unrecognized parameter name ''%s''.', field);
 end
@@ -371,14 +371,14 @@ fprintf('             qru: [ Quadratic Constraint Upper Bound ] \n');
 fprintf('\n OTHER CONSTRAINT FIELDS:\n');
 fprintf('              lb: [ Lower Bounds (lb <= x <= ub) ] \n');
 fprintf('              ub: [ Upper Bounds ] \n');
-fprintf('             int: [ Binary/Integer Variable String ] \n');
+fprintf('             int: [ Binary/Integer Variable String (''C'', ''I'' or ''B'')] \n');
 fprintf('             sos: [ SOS Constraint Structure (.type .index .weight) ] \n');
 fprintf('          sdcone: [ Semidefinite Cone Constraint (F1*x1 + F2*x2 + ... + Fn*xn - F0 >= 0 [PSD]) ] \n');
 
 fprintf('\n DATA FITTING FIELDS:\n');
 fprintf('           xdata: [ Data Fitting Problem X Data ] \n');
 fprintf('           ydata: [ Data Fitting Problem Y Data ] \n');
-fprintf('       weighting: [ Data Fitting Problem Weights on Y Data ] \n');
+fprintf('         weights: [ Data Fitting Problem Weights on Y Data ] \n');
 
 fprintf('\n OTHER FIELDS:\n');
 fprintf('            Name: [ Problem Name ] \n');

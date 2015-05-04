@@ -113,7 +113,7 @@ switch lower(field)
         end
         
     case 'solver'
-        if(ischar(value) && checkSolver(value))
+        if(ischar(value) && optiSolver(value))
             valid = true;
         else
             valid = false; errmsg = sprintf('Parameter %s should be a valid solver',field);

@@ -13,7 +13,7 @@ web('http://i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/MILP');
 % OPTI Toolbox comes with a number of MILP solvers, thus to determine which
 % ones are available on your system you can type:
 clc
-checkSolver('MILP')
+optiSolver('MILP')
 
 %% Example 1
 % This is a simple two decision variable MILP which will use for the next 

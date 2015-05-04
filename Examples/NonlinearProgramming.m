@@ -13,7 +13,7 @@ web('http://i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/NLP');
 % OPTI Toolbox comes with a number of NLP solvers, thus to determine which
 % ones are available on your system you can type:
 clc
-checkSolver('NLP')
+optiSolver('NLP')
 
 %% NLP Considerations - 1st Derivatives
 % See DifferentationExamples.m

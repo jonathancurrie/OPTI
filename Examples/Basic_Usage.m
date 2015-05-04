@@ -24,21 +24,21 @@ web('http://i2c2.aut.ac.nz/Wiki/OPTI/index.php/GetStart/Basics');
 % Not all solvers are supplied with the OPTI Toolbox, so to check which are
 % available you can use the following function:
 clc
-checkSolver
+optiSolver
 
 %% Matching solvers with a problem type
 % Use the 'matrix' argument to print a grid of solver vs problem solved:
 clc
-checkSolver('matrix')
+optiSolver('matrix')
 
 %% Finding all solvers for a given problem type
 % Specify the problem type in order to print a list of all solvers setup to
 % solve that problem type. The solver at the top of the list is the default
 % solver for that type. The following line prints all solvers which are
 % setup to solve a Linear Program (LP) together with constraint and 
-% sparsity settings (see help checkSolver):
+% sparsity settings (see help optiSolver):
 clc
-checkSolver('LP')
+optiSolver('LP')
 
 %% Creating an Optimization Problem
 % To create an optimization problem using OPTI there are two methods
@@ -59,15 +59,13 @@ checkSolver('LP')
 clc
 opti;
 
-web('optiprob.html');
-
 %% Options Fields
 % Type optiset with no input arguments to view all available fields. Check
 % the help documentation for more information.
 clc
 optiset
 
-web('http://i2c2.aut.ac.nz/Wiki/OPTI/index.php/Advanced/Opts');
+web('http://i2c2.aut.ac.nz/Wiki/OPTI/index.php/Advanced/Opts','-new');
 
 %% Example 1
 % This is a simple two decision variable Linear Program (LP) which we will

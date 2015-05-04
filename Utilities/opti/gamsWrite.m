@@ -35,7 +35,7 @@ if(isempty(strfind(filename,':')))
 end
 
 %If we have SCIP installed, use that (much easier, and does nonlinear models)
-if(checkSolver('scip',0))
+if(optiSolver('scip',0))
     opts = optiset('solver','scip','warnings','none','display','off','solverOpts',scipset('gamsfile',filename));
     if(isstruct(prob.int) && isfield(prob.int,'str'))
         prob.int = prob.int.str;

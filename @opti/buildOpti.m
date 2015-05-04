@@ -577,7 +577,7 @@ if(cqc)
     %If we have any quadratic equalities OR double sided inequalities (assumed non-convex)
     %and the user has not specified a solver, default to SCIP (if available)
     if(any(~isinf(prob.qrl) & ~isinf(prob.qru)))
-        if(strcmpi(opts.solver,'auto') && checkSolver('scip',0))
+        if(strcmpi(opts.solver,'auto') && optiSolver('scip',0))
             opts.solver = 'scip';
         end
     end
@@ -957,7 +957,7 @@ end
 if(strcmpi(opts.solver,'matlab'))    
     if(any(strcmpi(prb,{'MILP','MIQP','MIQCQP','SDP','MINLP'})))
         if(~strcmpi(prb,'milp') && isempty(which('intlinprog.m'))) %check for 2014a intlinprog
-            solver = checkSolver(['best_' prb]);
+            solver = optiSolver(['best_' prb]);
             if(warn)
                 optiwarn('opti:mi','MATLAB does not currently supply a Mixed Integer or Semidefinite Solver\nUsing %s instead.',solver);
             end
@@ -970,7 +970,7 @@ end
 if(isfield(prob,'probtype') && ~isempty(prob.probtype))
     if(~strcmpi(prob.probtype,prb))
         %Check user field exists
-        ptypes = checkSolver('ptypes');
+        ptypes = optiSolver('ptypes');
         switch(lower(prob.probtype))
             case ptypes
                 if(warn > 1)
@@ -1083,7 +1083,7 @@ end
 %AUTO solver - replace with best for problem type
 if(strcmpi(opts.solver,'auto'))
     try
-        opts.solver = lower(checkSolver(['best_' prb]));
+        opts.solver = lower(optiSolver(['best_' prb]));
     catch ME
         %Convert QCQP problems to general nonlinear (for now)
         if(any(strcmpi(prb,{'QCQP','MIQP','MIQCQP'})))
@@ -1103,13 +1103,13 @@ end
 %Only certain solvers solve SOS problems
 if(csos && ~any(strcmpi(opts.solver,{'CPLEX','LP_SOLVE','CBC','SCIP'})))
     oS = opts.solver;
-    if(checkSolver('cplex',0)) %prefer cplex, but may not be available
+    if(optiSolver('cplex',0)) %prefer cplex, but may not be available
         opts.solver = 'cplex';
-    elseif(checkSolver('scip',0))
+    elseif(optiSolver('scip',0))
         opts.solver = 'scip';
-    elseif(checkSolver('cbc',0))
+    elseif(optiSolver('cbc',0))
         opts.solver = 'cbc';
-    elseif(checkSolver('lp_solve',0))
+    elseif(optiSolver('lp_solve',0))
         opts.solver = 'lp_solve';
     else
         error('You do not have a solver which can solve problems specified with SOS');
@@ -1177,7 +1177,7 @@ if(any(strcmpi(prb,{'NLS','DNLS','SCNLE'})))
 		sInfo = optiSolverInfo(opts.solver);
 		%Check for linearly constrained
 		if((neq+nineq) > 0 && (sInfo.con.lineq + sInfo.con.leq) == 0) 
-			rub = checkSolver('levmar'); %#ok<NASGU> %only levmar solves linearly constrained NLS
+			rub = optiSolver('levmar'); %#ok<NASGU> %only levmar solves linearly constrained NLS
             opts.solver = 'levmar';
 			if(warn > 1)
 				if(any(strcmpi(prb,{'NLS','DNLS'})))
@@ -1188,7 +1188,7 @@ if(any(strcmpi(prb,{'NLS','DNLS','SCNLE'})))
 			end
 		%Check for bounded problems
 		elseif(nbnds && ~sInfo.con.bnd)			
-			rub = checkSolver('mkltrnls'); %#ok<NASGU>
+			rub = optiSolver('mkltrnls'); %#ok<NASGU>
 			opts.solver = 'mkltrnls';
 			if(warn > 1)
 				if(any(strcmpi(prb,{'NLS','DNLS'})))
@@ -1426,7 +1426,7 @@ end
 
 %AUTO solver - replace with best for problem type
 if(strcmpi(opts.solver,'auto'))
-    opts.solver = lower(checkSolver(['best_' prob.type]));
+    opts.solver = lower(optiSolver(['best_' prob.type]));
 end
 
 %MLDIVIDE solver

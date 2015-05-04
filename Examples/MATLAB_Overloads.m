@@ -135,7 +135,7 @@ x0 = [0;0];
 % choose an alternative NLP solver other than the default, examine the
 % other solvers available:
 clc
-checkSolver('NLP')
+optiSolver('NLP')
 
 % Then select it via optiset:
 

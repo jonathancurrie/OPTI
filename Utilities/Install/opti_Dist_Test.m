@@ -7,7 +7,7 @@ clear all
 opti_Install_Test;
 
 %Check MEX Interfaces all working
-vers = checkSolver('ver');
+vers = optiSolver('ver');
 
 %Run Benchmarks
 optiBench('LP');
@@ -108,6 +108,11 @@ dnls_examples;
 
 %Run General Test Set
 test_probs;
+
+%Run opti_debug then delete output file
+opti_debug;
+pause(0.1); rehash;
+delete('opti_debug.txt');
 
 clc
 fprintf('\nAll Appears OK!\n\n');

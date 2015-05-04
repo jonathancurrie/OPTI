@@ -13,7 +13,7 @@ web('http://i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/QP');
 % OPTI Toolbox comes with a number of QP solvers, thus to determine which
 % ones are available on your system you can type:
 clc
-checkSolver('QP')
+optiSolver('QP')
 
 %% Example 1
 % This is a simple two decision variable QP which will use for the next 

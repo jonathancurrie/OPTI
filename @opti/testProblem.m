@@ -12,7 +12,7 @@ function [tstop,res] = testProblem(optObj,solvers)
 
 %Setup default arguments
 if(~exist('solvers','var') || isempty(solvers))
-    solvers = checkSolver(['all_' optObj.prob.type]);
+    solvers = optiSolver(['all_' optObj.prob.type]);
 end
 if(~iscell(solvers))
     solvers = {solvers};
@@ -63,7 +63,7 @@ end
 len = length(solvers);
 %confirm solver exists!
 for i = 1:len
-    rub = checkSolver(solvers{i}); %#ok<NASGU>
+    rub = optiSolver(solvers{i}); %#ok<NASGU>
 end
 
 %Setup wait bar

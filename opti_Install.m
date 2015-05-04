@@ -44,6 +44,9 @@ rInd{:,:,i} = strfind(genp,'vti_cnf'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'vti_pvt'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'Source'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'CppAD'); i = i + 1;
+rInd{:,:,i} = strfind(genp,'misdp'); i = i + 1;
+rInd{:,:,i} = strfind(genp,'tex'); i = i + 1;
+rInd{:,:,i} = strfind(genp,'Crash Files'); i = i + 1;
 if(~exist([cd '\Solvers\Source\lib\win32\libclp.lib'],'file'))
     rInd{:,:,i} = strfind(genp,'Development'); i = i + 1;
 end
@@ -87,7 +90,7 @@ fprintf('\n\nOPTI Toolbox Installation Complete!\n');
 disp('------------------------------------------------')
 
 fprintf('\n\nYou now have the following solvers available to use:\n');
-checkSolver;
+optiSolver;
 
 
 function no = opti_Uninstall(token,del)
@@ -204,9 +207,9 @@ end
 
 %Print Missing PreReqs
 if(~havVC)
-    fprintf(2,'Cannot find the Microsoft VC++ 2012 %s Redistributable!\n',arch); 
+    fprintf(2,'Cannot find the Microsoft VC++ 2013 %s Redistributable!\n',arch); 
 else
-    fprintf('Found the Microsoft VC++ 2012 %s Redistributable\n',arch); 
+    fprintf('Found the Microsoft VC++ 2013 %s Redistributable\n',arch); 
 end
 % if(~havIC) %[not req from OPTI v >= 2.12]
 %     fprintf(2,'Cannot find the Intel C++ XE 2013 %s Redistributable!\n',arch);
@@ -224,7 +227,7 @@ if(missing)
     fprintf(2,'\nYou are missing one or more pre-requisites. Please read the instructions below carefully to install them:\n\n');
     
     if(~havVC)
-        fprintf(2,' Microsoft VC++ 2012:\n  - Download from: http://www.microsoft.com/en-us/download/details.aspx?id=30679\n');
+        fprintf(2,' Microsoft VC++ 2013:\n  - Download from: http://www.microsoft.com/en-us/download/details.aspx?id=40784\n');
         fprintf(2,'  - When prompted, select the ''%s'' package. Once downloaded, install it.\n\n',arch);
     end
     
@@ -236,7 +239,7 @@ if(missing)
     
     if(~havIF) 
         fprintf(2,' Intel Fortran XE 2015:\n  - Download from: https://software.intel.com/en-us/articles/redistributables-for-intel-parallel-studio-xe-2015-composer-edition-for-windows\n');
-        fprintf(2,'  - The download page will contain multiple links. Download the latest (highest number) update from the ''Intel Fortran Composer for Windows Table''\n');
+        fprintf(2,'  - The download page will contain multiple links. Download the latest (highest number) update from the ''Intel Fortran Compiler for Windows Table''\n');
         fprintf(2,'  - The download package will contain two files. Install the ''%s'' package.\n\n',icarch);
     end
     

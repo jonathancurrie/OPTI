@@ -2,14 +2,14 @@
 % A collection of test problems I've used for building the toolbox.
 clc
 %Run the following line to see what solvers are available to OPTI:
-checkSolver();
+optiSolver();
 
 %Alternatively you can find the best available solver for a given problem 
 %type:
-lp = checkSolver('best_lp')
+lp = optiSolver('best_lp')
 
 %Or see all available solvers for a given problem type
-checkSolver('lp')
+optiSolver('lp')
 
 %#ok<*ASGLU,*NASGU,*NOPTS>
 

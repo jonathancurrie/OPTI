@@ -25,7 +25,7 @@ switch(lower(prob))
 end
 
 %Get all available solvers
-msolvers = checkSolver(str);
+msolvers = optiSolver(str);
 %Remove Problem Solvers
 switch(lower(prob))
     case 'nls'
@@ -59,7 +59,7 @@ for i = 1:n
     end      
     wbar.x0 = (i-1)/n;
     try
-        [times{i},res{i}] = testSolver(prob,msolvers{i},testNo,wbar);  
+        [times{i},res{i}] = optiTestSolver(prob,msolvers{i},testNo,wbar);  
     catch ME
         error(['Error testing ' msolvers{i} ': ' ME.message]);
     end
