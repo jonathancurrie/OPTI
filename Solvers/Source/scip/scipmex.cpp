@@ -622,6 +622,9 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
         SCIP_ERR( SCIPsetIntParam(scip,"display/verblevel",printLevel), "Error setting verblevel");
     }
     
+    //Process User Options
+    
+
     //Solve Problem if not in testing mode or gams writing mode
     if(tm==0 && strlen(gamsfile)==0  && strlen(cipfile)==0)
     {
