@@ -22,7 +22,7 @@ addpath([cd '/Utilities/Source'])
 % opti_CLP_Install
 
 
-%% -- VS2012 Solvers --
+%% -- VS2013 Solvers --
 clc
 fprintf(2,'Please Specify Visual Studio 2013 as your Compiler...\n\n');
 mex -setup
