@@ -25,8 +25,8 @@ if ((nargin == 0) && (nargout == 0))
     return
 end
 %Names and Defaults
-Names = {'gamsfile','cipfile','maxpresolve','testmode'}';
-Defaults = {[],[],-1,0}';        
+Names = {'scipopts','cipfile','gamsfile','testmode'}';
+Defaults = {[],[],[],0}';        
 
 %Enter and check user args
 try
@@ -39,15 +39,15 @@ end
 function checkfield(field,value)
 %Check a field contains correct data type
 switch lower(field)
-    %Integer -1 <= value < Inf
-    case 'maxpresolve'
-        err = opticheckval.checkScalarIntBoundLEL(value,field,-1,Inf);
     %Scalar 0/1
     case 'testmode'
         err = opticheckval.checkScalar01(value,field);
     %char array
     case {'gamsfile','cipfile'}
-        err = opticheckval.checkChar(value,field);         
+        err = opticheckval.checkChar(value,field);    
+    %cell array
+    case 'scipopts'
+        err = opticheckval.checkCell2Col(value,field); 
     otherwise  
         err = MException('OPTI:SetFieldError','Unrecognized parameter name ''%s''.', field);
 end
@@ -56,6 +56,17 @@ if(~isempty(err)), throw(err); end
 
 function printfields()
 %Print out fields with defaults
-fprintf('         gamsfile: [ Write SCIP model to GAMS file (will skip solving): {[]}, ''filename'' ] \n');
+fprintf('         scipopts: [ Set SCIP options using a 2D cell format: {''name1'', val1; ''name2'', val2; ...} (See Below) {[]} ] \n');...
+fprintf('          cipfile: [ Write SCIP model to CIP file (will skip solving): {[]}, ''filename'' (Ensure Display is Off) ] \n');
+fprintf('         gamsfile: [ Write SCIP model to GAMS file (will skip solving): {[]}, ''filename'' (Ensure Display is Off) ] \n');
 fprintf('         testmode: [ Validate the nonlinear function generation (will skip solving): {0}, 1 ] \n');
 fprintf('\n');
+
+fprintf(' To set SCIP options not available via optiset, you may now set any available SCIP option using the ''scipopts'' field:\n');
+fprintf(' - For a list of all available options, see http://scip.zib.de/doc/html/PARAMETERS.php\n');
+fprintf(' - For example, to limit SCIP to the first feasible solution, use "scipset(''scipopts'',{''limits/solutions'',1})"\n');
+fprintf(' - Note:\n    - Boolean, Int, LongInt and Real parameters are all assumed MATLAB doubles, and converted internally.\n');
+fprintf('    - scipopts options take priority over all optiset options\n');
+fprintf('\n');
+
+

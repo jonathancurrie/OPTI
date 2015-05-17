@@ -13,7 +13,7 @@
 #include "mex.h"
 
 //Message buffer size
-#define BUFSIZE 1024
+#define BUFSIZE 2048
 //Function buffer size [maximum expressions & variables to hold for post-processing]
 #define MAX_DEPTH 512
 //Enable for debug print out
@@ -29,6 +29,6 @@ char *scipErrCode(int x);
 SCIP_RETCODE SCIPincludeCtrlCEventHdlr(SCIP* scip);
 
 //Add Nonlinear constraint / objective
-double addNonlinearCon(SCIP* scip, SCIP_VAR** vars, double *instr, size_t no_instr, double lhs, double rhs, double *x0, int nlno, bool isObj);
+double addNonlinearCon(SCIP* scip, SCIP_VAR** vars, double *instr, size_t no_instr, double lhs, double rhs, double *x0, size_t nlno, bool isObj);
 
 #endif

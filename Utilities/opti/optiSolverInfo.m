@@ -597,6 +597,7 @@ switch(lower(solver))
         info.opt.mnode = YES;
         info.opt.mtime = YES;
         info.opt.tolr = YES;
+        info.opt.opts = YES;
         info.opt.disp = YES;
         info.opt.ctrlc = YES;
         

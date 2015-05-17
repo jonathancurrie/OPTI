@@ -25,14 +25,13 @@
 %       exitflag - exit status (see below)
 %       stats - statistics structure
 %
-%   Option Fields (all optional):
+%   Option Fields (all optional - also see scipset):
 %       tolrfun - LP primal convergence tolerance
 %       maxiter - maximum LP solver iterations
 %       maxnodes - maximum nodes to explore
 %       maxtime - maximum execution time [s]
 %       display - solver display level [0-5]
 %       objbias - constant objective bias term
-%       gamsfile - skips solving the problem and instead writes to a GAMS file
 %
 %   Return Status:
 %       0 - Unknown

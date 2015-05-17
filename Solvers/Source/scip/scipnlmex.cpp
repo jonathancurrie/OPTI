@@ -22,7 +22,7 @@ enum {EMPTY=-2,READ,NUM,VAR,EXP,MUL,DIV,ADD,SUB,SQUARE,SQRT,POW,EXPNT,LOG,SIN,CO
 const int OTHER = 98, EXIT = 99;
 
 //Add Nonlinear Constraint to Problem
-double addNonlinearCon(SCIP* scip, SCIP_VAR** vars, double *instr, size_t no_instr, double lhs, double rhs, double *x0, int nlno, bool isObj)
+double addNonlinearCon(SCIP* scip, SCIP_VAR** vars, double *instr, size_t no_instr, double lhs, double rhs, double *x0, size_t nlno, bool isObj)
 {
     //Internal Args
     SCIP_EXPR **expvars = NULL;     //expression array to represent variables
