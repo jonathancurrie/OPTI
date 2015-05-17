@@ -39,6 +39,7 @@ if(nargin < 3 || isempty(opts))
     opts.ma27 = [];
     opts.linloader = false;
     opts.libname = ['lib' lower(solver)];
+    opts.copyLibs = true;
 end
 
 %Special paths
@@ -52,6 +53,7 @@ if(nargin < 2)
 end
 
 %Extract options
+global COPYLIBS
 if(~iscell(paths)), paths = {paths}; end
 if(isfield(opts,'expaths') && ~isempty(opts.expaths))
     if(~iscell(paths))
@@ -66,6 +68,7 @@ if(~isfield(opts,'ma27')), MA27 = []; else MA27 = opts.ma27; end
 if(~isfield(opts,'mumps') || isempty(opts.mumps)), MUMPS = []; else MUMPS = opts.mumps; end
 if(~isfield(opts,'linloader') || isempty(opts.linloader)), LINLOADER = false; else LINLOADER = opts.linloader; end
 if(~isfield(opts,'libname') || isempty(opts.libname)), LIBNAME = ['lib' lower(solver)]; else LIBNAME = opts.libname; end
+if(~isfield(opts,'copyLibs') || isempty(opts.copyLibs)), COPYLIBS = true; else COPYLIBS = opts.copyLibs; end
 
 %Visual Studio Setup
 if(isfield(opts,'vsver') && ~isempty(opts.vsver))
@@ -1113,7 +1116,9 @@ if(~isempty(projs))
     try
         compileProjects(vsdir,projs,comps,solpath,vsver);
         %Copy out compiled libraries
-        copyLibs(solpath,projs,comps,cdir);
+        if(COPYLIBS)
+            copyLibs(solpath,projs,comps,cdir);
+        end
         %Special case of mwma57, delete unzipped dir
         if(strcmpi(projs{1},'libmwma57'))
             pause(0.1); rehash;
@@ -1216,17 +1221,18 @@ fprintf('\n');
 
 
 function copyHeaders(hdrs,dpath)
-
-try
-    for i = 1:size(hdrs,1)
-        for j = 1:length(hdrs{i,2})
-            copyfile([hdrs{i,1} '/' hdrs{i,2}{j}],[dpath hdrs{i,2}{j}],'f');
+global COPYLIBS
+if(COPYLIBS)
+    try
+        for i = 1:size(hdrs,1)
+            for j = 1:length(hdrs{i,2})
+                copyfile([hdrs{i,1} '/' hdrs{i,2}{j}],[dpath hdrs{i,2}{j}],'f');
+            end
         end
+    catch
+        fprintf(2,'There was an error copying the header files for the selected solver - you will have to manually copy ALL Solver .h/.hpp files to OPTI/Solvers/Source/Include/$SOLVERNAME$\n');
     end
-catch
-    fprintf(2,'There was an error copying the header files for the selected solver - you will have to manually copy ALL Solver .h/.hpp files to OPTI/Solvers/Source/Include/$SOLVERNAME$\n');
 end
-
 
 function checkLibMWMA57
 %Check to see if libmwma57 exists (pretend library file to allow linking against MATLAB's MA57)
