@@ -18,6 +18,8 @@ current_version = 2.15;
 % - Updated IPOPT to 3.12.3
 % - Updated BONMIN to 1.8.2
 % - Updated SCIP to 3.1.1 (note more sensitive to unbounded problems now)
+% - Updated RMathlib to 3.2.0
+% - Updated CppAD source to 20150429
 % - Updated Documentation, mostly moved to Wiki now, tidied paths a little bit
 % - OPTI source (but not binaries) is now on GitHub: https://github.com/jonathancurrie/OPTI
 % - Fixed bug in convBonmin when supplying options from another solver (G.Tsoukalas)
