@@ -453,7 +453,13 @@ else
             fprintf('Objective Gradient:        %s\n',f);
             if(~isempty(j)), fprintf('Constraint Jacobian:       %s\n',j); end
         end        
-        if(~isempty(js)), fprintf('Jacobian Structure:        %s\n',js); end
+        if(~isempty(js))
+            if(strcmpi(js,'Not Supplied'))
+                fprintf('Jacobian Structure:        Assumed 100%% Dense\n'); 
+            else
+                fprintf('Jacobian Structure:        %s\n',js); 
+            end
+        end
         if(~isempty(H))
             if(isempty(j))
                 fprintf('Objective Hessian:         %s\n',H); 

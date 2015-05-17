@@ -197,6 +197,22 @@ classdef opticheckval
             end
         end
         
+        function err = checkCell2Col(value,field)
+            %Cell array of the form {'name1',val1; 'name2',val2}
+            err = [];
+            if(~iscell(value))
+                err = MException('OPTI:SetFieldError','Parameter ''%s'' should be a 2D cell array',field);
+            elseif(size(value,2) ~= 2)
+                err = MException('OPTI:SetFieldError','Parameter ''%s'' should be a 2D cell array of the form {''name1'',val1; ''name2'',val2}',field);
+            else                
+                for i = 1:size(value,1)
+                    if(~ischar(value{i,1}) || isempty(value{i,1}))
+                        err = MException('OPTI:SetFieldError','Parameter ''%s'' (cell %d option name) should be a string',field,i);
+                    end                    
+                end
+            end
+        end
+        
         function err = checkChar(value,field)
             %Char array
             err = [];
