@@ -46,6 +46,7 @@ rInd{:,:,i} = strfind(genp,'Source'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'CppAD'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'misdp'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'tex'); i = i + 1;
+rInd{:,:,i} = strfind(genp,'.git'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'Crash Files'); i = i + 1;
 if(~exist([cd '\Solvers\Source\lib\win32\libclp.lib'],'file'))
     rInd{:,:,i} = strfind(genp,'Development'); i = i + 1;
