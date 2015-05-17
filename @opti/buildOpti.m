@@ -1512,6 +1512,11 @@ switch(nargin)
         else
             opts = optiset(); %default
         end
+        %If solver is specified in prob and is auto in opts, set it
+        if(strcmpi(opts.solver,'auto') && isfield(prob,'solver') && ~isempty(prob.solver))
+            opts.solver = prob.solver;
+            prob = rmfield(prob,'solver'); %don't keep a copy
+        end
 end
 if(isfield(prob,'opts'))
     prob = rmfield(prob,'opts'); %don't keep a copy
