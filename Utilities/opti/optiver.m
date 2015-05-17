@@ -9,14 +9,17 @@ current_version = 2.15;
 
 %History
 
-%2.15 (...)
+%2.15 (17/05/15)
 % - Rebuilt all solvers against MKL v11.2 R3 and Visual Studio 2013
+% - Added the ability to specify options in SCIP
 % - Changed checkSolver to optiSolver, same API
 % - Updated CLP to 1.16.6
 % - Updated CBC to 2.9.4
 % - Updated IPOPT to 3.12.3
 % - Updated BONMIN to 1.8.2
-% - Updated SCIP to 3.1.0
+% - Updated SCIP to 3.1.1 (note more sensitive to unbounded problems now)
+% - Updated Documentation, mostly moved to Wiki now, tidied paths a little bit
+% - OPTI source (but not binaries) is now on GitHub: https://github.com/jonathancurrie/OPTI
 % - Fixed bug in convBonmin when supplying options from another solver (G.Tsoukalas)
 % - Fixed bug in >=R2014b when plotting OPTI plots with bounds
 % - Fixed bug in >=R2014b when plotting quadratic constraints
