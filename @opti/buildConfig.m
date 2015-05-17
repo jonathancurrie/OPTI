@@ -503,11 +503,6 @@ opts.objbias = prob.objbias;
 
 % -- SCIP -- %
 function [prob,nlprob,opts] = setupSCIP(prob,opts,warn)
-%Setup Options
-opts.scip = scipset(opts.solverOpts);
-%Add and remove custom scip options
-opts.gamsfile = opts.scip.gamsfile; opts.scip = rmfield(opts.scip,'gamsfile');
-opts.testmode = opts.scip.testmode; opts.scip = rmfield(opts.scip,'testmode');
 %Add objbias to options
 opts.objbias = prob.objbias;
 
