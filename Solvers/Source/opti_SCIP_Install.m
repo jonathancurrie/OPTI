@@ -24,12 +24,12 @@
 % The easiest way to compile SCIP is to use the Visual Studio Project
 % Builder included with OPTI. Use the following commands, substituting the
 % required path on your computer:
-% 
+
 % %% Visual Studio Builder Commands [LATEST SCIP REQ C++11]
 % %NOTE  - the PaxHeader folders change - update as required
 % clear
-% path = 'C:\Solvers\scipoptsuite-3.1.0\scip-3.1.0'; %e.g. 'C:\Solvers\SCIP'
-% splxpath = 'C:\Solvers\scipoptsuite-3.1.0\soplex-2.0.0'; %e.g. 'C:\Solvers\SOPLEX'
+% path = 'C:\Solvers\scipoptsuite-3.1.1\scip-3.1.1'; %e.g. 'C:\Solvers\SCIP'
+% splxpath = 'C:\Solvers\scipoptsuite-3.1.1\soplex-2.0.1'; %e.g. 'C:\Solvers\SOPLEX'
 % ipoptpath = 'C:\Solvers\Ipopt-3.12.3\Ipopt'; %e.g. 'C:\Solvers\IPOPT'
 % n = 1;
 % % SCIP
@@ -42,10 +42,10 @@
 %              'NO_STRTOK_R','ROUNDING_MS','NPARASCIP'};          
 % opts.exclude = {'exprinterpret_none.c','nlpi_ipopt_dummy.c','nlpi_xyz.c','lpi_none.c',...
 %                 'lpi_clp.cpp','lpi_cpx.c','lpi_grb.c','lpi_msk.c','lpi_qso.c',...
-%                 'lpi_spx.cpp','lpi_spx121.cpp','lpi_spx132.cpp','lpi_xprs.c','sorttpl.c','cmain.c',...
+%                 'lpi_spx2.cpp','lpi_spx121.cpp','lpi_spx132.cpp','lpi_xprs.c','sorttpl.c','cmain.c',...
 %                 'cppmain.cpp','disp_xyz.c','branch_xyz.c','event_xyz.c','cons_xyz.c',...
 %                 'heur_xyz.c','presol_xyz.c','prop_xyz.c','pricer_xyz.c','nodesel_xyz.c',...
-%                 'relax_xyz.c','reader_xyz.c','sepa_xyz.c','dialog_xyz.c'}; %NOTE lpi_splx.cpp exclude ONLY > 3.0.2
+%                 'relax_xyz.c','reader_xyz.c','sepa_xyz.c','dialog_xyz.c'}; 
 % opts.exFolder = {'PaxHeaders.13647'};            
 % VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = hdrs; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
 % % SOPLEX

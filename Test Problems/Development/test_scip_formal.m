@@ -153,7 +153,7 @@ cl = 0;
 cu = inf;
 lb = [0;0];
 x0 = [-2;-2];
-fmin(i) = 0.998831;
+fmin(i) = 9.97481744301262e-001; %correct?? (BARON has numerical problems)
 
 [~,fval(i),ef(i)] = opti_scipnl(fun,[],[],[],lb,[],nlcon,cl,cu,[],x0,opts);
 i = i + 1;
@@ -312,16 +312,16 @@ i = i + 1;
 
 %% NLP25 (not in anonymous function form)
 
-%% NLP26 (crashing 3.1.0)
-% fun = @(x) (x(1)-x(2))^2 + (x(2)-x(3))^4;
-% nlcon = @(x) (1+x(2)^2)*x(1) + x(3)^4 - 3;
-% cl = 0;
-% cu = 0;
-% x0 = [-2.6;2;2];
-% fmin(i) = 0;
-% 
-% [~,fval(i),ef(i)] = opti_scipnl(fun,[],[],[],[],[],nlcon,cl,cu,[],x0,opts);
-% i = i + 1;
+%% NLP26
+fun = @(x) (x(1)-x(2))^2 + (x(2)-x(3))^4;
+nlcon = @(x) (1+x(2)^2)*x(1) + x(3)^4 - 3;
+cl = 0;
+cu = 0;
+x0 = [-2.6;2;2];
+fmin(i) = 0;
+
+[~,fval(i),ef(i)] = opti_scipnl(fun,[],[],[],[],[],nlcon,cl,cu,[],x0,opts);
+i = i + 1;
 
 %% NLP27
 fun = @(x) 0.01*(x(1)-1)^2 + (x(2)-x(1)^2)^2;
