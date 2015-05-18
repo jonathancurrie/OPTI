@@ -107,5 +107,30 @@ Opt = opti('fun',fun,'nl',nlcon,cl,cu,'x0',x0,'opts',opts)
 
 
 
-
+%% MIQCQP1 [-2.5429] [non-convex]
+clc
+% Objective
+H = eye(2); f = [-2;-2];
+% Linear Constraints
+A = [-1 1; 1 3]; b = [2;5];
+% Quadratic Constraint
+Q = [1 0;0 1]; l = [0;-2];
+qrl = 3.5; qru = 5;
+% Bounds
+lb = [0;0]; ub = [40;inf];
+% Integrality
+xtype = 'IC';
+% Options
+sopts = scipset('scipopts',{'propagating/obbt/freq',1;...
+                            'propagating/obbt/maxlookahead',10;
+                            'propagating/obbt/itlimitfactor',0;
+                            'constraints/quadratic/maxproprounds',10;
+                            'separating/maxrounds',20;
+                            'limits/solutions',1});
+opts = optiset('solver','scip','display','iter','solverOpts',sopts);                        
+%Build & Solve
+Opt = opti('H',H,'f',f,'ineq',A,b,'qcrow',Q,l,qrl,qru,'bounds',lb,ub,'xtype',xtype,'opts',opts)
+[x,fval,exitflag,info] = solve(Opt)
+% Plot
+plot(Opt)
 
