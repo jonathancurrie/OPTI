@@ -30,6 +30,9 @@ Differentiation_Examples;
 FileIO_Examples;
 AMPL_Examples;
 
+%Run Wiki Code
+opti_wikicode;
+
 %Run MATLAB Wrapper Soak Tests
 test_probs_mw;
 test_probs_mw;
