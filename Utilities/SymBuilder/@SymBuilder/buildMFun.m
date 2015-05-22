@@ -78,6 +78,7 @@ if(strcmpi(mode,'new'))
     end
     fprintf(fp,'    otherwise\n        error(''Unknown callback mode'')\n');
     fprintf(fp,'end\n\n\n');
+	fclose(fp);
     return;
 end
     
