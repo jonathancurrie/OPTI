@@ -281,8 +281,11 @@ switch lower(field)
     case 'objbias'
         err = opticheckval.checkScalarDbl(value,field);
     %Double Vector
-    case {'b','beq','rl','ru','lb','ub','nlrhs','nle','cl','cu','x0','sedumi b','sedumi c','odez0'} 
+    case {'b','beq','rl','ru','lb','ub','nlrhs','nle','cl','cu','x0','sedumi b','odez0'} 
         err = opticheckval.checkDblVec(value,field);
+    %Double Vector (but may be sparse)
+    case 'sedumi c'
+        err = opticheckval.checkDblSpVec(value,field);
     %Double Matrix
     case {'a','aeq','sedumi at'} 
         err = opticheckval.checkDblMat(value,field);        

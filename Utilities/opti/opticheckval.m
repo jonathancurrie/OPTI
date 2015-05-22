@@ -150,6 +150,14 @@ classdef opticheckval
                 err = MException('OPTI:SetFieldError','Parameter ''%s'' should be a real double dense vector (1D)',field);
             end            
         end
+
+        function err = checkDblSpVec(value,field)
+            %Double vector but maybe sparse
+            err = [];
+            if(~isnumeric(value) || ~isreal(value) || ~isa(value,'double') || (size(value,1) > 1 && size(value,2) > 1))
+                err = MException('OPTI:SetFieldError','Parameter ''%s'' should be a real double vector (1D)',field);
+            end            
+        end     
         
         function err = checkDblMat(value,field)
             %Double Matrix or Vector or Scalar
