@@ -22,13 +22,13 @@ elseif(no < 0)
         end
         f = fun;
         g = [];
-    catch %#ok<*CTCH>
+    catch me
         try
             [~,~] = fun(x0);
             f = @(x) fval(fun,x);
             g = @(x) gval(fun,x);
         catch 
-            error('Unknown function / gradient format')
+            error(['Unknown function / gradient format: ' me.message])
         end
     end
     

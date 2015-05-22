@@ -29,6 +29,9 @@ if nargin < 4, b = []; end
 if nargin < 3, A = []; end
 if nargin < 2, error('You must supply at least 2 arguments to opti_fmincon'); end
 
+%Opti enforces a column for x0, so make sure it is here too
+if(size(x0,2) > 1), x0 = x0(:); end
+
 %Sort out Fun + Grad
 [f,g] = detGrad(fun,x0);
 
