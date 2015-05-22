@@ -4,7 +4,7 @@ function plotSDCon(sdcone,data)
 
 %   Copyright (C) 2013 Jonathan Currie (I2C2)
 
-xl = xlim; yl = ylim;
+xl = data.xl; yl = data.yl;
 hold on;
 
 %Colour

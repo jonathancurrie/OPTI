@@ -137,7 +137,10 @@ end
 
 function plotProblem(prob,xb,data)    
 %Plot Objective Contour
-[data.npts,objlim] = plotObj(prob,xb,data);
+[data.npts,data.xl,data.yl] = plotObj(prob,xb,data);
+
+%Initial x0 Colour
+ix0col = [0 183/255 91/255];
 
 %If we have search space (i.e. multisolve has been run), also plot
 if(strcmp(data.mode,'multi') && isfield(prob,'multi') && ~isempty(prob.multi))
@@ -164,9 +167,9 @@ if(prob.sizes.nineq + prob.sizes.neq > 0)
         %Standard linear patches
         if(~isempty(prob.rl))
             [A,b,Aeq,beq] = row2gen(prob.A,prob.rl,prob.ru);
-            plotLinCon(A,b,Aeq,beq);
+            plotLinCon(A,b,Aeq,beq,data);
         else
-            plotLinCon(prob.A,prob.b,prob.Aeq,prob.beq);
+            plotLinCon(prob.A,prob.b,prob.Aeq,prob.beq,data);
         end
     else
         %Lazy nonlinear contour method (can't quite work out above for multi-dim)
@@ -202,7 +205,7 @@ if(isfield(prob.int,'ind') && any(prob.int.ind))
 end
 
 %Reset plot bounds
-xlim(objlim.xl); ylim(objlim.yl);
+xlim(data.xl); ylim(data.yl);
 
 %Plot Optimum
 if(~isempty(xb))
@@ -217,9 +220,9 @@ if(~isempty(xb))
             end
         case 'usex0'
             if(length(xb)==1)
-                plot(xb(idx(1)),prob.objective(xb),'g.','markersize',20);
+                plot(xb(idx(1)),prob.objective(xb),'.','color',ix0col,'markersize',20);
             else
-                plot(xb(idx(1)),xb(idx(2)),'g.','markersize',20);
+                plot(xb(idx(1)),xb(idx(2)),'.','color',ix0col,'markersize',20);
             end
     end
     hold off
@@ -231,9 +234,9 @@ if(~isempty(prob.x0))
     switch(data.mode)
         case {'normal','multi'}
             if(length(xb)==1)
-                plot(prob.x0(idx(1)),prob.objective(prob.x0),'g.','markersize',15);
+                plot(prob.x0(idx(1)),prob.objective(prob.x0),'.','color',ix0col,'markersize',10);
             else
-                plot(prob.x0(idx(1)),prob.x0(idx(2)),'g.','markersize',15);
+                plot(prob.x0(idx(1)),prob.x0(idx(2)),'.','color',ix0col,'markersize',10);
             end
     end
     hold off

@@ -5,8 +5,8 @@ function plotNonlinCon(prob,data,linear)
 %   Copyright (C) 2013 Jonathan Currie (I2C2)
 
 if(nargin < 3), linear = false; end
+xl = data.xl; yl = data.yl;
 
-xl = xlim; yl = ylim;
 hold on;
 
 %Colour

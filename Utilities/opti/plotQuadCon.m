@@ -4,7 +4,8 @@ function plotQuadCon(Q,l,rl,ru,data)
 
 %   Copyright (C) 2013 Jonathan Currie (I2C2)
 
-xl = xlim; yl = ylim;
+xl = data.xl; yl = data.yl;
+
 hold on;
 
 %Colour
@@ -18,7 +19,7 @@ else
 end
 %>= 2014b requires more points...
 if(~verLessThan('matlab','8.4'))
-    nmul = 4;
+    nmul = 2;
 else
     nmul = 1;
 end

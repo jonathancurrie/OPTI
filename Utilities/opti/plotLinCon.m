@@ -1,10 +1,14 @@
-function plotLinCon(A,b,Aeq,beq)
+function plotLinCon(A,b,Aeq,beq,data)
 %PLOTLINCON Plot Linear Constraints on the current figure
 %   plotLinCon(A,b,Aeq,beq)
 
 %   Copyright (C) 2011 Jonathan Currie (I2C2)
 
-xl = xlim; yl = ylim;
+if(nargin < 5 || isempty(data))
+    xl = xlim; yl = ylim;
+else
+    xl = data.xl; yl = data.yl;
+end
 
 hold on;
 

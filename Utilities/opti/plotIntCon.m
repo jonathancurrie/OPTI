@@ -9,7 +9,12 @@ if(all(prob.int.str(data.idx) == 'C'))
     return; %nothing to do!
 end
 
-xl = round(xlim); yl = round(ylim);
+%Colours
+intC = [0 114/255 189/255]; %feasible
+intIC = [123/255 142/255 147/255]; %infeasible
+
+xl = round(data.xl); yl = round(data.yl);
+
 hold on;
 
 %Get Problem Components
@@ -114,8 +119,8 @@ if(isempty(Y))
         Y(i) = prob.objective(X(i));
     end
 end
-plot(X(idx),Y(idx),'bo','markerface','b','markersize',5);
-plot(X(~idx),Y(~idx),'bo','markersize',5);
+plot(X(idx),Y(idx),'o','color',intC,'markerface',intC,'markersize',5);
+plot(X(~idx),Y(~idx),'o','color',intIC,'markersize',5);
 
 hold off;
 

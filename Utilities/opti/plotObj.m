@@ -1,4 +1,4 @@
-function [npts,lims] = plotObj(prob,xb,data)
+function [npts,xl,yl] = plotObj(prob,xb,data)
 %PLOTOBJ Plot the objective function contour
 %   plotObj(prob,xb,data)
 
@@ -135,7 +135,7 @@ title(plotTitle(prob,xb,data));
 hold off;
 
 %Save Limits of Plot
-lims.xl = xlim;
-lims.yl = ylim;
+xl = xlim;
+yl = ylim;
 end
 
