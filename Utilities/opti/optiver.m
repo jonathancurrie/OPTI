@@ -5,9 +5,12 @@ function current_version = optiver
 
 %   Copyright (C) 2011-2015 Jonathan Currie (I2C2)
 
-current_version = 2.15;
+current_version = 2.16;
 
 %History
+
+%2.16 (..)
+% - Minor bug fixes
 
 %2.15 (17/05/15)
 % - Rebuilt all solvers against MKL v11.2 R3 and Visual Studio 2013

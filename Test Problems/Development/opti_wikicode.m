@@ -2623,11 +2623,8 @@ nlcon = @(x) (1 + x(1)^2)^2 + x(2)^2; %Nonlinear Equality Constraint
 cl = 4;
 cu = 4;
 
-% Create SCIP Options
-sopts = baronset('numsol',1);
-
 % Create OPTI Object
-opts = optiset('solver','baron','display','iter','solverOpts',sopts);
+opts = optiset('solver','baron','display','iter');
 Opt = opti('fun',fun,'nl',nlcon,cl,cu,'ndec',2,'opts',opts)
 
 % Solve the NLP problem
