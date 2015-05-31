@@ -210,6 +210,23 @@ classdef optifit
             end
         end
         
+        %-- Print Model to Command Line --%
+        function str = print(ofit)
+            %PRINT Print Model to Command Line [Unfinished]
+            %
+            %   print(ofit)
+            
+            str = ofit.stats.ModelStructure;
+            for i = length(ofit.theta):-1:1
+                t = ['t' int2str(i)];
+                str = strrep(str,t,num2str(ofit.theta(i),'%1.12g'));
+            end
+            idx = strfind(str,'[');
+            str = str(1:idx(1)-1);
+            disp(str);
+        end
+            
+        
     end
     
     methods (Static, Access=private)
