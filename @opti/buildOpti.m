@@ -835,6 +835,9 @@ if(strcmpi(prb,'NLP') && ~misc.forceSNLE)
         x0 = prob.x0;
     elseif(prob.sizes.ndec)
         x0 = zeros(prob.sizes.ndec,1);
+        if(warn > 1)
+            optiwarn('OPTI:nox0','OPTI is testing your objective function but does not have an x0 to use - assuming zeros(n,1).\n Please supply x0 to opti/optiprob to avoid this warning.');
+		end
     else
         error('OPTI cannot determine whether you are solving a UNO or SNLE. Please supply ndec or x0 to opti/optiprob to continue.');
     end
@@ -992,7 +995,16 @@ end
 
 %Check correct number of nonlinear constraints (requires a call to nlcon but error otherwise is pretty hard to follow)
 if(cnl && ~isempty(prob.nlcon))
-    nnlcon = length(prob.nlcon(zeros(siz.ndec,1)));
+    % Get x0 (or try and make one)
+    if(isfield(prob,'x0') && ~isempty(prob.x0))
+        x0 = prob.x0;
+    else
+        x0 = zeros(prob.sizes.ndec,1);
+        if(warn > 1)
+            optiwarn('OPTI:nox0','OPTI is testing your nonlinear constraint function(s) but does not have an x0 to use - assuming zeros(n,1).\n Please supply x0 to opti/optiprob to avoid this warning.');
+        end
+    end    
+    nnlcon = length(prob.nlcon(x0));
     %Determine number of constraint equations from bounds (remember double sided constraints will cause issues otherwise)
     if(~isempty(prob.cl))
         tnnlcon = length(prob.cl);
