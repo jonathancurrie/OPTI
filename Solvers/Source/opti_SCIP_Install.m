@@ -28,8 +28,8 @@
 % %% Visual Studio Builder Commands [LATEST SCIP REQ C++11]
 % %NOTE  - the PaxHeader folders change - update as required
 % clear
-% path = 'C:\Solvers\scipoptsuite-3.1.1\scip-3.1.1'; %e.g. 'C:\Solvers\SCIP'
-% splxpath = 'C:\Solvers\scipoptsuite-3.1.1\soplex-2.0.1'; %e.g. 'C:\Solvers\SOPLEX'
+% path = 'C:\Solvers\scipoptsuite-3.2.0\scip-3.2.0'; %e.g. 'C:\Solvers\SCIP'
+% splxpath = 'C:\Solvers\scipoptsuite-3.2.0\soplex-2.2.0'; %e.g. 'C:\Solvers\SOPLEX'
 % ipoptpath = 'C:\Solvers\Ipopt-3.12.3\Ipopt'; %e.g. 'C:\Solvers\IPOPT'
 % n = 1;
 % % SCIP
@@ -39,14 +39,13 @@
 % name = 'libscip';
 % opts = [];
 % opts.exPP = {'IPOPT_BUILD','_CRT_SECURE_NO_WARNINGS','NO_RAND_R','NO_SIGACTION','NO_STRERROR_R',...
-%              'NO_STRTOK_R','ROUNDING_MS','NPARASCIP'};          
+%              'NO_STRTOK_R','ROUNDING_MS','NPARASCIP','WITH_SCIPDEF'};          
 % opts.exclude = {'exprinterpret_none.c','nlpi_ipopt_dummy.c','nlpi_xyz.c','lpi_none.c',...
 %                 'lpi_clp.cpp','lpi_cpx.c','lpi_grb.c','lpi_msk.c','lpi_qso.c',...
-%                 'lpi_spx2.cpp','lpi_spx121.cpp','lpi_spx132.cpp','lpi_xprs.c','sorttpl.c','cmain.c',...
+%                 'lpi_spx.cpp','lpi_xprs.c','sorttpl.c','cmain.c',... %check whether we want lpi_spx2 or spx...?
 %                 'cppmain.cpp','disp_xyz.c','branch_xyz.c','event_xyz.c','cons_xyz.c',...
 %                 'heur_xyz.c','presol_xyz.c','prop_xyz.c','pricer_xyz.c','nodesel_xyz.c',...
-%                 'relax_xyz.c','reader_xyz.c','sepa_xyz.c','dialog_xyz.c'}; 
-% opts.exFolder = {'PaxHeaders.13647'};            
+%                 'relax_xyz.c','reader_xyz.c','sepa_xyz.c','dialog_xyz.c','compr_xyz.c'};           
 % VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = hdrs; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
 % % SOPLEX
 % sdir = [splxpath '\src'];
@@ -54,7 +53,6 @@
 % opts = [];
 % opts.exPP = {'_CRT_SECURE_NO_WARNINGS'};
 % opts.exclude = {'soplexmain.cpp','simpleexample.cpp'};
-% opts.exFolder = {'PaxHeaders.20720'}; 
 % VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = []; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
 % % SCIP executable (to use this, copy all the .libs listed below into the respective .lib directories in libscip)
 % sdir = [path '\src'];
@@ -95,11 +93,6 @@
 %      while for 64bit change it to
 %           # define CPPAD_SIZE_T_SAME_UNSIGNED_INT 0
 %           # define CPPAD_TAPE_ADDR_TYPE size_t
-
-%   SOPLEX Changes
-%       - settings.cpp add "Settings::" to fucntions on lines
-%       340,350,360,378,404,668
-
 %   c) Build a Win32 or x64 Release of each project to compile the code.
 %   d) Copy the generated .lib files to the following folder:
 %

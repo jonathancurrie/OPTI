@@ -11,6 +11,7 @@ current_version = 2.16;
 
 %2.16 (..)
 % - Minor bug fixes
+% - Updated SCIP to 3.2.0 (note change in return codes)
 % - Fixed bug when nlcon cannot accept x0 = zeros(n,1) during function testing (A. Khalid)
 
 %2.15 (17/05/15)

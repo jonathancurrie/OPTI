@@ -44,10 +44,11 @@
 %       7 - Gap Limit Reached
 %       8 - Solution Limit Reached
 %       9 - Solution Improvement Limit Reached
-%      10 - Problem Solved to Optimality
-%      11 - Problem is Infeasible
-%      12 - Problem is Unbounded
-%      13 - Problem is Either Infeasible or Unbounded
+%      10 - Restart Limit Reached
+%      11 - Problem Solved to Optimality
+%      12 - Problem is Infeasible
+%      13 - Problem is Unbounded
+%      14 - Problem is Either Infeasible or Unbounded
 %
 %   Special Ordered Sets (SOS):
 %       type    - A string containing '1' or '2' for each SOS1 or SOS2 constraint.
