@@ -408,7 +408,9 @@ opts = optiset('display','iter');
 Opt = opti('sedumi',At,b,c,K,'options',opts)
 
 % Solve the SDP
-[x,f] = solve(Opt)
+if(~isempty(which('sedumi.m')))
+    [x,f] = solve(Opt)
+end
 
 %% QP
 % http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/QP
