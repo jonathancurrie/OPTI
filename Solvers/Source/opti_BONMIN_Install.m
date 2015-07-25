@@ -12,7 +12,7 @@
 
 % To recompile you will need to get / do the following:
 
-% 0) Complete Compilation as per OPTI instructions for CLP and CBC.
+% 0) Complete Compilation as per OPTI instructions for CLP, CBC and IPOPT.
 
 % 1) Get BONMIN
 % BONMIN is available from http://www.coin-or.org/Bonmin/. Download 
@@ -30,10 +30,10 @@ opts.ma57 = 'Matlab'; %use MATLAB's supplied MA57 library (empty to not use ma57
 opts.mumps = true; %link MUMPS (add path below when compiling lib)
 opts.ma27 = ''; %do not link ma27
 
-%Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% path = 'C:\Solvers\Bonmin-1.8.2\Bonmin'; %FULL path to BONMIN
+% %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
+% path = 'C:\Solvers\Bonmin-1.8.3\Bonmin'; %FULL path to BONMIN
 % ipoptpath = 'C:\Solvers\Ipopt-3.12.3\Ipopt'; %FULL path to IPOPT
-% cbcpath = 'C:\Solvers\Cbc-2.9.4\Cbc'; % FULL path to CBC
+% cbcpath = 'C:\Solvers\Cbc-2.9.5\Cbc'; % FULL path to CBC
 % clppath = 'C:\Solvers\Clp-1.16.6\Clp'; % FULL path to CLP
 % mumpspath = 'C:\Solvers\MUMPS_4.10.0'; %FULL path to MUMPS (or leave blank to skip linking MUMPS)
 % metispath = 'C:\Solvers\metis-4.0.3'; % FULL path to METIS (leave blank if not linking MUMPS) [max version 4.0.3]

@@ -9,9 +9,11 @@ current_version = 2.16;
 
 %History
 
-%2.16 (..)
+%2.16 (25/07/15)
 % - Minor bug fixes
 % - Updated SCIP to 3.2.0 (note change in return codes)
+% - Updated BONMIN to 1.8.3
+% - Updated CBC to 2.9.5
 % - Fixed bug when nlcon cannot accept x0 = zeros(n,1) during function testing (A. Khalid)
 
 %2.15 (17/05/15)
