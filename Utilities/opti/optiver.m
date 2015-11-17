@@ -5,9 +5,12 @@ function current_version = optiver
 
 %   Copyright (C) 2011-2015 Jonathan Currie (I2C2)
 
-current_version = 2.16;
+current_version = 2.17;
 
 %History
+
+%2.17 (..)
+% - Fixed bug plotting 1D maximization problem xb,x0
 
 %2.16 (25/07/15)
 % - Minor bug fixes

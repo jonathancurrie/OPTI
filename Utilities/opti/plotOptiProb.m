@@ -214,13 +214,13 @@ if(~isempty(xb))
     switch(data.mode)
         case {'normal','multi'}
             if(length(xb)==1)
-                plot(xb(idx(1)),prob.objective(xb),'r.','markersize',20);
+                plot(xb(idx(1)),prob.objective(xb).*prob.sense,'r.','markersize',20);
             else
                 plot(xb(idx(1)),xb(idx(2)),'r.','markersize',20);
             end
         case 'usex0'
             if(length(xb)==1)
-                plot(xb(idx(1)),prob.objective(xb),'.','color',ix0col,'markersize',20);
+                plot(xb(idx(1)),prob.objective(xb).*prob.sense,'.','color',ix0col,'markersize',20);
             else
                 plot(xb(idx(1)),xb(idx(2)),'.','color',ix0col,'markersize',20);
             end
@@ -234,7 +234,7 @@ if(~isempty(prob.x0))
     switch(data.mode)
         case {'normal','multi'}
             if(length(xb)==1)
-                plot(prob.x0(idx(1)),prob.objective(prob.x0),'.','color',ix0col,'markersize',10);
+                plot(prob.x0(idx(1)),prob.objective(prob.x0).*prob.sense,'.','color',ix0col,'markersize',10);
             else
                 plot(prob.x0(idx(1)),prob.x0(idx(2)),'.','color',ix0col,'markersize',10);
             end
