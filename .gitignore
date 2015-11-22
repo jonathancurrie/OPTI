@@ -13,3 +13,6 @@ _vti_pvt/
 *.exp
 Help/OPTI_HTML/tex/
 Utilities/Install/VisualStudioBuilder/guids.txt
+*.lib
+*.exe
+Help/OPTI_HTML/helpsearch-v3/segments_1
