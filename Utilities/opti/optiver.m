@@ -11,6 +11,7 @@ current_version = 2.17;
 
 %2.17 (..)
 % - Fixed bug plotting 1D maximization problem xb,x0
+% - Fixed bug in opti_scipasl returning the wrong status code and message (F. Bastos)
 
 %2.16 (25/07/15)
 % - Minor bug fixes

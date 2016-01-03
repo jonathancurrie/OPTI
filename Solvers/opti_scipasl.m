@@ -67,25 +67,9 @@ info.BBGap = stats.BBgap;
 info.Time = toc(t);
 info.Algorithm = 'SCIP: Spatial Branch and Bound using IPOPT and SoPlex [AMPL Interface]';
 
-switch(exitflag)
-    case 10
-        info.Status = 'Globally Optimal';
-        exitflag = 1;
-    case {2,3,4,5,6,7,8}
-        info.Status = 'Exceeded Iterations / Time / Nodes';
-        exitflag = 0;
-    case 11
-        info.Status = 'Infeasible';
-        exitflag = -1;
-    case {12,13}
-        info.Status = 'Unbounded or Infeasible';
-        exitflag = -2;
-    case 1
-        info.Status = 'User Exited';
-        exitflag = -5;
-    otherwise
-        info.Status = [];
-end
+%Process Return Code
+[info.Status,exitflag] = scipRetCode(exitflag);
+
 
 function  print_level = dispLevel(lev)
 %Return CLP compatible display level
