@@ -537,7 +537,12 @@ classdef optifit
                             Opt = opti(Opt,'x0',x0,'solver','lmder');
                             [theta,~,ef] = solve(Opt);
                         end
-                        stats = fitStats(Opt);
+                        try
+                            stats = fitStats(Opt);
+                        catch
+                            optiwarn('optifit:nostats','Could not solve for fit statistics');
+                            stats = [];
+                        end
                     end
                 end
                 if(ef ~= 1 && optiWarnLevel(opts.warnings))
