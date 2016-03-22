@@ -111,7 +111,9 @@ ivar = buildVarIndex(v,length(svar));
 if(size(svar,1) > 1), svar = svar.'; end
 if(size(ivar,1) > 1), ivar = ivar'; end
 %Subs out individual symbolic variables into our indexed list and converts to normal numbers
+wstate = warning('off','symbolic:sym:sym:DeprecateExpressions');
 eq = vpa(subs(sobj,svar,ivar),16);
+warning(wstate);
 
 %Get equation size (matrices treated differently)
 [r,c] = size(eq);

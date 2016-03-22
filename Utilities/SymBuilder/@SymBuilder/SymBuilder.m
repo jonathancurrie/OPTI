@@ -56,7 +56,9 @@ classdef SymBuilder < handle
             %Check for string
             if(ischar(str))
                 digits(16);
+                wstate = warning('off','symbolic:sym:sym:DeprecateExpressions');
                 s = sym(str);
+                warning(wstate);
             elseif(isa(str,'sym'))
                 s = str;
             else
@@ -86,7 +88,9 @@ classdef SymBuilder < handle
                 %Parse constraint string
                 [str,l,u] = SymBuilder.parseConstraint(str_in);
                 digits(16);
+                wstate = warning('off','symbolic:sym:sym:DeprecateExpressions');
                 s = sym(str);
+                warning(wstate);
             elseif(isa(str_in,'sym'))
                 if(nargin < 4 || ~isnumeric(cl) || ~isnumeric(cu) || length(cl)~=length(cu) || length(cl)~=length(str_in))
                     error('When supplying a symbolic expression to AddCon, you must supply as AddCon(sym_con,cl,cu) with cl, cu as numeric vectors of the same length.');
@@ -701,7 +705,9 @@ classdef SymBuilder < handle
                 %Substitute expressions
                 if(~isempty(B.exprsn))                                           
                     %Now subs into full equation system
+                    wstate = warning('off','symbolic:sym:sym:DeprecateExpressions');
                     symobj = subs(symobj,B.exprsn(:,1),B.exprsn(:,2));
+                    warning(wstate);
                     %Have to repeat until all nested expressions are sub'd
                     n = 10;  %max depth
                     no = size(B.exprsn,1);
@@ -913,10 +919,12 @@ classdef SymBuilder < handle
             index_BH = find(ind);
             ind(B.indobj) = [];
             index_L = find(ind);
+            wstate = warning('off','symbolic:sym:sym:DeprecateExpressions');
             for i = 1:length(index_BH)
                 l = sym(sprintf('lambda(%d)',index_L(i)));
                 H = H + l*B.hess(index_BH(i)).H;
             end                  
+            warning(wstate);
             %Save resulting Hessian
             B.hesslag = tril(H);
         end

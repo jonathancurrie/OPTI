@@ -104,7 +104,9 @@ if(nargin > 1 && ~isempty(sobj))
     if(size(svar,1) > 1), svar = svar.'; end
     if(size(xvar,1) > 1), xvar = xvar'; end
     %Subs out individual symbolic variables into our indexed list and converts to normal numbers
+    wstate = warning('off','symbolic:sym:sym:DeprecateExpressions');
     eq = vpa(subs(sobj,svar,xvar),16); %this takes too long - any suggestions?
+    warning(wstate);
     %Sub out Lambda if Hessian
     if(var=='H')
         l = cell(ncon,1);
@@ -113,7 +115,9 @@ if(nargin > 1 && ~isempty(sobj))
             l{i} = sprintf('lambda(%d)',i);
             l2{i} = sprintf('lambda[%d]',i);
         end
+        wstate = warning('off','symbolic:sym:sym:DeprecateExpressions');
         eq = subs(eq,l,l2);
+        warning(wstate);
     end
 
     %Enter Equations (Var Type Dictates Entry Type)
