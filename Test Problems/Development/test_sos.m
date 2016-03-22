@@ -93,6 +93,7 @@ Opt = opti('f',f,'lin',A,rl,ru,'bounds',lb,ub,'sos',sos_type,sos_index,...
 
 %%
 % SOS Structure
+sos = [];
 sos.type = '12'; %each character represents a SOS set 
 sos.index = {[1 2]' [3:5]'};
 sos.weight = {[1 2]' [1:3]'};
