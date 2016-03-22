@@ -20,8 +20,10 @@ switch(lower(vsver))
         toolset = 'v110';
     case {'vs2013','2013','v120'}
         toolset = 'v120';
+    case {'vs2015','2015','v140'}
+        toolset = 'v140';
     otherwise
-        error('Unknown Visual Studio Version! Only VS2010, VS2012 and VS2013 accepted');
+        error('Unknown Visual Studio Version! Only VS2010, VS2012, VS2013, VS2015 accepted');
 end
 
 fprintf('Generating Visual Studio Projects and Solution:\n');
@@ -54,7 +56,9 @@ solPath = [PATHS{1} filesep projStruct(1).name '.sln'];
 fid = fopen(solPath,'w+');
 if(fid < 0), error('Error writing solution file'); end  
 try
-    if(strcmpi(toolset,'v120'))
+    if(strcmpi(toolset,'v140'))
+        fprintf(fid,'Microsoft Visual Studio Solution File, Format Version 14.00\n# Visual Studio 2015\n'); 
+    elseif(strcmpi(toolset,'v120'))
         fprintf(fid,'Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio 2013\n');  
     elseif(strcmpi(toolset,'v110'))
         fprintf(fid,'Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio 2012\n');        

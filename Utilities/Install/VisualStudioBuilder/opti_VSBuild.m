@@ -12,8 +12,8 @@ function opti_VSBuild(solver,paths,opts)
 %      - path:              FULL path to the solver source directory
 %      - opts_structure:    structure with the following fields:          
 %           expath:         FULL paths to extra required source directories (cell array)
-%           vsver:          Visual Studio Version (default find the highest version, otherwise 'VS2013', 'VS2010' and 'VS2012' supported)
-%           ifortver:       Intel Fortran Version (default find the highest version, otherwise 'XE15', 'XE13SP1', 'XE13', 'XE11SP1' and 'XE11' also supported)
+%           vsver:          Visual Studio Version (default find the highest version, otherwise 'VS2015', 'VS2013', 'VS2010' and 'VS2012' supported)
+%           ifortver:       Intel Fortran Version (default find the highest version, otherwise 'XE16', 'XE15', 'XE13SP1', 'XE13', 'XE11SP1' and 'XE11' also supported)
 %           ma57            Include MA57 in build {[]} ('HSL' - HSL Fortran source version, 'Matlab' - DLL included with MATLAB) [see opti_MISC_Install]
 %           ma27            Include MA27 in build {[]} ('HSL' - HSL Fortran source version) [see opti_MISC_Install]
 %           pardiso         Include PARDISO in build {[]} ('Basel' - DLL from Official PARDISO Site, 'MKL' - Version included with Intel MKL)
@@ -21,9 +21,11 @@ function opti_VSBuild(solver,paths,opts)
 %           linloader       Include IPOPT Linear System Loader DLL Code {false}
 
 %Constants (modify to suit your PC)
+vs15dir     = 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE';
 vs13dir     = 'C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE';
 vs12dir     = 'C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE';
 vs10dir     = 'C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE';
+if16dir     = 'C:\Program Files (x86)\IntelSWTools\compilers_and_libraries\windows\compiler';
 if15dir     = 'C:\Program Files (x86)\Intel\Composer XE 2015\compiler';
 if13SP1dir  = 'C:\Program Files (x86)\Intel\Composer XE 2013 SP1\compiler';
 if13dir     = 'C:\Program Files (x86)\Intel\Composer XE 2013\compiler';
@@ -55,11 +57,11 @@ end
 %Extract options
 global COPYLIBS
 if(~iscell(paths)), paths = {paths}; end
-if(isfield(opts,'expaths') && ~isempty(opts.expaths))
+if(isfield(opts,'expath') && ~isempty(opts.expath))
     if(~iscell(paths))
-        paths = [paths {opts.expaths}];
+        paths = [paths {opts.expath}];
     else
-        paths = [paths opts.expaths];
+        paths = [paths opts.expath];
     end   
 end
 if(~isfield(opts,'pardiso')), PARDISO = []; else PARDISO = opts.pardiso; end
@@ -74,7 +76,9 @@ if(~isfield(opts,'copyLibs') || isempty(opts.copyLibs)), COPYLIBS = true; else C
 if(isfield(opts,'vsver') && ~isempty(opts.vsver))
     vsver = opts.vsver;
 else %find suitable version
-    if(exist([vs13dir '\devenv.exe'],'file'))
+    if(exist([vs15dir '\devenv.exe'],'file'))
+        vsver = 'VS2015';
+    elseif(exist([vs13dir '\devenv.exe'],'file'))
         vsver = 'VS2013';
     elseif(exist([vs12dir '\devenv.exe'],'file'))
         vsver = 'VS2012';
@@ -88,7 +92,9 @@ end
 if(isfield(opts,'ifortver') && ~isempty(opts.ifortver))
     ifortver = opts.ifortver;
 else %find suitable version
-    if(exist(if15dir,'dir'))
+    if(exist(if16dir,'dir'))
+        ifortver = 'XE16';    
+    elseif(exist(if15dir,'dir'))
         ifortver = 'XE15';
     elseif(exist(if13dir,'dir') || exist(if13SP1dir,'dir'))
         ifortver = 'XE13';
@@ -100,6 +106,8 @@ else %find suitable version
 end
 if(~isempty(ifortver)) %ensure compatible with visual studio builder
     switch(lower(ifortver))
+        case {'11.3','xe16'}
+            ifortver = 'XE16';
         case {'11.2','xe15'}
             ifortver = 'XE15';
         case {'11.1','11.0','11','xe13','xe13sp1'}
@@ -113,6 +121,11 @@ cdir = cd;
 
 %Find Visual Studio devenv.exe 
 switch(lower(vsver))
+    case {'vs2015','2015'}
+        if(~exist([vs15dir '\devenv.exe'],'file'))
+            error('Could not find Visual Studio 2015 Install - Looked in ''%s''',vs15dir);
+        end
+        vsdir = vs15dir;
     case {'vs2013','2013'}
         if(~exist([vs13dir '\devenv.exe'],'file'))
             error('Could not find Visual Studio 2013 Install - Looked in ''%s''',vs13dir);
@@ -780,17 +793,27 @@ switch(lower(solver))
             copyfile([cd '/Solvers/Source/nlopt/config12.h'],[nloptpath '\api\config.h'],'f');
         end
         %VS2013 no-vector fix for cobyla.c (see https://connect.microsoft.com/VisualStudio/feedback/details/1028781/c1001-on-release-build)
-        if(strcmpi(vsver,'VS2013'))
+        if(strcmpi(vsver,'VS2013') || strcmpi(vsver,'VS2015'))
             str = fileread([nloptpath '/cobyla/cobyla.c']);
-            str = regexprep(str,'i__1 = nact;\n  for (k = 1;','i__1 = nact;\n  #pragma loop(no_vector)\n  for (k = 1;');
+            str = strrep(str,sprintf('i__1 = nact;\r\n  for (k = 1;'),sprintf('i__1 = nact;\r\n  #pragma loop(no_vector)\r\n  for (k = 1;'));
             fp = fopen([nloptpath '/cobyla/cobyla.c'],'w');
             fprintf(fp,'%s',str); fclose(fp);
+        end
+        %VS2015 fix for extra math fncs
+        if(strcmpi(vsver,'VS2015'))
+            str = fileread([nloptpath '/api/nlopt.h']);
+            str = strrep(str,'and size_t */',sprintf('and size_t */\r\n#define HAVE_COPYSIGN\r\n#define HAVE_ISNAN\r\n'));
+            fp = fopen([nloptpath '/api/nlopt.h'],'w');
+            fprintf(fp,'%s',str); fclose(fp);            
         end
         n=1;
         sdir = nloptpath;
         name = LIBNAME;
         opts = [];
         opts.exPP = {'_CRT_SECURE_NO_WARNINGS'};
+        if(strcmpi(vsver,'VS2015'))
+           opts.exPP = [opts.exPP,'HAVE_ISNAN','HAVE_COPYSIGN']; 
+        end
         opts.exclude = {'testfuncs.c','tst.cc','tstc.c','testros.cc','prog.cc','redblack_test.c','DIRparallel.c'};
         opts.exFolder = {'octave','swig','test'};
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = []; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
@@ -1015,7 +1038,11 @@ switch(lower(solver))
         name = LIBNAME;
         opts = [];
         opts.exPP = {'Arith_Kind_ASL=1','Sscanf=sscanf','Printf=printf','Sprintf=sprintf',...
-                     'Fprintf=fprintf','snprintf=_snprintf','NO_STDIO1','_CRT_SECURE_NO_WARNINGS','_CRT_NONSTDC_NO_DEPRECATE'};
+                     'Fprintf=fprintf','NO_STDIO1','_CRT_SECURE_NO_WARNINGS','_CRT_NONSTDC_NO_DEPRECATE'};
+        %VS2015 doesn't need snprintf
+        if(~strcmpi(vsver,'VS2015'))
+            opts.exPP = [opts.exPP 'snprintf=_snprintf'];
+        end
         opts.exclude = {'arithchk.c','atof.c','b_search.c','dtoa.c','fpinit.c','funcadd.c',...
                         'funcadd0.c','funcaddk.c','funcaddr.c','obj_adj0.c','sjac0dim.c',...
                         'sprintf.c','sscanf.c','printf.c','mpec_adj0.c'};
@@ -1141,6 +1168,7 @@ end
 function copyLibs(solpath,projs,comps,cdir)
 
 fprintf('Copying Compiled Libraries:\n');
+pause(0.5); %allow files to be created
 idx = strfind(solpath,filesep);
 spath = solpath(1:idx(end));
 
@@ -1196,7 +1224,7 @@ for i = 1:length(projs)
             else
                 cmp = 'Intel Fortran';
             end
-            if(strcmpi(vsver,'vs2013'))
+            if(strcmpi(vsver,'vs2013') || strcmpi(vsver,'vs2015'))
                 estr32 = ['!devenv "' solpath '" /build "Release|Win32" /project ' projs{i} ' /projectconfig "Release|Win32"'];
                 estr64 = ['!devenv "' solpath '" /build "Release|x64" /project ' projs{i} ' /projectconfig "Release|x64"'];
             else
