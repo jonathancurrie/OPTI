@@ -12,6 +12,7 @@
 #include <exception>
 #include <ctype.h>
 #include <stdio.h>
+#include <cmath>
 
 #include "scip/scip.h"
 #include "scip/scipdefplugins.h"
@@ -83,8 +84,8 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
     char fpath[BUFSIZE];
     
     //Return Args
-    double *x, *fval, *exitflag, *iter, *nodes, *gap;
-    const char *fnames[3] = {"LPiter","BBnodes","BBgap"};
+    double *x, *fval, *exitflag, *iter, *nodes, *gap,*pbound,*dbound;
+    const char *fnames[5] = {"LPiter","BBnodes","BBgap","PrimalBound","DualBound"};
     
     //Common Options
     int maxiter = 1500;
@@ -179,13 +180,17 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
     fval = mxGetPr(plhs[1]); 
     exitflag = mxGetPr(plhs[2]);        
     //Statistic Structure Output
-    plhs[3] = mxCreateStructMatrix(1,1,3,fnames);
+    plhs[3] = mxCreateStructMatrix(1,1,5,fnames);
     mxSetField(plhs[3],0,fnames[0],mxCreateDoubleMatrix(1,1, mxREAL));
     mxSetField(plhs[3],0,fnames[1],mxCreateDoubleMatrix(1,1, mxREAL));
     mxSetField(plhs[3],0,fnames[2],mxCreateDoubleMatrix(1,1, mxREAL));
+    mxSetField(plhs[3],0,fnames[3],mxCreateDoubleMatrix(1,1, mxREAL));
+    mxSetField(plhs[3],0,fnames[4],mxCreateDoubleMatrix(1,1, mxREAL));
     iter  = mxGetPr(mxGetField(plhs[3],0,fnames[0]));
     nodes = mxGetPr(mxGetField(plhs[3],0,fnames[1]));
     gap   = mxGetPr(mxGetField(plhs[3],0,fnames[2]));
+    pbound   = mxGetPr(mxGetField(plhs[3],0,fnames[3]));
+    dbound   = mxGetPr(mxGetField(plhs[3],0,fnames[4]));
 
     //SCIP Objects
     SCIP* scip;
@@ -235,21 +240,21 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
                 case 'i':
                     vartype = SCIP_VARTYPE_INTEGER; 
                     llb = lb[i]; lub = ub[i]; 
-                    sprintf(msgbuf,"ivar%d",nint++);
+                    sprintf(msgbuf,"ivar%zd",nint++);
                     break;
                 case 'b':
                     vartype = SCIP_VARTYPE_BINARY; 
                     llb = lb[i] <= -1e50 ? 0 : lb[i]; //if we don't do this, SCIP fails during presolve
                     lub = ub[i] >= 1e50 ? 1 : ub[i];
-                    sprintf(msgbuf,"bvar%d",nbin++);
+                    sprintf(msgbuf,"bvar%zd",nbin++);
                     break;
                 case 'c':
                     vartype = SCIP_VARTYPE_CONTINUOUS; 
                     llb = lb[i]; lub = ub[i]; 
-                    sprintf(msgbuf,"xvar%d",ncnt++);
+                    sprintf(msgbuf,"xvar%zd",ncnt++);
                     break;
                 default:
-                    sprintf(msgbuf,"Unknown variable type for variable %d",i);
+                    sprintf(msgbuf,"Unknown variable type for variable %zd",i);
                     mexErrMsgTxt(msgbuf);
             }
             //Create variable
@@ -384,7 +389,7 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
                             break;
 
                         default:
-                            sprintf(msgbuf,"Uknown SOS Type for SOS %d",i);
+                            sprintf(msgbuf,"Uknown SOS Type for SOS %zd",i);
                             mexErrMsgTxt(msgbuf);                        
                     }
                     //Add the constraint to the problem, then release it
@@ -516,7 +521,7 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
                         {
                             err = abs(cval - conval[i]);
                             if(err > 1e-6) {
-                                sprintf(msgbuf,"Failed validation test on nonlinear constraint #%d, difference: %1.6g",i,err);
+                                sprintf(msgbuf,"Failed validation test on nonlinear constraint #%zd, difference: %1.6g",i,err);
                                 mexWarnMsgTxt(msgbuf);
                                 ts = 0;
                             }
@@ -652,6 +657,8 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
             *iter = (double)SCIPgetNLPIterations(scip);
             *nodes = (double)SCIPgetNTotalNodes(scip);
             *gap = SCIPgetGap(scip);
+            *pbound = SCIPgetPrimalbound(scip);
+            *dbound = SCIPgetDualbound(scip);
             #ifdef LINK_ASL
             if(aslMode) //write ampl solution by default
                 SCIPwriteAmplSolReaderNl(scip,NULL);
@@ -921,14 +928,14 @@ void processUserOpts(SCIP *scip, mxArray *opts)
             opt_name = mxGetCell(opts,i);
             opt_val = mxGetCell(opts,i+no);
             if(mxIsEmpty(opt_name)) {
-                sprintf(msgbuf,"SCIP Option Name in Cell Row %d is Empty!",i+1);
+                sprintf(msgbuf,"SCIP Option Name in Cell Row %zd is Empty!",i+1);
                 mexErrMsgTxt(msgbuf);
             }
             if(mxIsEmpty(opt_val)) 
                 continue; //skip this one
             
             if(!mxIsChar(opt_name)) {
-                sprintf(msgbuf,"SCIP Option Name in Cell Row %d is not a string!",i+1);
+                sprintf(msgbuf,"SCIP Option Name in Cell Row %zd is not a string!",i+1);
                 mexErrMsgTxt(msgbuf);
             }
             name = mxArrayToString(opt_name);
@@ -941,7 +948,7 @@ void processUserOpts(SCIP *scip, mxArray *opts)
             }
             if(p==NULL) { //no luck finding it
                 //Clean up SCIP here
-                sprintf(msgbuf,"SCIP Option \"%s\" (Row %d) is not recognised!",name,i+1);
+                sprintf(msgbuf,"SCIP Option \"%s\" (Row %zd) is not recognised!",name,i+1);
                 mxFree(name);
                 mexErrMsgTxt(msgbuf);  
             }
@@ -964,7 +971,7 @@ void processUserOpts(SCIP *scip, mxArray *opts)
                         SCIP_ERR( SCIPsetBoolParam(scip,name,val), "Error Setting SCIP Bool Parameter");
                     }
                     catch(...) {
-                        sprintf(msgbuf,"Error setting SCIP Option \"%s\" (Row %d)! Please check the value is within range.",name,i+1);
+                        sprintf(msgbuf,"Error setting SCIP Option \"%s\" (Row %zd)! Please check the value is within range.",name,i+1);
                         mexErrMsgTxt(msgbuf);
                     }
                     break;
@@ -977,7 +984,7 @@ void processUserOpts(SCIP *scip, mxArray *opts)
                         SCIP_ERR( SCIPsetIntParam(scip,name,*mxGetPr(opt_val)), "Error Setting SCIP Int Parameter");
                     }
                     catch(...) {
-                        sprintf(msgbuf,"Error setting SCIP Option \"%s\" (Row %d)! Please check the value is within range.",name,i+1);
+                        sprintf(msgbuf,"Error setting SCIP Option \"%s\" (Row %zd)! Please check the value is within range.",name,i+1);
                         mexErrMsgTxt(msgbuf);
                     }
                     break;
@@ -990,7 +997,7 @@ void processUserOpts(SCIP *scip, mxArray *opts)
                         SCIP_ERR( SCIPsetLongintParam(scip,name,*mxGetPr(opt_val)), "Error Setting SCIP Longint Parameter");
                     }
                     catch(...) {
-                        sprintf(msgbuf,"Error setting SCIP Option \"%s\" (Row %d)! Please check the value is within range.",name,i+1);
+                        sprintf(msgbuf,"Error setting SCIP Option \"%s\" (Row %zd)! Please check the value is within range.",name,i+1);
                         mexErrMsgTxt(msgbuf);
                     }
                     break;
@@ -1003,7 +1010,7 @@ void processUserOpts(SCIP *scip, mxArray *opts)
                         SCIP_ERR( SCIPsetRealParam(scip,name,*mxGetPr(opt_val)), "Error Setting SCIP Real Parameter");
                     }
                     catch(...) {
-                        sprintf(msgbuf,"Error setting SCIP Option \"%s\" (Row %d)! Please check the value is within range.",name,i+1);
+                        sprintf(msgbuf,"Error setting SCIP Option \"%s\" (Row %zd)! Please check the value is within range.",name,i+1);
                         mexErrMsgTxt(msgbuf);
                     }
                     break;
@@ -1017,7 +1024,7 @@ void processUserOpts(SCIP *scip, mxArray *opts)
                         SCIP_ERR( SCIPsetCharParam(scip,name,str_val[0]), "Error Setting SCIP Char Parameter");
                     }
                     catch(...) {
-                        sprintf(msgbuf,"Error setting SCIP Option \"%s\" (Row %d)! Please check the value is a valid character.",name,i+1);
+                        sprintf(msgbuf,"Error setting SCIP Option \"%s\" (Row %zd)! Please check the value is a valid character.",name,i+1);
                         mxFree(str_val);
                         mexErrMsgTxt(msgbuf);
                     }
@@ -1033,7 +1040,7 @@ void processUserOpts(SCIP *scip, mxArray *opts)
                         SCIP_ERR( SCIPsetStringParam(scip,name,str_val), "Error Setting SCIP String Parameter");
                     }
                     catch(...) {
-                        sprintf(msgbuf,"Error setting SCIP Option \"%s\" (Row %d)! Please check the value is a valid string.",name,i+1);
+                        sprintf(msgbuf,"Error setting SCIP Option \"%s\" (Row %zd)! Please check the value is a valid string.",name,i+1);
                         mxFree(str_val);
                         mexErrMsgTxt(msgbuf);
                     }

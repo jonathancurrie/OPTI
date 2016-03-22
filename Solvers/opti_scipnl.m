@@ -210,6 +210,8 @@ x = reshape(x,size(x0));
 %Assign Outputs
 info.BBNodes = stats.BBnodes;
 info.BBGap = stats.BBgap;
+info.PrimalBound = stats.PrimalBound;
+info.DualBound = stats.DualBound;
 info.Time = toc(t);
 info.Algorithm = 'SCIP: Spatial Branch and Bound using IPOPT and SoPlex';
 
