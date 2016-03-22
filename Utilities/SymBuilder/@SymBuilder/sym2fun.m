@@ -9,7 +9,9 @@ ivar = convIndex(svar);
 
 %Subs out individual symbolic variables into our indexed list
 if(~skipSubs)
+    wstate = warning('off','symbolic:sym:sym:DeprecateExpressions');
     eq = subs(sobj,svar,ivar);
+    warning(wstate);
 else
     eq = sobj;
 end
