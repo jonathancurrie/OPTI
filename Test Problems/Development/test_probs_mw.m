@@ -121,6 +121,7 @@ Opt = opti('f',f,'ineq',A,b,'bounds',lb,ub,'sos',sos,sosind,soswt,'options',opts
 [x,fval,exitflag,info] = solve(Opt)
 
 %%
+sos = [];
 sos.type = sos; sos.index = sosind; sos.weight = soswt;
 [x,fval,exitflag,info,Opt] = opti_mintprog(f,A,b,[],[],lb,ub,[],sos,opts)
 
