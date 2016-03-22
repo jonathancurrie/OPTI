@@ -19,55 +19,43 @@
 % Builder included with OPTI. Use the following commands, substituting the 
 % required path on your computer:
 %
-% %% Visual Studio Builder Commands
-% path = 'C:\Solvers\R-3.2.0';
+% % Visual Studio Builder Commands
+% path = 'C:\Solvers\R-3.2.4';
 % sdir = [path '\src\nmath']; 
 % inc = [path '\src\include'];
 % name = 'libRMathlib';
 % opts = [];
 % opts.compileAsCpp = true;
 % opts.exPP = {'_CRT_SECURE_NO_WARNINGS','MATHLIB_STANDALONE'};
+% opts.exPP = [opts.exPP 'HAVE_HYPOT','HAVE_EXPM1','HAVE_LOG1P']; %only if VS2015 or above!!
 % opts.exclude = {'test.c'};
 % VS_WriteProj(sdir,name,inc,opts)
-
+% %%
 % Once complete, you will have a directory called R\libRmathlib. Open the
-% Visual Studio 2012 project file, then complete the following steps:
-%
-% 3.1 instructions
-%   a) Within nmath.h make the following changes:
-%       - comment #include <R_ext/RS.h>
-%       - comment #include <R_ext/Print.h>
-%       - Modify the following defines: (may require limits.h)
-%           - #define ISNAN(x) (x!=x)
-%           
-%       - Add the following function definitions under #include <Rmath.h>
-%           - inline double round(double x) { return x < 0.0 ? ceil(x - 0.5) : floor(x + 0.5); }
-%           - inline double trunc(double d){ return (d>0) ? floor(d) : ceil(d) ; }
-%   b) Find and replace R_ext/ to a blank string
-%   c) Find and replace "isnan" to "ISNAN"
-%   d) Find and replace lgamma( to lgammafn(
-%   e) Delete the F77_NAME functions in d1mach and i1mach
-%   f) Add "#include <nmath.h>" to sunif.c
-%   g) Copy from Utilities/Source/Include/RMathlib Rconfig.h and Rmath.h to
-%   the R/src/nmath folder.
-
-% 3.2 instructions (and maybe some of the above...)
-% COPY Rconfig.h and Rmath.h
-% Fix <config.h> to Rconfig.h
-% Change nmath.h 110-112 to 
-% - #define ML_POSINF	std::numeric_limits<double>::infinity()
-%           - #define ML_NEGINF	-std::numeric_limits<double>::infinity()
-%           - #define ML_NAN std::numeric_limits<double>::quiet_NaN()
-% #include Random.h in nmath2.h
-% extern "C" above R_isnancpp in mlutils.c
-% extern "C" above R_isnancpp in mlutils.c
-
-
-%   i) Try compile, there should be a number of errors related to cannot
+% Visual Studio 2015 project file, then complete the following steps:
+%   a) Copy from Utilities/Source/Include/RMathlib Rconfig.h and Rmath.h to
+%   the R/src/nmath folder. 
+%   b) Change nmath.h 110-112 to (VS2015)
+%       - #define ML_POSINF	INFINITY
+%       - #define ML_NEGINF	-INFINITY
+%       - #define ML_NAN		NAN
+%   OR VS2013
+%       - #define ML_POSINF	std::numeric_limits<double>::infinity()
+%       - #define ML_NEGINF	-std::numeric_limits<double>::infinity()
+%       - #define ML_NAN std::numeric_limits<double>::quiet_NaN()
+%   c) A number of files use <config.h> instead of "Rconfig.h". Compile and
+%   look for the errors (pcauchy.c, fround.c, etc).
+%   d) Comment line 70 in Arith.h (int R_finite(double);...)
+%   e) VS2015 does not seem to like hexadecimal floating point constants.
+%   Change line 86 in qbeta.c to DBL_1__eps    = 1 - DBL_EPSILON;
+%   f) Comment line 80, 81 and 89 in Arith.h to remove macro redefinition
+%   warning for ISNAN and R_FINITE
+%   g) Add "#include "Rmath.h"" near the top of sunif.c (or ../Rmath.h)
+%   h) Try compile, there should be a number of errors related to cannot
 %   cast bool to Rboolean. For each error, manually cast the result (i.e.
 %   add (Rboolean)... bit of a pain!).
-%   j) Build a Win32 or x64 Release to compile the code.
-%   k) Copy the generated .lib file to the following folder:
+%   i) Build a Win32 or x64 Release to compile the code.
+%   j) Copy the generated .lib file to the following folder:
 %
 %   OPTI/Utilities/Source/lib/win32 or win64
 %
