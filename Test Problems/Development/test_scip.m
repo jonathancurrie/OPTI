@@ -176,7 +176,7 @@ ru = [1;1;1];
 lb = []; ub = [];
 
 xtype = 'CCC';
-opts.display = 5;
+opts.display = 3;
 
 [x,f,e,i] = scip(H,f,A,rl,ru,lb,ub,xtype,[],[],[],opts)
 
@@ -252,7 +252,7 @@ ru = [1;1;1];
 lb = []; ub = [];
 xtype = 'CIC';
 
-opts.display = 5;
+opts.display = 3;
 
 [x,f,e,i] = scip(H,f,A,rl,ru,lb,ub,xtype,[],[],[],opts)
 
