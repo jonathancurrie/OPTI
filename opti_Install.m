@@ -189,7 +189,9 @@ if(str2double(vv{1}) < 8)
 end
 switch(mexext)
     case 'mexw32'
-        fprintf('MATLAB %s 32bit (Windows x86) detected\n',mver.Release);
+        error(['From v2.20 OPTI Toolbox only supports 64bit (Windows x64) platforms. Realistically, you should consider upgrading to 64bit for the best performance with OPTI.\n'...
+               '\nIf however you would like to persist with 32bit, please download the last 32bit maintained version (v2.16) from the OPTI dropbox account:\n'...
+               '%s'],'https://www.dropbox.com/s/uafexyw3zyaz3bq/OptiToolbox_v2.16.zip?dl=0');
     case 'mexw64'
         fprintf('MATLAB %s 64bit (Windows x64) detected\n',mver.Release);
     otherwise
@@ -208,9 +210,9 @@ end
 
 %Print Missing PreReqs
 if(~havVC)
-    fprintf(2,'Cannot find the Microsoft VC++ 2013 %s Redistributable!\n',arch); 
+    fprintf(2,'Cannot find the Microsoft VC++ 2015 %s Redistributable!\n',arch); 
 else
-    fprintf('Found the Microsoft VC++ 2013 %s Redistributable\n',arch); 
+    fprintf('Found the Microsoft VC++ 2015 %s Redistributable\n',arch); 
 end
 % if(~havIC) %[not req from OPTI v >= 2.12]
 %     fprintf(2,'Cannot find the Intel C++ XE 2013 %s Redistributable!\n',arch);
@@ -218,9 +220,9 @@ end
 %     fprintf('Found the Intel C++ XE 2013 %s Redistributable\n',arch); 
 % end
 if(~havIF)
-    fprintf(2,'Cannot find the Intel Fortran XE 2015 %s Redistributable!\n',arch);
+    fprintf(2,'Cannot find the Intel Fortran XE 2016 %s Redistributable!\n',arch);
 else
-    fprintf('Found the Intel Fortran XE 2015 %s Redistributable\n',arch); 
+    fprintf('Found the Intel Fortran XE 2016 %s Redistributable\n',arch); 
 end    
 
 %Install Instructions for each Package
@@ -228,8 +230,10 @@ if(missing)
     fprintf(2,'\nYou are missing one or more pre-requisites. Please read the instructions below carefully to install them:\n\n');
     
     if(~havVC)
-        fprintf(2,' Microsoft VC++ 2013:\n  - Download from: http://www.microsoft.com/en-us/download/details.aspx?id=40784\n');
+        fprintf(2,' Microsoft VC++ 2015:\n  - Download from: https://www.microsoft.com/en-us/download/details.aspx?id=49984\n');
         fprintf(2,'  - When prompted, select the ''%s'' package. Once downloaded, install it.\n\n',arch);
+        fprintf(2,['NOTE: If you have already downloaded and installed VC++ 2015 (and restarted MATLAB) - it may be that you are missing the Universal C Runtime (Universal CRT).\nThis is automatically installed '...
+                    'with Windows Updates - but if you don''t have those turned on, you can download it from here:\nhttps://www.microsoft.com/en-us/download/details.aspx?id=48234\n\n']);
     end
     
 %     if(~havIC) %[not req from OPTI v >= 2.12]
@@ -239,7 +243,7 @@ if(missing)
 %     end
     
     if(~havIF) 
-        fprintf(2,' Intel Fortran XE 2015:\n  - Download from: https://software.intel.com/en-us/articles/redistributables-for-intel-parallel-studio-xe-2015-composer-edition-for-windows\n');
+        fprintf(2,' Intel Fortran XE 2016:\n  - Download from: https://software.intel.com/en-us/articles/redistributables-for-intel-parallel-studio-xe-2016-composer-edition-for-windows\n');
         fprintf(2,'  - The download page will contain multiple links. Download the latest (highest number) update from the ''Intel Fortran Compiler for Windows Table''\n');
         fprintf(2,'  - The download package will contain two files. Install the ''%s'' package.\n\n',icarch);
     end
