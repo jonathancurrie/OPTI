@@ -28,9 +28,9 @@
 % %% Visual Studio Builder Commands [LATEST SCIP REQ C++11]
 % %NOTE  - the PaxHeader folders change - update as required
 % clear
-% path = 'C:\Solvers\scipoptsuite-3.2.0\scip-3.2.0'; %e.g. 'C:\Solvers\SCIP'
-% splxpath = 'C:\Solvers\scipoptsuite-3.2.0\soplex-2.2.0'; %e.g. 'C:\Solvers\SOPLEX'
-% ipoptpath = 'C:\Solvers\Ipopt-3.12.3\Ipopt'; %e.g. 'C:\Solvers\IPOPT'
+% path = 'C:\Solvers\scipoptsuite-3.2.1\scip-3.2.1'; %e.g. 'C:\Solvers\SCIP'
+% splxpath = 'C:\Solvers\scipoptsuite-3.2.1\soplex-2.2.1'; %e.g. 'C:\Solvers\SOPLEX'
+% ipoptpath = 'C:\Solvers\Ipopt-3.12.4\Ipopt'; %e.g. 'C:\Solvers\IPOPT'
 % n = 1;
 % % SCIP
 % sdir = [path '\src'];

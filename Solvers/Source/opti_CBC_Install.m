@@ -22,7 +22,7 @@
 % required path on your computer:
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% path = 'C:\Solvers\Cbc-2.9.5\Cbc'; % FULL path to CBC
+% path = 'C:\Solvers\Cbc-2.9.8\Cbc'; % FULL path to CBC
 % opti_VSBuild('CBC',path);
 
 % 3) Compile the MEX File

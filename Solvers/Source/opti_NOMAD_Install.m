@@ -19,7 +19,7 @@
 % required path on your computer:
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% path = 'C:\Solvers\NOMAD-3.6.2'; % FULL path to NOMAD
+% path = 'C:\Solvers\NOMAD-3.7.2'; % FULL path to NOMAD
 % opti_VSBuild('Nomad',path);
 
 % 3) Compile the MEX File
