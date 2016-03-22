@@ -239,7 +239,7 @@ opts = nomadset('display_degree',2);
 
 [xr,fval,ef,iter] = nomad(fun,x0,[],[],nlcon,nlrhs,xtype,opts)
 
-%% MINLP2 [fval = -2.5]
+%% MINLP2 [fval = -1.5]
 clc
 fun = @(x) -x(1) - x(2) - x(3);
 nlcon = @(x) [ (x(2) - 1./2.)*(x(2) - 1./2.) + (x(3) - 1./2.)*(x(3) - 1./2.);
