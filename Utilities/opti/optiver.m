@@ -3,15 +3,29 @@ function current_version = optiver
 %  Return OPTI software version. This file also contains version update
 %  information.
 
-%   Copyright (C) 2011-2015 Jonathan Currie (I2C2)
+%   Copyright (C) 2011-2016 Jonathan Currie (I2C2)
 
-current_version = 2.17;
+current_version = 2.20;
 
 %History
 
-%2.17 (..)
+%2.20 (22/03/16)
+% - Win32 solvers removed from distribution (v2.16 is last 32bit release - https://www.dropbox.com/s/uafexyw3zyaz3bq/OptiToolbox_v2.16.zip?dl=0)
+% - Rebuilt all solvers against MKL v11.3 R2
+% - Rebuilt all solvers in 2016a with Visual Studio 2015 & Intel XE 2016
+% - Added primal and dual bounds to SCIP return arguments
+% - Updated CLP to 1.16.10
+% - Updated CBC to 2.9.8
+% - Updated IPOPT to 3.12.4
+% - Updated BONMIN to 1.8.4
+% - Updated NOMAD to 3.7.2
+% - Updated SCIP to 3.2.1 (note even more sensitive to unbounded problems now)
+% - Updated RMathlib to 3.2.4
+% - Updated CppAD source to 20160321
+% - Updated VSBuilder to support VS2015 and Intel 2016
 % - Fixed bug plotting 1D maximization problem xb,x0
 % - Fixed bug in opti_scipasl returning the wrong status code and message (F. Bastos)
+% - Improved compatibility with R2016a
 
 %2.16 (25/07/15)
 % - Minor bug fixes
@@ -498,6 +512,3 @@ current_version = 2.17;
 
 % v0.1 (23/06/11)
 % - Pre-release of OPTI Toolbox for DIW.
-
-end
-
