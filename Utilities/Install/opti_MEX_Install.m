@@ -5,7 +5,7 @@
 
 % My build platform:
 % - Windows 7 x64
-% - Visual Studio 2012
+% - Visual Studio 2015
 % - Intel Compiler XE (C++ & FORTRAN)
 % - Intel Math Kernel Library
 
@@ -16,15 +16,15 @@ addpath([cd '/Utilities/Source'])
 
 % %% -- Intel C++ Solvers --
 % clc
-% fprintf(2,'Please Specify Intel C++ as your Compiler with VS2012 Linker (Option 3, Don''t Look for Installed Compilers)...\n\n');
+% fprintf(2,'Please Specify Intel C++ as your Compiler with VS2015 Linker (Option 3, Don''t Look for Installed Compilers)...\n\n');
 % mex -setup
 % %% CLP
 % opti_CLP_Install
 
 
-%% -- VS2013 Solvers --
+%% -- VS2015 Solvers --
 clc
-fprintf(2,'Please Specify Visual Studio 2013 as your Compiler...\n\n');
+fprintf(2,'Please Specify Visual Studio 2015 as your Compiler...\n\n');
 mex -setup
 %% CLP
 opti_CLP_Install

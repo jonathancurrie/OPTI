@@ -96,6 +96,7 @@ end
 %Build Library String
 lib_str = [' -L' getLibPath];
 if(opts.util)
+    lib_str = [lib_str ' -L..\..\Utilities\Source\' getLibPath];
     lib_str = [lib_str ' -L..\..\Solvers\Source\' getLibPath];
 end
 if(iscell(libs))
