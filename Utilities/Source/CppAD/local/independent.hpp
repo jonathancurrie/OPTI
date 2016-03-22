@@ -1,12 +1,12 @@
-/* $Id: independent.hpp 3607 2015-01-20 16:20:41Z bradbell $ */
-# ifndef CPPAD_INDEPENDENT_INCLUDED
-# define CPPAD_INDEPENDENT_INCLUDED
+// $Id: independent.hpp 3804 2016-03-20 15:08:46Z bradbell $
+# ifndef CPPAD_LOCAL_INDEPENDENT_HPP
+# define CPPAD_LOCAL_INDEPENDENT_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -27,11 +27,6 @@ $spell
 	typename
 $$
 
-$index Independent$$
-$index start, recording$$
-$index recording, start$$
-$index variable, independent$$
-
 $section Declare Independent Variables and Start Recording$$
 
 $head Syntax$$
@@ -41,10 +36,10 @@ $codei%Independent(%x%, %abort_op_index%)
 %$$
 
 $head Purpose$$
-Start recording 
+Start recording
 $cref/AD of Base/glossary/AD of Base/$$ operations
 with $icode x$$ as the independent variable vector.
-Once the 
+Once the
 $cref/operation sequence/glossary/Operation/Sequence/$$ is completed,
 it must be transferred to a function object; see below.
 
@@ -69,9 +64,9 @@ $codei%
 The only other way to stop a recording is using
 $cref abort_recording$$.
 Between when the recording is started and when it stopped,
-we refer to the elements of $icode x$$, 
+we refer to the elements of $icode x$$,
 and the values that depend on the elements of $icode x$$,
-as $codei%AD<%Base%>%$$ variables. 
+as $codei%AD<%Base%>%$$ variables.
 
 $head x$$
 The vector $icode x$$ has prototype
@@ -84,11 +79,10 @@ and is the number of independent variables for this
 AD operation sequence.
 
 $head abort_op_index$$
-$index abort_op_index$$
-It specifies the operator index at which the execution is be aborted 
+It specifies the operator index at which the execution is be aborted
 by calling the CppAD $cref/error handler/ErrorHandler/$$.
 When this error handler leads to an assert, the user
-can inspect the call stack to see the source code corresponding to 
+can inspect the call stack to see the source code corresponding to
 this operator index; see
 $cref/purpose/compare_change/op_index/Purpose/$$.
 No abort will occur if $icode abort_op_index$$ is zero,
@@ -102,19 +96,18 @@ The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 $head Parallel Mode$$
-$index parallel, Independent$$
-$index Independent, parallel$$
-The call to $code Independent$$,
-and the corresponding call to
+Each thread can have one, and only one, active recording.
+A call to $code Independent$$ starts the recording for the current thread.
+The recording must be stopped by a corresponding call to
 $codei%
 	ADFun<%Base%> %f%( %x%, %y%)
 %$$
-or 
+or
 $codei%
 	%f%.Dependent( %x%, %y%)
 %$$
-or $cref abort_recording$$,
-must be preformed by the same thread; i.e.,
+or $cref abort_recording$$
+preformed by the same thread; i.e.,
 $cref/thread_alloc::thread_num/ta_thread_num/$$ must be the same.
 
 $head Example$$
@@ -152,7 +145,7 @@ void ADTape<Base>::Independent(VectorAD &x, size_t abort_op_index)
 	// set the abort index before doing anything else
 	Rec_.set_abort_op_index(abort_op_index);
 
-	// mark the beginning of the tape and skip the first variable index 
+	// mark the beginning of the tape and skip the first variable index
 	// (zero) because parameters use taddr zero
 	CPPAD_ASSERT_NARG_NRES(BeginOp, 1, 1);
 	Rec_.PutOp(BeginOp);
@@ -184,13 +177,13 @@ inline void Independent(VectorAD &x, size_t abort_op_index)
 		"AD<Base>::abort_recording() would abort this previous recording."
 	);
 	ADTape<Base>* tape = ADBase::tape_manage(tape_manage_new);
-	tape->Independent(x, abort_op_index); 
+	tape->Independent(x, abort_op_index);
 }
 template <typename VectorAD>
 inline void Independent(VectorAD &x)
 {	size_t abort_op_index = 0;
 	Independent(x, abort_op_index); }
-} 
+}
 // END CppAD namespace
 
 # endif

@@ -1,12 +1,12 @@
-/* $Id: ordered.hpp 3232 2014-04-27 15:38:21Z bradbell $ */
-# ifndef CPPAD_ORDERED_INCLUDED
-# define CPPAD_ORDERED_INCLUDED
+// $Id: ordered.hpp 3804 2016-03-20 15:08:46Z bradbell $
+# ifndef CPPAD_LOCAL_ORDERED_HPP
+# define CPPAD_LOCAL_ORDERED_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -89,7 +89,7 @@ value we are checking if it is greater than or equal other.
 value we are checking if it is less than other.
 
 \return
-returns true iff the absolute value of \c x is greater than or equal 
+returns true iff the absolute value of \c x is greater than or equal
 absolute value of \c y.
 */
 template <class Base>

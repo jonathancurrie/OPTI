@@ -1,9 +1,9 @@
-/* $Id: exp_op.hpp 3667 2015-03-01 04:00:15Z bradbell $ */
-# ifndef CPPAD_EXP_OP_INCLUDED
-# define CPPAD_EXP_OP_INCLUDED
+// $Id: exp_op.hpp 3804 2016-03-20 15:08:46Z bradbell $
+# ifndef CPPAD_LOCAL_EXP_OP_HPP
+# define CPPAD_LOCAL_EXP_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -183,12 +183,12 @@ inline void reverse_exp_op(
 		pz[j] /= Base(j);
 
 		for(k = 1; k <= j; k++)
-		{	px[k]   += pz[j] * Base(k) * z[j-k];
-			pz[j-k] += pz[j] * Base(k) * x[k];
+		{	px[k]   += Base(k) * azmul(pz[j], z[j-k]);
+			pz[j-k] += Base(k) * azmul(pz[j], x[k]);
 		}
 		--j;
 	}
-	px[0] += pz[0] * z[0];
+	px[0] += azmul(pz[0], z[0]);
 }
 
 } // END_CPPAD_NAMESPACE

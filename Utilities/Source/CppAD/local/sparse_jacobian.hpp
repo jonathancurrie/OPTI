@@ -1,9 +1,9 @@
-/* $Id: sparse_jacobian.hpp 3673 2015-04-18 19:03:50Z bradbell $ */
-# ifndef CPPAD_SPARSE_JACOBIAN_INCLUDED
-# define CPPAD_SPARSE_JACOBIAN_INCLUDED
+// $Id: sparse_jacobian.hpp 3804 2016-03-20 15:08:46Z bradbell $
+# ifndef CPPAD_LOCAL_SPARSE_JACOBIAN_HPP
+# define CPPAD_LOCAL_SPARSE_JACOBIAN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -37,8 +37,7 @@ $spell
 $$
 
 $section Sparse Jacobian: Easy Driver$$
-$index SparseJacobian$$
-$index jacobian, sparse$$
+$mindex SparseJacobian$$
 
 $head Syntax$$
 $icode%jac% = %f%.SparseJacobian(%x%)
@@ -321,7 +320,7 @@ is the base type for the recording that is stored in this
 is a simple vector class with elements of type \a Base.
 
 \tparam VectorSet
-is either \c sparse_pack, \c sparse_set or \c sparse_list.
+is either sparse_pack or sparse_list.
 
 \tparam VectorSize
 is a simple vector class with elements of type \c size_t.
@@ -393,8 +392,8 @@ size_t ADFun<Base>::SparseJacobianFor(
 
 	// number of components of Jacobian that are required
 	size_t K = size_t(jac.size());
-	CPPAD_ASSERT_UNKNOWN( row.size() == K );
-	CPPAD_ASSERT_UNKNOWN( col.size() == K );
+	CPPAD_ASSERT_UNKNOWN( size_t( row.size() ) == K );
+	CPPAD_ASSERT_UNKNOWN( size_t( col.size() ) == K );
 
 	// Point at which we are evaluating the Jacobian
 	Forward(0, x);
@@ -518,7 +517,7 @@ is the base type for the recording that is stored in this
 is a simple vector class with elements of type \a Base.
 
 \tparam VectorSet
-is either \c sparse_pack, \c sparse_set or \c sparse_list.
+is either sparse_pack or sparse_list.
 
 \tparam VectorSize
 is a simple vector class with elements of type \c size_t.
@@ -590,8 +589,8 @@ size_t ADFun<Base>::SparseJacobianRev(
 
 	// number of components of Jacobian that are required
 	size_t K = size_t(jac.size());
-	CPPAD_ASSERT_UNKNOWN( row.size() == K );
-	CPPAD_ASSERT_UNKNOWN( col.size() == K );
+	CPPAD_ASSERT_UNKNOWN( size_t( size_t( row.size() ) ) == K );
+	CPPAD_ASSERT_UNKNOWN( size_t( size_t( col.size() ) ) == K );
 
 	// Point at which we are evaluating the Jacobian
 	Forward(0, x);
@@ -738,8 +737,9 @@ size_t ADFun<Base>::SparseJacobianForward(
 {
 	size_t n = Domain();
 	size_t m = Range();
+	size_t K = jac.size();
 # ifndef NDEBUG
-	size_t k, K = jac.size();
+	size_t k;
 	CPPAD_ASSERT_KNOWN(
 		size_t(x.size()) == n ,
 		"SparseJacobianForward: size of x not equal domain dimension for f."
@@ -769,15 +769,21 @@ size_t ADFun<Base>::SparseJacobianForward(
 			"SparseJacobianForward: invalid value in work."
 	);
 # endif
+	// check for case where there is nothing to compute
+	size_t n_sweep = 0;
+	if( K == 0 )
+		return n_sweep;
 
 	typedef typename VectorSet::value_type Set_type;
 	typedef typename internal_sparsity<Set_type>::pattern_type Pattern_type;
 	Pattern_type s_transpose;
 	if( work.color.size() == 0 )
 	{	bool transpose = true;
-		sparsity_user2internal(s_transpose, p, m, n, transpose);
+		const char* error_msg = "SparseJacobianForward: transposed sparsity"
+		" pattern does not have proper row or column dimension";
+		sparsity_user2internal(s_transpose, p, n, m, transpose, error_msg);
 	}
-	size_t n_sweep = SparseJacobianFor(x, s_transpose, row, col, jac, work);
+	n_sweep = SparseJacobianFor(x, s_transpose, row, col, jac, work);
 	return n_sweep;
 }
 /*!
@@ -846,8 +852,9 @@ size_t ADFun<Base>::SparseJacobianReverse(
 {
 	size_t m = Range();
 	size_t n = Domain();
+	size_t K = jac.size();
 # ifndef NDEBUG
-	size_t k, K = jac.size();
+	size_t k;
 	CPPAD_ASSERT_KNOWN(
 		size_t(x.size()) == n ,
 		"SparseJacobianReverse: size of x not equal domain dimension for f."
@@ -877,15 +884,21 @@ size_t ADFun<Base>::SparseJacobianReverse(
 			"SparseJacobianReverse: invalid value in work."
 	);
 # endif
+	// check for case where there is nothing to compute
+	size_t n_sweep = 0;
+	if( K == 0 )
+		return n_sweep;
 
 	typedef typename VectorSet::value_type Set_type;
 	typedef typename internal_sparsity<Set_type>::pattern_type Pattern_type;
 	Pattern_type s;
 	if( work.color.size() == 0 )
 	{	bool transpose = false;
-		sparsity_user2internal(s, p, m, n, transpose);
+		const char* error_msg = "SparseJacobianReverse: sparsity"
+		" pattern does not have proper row or column dimension";
+		sparsity_user2internal(s, p, m, n, transpose, error_msg);
 	}
-	size_t n_sweep = SparseJacobianRev(x, s, row, col, jac, work);
+	n_sweep = SparseJacobianRev(x, s, row, col, jac, work);
 	return n_sweep;
 }
 /*!
@@ -951,7 +964,9 @@ VectorBase ADFun<Base>::SparseJacobian(
 		// need an internal copy of sparsity pattern
 		Pattern_type s_transpose;
 		bool transpose = true;
-		sparsity_user2internal(s_transpose, p, m, n, transpose);
+		const char* error_msg = "SparseJacobian: transposed sparsity"
+		" pattern does not have proper row or column dimension";
+		sparsity_user2internal(s_transpose, p, n, m, transpose, error_msg);
 
 		k = 0;
 		for(j = 0; j < n; j++)
@@ -979,7 +994,9 @@ VectorBase ADFun<Base>::SparseJacobian(
 		// need an internal copy of sparsity pattern
 		Pattern_type s;
 		bool transpose = false;
-		sparsity_user2internal(s, p, m, n, transpose);
+		const char* error_msg = "SparseJacobian: sparsity"
+		" pattern does not have proper row or column dimension";
+		sparsity_user2internal(s, p, m, n, transpose, error_msg);
 
 		k = 0;
 		for(i = 0; i < m; i++)

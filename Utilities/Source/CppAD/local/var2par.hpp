@@ -1,9 +1,9 @@
-/* $Id: var2par.hpp 3671 2015-04-07 15:36:16Z bradbell $ */
-# ifndef CPPAD_VAR2PAR_INCLUDED
-# define CPPAD_VAR2PAR_INCLUDED
+// $Id: var2par.hpp 3804 2016-03-20 15:08:46Z bradbell $
+# ifndef CPPAD_LOCAL_VAR2PAR_HPP
+# define CPPAD_LOCAL_VAR2PAR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -22,12 +22,9 @@ $spell
 	const
 $$
 
-$index Var2Par$$
-$index variable, convert to parameter$$
-$index parameter, convert from variable$$
-$index value_, obtain during taping$$
 
 $section Convert an AD Variable to a Parameter$$
+$mindex Var2Par from value_ obtain during taping$$
 
 $head Syntax$$
 $icode%y% = Var2Par(%x%)%$$

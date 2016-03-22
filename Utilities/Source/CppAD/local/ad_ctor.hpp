@@ -1,9 +1,9 @@
-/* $Id: ad_ctor.hpp 3670 2015-03-13 12:43:26Z bradbell $ */
-# ifndef CPPAD_AD_CTOR_INCLUDED
-# define CPPAD_AD_CTOR_INCLUDED
+// $Id: ad_ctor.hpp 3804 2016-03-20 15:08:46Z bradbell $
+# ifndef CPPAD_LOCAL_AD_CTOR_HPP
+# define CPPAD_LOCAL_AD_CTOR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -25,13 +25,9 @@ $spell
 	const
 $$
 
-$index AD, constructor$$
-$index constructor, AD$$
-$index convert, to AD$$
-$index Base, convert to AD$$
-$index VecAD, convert to AD$$
 
 $section AD Constructors $$
+$mindex convert Base VecAD$$
 
 $head Syntax$$
 $codei%AD<%Base%> %y%()
@@ -61,14 +57,8 @@ $codei%
 for any type that has an explicit constructor of the form
 $icode%Base%(%x%)%$$.
 
-$subhead deprecated$$
-$index deprecated, constructor$$
-$index constructor, deprecated$$
-If you set
-$cref/cppad_implicit_ctor_from_any_type
-	/cmake
-	/cppad_implicit_ctor_from_any_type
-/$$
+$subhead Deprecated 2013-12-31$$
+If you set $cref/cppad_deprecated/cmake/cppad_deprecated/$$
 to be $code YES$$ during the install procedure,
 you will get an implicit constructor with prototype
 $codei%

@@ -1,8 +1,8 @@
-/* $Id: base_complex.hpp 3523 2014-12-29 15:22:30Z bradbell $ */
-# ifndef CPPAD_BASE_COMPLEX_INCLUDED
-# define CPPAD_BASE_COMPLEX_INCLUDED
+// $Id: base_complex.hpp 3804 2016-03-20 15:08:46Z bradbell $
+# ifndef CPPAD_LOCAL_BASE_COMPLEX_HPP
+# define CPPAD_LOCAL_BASE_COMPLEX_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -16,11 +16,16 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <complex>
 
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
-# include <cppad/thread_alloc.hpp>
+# include <cppad/utility/thread_alloc.hpp>
 
 /*
 $begin base_complex.hpp$$
 $spell
+	azmul
+	expm1
+	atanh
+	acosh
+	asinh
 	endif
 	eps
 	abs_geq
@@ -49,9 +54,6 @@ $spell
 	bool
 $$
 
-$index complex, double Base$$
-$index Base, double complex$$
-$index double, complex Base$$
 
 $section Enable use of AD<Base> where Base is std::complex<double>$$
 
@@ -67,20 +69,20 @@ This file is included before $code <cppad/cppad.hpp>$$
 so it is necessary to define the error handler
 in addition to including
 $cref/base_require.hpp/base_require/Include Order/$$
-$codep */
+$srccode%cpp% */
 # include <limits>
 # include <complex>
 # include <cppad/base_require.hpp>
 # include <cppad/local/cppad_assert.hpp>
 
-/* $$
+/* %$$
 
 $head CondExpOp$$
 The type $code std::complex<double>$$ does not supports the
 $code <$$, $code <=$$, $code ==$$, $code >=$$, and $code >$$ operators; see
 $cref/not ordered/base_cond_exp/CondExpTemplate/Not Ordered/$$.
 Hence its $code CondExpOp$$ function is defined by
-$codep */
+$srccode%cpp% */
 namespace CppAD {
 	inline std::complex<double> CondExpOp(
 		enum CppAD::CompareOp      cop        ,
@@ -96,37 +98,37 @@ namespace CppAD {
 		return std::complex<double>(0);
 	}
 }
-/* $$
+/* %$$
 
 $head CondExpRel$$
 The $cref/CPPAD_COND_EXP_REL/base_cond_exp/CondExpRel/$$ macro invocation
-$codep */
+$srccode%cpp% */
 namespace CppAD {
 	CPPAD_COND_EXP_REL( std::complex<double> )
 }
-/* $$
+/* %$$
 used $code CondExpOp$$ above to
 define $codei%CondExp%Rel%$$ for $code std::complex<double>$$ arguments
 and $icode%Rel%$$ equal to
 $code Lt$$, $code Le$$, $code Eq$$, $code Ge$$, and $code Gt$$.
 
 $head EqualOpSeq$$
-Complex numbers do not carry operation sequence information. 
-Thus they are equal in this sense if and only if there values are equal.  
-$codep */
+Complex numbers do not carry operation sequence information.
+Thus they are equal in this sense if and only if there values are equal.
+$srccode%cpp% */
 namespace CppAD {
 	inline bool EqualOpSeq(
-		const std::complex<double> &x , 
+		const std::complex<double> &x ,
 		const std::complex<double> &y )
-	{	return x == y; 
+	{	return x == y;
 	}
 }
-/* $$
+/* %$$
 
 $head Identical$$
-Complex numbers do not carry operation sequence information. 
+Complex numbers do not carry operation sequence information.
 Thus they are all parameters so the identical functions just check values.
-$codep */
+$srccode%cpp% */
 namespace CppAD {
 	inline bool IdenticalPar(const std::complex<double> &x)
 	{	return true; }
@@ -138,11 +140,11 @@ namespace CppAD {
 		const std::complex<double> &x, const std::complex<double> &y)
 	{	return (x == y); }
 }
-/* $$
+/* %$$
 
 $head Ordered$$
-Complex types do not support comparison operators, 
-$codep */
+Complex types do not support comparison operators,
+$srccode%cpp% */
 # undef  CPPAD_USER_MACRO
 # define CPPAD_USER_MACRO(Fun)                                     \
 inline bool Fun(const std::complex<double>& x)                     \
@@ -159,34 +161,29 @@ namespace CppAD {
 	CPPAD_USER_MACRO(GreaterThanOrZero)
 	CPPAD_USER_MACRO(GreaterThanZero)
 	inline bool abs_geq(
-		const std::complex<double>& x , 
+		const std::complex<double>& x ,
 		const std::complex<double>& y )
 	{	return std::abs(x) >= std::abs(y); }
 }
-/* $$
-
-$head erf$$
-Complex types do not support the error function
-(use CPPAD_USER_MACRO define above).
-$codep */
-# if CPPAD_COMPILER_HAS_ERF
-namespace CppAD {
-	CPPAD_USER_MACRO(erf)
-}
-# endif
-/* $$
-
+/* %$$
 
 $head Integer$$
 The implementation of this function must agree
 with the CppAD user specifications for complex arguments to the
 $cref/Integer/Integer/x/Complex Types/$$ function:
-$codep */
+$srccode%cpp% */
 namespace CppAD {
 	inline int Integer(const std::complex<double> &x)
 	{	return static_cast<int>( x.real() ); }
 }
-/* $$
+/* %$$
+
+$head azmul$$
+$srccode%cpp% */
+namespace CppAD {
+	CPPAD_AZMUL( std::complex<double> )
+}
+/* %$$
 
 $head isnan$$
 The gcc 4.1.1 complier defines the function
@@ -198,19 +195,19 @@ This causes an ambiguity between the function above and the CppAD
 $cref/isnan/nan/$$ template function.
 We avoid this ambiguity by defining a non-template version of
 this function in the CppAD namespace.
-$codep */
+$srccode%cpp% */
 namespace CppAD {
 	inline bool isnan(const std::complex<double>& z)
 	{	return (z != z);
 	}
 }
-/* $$
+/* %$$
 
 $head Valid Unary Math$$
-The following macro invocations define the standard unary 
+The following macro invocations define the standard unary
 math functions that are valid with complex arguments and are
 required to use $code AD< std::complex<double> >$$.
-$codep */
+$srccode%cpp% */
 namespace CppAD {
 	CPPAD_STANDARD_MATH_UNARY(std::complex<double>, cos)
 	CPPAD_STANDARD_MATH_UNARY(std::complex<double>, cosh)
@@ -220,13 +217,13 @@ namespace CppAD {
 	CPPAD_STANDARD_MATH_UNARY(std::complex<double>, sinh)
 	CPPAD_STANDARD_MATH_UNARY(std::complex<double>, sqrt)
 }
-/* $$
+/* %$$
 
 $head Invalid Unary Math$$
-The following macro definition and invocations define the standard unary 
+The following macro definition and invocations define the standard unary
 math functions that are invalid with complex arguments and are
 required to use $code AD< std::complex<double> >$$.
-$codep */
+$srccode%cpp% */
 # undef  CPPAD_USER_MACRO
 # define CPPAD_USER_MACRO(Fun)                                     \
 inline std::complex<double> Fun(const std::complex<double>& x)     \
@@ -243,53 +240,46 @@ namespace CppAD {
 	CPPAD_USER_MACRO(asin)
 	CPPAD_USER_MACRO(atan)
 	CPPAD_USER_MACRO(sign)
+# if CPPAD_USE_CPLUSPLUS_2011
+	CPPAD_USER_MACRO(erf)
+	CPPAD_USER_MACRO(asinh)
+	CPPAD_USER_MACRO(acosh)
+	CPPAD_USER_MACRO(atanh)
+	CPPAD_USER_MACRO(expm1)
+	CPPAD_USER_MACRO(log1p)
+# endif
 }
-/* $$
+/* %$$
 
 $head pow $$
 The following defines a $code CppAD::pow$$ function that
 is required to use $code AD< std::complex<double> >$$:
-$codep */
+$srccode%cpp% */
 namespace CppAD {
 	inline std::complex<double> pow(
-		const std::complex<double> &x , 
+		const std::complex<double> &x ,
 		const std::complex<double> &y )
 	{	return std::pow(x, y); }
 }
-/*$$
+/* %$$
 
-$head limits$$
-The following defines the numeric limits functions
-$code epsilon$$, $code min$$, and $code max$$ for the type
-$code std::complex<double>$$.
-It also defines the deprecated $code epsilon$$ function:
-$codep */
+$head numeric_limits$$
+The following defines the CppAD $cref numeric_limits$$
+for the type $code std::complex<double>$$:
+$srccode%cpp% */
 namespace CppAD {
-	template <>
-	class numeric_limits< std::complex<double> > {
-	public:
-		// machine epsilon
-		static  std::complex<double> epsilon(void)
-		{	double eps = std::numeric_limits<double>::epsilon();
-			return std::complex<double>(eps, 0.0);
-		}
-		// minimum positive normalized value
-		static  std::complex<double> min(void)
-		{	double min = std::numeric_limits<double>::min();
-			return std::complex<double>(min, 0.0);
-		}
-		// maximum finite value
-		static  std::complex<double> max(void)
-		{	double max = std::numeric_limits<double>::max();
-			return std::complex<double>(max, 0.0);
-		}
-	};
-	// deprecated machine epsilon
-	template <> 
-	inline std::complex<double> epsilon< std::complex<double> > (void)
-	{	return numeric_limits< std::complex<double> >::epsilon(); }
+	CPPAD_NUMERIC_LIMITS(double, std::complex<double>)
 }
-/* $$
+/* %$$
+
+$head to_string$$
+The following defines the function CppAD $cref to_string$$
+for the type $code std::complex<double>$$:
+$srccode%cpp% */
+namespace CppAD {
+	CPPAD_TO_STRING(std::complex<double>)
+}
+/* %$$
 $end
 */
 # undef  CPPAD_USER_MACRO_ONE
@@ -331,9 +321,9 @@ namespace CppAD {
 	CPPAD_COND_EXP_REL( std::complex<float> )
 	// EqualOpSeq -----------------------------------------------------
 	inline bool EqualOpSeq(
-		const std::complex<float> &x , 
+		const std::complex<float> &x ,
 		const std::complex<float> &y )
-	{	return x == y; 
+	{	return x == y;
 	}
 	// Identical ------------------------------------------------------
 	inline bool IdenticalPar(const std::complex<float> &x)
@@ -351,7 +341,7 @@ namespace CppAD {
 	CPPAD_USER_MACRO_ONE(GreaterThanOrZero)
 	CPPAD_USER_MACRO_ONE(GreaterThanZero)
 	inline bool abs_geq(
-		const std::complex<float>& x , 
+		const std::complex<float>& x ,
 		const std::complex<float>& y )
 	{	return std::abs(x) >= std::abs(y); }
 	// Integer ------------------------------------------------------
@@ -377,32 +367,13 @@ namespace CppAD {
 	CPPAD_USER_MACRO_TWO(sign)
 	// The pow function
 	inline std::complex<float> pow(
-		const std::complex<float> &x , 
+		const std::complex<float> &x ,
 		const std::complex<float> &y )
 	{	return std::pow(x, y); }
 	// numeric_limits -------------------------------------------------
-	template <>
-	class numeric_limits< std::complex<float> > {
-	public:
-		/// machine epsilon
-		static  std::complex<float> epsilon(void)
-		{	float eps = std::numeric_limits<float>::epsilon();
-			return std::complex<float>(eps, 0.0);
-		}
-		/// minimum positive normalized value
-		static  std::complex<float> min(void)
-		{	float min = std::numeric_limits<float>::min();
-			return std::complex<float>(min, 0.0);
-		}
-		/// maximum finite value
-		static  std::complex<float> max(void)
-		{	float max = std::numeric_limits<float>::max();
-			return std::complex<float>(max, 0.0);
-		}
-	};
-	template <> 
-	inline std::complex<float> epsilon< std::complex<float> >(void)
-	{	return numeric_limits< std::complex<float> >::epsilon(); }
+	CPPAD_NUMERIC_LIMITS(float, std::complex<float>)
+	// to_string -------------------------------------------------
+	CPPAD_TO_STRING(std::complex<float>)
 }
 
 // undefine macros only used by this file

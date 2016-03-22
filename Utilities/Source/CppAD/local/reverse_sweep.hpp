@@ -1,9 +1,9 @@
-/* $Id: reverse_sweep.hpp 3666 2015-02-28 16:54:17Z bradbell $ */
-# ifndef CPPAD_REVERSE_SWEEP_INCLUDED
-# define CPPAD_REVERSE_SWEEP_INCLUDED
+// $Id: reverse_sweep.hpp 3804 2016-03-20 15:08:46Z bradbell $
+# ifndef CPPAD_LOCAL_REVERSE_SWEEP_HPP
+# define CPPAD_LOCAL_REVERSE_SWEEP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -253,7 +253,7 @@ void ReverseSweep(
 			CPPAD_ASSERT_UNKNOWN( op != CSkipOp );
 			// if( op == CSkipOp )
 			// {	// CSkip has a variable number of arguments
-			// 	play->reverse_cskip(op, arg, i_op, i_var);
+			//	play->reverse_cskip(op, arg, i_op, i_var);
 			// }
 			CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
 			play->reverse_next(op, arg, i_op, i_var);
@@ -308,6 +308,17 @@ void ReverseSweep(
 			break;
 			// --------------------------------------------------
 
+# if CPPAD_USE_CPLUSPLUS_2011
+			case AcoshOp:
+			// sqrt(x * x - 1), acosh(x)
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+			reverse_acosh_op(
+				d, i_var, arg[0], J, Taylor, K, Partial
+			);
+			break;
+# endif
+			// --------------------------------------------------
+
 			case AddvvOp:
 			reverse_addvv_op(
 				d, i_var, arg, parameter, J, Taylor, K, Partial
@@ -332,6 +343,17 @@ void ReverseSweep(
 			break;
 			// --------------------------------------------------
 
+# if CPPAD_USE_CPLUSPLUS_2011
+			case AsinhOp:
+			// sqrt(1 + x * x), asinh(x)
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+			reverse_asinh_op(
+				d, i_var, arg[0], J, Taylor, K, Partial
+			);
+			break;
+# endif
+			// --------------------------------------------------
+
 			case AtanOp:
 			// 1 + x * x, atan(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
@@ -339,6 +361,17 @@ void ReverseSweep(
 				d, i_var, arg[0], J, Taylor, K, Partial
 			);
 			break;
+			// -------------------------------------------------
+
+# if CPPAD_USE_CPLUSPLUS_2011
+			case AtanhOp:
+			// 1 - x * x, atanh(x)
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+			reverse_atanh_op(
+				d, i_var, arg[0], J, Taylor, K, Partial
+			);
+			break;
+# endif
 			// -------------------------------------------------
 
 			case BeginOp:
@@ -431,7 +464,7 @@ void ReverseSweep(
 			break;
 			// --------------------------------------------------
 
-# if CPPAD_COMPILER_HAS_ERF
+# if CPPAD_USE_CPLUSPLUS_2011
 			case ErfOp:
 			reverse_erf_op(
 				d, i_var, arg, parameter, J, Taylor, K, Partial
@@ -445,6 +478,15 @@ void ReverseSweep(
 				d, i_var, arg[0], J, Taylor, K, Partial
 			);
 			break;
+			// --------------------------------------------------
+
+# if CPPAD_USE_CPLUSPLUS_2011
+			case Expm1Op:
+			reverse_expm1_op(
+				d, i_var, arg[0], J, Taylor, K, Partial
+			);
+			break;
+# endif
 			// --------------------------------------------------
 
 			case InvOp:
@@ -485,16 +527,25 @@ void ReverseSweep(
 			break;
 			// --------------------------------------------------
 
-			case MulvvOp:
-			reverse_mulvv_op(
-				d, i_var, arg, parameter, J, Taylor, K, Partial
+# if CPPAD_USE_CPLUSPLUS_2011
+			case Log1pOp:
+			reverse_log1p_op(
+				d, i_var, arg[0], J, Taylor, K, Partial
 			);
 			break;
+# endif
 			// --------------------------------------------------
 
 			case MulpvOp:
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			reverse_mulpv_op(
+				d, i_var, arg, parameter, J, Taylor, K, Partial
+			);
+			break;
+			// --------------------------------------------------
+
+			case MulvvOp:
+			reverse_mulvv_op(
 				d, i_var, arg, parameter, J, Taylor, K, Partial
 			);
 			break;
@@ -741,6 +792,29 @@ void ReverseSweep(
 				user_state = user_arg;
 			break;
 			// ------------------------------------------------------------
+
+			case ZmulpvOp:
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
+			reverse_zmulpv_op(
+				d, i_var, arg, parameter, J, Taylor, K, Partial
+			);
+			break;
+			// --------------------------------------------------
+
+			case ZmulvpOp:
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
+			reverse_zmulvp_op(
+				d, i_var, arg, parameter, J, Taylor, K, Partial
+			);
+			break;
+			// --------------------------------------------------
+
+			case ZmulvvOp:
+			reverse_zmulvv_op(
+				d, i_var, arg, parameter, J, Taylor, K, Partial
+			);
+			break;
+			// --------------------------------------------------
 
 			default:
 			CPPAD_ASSERT_UNKNOWN(false);

@@ -1,9 +1,9 @@
-/* $Id: ad_fun.hpp 3667 2015-03-01 04:00:15Z bradbell $ */
-# ifndef CPPAD_AD_FUN_INCLUDED
-# define CPPAD_AD_FUN_INCLUDED
+// $Id: ad_fun.hpp 3804 2016-03-20 15:08:46Z bradbell $
+# ifndef CPPAD_LOCAL_AD_FUN_HPP
+# define CPPAD_LOCAL_AD_FUN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -31,8 +31,6 @@ $$
 
 $section ADFun Objects$$
 
-$index ADFun, object$$
-$index object, ADFun$$
 
 $head Purpose$$
 An AD of $icode Base$$
@@ -51,7 +49,7 @@ $childtable%
 	cppad/local/drivers.hpp%
 	cppad/local/fun_check.hpp%
 	cppad/local/optimize.hpp%
-	omh/check_for_nan.omh
+	cppad/local/check_for_nan.hpp
 %$$
 
 $end
@@ -138,7 +136,7 @@ private:
 
 	/// Set results of the forward mode Jacobian sparsity calculations
 	/// for_jac_sparse_set_.n_set() != 0  implies for_sparse_pack_ is empty.
-	CPPAD_INTERNAL_SPARSE_SET  for_jac_sparse_set_;
+	sparse_list                for_jac_sparse_set_;
 
 // ------------------------------------------------------------
 // Private member functions
@@ -154,6 +152,7 @@ private:
 	void ForSparseJacCase(
 		bool               set_type  ,
 		bool               transpose ,
+		bool               dependency,
 		size_t             q         ,
 		const VectorSet&   r         ,
 		VectorSet&         s
@@ -164,6 +163,7 @@ private:
 	void ForSparseJacCase(
 		const std::set<size_t>&  set_type  ,
 		bool                     transpose ,
+		bool                     dependency,
 		size_t                   q         ,
 		const VectorSet&         r         ,
 		VectorSet&               s
@@ -175,7 +175,7 @@ private:
 	void RevSparseJacCase(
 		bool               set_type  ,
 		bool               transpose ,
-		bool               nz_compare,
+		bool               dependency,
 		size_t             p         ,
 		const VectorSet&   s         ,
 		VectorSet&         r
@@ -186,10 +186,29 @@ private:
 	void RevSparseJacCase(
 		const std::set<size_t>&  set_type  ,
 		bool                     transpose ,
-		bool                     nz_compare,
+		bool                     dependency,
 		size_t                   p         ,
 		const VectorSet&         s         ,
 		VectorSet&               r
+	);
+	// ------------------------------------------------------------
+	// vector of bool version of ForSparseHes
+	// (see doxygen in rev_sparse_hes.hpp)
+	template <class VectorSet>
+	void ForSparseHesCase(
+		bool               set_type  ,
+		const VectorSet&   r         ,
+		const VectorSet&   s         ,
+		VectorSet&         h
+	);
+	// vector of std::set<size_t> version of ForSparseHes
+	// (see doxygen in rev_sparse_hes.hpp)
+	template <class VectorSet>
+	void ForSparseHesCase(
+		const std::set<size_t>&  set_type  ,
+		const VectorSet&         r         ,
+		const VectorSet&         s         ,
+		VectorSet&               h
 	);
 	// ------------------------------------------------------------
 	// vector of bool version of RevSparseHes
@@ -236,7 +255,7 @@ private:
 		      sparse_jacobian_work& work
 	);
 	// ------------------------------------------------------------
-	// combined sparse_set, sparse_list and sparse_pack version of
+	// combined sparse_list and sparse_pack version of
 	// SparseHessian (see doxygen in sparse_hessian.hpp)
 	template <class VectorBase, class VectorSet, class VectorSize>
 	size_t SparseHessianCompute(
@@ -307,20 +326,60 @@ public:
 	// (see doxygen documentation in for_sparse_jac.hpp)
 	template <typename VectorSet>
 	VectorSet ForSparseJac(
-		size_t q, const VectorSet &r, bool transpose = false
+		size_t q, const VectorSet &r, bool transpose = false,
+		bool dependency = false
 	);
 	// reverse mode Jacobian sparsity
 	// (see doxygen documentation in rev_sparse_jac.hpp)
 	template <typename VectorSet>
 	VectorSet RevSparseJac(
 		size_t q, const VectorSet &s, bool transpose = false,
-		bool nz_compare = false
+		bool dependency = false
+	);
+	// forward mode Hessian sparsity
+	// (see doxygen documentation in rev_sparse_hes.hpp)
+	template <typename VectorSet>
+	VectorSet ForSparseHes(
+		const VectorSet &r, const VectorSet &s
+	);
+	// internal set sparsity version of ForSparseHes
+	// (used by checkpoint functions only)
+	void ForSparseHesCheckpoint(
+		vector<bool>&                 r         ,
+		vector<bool>&                 s         ,
+		sparse_list&                  h
 	);
 	// reverse mode Hessian sparsity
 	// (see doxygen documentation in rev_sparse_hes.hpp)
 	template <typename VectorSet>
 	VectorSet RevSparseHes(
 		size_t q, const VectorSet &s, bool transpose = false
+	);
+	// internal set sparsity version of RevSparseHes
+	// (used by checkpoint functions only)
+	void RevSparseHesCheckpoint(
+		size_t                        q         ,
+		vector<bool>&                 s         ,
+		bool                          transpose ,
+		sparse_list&                  h
+	);
+	// internal set sparsity version of RevSparseJac
+	// (used by checkpoint functions only)
+	void RevSparseJacCheckpoint(
+		size_t                        q          ,
+		sparse_list&                  r          ,
+		bool                          transpose  ,
+		bool                          dependency ,
+		sparse_list&                  s
+	);
+    // internal set sparsity version of RevSparseJac
+    // (used by checkpoint functions only)
+	void ForSparseJacCheckpoint(
+	size_t                        q          ,
+	sparse_list&                  r          ,
+	bool                          transpose  ,
+	bool                          dependency ,
+	sparse_list&                  s
 	);
 
 	/// amount of memory used for Jacobain sparsity pattern
@@ -581,6 +640,7 @@ public:
 # include <cppad/local/for_jac_sweep.hpp>
 # include <cppad/local/rev_jac_sweep.hpp>
 # include <cppad/local/rev_hes_sweep.hpp>
+# include <cppad/local/for_hes_sweep.hpp>
 
 // user interfaces
 # include <cppad/local/parallel_ad.hpp>

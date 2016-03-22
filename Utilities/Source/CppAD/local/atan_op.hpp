@@ -1,9 +1,9 @@
-/* $Id: atan_op.hpp 3667 2015-03-01 04:00:15Z bradbell $ */
-# ifndef CPPAD_ATAN_OP_INCLUDED
-# define CPPAD_ATAN_OP_INCLUDED
+// $Id: atan_op.hpp 3804 2016-03-20 15:08:46Z bradbell $
+# ifndef CPPAD_LOCAL_ATAN_OP_HPP
+# define CPPAD_LOCAL_ATAN_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -205,37 +205,31 @@ inline void reverse_atan_op(
 	const Base* b  = z  - cap_order; // called y in documentation
 	Base* pb       = pz - nc_partial;
 
-	// If pz is zero, make sure this operation has no effect
-	// (zero times infinity or nan would be non-zero).
-	bool skip(true);
-	for(size_t i_d = 0; i_d <= d; i_d++)
-		skip &= IdenticalZero(pz[i_d]);
-	if( skip )
-		return;
+	Base inv_b0 = Base(1) / b[0];
 
 	// number of indices to access
 	size_t j = d;
 	size_t k;
 	while(j)
 	{	// scale partials w.r.t z[j] and b[j]
-		pz[j] /= b[0];
+		pz[j]  = azmul(pz[j], inv_b0);
 		pb[j] *= Base(2);
 
-		pb[0] -= pz[j] * z[j];
-		px[j] += pz[j] + pb[j] * x[0];
-		px[0] += pb[j] * x[j];
+		pb[0] -= azmul(pz[j], z[j]);
+		px[j] += pz[j] + azmul(pb[j], x[0]);
+		px[0] += azmul(pb[j], x[j]);
 
 		// more scaling of partials w.r.t z[j]
 		pz[j] /= Base(j);
 
 		for(k = 1; k < j; k++)
-		{	pb[j-k] -= pz[j] * Base(k) * z[k];
-			pz[k]   -= pz[j] * Base(k) * b[j-k];
-			px[k]   += pb[j] * x[j-k];
+		{	pb[j-k] -= Base(k) * azmul(pz[j], z[k]);
+			pz[k]   -= Base(k) * azmul(pz[j], b[j-k]);
+			px[k]   += azmul(pb[j], x[j-k]);
 		}
 		--j;
 	}
-	px[0] += pz[0] / b[0] + pb[0] * Base(2) * x[0];
+	px[0] += azmul(pz[0], inv_b0) + Base(2) * azmul(pb[0], x[0]);
 }
 
 } // END_CPPAD_NAMESPACE

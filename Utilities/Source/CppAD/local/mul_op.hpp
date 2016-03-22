@@ -1,9 +1,9 @@
-/* $Id: mul_op.hpp 3667 2015-03-01 04:00:15Z bradbell $ */
-# ifndef CPPAD_MUL_OP_INCLUDED
-# define CPPAD_MUL_OP_INCLUDED
+// $Id: mul_op.hpp 3804 2016-03-20 15:08:46Z bradbell $
+# ifndef CPPAD_LOCAL_MUL_OP_HPP
+# define CPPAD_LOCAL_MUL_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -181,13 +181,6 @@ inline void reverse_mulvv_op(
 	Base* py = partial + arg[1] * nc_partial;
 	Base* pz = partial + i_z    * nc_partial;
 
-	// If pz is zero, make sure this operation has no effect
-	// (zero times infinity or nan would be non-zero).
-	bool skip(true);
-	for(size_t i_d = 0; i_d <= d; i_d++)
-		skip &= IdenticalZero(pz[i_d]);
-	if( skip )
-		return;
 
 	// number of indices to access
 	size_t j = d + 1;
@@ -196,8 +189,8 @@ inline void reverse_mulvv_op(
 	{	--j;
 		for(k = 0; k <= j; k++)
 		{
-			px[j-k] += pz[j] * y[k];
-			py[k]   += pz[j] * x[j-k];
+			px[j-k] += azmul(pz[j], y[k]);
+			py[k]   += azmul(pz[j], x[j-k]);
 		}
 	}
 }
@@ -358,7 +351,7 @@ inline void reverse_mulpv_op(
 	size_t j = d + 1;
 	while(j)
 	{	--j;
-		py[j] += pz[j] * x;
+		py[j] += azmul(pz[j], x);
 	}
 }
 

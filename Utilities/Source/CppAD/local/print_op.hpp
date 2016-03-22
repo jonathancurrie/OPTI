@@ -1,12 +1,12 @@
-/* $Id: print_op.hpp 3323 2014-09-12 12:10:54Z bradbell $ */
-# ifndef CPPAD_PRINT_OP_INCLUDED
-# define CPPAD_PRINT_OP_INCLUDED
+// $Id: print_op.hpp 3804 2016-03-20 15:08:46Z bradbell $
+# ifndef CPPAD_LOCAL_PRINT_OP_HPP
+# define CPPAD_LOCAL_PRINT_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -29,7 +29,7 @@ and the print occurs during the zero order forward mode computation.
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type 
+using AD< \a Base > and computations by this routine are done using type
 \a Base .
 
 \param s_out

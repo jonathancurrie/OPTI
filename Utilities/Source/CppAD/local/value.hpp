@@ -1,9 +1,9 @@
-/* $Id: value.hpp 3671 2015-04-07 15:36:16Z bradbell $ */
-# ifndef CPPAD_VALUE_INCLUDED
-# define CPPAD_VALUE_INCLUDED
+// $Id: value.hpp 3804 2016-03-20 15:08:46Z bradbell $
+# ifndef CPPAD_LOCAL_VALUE_HPP
+# define CPPAD_LOCAL_VALUE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -19,13 +19,10 @@ $spell
 	const
 $$
 
-$index Value$$
 
-$index Base, from AD$$
-$index AD, convert to Base$$
-$index convert, AD to Base$$
 
 $section Convert From an AD Type to its Base Type$$
+$mindex Value$$
 
 $head Syntax$$
 $icode%b% = Value(%x%)%$$

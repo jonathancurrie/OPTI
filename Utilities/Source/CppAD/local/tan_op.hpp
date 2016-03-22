@@ -1,9 +1,9 @@
-/* $Id: tan_op.hpp 3667 2015-03-01 04:00:15Z bradbell $ */
-# ifndef CPPAD_TAN_OP_INCLUDED
-# define CPPAD_TAN_OP_INCLUDED
+// $Id: tan_op.hpp 3804 2016-03-20 15:08:46Z bradbell $
+# ifndef CPPAD_LOCAL_TAN_OP_HPP
+# define CPPAD_LOCAL_TAN_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -208,13 +208,6 @@ inline void reverse_tan_op(
 	const Base* y  = z  - cap_order; // called y in documentation
 	Base* py       = pz - nc_partial;
 
-	// If pz is zero, make sure this operation has no effect
-	// (zero times infinity or nan would be non-zero).
-	bool skip(true);
-	for(size_t i_d = 0; i_d <= d; i_d++)
-		skip &= IdenticalZero(pz[i_d]);
-	if( skip )
-		return;
 
 	size_t j = d;
 	size_t k;
@@ -224,15 +217,15 @@ inline void reverse_tan_op(
 		px[j]   += pz[j];
 		pz[j]   /= Base(j);
 		for(k = 1; k <= j; k++)
-		{	px[k]   += pz[j] * y[j-k] * Base(k);
-			py[j-k] += pz[j] * x[k] * Base(k);
+		{	px[k]   += azmul(pz[j], y[j-k]) * Base(k);
+			py[j-k] += azmul(pz[j], x[k]) * Base(k);
 		}
 		for(k = 0; k < j; k++)
-			pz[k] += py[j-1] * z[j-k-1] * base_two;
+			pz[k] += azmul(py[j-1], z[j-k-1]) * base_two;
 
 		--j;
 	}
-	px[0] += pz[0] * (Base(1) + y[0]);
+	px[0] += azmul(pz[0], Base(1) + y[0]);
 }
 
 } // END_CPPAD_NAMESPACE

@@ -1,12 +1,12 @@
-/* $Id: load_op.hpp 3623 2015-01-29 11:42:49Z bradbell $ */
-# ifndef CPPAD_LOAD_OP_INCLUDED
-# define CPPAD_LOAD_OP_INCLUDED
+// $Id: load_op.hpp 3804 2016-03-20 15:08:46Z bradbell $
+# ifndef CPPAD_LOCAL_LOAD_OP_HPP
+# define CPPAD_LOCAL_LOAD_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -19,21 +19,40 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 \file load_op.hpp
 Setting a variable so that it corresponds to current value of a VecAD element.
 */
-
-/*!
-Shared documentation for zero order forward mode implementation of 
-op = LdpOp or LdvOp (not called).
-
+/*
+==============================================================================
+<!-- define preamble -->
 The C++ source code corresponding to this operation is
 \verbatim
-	z = v[x]
+	v[x] = y
 \endverbatim
-where v is a VecAD<Base> vector and x is an AD<Base> index. 
+where v is a VecAD<Base> vector, x is an AD<Base> object,
+and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
 	i_v_x = index_by_ind[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
+<!-- end preamble -->
+==============================================================================
+*/
+/*!
+Shared documentation for zero order forward mode implementation of
+op = LdpOp or LdvOp (not called).
+
+<!-- replace preamble -->
+The C++ source code corresponding to this operation is
+\verbatim
+	v[x] = y
+\endverbatim
+where v is a VecAD<Base> vector, x is an AD<Base> object,
+and y is AD<Base> or Base objects.
+We define the index corresponding to v[x] by
+\verbatim
+	i_v_x = index_by_ind[ arg[0] + i_vec ]
+\endverbatim
+where i_vec is defined under the heading arg[1] below:
+<!-- end preamble -->
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
@@ -49,18 +68,18 @@ is the AD variable index corresponding to the variable z.
 \param arg
 \n
 arg[0]
-is the offset of this VecAD vector relative to the beginning 
-of the isvar_by_ind and index)_by_ind arrays.
+is the offset of this VecAD vector relative to the beginning
+of the isvar_by_ind and index_by_ind arrays.
 \n
-\n 
-arg[1] 
+\n
+arg[1]
 \n
 If this is the LdpOp operation (if x is a parameter),
 i_vec is defined by
 \verbatim
 	i_vec = arg[1]
 \endverbatim
-If this is the LdvOp operation (if x is a variable), 
+If this is the LdvOp operation (if x is a variable),
 i_vec is defined by
 \verbatim
 	i_vec = floor( taylor[ arg[1] * cap_order + 0 ] )
@@ -100,16 +119,16 @@ v[x] is a variable.  Otherwise it is a parameter.
 This vector has size play->num_vec_ind_rec().
 
 \param index_by_ind
-<code>index_by_ind[ arg[0] - 1 ]</code> 
+<code>index_by_ind[ arg[0] - 1 ]</code>
 is the number of elements in the user vector containing this element.
-<code>index_by_ind[ arg[0] + i_vec ]</code> is the variable or 
+<code>index_by_ind[ arg[0] + i_vec ]</code> is the variable or
 parameter index for this element,
 This array has size play->num_vec_ind_rec().
 
 \param var_by_load_op
 is a vector with size play->num_load_op_rec().
 The input value of its elements does not matter.
-Upon return,  it contains the variable index corresponding to each load 
+Upon return,  it contains the variable index corresponding to each load
 instruction.
 In the case where the index is zero,
 the instruction corresponds to a parameter (not variable).
@@ -117,8 +136,8 @@ This array has size play->num_load_op_rec().
 
 \par Check User Errors
 \li In the LdvOp case check that the index is with in range; i.e.
-<code>i_vec < index_by_ind[ arg[0] - 1 ]</code>. 
-Note that, if x is a parameter, 
+<code>i_vec < index_by_ind[ arg[0] - 1 ]</code>.
+Note that, if x is a parameter,
 the corresponding vector index and it does not change.
 In this case, the error above should be detected during tape recording.
 */
@@ -126,7 +145,7 @@ template <class Base>
 inline void forward_load_op_0(
 	player<Base>*  play        ,
 	size_t         i_z         ,
-	const addr_t*  arg         , 
+	const addr_t*  arg         ,
 	const Base*    parameter   ,
 	size_t         cap_order   ,
 	Base*          taylor      ,
@@ -138,23 +157,30 @@ inline void forward_load_op_0(
 	CPPAD_ASSERT_UNKNOWN( false );
 }
 /*!
-Shared documentation for sparsity operations corresponding to 
+Shared documentation for sparsity operations corresponding to
 op = LdpOp or LdvOp (not called).
 
-<!-- define sparse_load_op -->
+<!-- replace preamble -->
 The C++ source code corresponding to this operation is
 \verbatim
-	z = v[x]
+	v[x] = y
 \endverbatim
-where v is a VecAD<Base> vector and x is an AD<Base> index. 
+where v is a VecAD<Base> vector, x is an AD<Base> object,
+and y is AD<Base> or Base objects.
+We define the index corresponding to v[x] by
+\verbatim
+	i_v_x = index_by_ind[ arg[0] + i_vec ]
+\endverbatim
+where i_vec is defined under the heading arg[1] below:
+<!-- end preamble -->
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-\c sparse_pack, \c sparse_set, or \c sparse_list.
+sparse_pack or sparse_list.
 
 \param op
-is the code corresponding to this operator; i.e., LdpOp or LdvOp
-(only used for error checking).
+is the code corresponding to this operator;
+i.e., LdpOp or LdvOp.
 
 \param i_z
 is the AD variable index corresponding to the variable z; i.e.,
@@ -191,19 +217,18 @@ This is an input for forward mode operations.
 For reverse mode operations,
 the sparsity pattern for z is added to the sparsity pattern for v.
 
-\par Checked Assertions 
+\par Checked Assertions
 \li NumArg(op) == 3
 \li NumRes(op) == 1
 \li 0         <  \a arg[0]
 \li \a arg[0] < \a num_combined
 \li i_v       < \a vecad_sparsity.n_set()
-<!-- end sparse_load_op -->
 */
 template <class Vector_set>
 inline void sparse_load_op(
 	OpCode              op             ,
 	size_t              i_z            ,
-	const addr_t*        arg           , 
+	const addr_t*        arg           ,
 	size_t              num_combined   ,
 	const size_t*       combined       ,
 	Vector_set&         var_sparsity   ,
@@ -223,7 +248,7 @@ template <class Base>
 inline void forward_load_p_op_0(
 	player<Base>*  play        ,
 	size_t         i_z         ,
-	const addr_t*  arg         , 
+	const addr_t*  arg         ,
 	const Base*    parameter   ,
 	size_t         cap_order   ,
 	Base*          taylor      ,
@@ -266,7 +291,7 @@ template <class Base>
 inline void forward_load_v_op_0(
 	player<Base>*  play        ,
 	size_t         i_z         ,
-	const addr_t*  arg         , 
+	const addr_t*  arg         ,
 	const Base*    parameter   ,
 	size_t         cap_order   ,
 	Base*          taylor      ,
@@ -279,13 +304,13 @@ inline void forward_load_v_op_0(
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
 
 	size_t i_vec = Integer( taylor[ arg[1] * cap_order + 0 ] );
-	CPPAD_ASSERT_KNOWN( 
+	CPPAD_ASSERT_KNOWN(
 		i_vec < index_by_ind[ arg[0] - 1 ] ,
 		"VecAD: index during zero order forward sweep is out of range"
 	);
 	CPPAD_ASSERT_UNKNOWN( arg[0] + i_vec < play->num_vec_ind_rec() );
 
-	size_t i_v_x  = index_by_ind[ arg[0] + i_vec ];	
+	size_t i_v_x  = index_by_ind[ arg[0] + i_vec ];
 	Base* z       = taylor + i_z * cap_order;
 	if( isvar_by_ind[ arg[0] + i_vec ]  )
 	{	CPPAD_ASSERT_UNKNOWN( i_v_x < i_z );
@@ -304,11 +329,20 @@ inline void forward_load_v_op_0(
 /*!
 Forward mode, except for zero order, for op = LdpOp or op = LdvOp
 
+
+<!-- replace preamble -->
 The C++ source code corresponding to this operation is
 \verbatim
-	z = v[x]
+	v[x] = y
 \endverbatim
-where v is a VecAD<Base> vector and x is an AD<Base> or Base index. 
+where v is a VecAD<Base> vector, x is an AD<Base> object,
+and y is AD<Base> or Base objects.
+We define the index corresponding to v[x] by
+\verbatim
+	i_v_x = index_by_ind[ arg[0] + i_vec ]
+\endverbatim
+where i_vec is defined under the heading arg[1] below:
+<!-- end preamble -->
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
@@ -384,10 +418,10 @@ inline void forward_load_op(
 	size_t               r                    ,
 	size_t               cap_order            ,
 	size_t               i_z                  ,
-	const addr_t*        arg                  , 
+	const addr_t*        arg                  ,
 	const addr_t*        var_by_load_op       ,
 	      Base*          taylor               )
-{	
+{
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
@@ -423,22 +457,30 @@ inline void forward_load_op(
 /*!
 Reverse mode for op = LdpOp or LdvOp.
 
+<!-- replace preamble -->
 The C++ source code corresponding to this operation is
 \verbatim
-	z = y[x]
+	v[x] = y
 \endverbatim
-where y is a VecAD<Base> vector and x is an AD<Base> or Base index. 
+where v is a VecAD<Base> vector, x is an AD<Base> object,
+and y is AD<Base> or Base objects.
+We define the index corresponding to v[x] by
+\verbatim
+	i_v_x = index_by_ind[ arg[0] + i_vec ]
+\endverbatim
+where i_vec is defined under the heading arg[1] below:
+<!-- end preamble -->
 
-This routine is given the partial derivatives of a function 
+This routine is given the partial derivatives of a function
 G(z , y[x] , w , u ... )
-and it uses them to compute the partial derivatives of 
+and it uses them to compute the partial derivatives of
 \verbatim
 	H( y[x] , w , u , ... ) = G[ z( y[x] ) , y[x] , w , u , ... ]
 \endverbatim
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type 
+using AD< \a Base > and computations by this routine are done using type
 \a Base.
 
 \param op
@@ -474,7 +516,7 @@ and no values need to be modified; i.e., \a partial is not used.
 Otherwise, y[x] is a variable and:
 \n
 \n
-\a partial [ \a i_z * \a nc_partial + k ] 
+\a partial [ \a i_z * \a nc_partial + k ]
 for k = 0 , ... , \a d
 is the partial derivative of G
 with respect to the k-th order Taylor coefficient for z.
@@ -483,10 +525,10 @@ with respect to the k-th order Taylor coefficient for z.
 If \a arg[2] is not zero,
 \a partial [ \a arg[2] * \a nc_partial + k ]
 for k = 0 , ... , \a d
-is the partial derivative with respect to 
+is the partial derivative with respect to
 the k-th order Taylor coefficient for x.
 On input, it corresponds to the function G,
-and on output it corresponds to the the function H. 
+and on output it corresponds to the the function H.
 
 \param var_by_load_op
 is a vector with size play->num_load_op_rec().
@@ -494,7 +536,7 @@ It contains the variable index corresponding to each load instruction.
 In the case where the index is zero,
 the instruction corresponds to a parameter (not variable).
 
-\par Checked Assertions 
+\par Checked Assertions
 \li NumArg(op) == 3
 \li NumRes(op) == 1
 \li d < cap_order
@@ -505,7 +547,7 @@ inline void reverse_load_op(
 	OpCode         op          ,
 	size_t         d           ,
 	size_t         i_z         ,
-	const addr_t*  arg         , 
+	const addr_t*  arg         ,
 	size_t         cap_order   ,
 	const Base*    taylor      ,
 	size_t         nc_partial  ,
@@ -532,13 +574,17 @@ inline void reverse_load_op(
 /*!
 Forward mode sparsity operations for LdpOp and LdvOp
 
+\param dependency
+is this a dependency (or sparsity) calculation.
+
 \copydetails sparse_load_op
 */
 template <class Vector_set>
 inline void forward_sparse_load_op(
+	bool               dependency     ,
 	OpCode             op             ,
 	size_t             i_z            ,
-	const addr_t*      arg            , 
+	const addr_t*      arg            ,
 	size_t             num_combined   ,
 	const size_t*      combined       ,
 	Vector_set&        var_sparsity   ,
@@ -552,6 +598,8 @@ inline void forward_sparse_load_op(
 	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
 
 	var_sparsity.assignment(i_z, i_v, vecad_sparsity);
+	if( dependency & (op == LdvOp) )
+		var_sparsity.binary_union(i_z, i_z, arg[1], var_sparsity);
 
 	return;
 }
@@ -560,13 +608,17 @@ inline void forward_sparse_load_op(
 /*!
 Reverse mode Jacobian sparsity operations for LdpOp and LdvOp
 
+\param dependency
+is this a dependency (or sparsity) calculation.
+
 \copydetails sparse_load_op
 */
 template <class Vector_set>
 inline void reverse_sparse_jacobian_load_op(
+	bool               dependency     ,
 	OpCode             op             ,
 	size_t             i_z            ,
-	const addr_t*      arg            , 
+	const addr_t*      arg            ,
 	size_t             num_combined   ,
 	const size_t*      combined       ,
 	Vector_set&        var_sparsity   ,
@@ -580,6 +632,8 @@ inline void reverse_sparse_jacobian_load_op(
 	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
 
 	vecad_sparsity.binary_union(i_v, i_v, i_z, var_sparsity);
+	if( dependency & (op == LdvOp) )
+		var_sparsity.binary_union(arg[1], arg[1], i_z, var_sparsity);
 
 	return;
 }
@@ -588,79 +642,16 @@ inline void reverse_sparse_jacobian_load_op(
 /*!
 Reverse mode Hessian sparsity operations for LdpOp and LdvOp
 
-This routine is given the sparsity patterns for 
-G(z , v[x] , w , u ... )
-and it uses them to compute the sparsity patterns for
-\verbatim
-	H( v[x] , w , u , ... ) = G[ z( v[x] ) , v[x] , w , u , ... ]
-\endverbatim
-
-<!-- replace sparse_load_op -->
-The C++ source code corresponding to this operation is
-\verbatim
-	z = v[x]
-\endverbatim
-where v is a VecAD<Base> vector and x is an AD<Base> index. 
-
-\tparam Vector_set
-is the type used for vectors of sets. It can be either
-\c sparse_pack, \c sparse_set, or \c sparse_list.
-
-\param op
-is the code corresponding to this operator; i.e., LdpOp or LdvOp
-(only used for error checking).
-
-\param i_z
-is the AD variable index corresponding to the variable z; i.e.,
-the set with index \a i_z in \a var_sparsity is the sparsity pattern
-correpsonding to z.
-
-\param arg
-\n
-\a arg[0]
-is the offset corresponding to this VecAD vector in the VecAD combined array.
-
-\param num_combined
-is the total number of elements in the VecAD combinded array.
-
-\param combined
-is the VecAD combined array.
-\n
-\n
-\a combined[ \a arg[0] - 1 ]
-is the index of the set corresponding to the vector v  in \a vecad_sparsity.
-We use the notation i_v for this value; i.e.,
-\verbatim
-	i_v = combined[ \a arg[0] - 1 ]
-\endverbatim
-
-\param var_sparsity
-The set with index \a i_z in \a var_sparsity is the sparsity pattern for z.
-This is an output for forward mode operations,
-and an input for reverse mode operations.
-
-\param vecad_sparsity
-The set with index \a i_v is the sparsity pattern for the vector v.
-This is an input for forward mode operations.
-For reverse mode operations,
-the sparsity pattern for z is added to the sparsity pattern for v.
-
-\par Checked Assertions 
-\li NumArg(op) == 3
-\li NumRes(op) == 1
-\li 0         <  \a arg[0]
-\li \a arg[0] < \a num_combined
-\li i_v       < \a vecad_sparsity.n_set()
-<!-- end sparse_load_op -->
+\copydetails sparse_load_op
 
 \param var_jacobian
-\a var_jacobian[i_z] 
-is false (true) if the Jacobian of G with respect to z is always zero 
+\a var_jacobian[i_z]
+is false (true) if the Jacobian of G with respect to z is always zero
 (many be non-zero).
 
 \param vecad_jacobian
-\a vecad_jacobian[i_v] 
-is false (true) if the Jacobian with respect to x is always zero 
+\a vecad_jacobian[i_v]
+is false (true) if the Jacobian with respect to x is always zero
 (may be non-zero).
 On input, it corresponds to the function G,
 and on output it corresponds to the function H.
@@ -670,7 +661,7 @@ template <class Vector_set>
 inline void reverse_sparse_hessian_load_op(
 	OpCode             op             ,
 	size_t             i_z            ,
-	const addr_t*      arg            , 
+	const addr_t*      arg            ,
 	size_t             num_combined   ,
 	const size_t*      combined       ,
 	Vector_set&        var_sparsity   ,

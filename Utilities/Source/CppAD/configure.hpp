@@ -48,7 +48,7 @@ Does this compiler cupport c++11 rvalues; i.e., values with move semantics
 \def CPPAD_PACKAGE_STRING
 cppad-yyyymmdd as a C string where yyyy is year, mm is month, and dd is day.
 */
-# define CPPAD_PACKAGE_STRING "cppad-20150429"
+# define CPPAD_PACKAGE_STRING "cppad-20160321"
 
 /*!
 def CPPAD_HAS_COLPACK
@@ -168,5 +168,13 @@ header files.  If it is not yet defined,
 # ifndef CPPAD_MAX_NUM_THREADS
 # define CPPAD_MAX_NUM_THREADS 48
 # endif
+
+/*!
+\def CPPAD_NULL
+This preprocessor symbol is used for a null pointer.
+*/
+# ifndef CPPAD_NULL
+# define CPPAD_NULL nullptr
+# endif 
 
 # endif

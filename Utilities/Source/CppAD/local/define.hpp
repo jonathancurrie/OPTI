@@ -1,12 +1,12 @@
-/* $Id: define.hpp 3232 2014-04-27 15:38:21Z bradbell $ */
-# ifndef CPPAD_DEFINE_INCLUDED
-# define CPPAD_DEFINE_INCLUDED
+// $Id: define.hpp 3804 2016-03-20 15:08:46Z bradbell $
+# ifndef CPPAD_LOCAL_DEFINE_HPP
+# define CPPAD_LOCAL_DEFINE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,9 +18,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 Define processor symbols and macros that are used by CppAD.
 */
 
+// ----------------------------------------------------------------------------
 /*!
 \def CPPAD_OP_CODE_TYPE
-Is the type used to store enum OpCode values. If not the same as OpCode, then 
+Is the type used to store enum OpCode values. If not the same as OpCode, then
 <code>sizeof(CPPAD_OP_CODE_TYPE) <= sizeof( enum OpCode )</code>
 to conserve memory.
 This type must support \c std::numeric_limits,
@@ -32,20 +33,21 @@ in pod_vector.hpp.
 # define CPPAD_OP_CODE_TYPE unsigned char
 
 
+// ----------------------------------------------------------------------------
 /*!
 \def CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 A version of the inline command that works with MC compiler.
 
 Microsoft Visual C++ version 9.0 generates a warning if a template
 function is declared as a friend
-(this was not a problem for version 7.0). 
+(this was not a problem for version 7.0).
 The warning identifier is
 \verbatim
 	warning C4396
-\endverbatim 
+\endverbatim
 and it contains the text
 \verbatim
-	the inline specifier cannot be used when a friend declaration refers 
+	the inline specifier cannot be used when a friend declaration refers
 	to a specialization of a function template
 \endverbatim
 This happens even if the function is not a specialization.
@@ -57,21 +59,24 @@ This macro is defined as empty for Microsoft compilers.
 # define CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION inline
 # endif
 
+// ----------------------------------------------------------------------------
 /*!
-\def CPPAD_NULL
-This preprocessor symbol is used for a null pointer. 
-
-If it is not yet defined,
-it is defined when cppad/local/define.hpp is included.
+\def CPPAD_LIB_EXPORT
+Special macro for exporting windows DLL symbols; see
+https://cmake.org/Wiki/BuildingWinDLL
 */
-# ifndef CPPAD_NULL
-# if CPPAD_HAS_NULLPTR
-# define CPPAD_NULL     nullptr  
+# ifdef  _MSC_VER
+# ifdef  cppad_lib_EXPORTS
+# define CPPAD_LIB_EXPORT __declspec(dllexport)
 # else
-# define CPPAD_NULL     0
+# define CPPAD_LIB_EXPORT __declspec(dllimport)
+# endif  // cppad_lib_EXPORTS
+# else   // _MSC_VER
+# define CPPAD_LIB_EXPORT
 # endif
-# endif
- 
+
+
+// ============================================================================
 /*!
 \def CPPAD_FOLD_ASSIGNMENT_OPERATOR(Op)
 Declares automatic coercion for certain AD assignment operations.
@@ -88,7 +93,7 @@ Base, or
 double.
 The argument right is const and call by reference.
 This macro converts the operands to AD<Base> and then
-uses the definition of the same operation for that case. 
+uses the definition of the same operation for that case.
 */
 
 # define CPPAD_FOLD_ASSIGNMENT_OPERATOR(Op)                             \
@@ -121,8 +126,8 @@ This macro assumes that the operator
 \verbatim
 	left Op right
 \endverbatim
-is defined for the case where left and right 
-and the result of the operation all 
+is defined for the case where left and right
+and the result of the operation all
 have type AD<Base>.
 It uses this case to define the cases either left
 or right has type VecAD_reference<Base> or AD<Base>
@@ -130,7 +135,7 @@ and the type of the other operand is one of the following:
 VecAD_reference<Base>, AD<Base>, Base, double.
 All of the arguments are const and call by reference.
 This macro converts the operands to AD<Base> and then
-uses the definition of the same operation for that case. 
+uses the definition of the same operation for that case.
 */
 # define CPPAD_FOLD_AD_VALUED_BINARY_OPERATOR(Op)                      \
 /* ----------------------------------------------------------------*/  \
@@ -224,7 +229,7 @@ This macro assumes that the operator
 \verbatim
 	left Op right
 \endverbatim
-is defined for the case where left and right 
+is defined for the case where left and right
 have type AD<Base> and the result has type bool.
 It uses this case to define the cases either left
 or right has type
@@ -233,7 +238,7 @@ and the type of the other operand is one of the following:
 VecAD_reference<Base>, AD<Base>, Base, double.
 All of the arguments are const and call by reference.
 This macro converts the operands to AD<Base> and then
-uses the definition of the same operation for that case. 
+uses the definition of the same operation for that case.
 */
 # define CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(Op)                    \
 /* ----------------------------------------------------------------*/  \

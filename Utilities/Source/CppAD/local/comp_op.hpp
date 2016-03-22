@@ -1,12 +1,12 @@
-/* $Id: comp_op.hpp 3607 2015-01-20 16:20:41Z bradbell $ */
-# ifndef CPPAD_COMP_OP_INCLUDED
-# define CPPAD_COMP_OP_INCLUDED
+// $Id: comp_op.hpp 3804 2016-03-20 15:08:46Z bradbell $
+# ifndef CPPAD_LOCAL_COMP_OP_HPP
+# define CPPAD_LOCAL_COMP_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -104,7 +104,7 @@ It the condition is not true, ths counter is incremented by one.
 
 \param arg
 taylor[ arg[0] * cap_order + 0 ] is the zero order Taylor coefficient
-for the left operand and  
+for the left operand and
 taylor[ arg[1] * cap_order + 0 ] is the zero order Taylor coefficient
 for the right operand.
 

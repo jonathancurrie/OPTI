@@ -1,11 +1,11 @@
-/* $Id: cond_op.hpp 3323 2014-09-12 12:10:54Z bradbell $ */
-# ifndef CPPAD_COND_OP_INCLUDED
-# define CPPAD_COND_OP_INCLUDED
+// $Id: cond_op.hpp 3804 2016-03-20 15:08:46Z bradbell $
+# ifndef CPPAD_LOCAL_COND_OP_HPP
+# define CPPAD_LOCAL_COND_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -26,11 +26,11 @@ The C++ source code coresponding to this operation is
 \verbatim
 	z = CondExpRel(y_0, y_1, y_2, y_3)
 \endverbatim
-where Rel is one of the following: Lt, Le, Eq, Ge, Gt. 
+where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type 
+using AD< \a Base > and computations by this routine are done using type
 \a Base.
 
 \param i_z
@@ -42,11 +42,11 @@ is the AD variable index corresponding to the variable z.
 is static cast to size_t from the enum type
 \verbatim
 	enum CompareOp {
-		CompareLt, 
-		CompareLe, 
-		CompareEq, 
-		CompareGe, 
-		CompareGt, 
+		CompareLt,
+		CompareLe,
+		CompareEq,
+		CompareGe,
+		CompareGt,
 		CompareNe
 	}
 \endverbatim
@@ -99,7 +99,7 @@ number of columns in the matrix containing the Taylor coefficients.
 template <class Base>
 inline void conditional_exp_op(
 	size_t         i_z         ,
-	const addr_t*  arg         , 
+	const addr_t*  arg         ,
 	size_t         num_par     ,
 	const Base*    parameter   ,
 	size_t         cap_order   )
@@ -115,11 +115,11 @@ The C++ source code coresponding to this operation is
 \verbatim
 	z = CondExpRel(y_0, y_1, y_2, y_3)
 \endverbatim
-where Rel is one of the following: Lt, Le, Eq, Ge, Gt. 
+where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-\c sparse_pack, \c sparse_set, or \c sparse_list.
+sparse_pack or sparse_list.
 
 \param i_z
 is the AD variable index corresponding to the variable z.
@@ -130,11 +130,11 @@ is the AD variable index corresponding to the variable z.
 is static cast to size_t from the enum type
 \verbatim
 	enum CompareOp {
-		CompareLt, 
-		CompareLe, 
-		CompareEq, 
-		CompareGe, 
-		CompareGt, 
+		CompareLt,
+		CompareLe,
+		CompareEq,
+		CompareGe,
+		CompareGt,
 		CompareNe
 	}
 \endverbatim
@@ -180,7 +180,7 @@ is the total number of values in the vector \a parameter.
 template <class Vector_set>
 inline void sparse_conditional_exp_op(
 	size_t         i_z           ,
-	const addr_t*  arg           , 
+	const addr_t*  arg           ,
 	size_t         num_par       )
 {	// This routine is only for documentation, it should never be used
 	CPPAD_ASSERT_UNKNOWN( false );
@@ -194,11 +194,11 @@ The C++ source code coresponding to this operation is
 \verbatim
 	z = CondExpRel(y_0, y_1, y_2, y_3)
 \endverbatim
-where Rel is one of the following: Lt, Le, Eq, Ge, Gt. 
+where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type 
+using AD< \a Base > and computations by this routine are done using type
 \a Base.
 
 \param i_z
@@ -210,11 +210,11 @@ is the AD variable index corresponding to the variable z.
 is static cast to size_t from the enum type
 \verbatim
 	enum CompareOp {
-		CompareLt, 
-		CompareLe, 
-		CompareEq, 
-		CompareGe, 
-		CompareGt, 
+		CompareLt,
+		CompareLe,
+		CompareEq,
+		CompareGe,
+		CompareGt,
 		CompareNe
 	}
 \endverbatim
@@ -277,13 +277,13 @@ if y_j is a variable then
 <code>taylor [ arg[2+j] * cap_order + k ]</code>
 is the k-th order Taylor coefficient corresponding to y_j.
 \n
-\b Input: <code>taylor [ i_z * cap_order + k ]</code> 
+\b Input: <code>taylor [ i_z * cap_order + k ]</code>
 for k = 0 , ... , p-1,
 is the k-th order Taylor coefficient corresponding to z.
 \n
 \b Output: <code>taylor [ i_z * cap_order + k ]</code>
-for k = p , ... , q, 
-is the k-th order Taylor coefficient corresponding to z. 
+for k = p , ... , q,
+is the k-th order Taylor coefficient corresponding to z.
 
 */
 template <class Base>
@@ -291,7 +291,7 @@ inline void forward_cond_op(
 	size_t         p           ,
 	size_t         q           ,
 	size_t         i_z         ,
-	const addr_t*  arg         , 
+	const addr_t*  arg         ,
 	size_t         num_par     ,
 	const Base*    parameter   ,
 	size_t         cap_order   ,
@@ -377,11 +377,11 @@ The C++ source code coresponding to this operation is
 \verbatim
 	z = CondExpRel(y_0, y_1, y_2, y_3)
 \endverbatim
-where Rel is one of the following: Lt, Le, Eq, Ge, Gt. 
+where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type 
+using AD< \a Base > and computations by this routine are done using type
 \a Base.
 
 \param i_z
@@ -393,11 +393,11 @@ is the AD variable index corresponding to the variable z.
 is static cast to size_t from the enum type
 \verbatim
 	enum CompareOp {
-		CompareLt, 
-		CompareLe, 
-		CompareEq, 
-		CompareGe, 
-		CompareGt, 
+		CompareLt,
+		CompareLe,
+		CompareEq,
+		CompareGe,
+		CompareGt,
 		CompareNe
 	}
 \endverbatim
@@ -467,23 +467,23 @@ is the zero order Taylor coefficient corresponding to y_j and
 <code>taylor [ arg[2+j] * tpv + (k-1)*r+1+ell</code> is its
 k-th order Taylor coefficient in the ell-th direction.
 \n
-\b Input: 
+\b Input:
 For j = 0, 1, 2, 3, k = 1, ..., q-1,
-<code>taylor [ i_z * tpv + 0 ]</code> 
+<code>taylor [ i_z * tpv + 0 ]</code>
 is the zero order Taylor coefficient corresponding to z and
 <code>taylor [ i_z * tpv + (k-1)*r+1+ell</code> is its
 k-th order Taylor coefficient in the ell-th direction.
 \n
 \b Output: <code>taylor [ i_z * tpv + (q-1)*r+1+ell ]</code>
 is the q-th order Taylor coefficient corresponding to z
-in the ell-th direction. 
+in the ell-th direction.
 */
 template <class Base>
 inline void forward_cond_op_dir(
 	size_t         q           ,
 	size_t         r           ,
 	size_t         i_z         ,
-	const addr_t*  arg         , 
+	const addr_t*  arg         ,
 	size_t         num_par     ,
 	const Base*    parameter   ,
 	size_t         cap_order   ,
@@ -547,11 +547,11 @@ The C++ source code coresponding to this operation is
 \verbatim
 	z = CondExpRel(y_0, y_1, y_2, y_3)
 \endverbatim
-where Rel is one of the following: Lt, Le, Eq, Ge, Gt. 
+where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type 
+using AD< \a Base > and computations by this routine are done using type
 \a Base.
 
 \param i_z
@@ -563,11 +563,11 @@ is the AD variable index corresponding to the variable z.
 is static cast to size_t from the enum type
 \verbatim
 	enum CompareOp {
-		CompareLt, 
-		CompareLe, 
-		CompareEq, 
-		CompareGe, 
-		CompareGt, 
+		CompareLt,
+		CompareLe,
+		CompareEq,
+		CompareGe,
+		CompareGt,
 		CompareNe
 	}
 \endverbatim
@@ -624,13 +624,13 @@ if y_j is a variable then
 \a taylor [ \a arg[2+j] * cap_order + 0 ]
 is the zero order Taylor coefficient corresponding to y_j.
 \n
-\b Output: \a taylor [ \a i_z * \a cap_order + 0 ] 
-is the zero order Taylor coefficient corresponding to z. 
+\b Output: \a taylor [ \a i_z * \a cap_order + 0 ]
+is the zero order Taylor coefficient corresponding to z.
 */
 template <class Base>
 inline void forward_cond_op_0(
 	size_t         i_z         ,
-	const addr_t*  arg         , 
+	const addr_t*  arg         ,
 	size_t         num_par     ,
 	const Base*    parameter   ,
 	size_t         cap_order   ,
@@ -689,9 +689,9 @@ inline void forward_cond_op_0(
 /*!
 Compute reverse mode Taylor coefficients for op = CExpOp.
 
-This routine is given the partial derivatives of a function 
+This routine is given the partial derivatives of a function
 G( z , y , x , w , ... )
-and it uses them to compute the partial derivatives of 
+and it uses them to compute the partial derivatives of
 \verbatim
 	H( y , x , w , u , ... ) = G[ z(y) , y , x , w , u , ... ]
 \endverbatim
@@ -702,11 +702,11 @@ The C++ source code coresponding to this operation is
 \verbatim
 	z = CondExpRel(y_0, y_1, y_2, y_3)
 \endverbatim
-where Rel is one of the following: Lt, Le, Eq, Ge, Gt. 
+where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type 
+using AD< \a Base > and computations by this routine are done using type
 \a Base.
 
 \param i_z
@@ -718,11 +718,11 @@ is the AD variable index corresponding to the variable z.
 is static cast to size_t from the enum type
 \verbatim
 	enum CompareOp {
-		CompareLt, 
-		CompareLe, 
-		CompareEq, 
-		CompareGe, 
-		CompareGt, 
+		CompareLt,
+		CompareLe,
+		CompareEq,
+		CompareGe,
+		CompareGt,
 		CompareNe
 	}
 \endverbatim
@@ -782,7 +782,7 @@ if y_j is a variable then
 \a taylor [ \a arg[2+j] * cap_order + k ]
 is the k-th order Taylor coefficient corresponding to y_j.
 \n
-\a taylor [ \a i_z * \a cap_order + k ] 
+\a taylor [ \a i_z * \a cap_order + k ]
 for k = 0 , ... , \a d
 is the k-th order Taylor coefficient corresponding to z.
 
@@ -797,7 +797,7 @@ if y_j is a variable then
 is the partial derivative of G( z , y , x , w , u , ... )
 with respect to the k-th order Taylor coefficient corresponding to y_j.
 \n
-\b Input: \a partial [ \a i_z * \a cap_order + k ] 
+\b Input: \a partial [ \a i_z * \a cap_order + k ]
 for k = 0 , ... , \a d
 is the partial derivative of G( z , y , x , w , u , ... )
 with respect to the k-th order Taylor coefficient corresponding to z.
@@ -814,7 +814,7 @@ template <class Base>
 inline void reverse_cond_op(
 	size_t         d           ,
 	size_t         i_z         ,
-	const addr_t*  arg         , 
+	const addr_t*  arg         ,
 	size_t         num_par     ,
 	const Base*    parameter   ,
 	size_t         cap_order   ,
@@ -888,11 +888,11 @@ The C++ source code coresponding to this operation is
 \verbatim
 	z = CondExpRel(y_0, y_1, y_2, y_3)
 \endverbatim
-where Rel is one of the following: Lt, Le, Eq, Ge, Gt. 
+where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-\c sparse_pack, \c sparse_set, or \c sparse_list.
+sparse_pack or sparse_list.
 
 \param i_z
 is the AD variable index corresponding to the variable z.
@@ -903,11 +903,11 @@ is the AD variable index corresponding to the variable z.
 is static cast to size_t from the enum type
 \verbatim
 	enum CompareOp {
-		CompareLt, 
-		CompareLe, 
-		CompareEq, 
-		CompareGe, 
-		CompareGt, 
+		CompareLt,
+		CompareLe,
+		CompareEq,
+		CompareGe,
+		CompareGt,
 		CompareNe
 	}
 \endverbatim
@@ -949,6 +949,14 @@ is the total number of values in the vector \a parameter.
 \li arg[1] != 0; i.e., not all of y_0, y_1, y_2, y_3 are parameters.
 \li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
 <!-- end sparse_conditional_exp_op -->
+
+\param dependency
+Are the derivatives with respect to left and right of the expression below
+considered to be non-zero:
+\code
+	CondExpRel(left, right, if_true, if_false)
+\endcode
+This is used by the optimizer to obtain the correct dependency relations.
 
 \param sparsity
 \b Input:
@@ -963,16 +971,17 @@ the sparsity pattern corresponding to y_3.
 This identifies which of the independent variables the variable y_3
 depends on.
 \n
-\b Output: 
+\b Output:
 The set with index T is
 the sparsity pattern corresponding to z.
 This identifies which of the independent variables the variable z
-depends on. 
+depends on.
 */
 template <class Vector_set>
 inline void forward_sparse_jacobian_cond_op(
+	bool               dependency    ,
 	size_t             i_z           ,
-	const addr_t*      arg           , 
+	const addr_t*      arg           ,
 	size_t             num_par       ,
 	Vector_set&        sparsity      )
 {
@@ -980,43 +989,25 @@ inline void forward_sparse_jacobian_cond_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
-
 # ifndef NDEBUG
-	if( arg[1] & 1 )
-	{
-	}
-	else
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
-	}
-	if( arg[1] & 2 )
-	{
-	}
-	else
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
+	size_t k = 1;
+	for( size_t j = 0; j < 4; j++)
+	{	if( ! ( arg[1] & k ) )
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[2+j]) < num_par );
+		k *= 2;
 	}
 # endif
-	if( arg[1] & 4 )
-	{
-		if( arg[1] & 8 )
-		{
-			sparsity.binary_union(i_z, arg[4], arg[5], sparsity);
-		}
-		else
-		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
-			sparsity.assignment(i_z, arg[4], sparsity);
-		}
-	}	
-	else
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_par );
-		if( arg[1] & 8 )
-		{
-			sparsity.assignment(i_z, arg[5], sparsity);
-		}
-		else
-		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
-			sparsity.clear(i_z);
-		}
+	sparsity.clear(i_z);
+	if( dependency )
+	{	if( arg[1] & 1 )
+			sparsity.binary_union(i_z, i_z, arg[2], sparsity);
+		if( arg[1] & 2 )
+			sparsity.binary_union(i_z, i_z, arg[3], sparsity);
 	}
+	if( arg[1] & 4 )
+		sparsity.binary_union(i_z, i_z, arg[4], sparsity);
+	if( arg[1] & 8 )
+		sparsity.binary_union(i_z, i_z, arg[5], sparsity);
 	return;
 }
 
@@ -1025,7 +1016,7 @@ Compute reverse Jacobian sparsity patterns for op = CExpOp.
 
 This routine is given the sparsity patterns
 for a function G(z, y, x, ... )
-and it uses them to compute the sparsity patterns for 
+and it uses them to compute the sparsity patterns for
 \verbatim
 	H( y, x, w , u , ... ) = G[ z(x,y) , y , x , w , u , ... ]
 \endverbatim
@@ -1036,11 +1027,11 @@ The C++ source code coresponding to this operation is
 \verbatim
 	z = CondExpRel(y_0, y_1, y_2, y_3)
 \endverbatim
-where Rel is one of the following: Lt, Le, Eq, Ge, Gt. 
+where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-\c sparse_pack, \c sparse_set, or \c sparse_list.
+sparse_pack or sparse_list.
 
 \param i_z
 is the AD variable index corresponding to the variable z.
@@ -1051,11 +1042,11 @@ is the AD variable index corresponding to the variable z.
 is static cast to size_t from the enum type
 \verbatim
 	enum CompareOp {
-		CompareLt, 
-		CompareLe, 
-		CompareEq, 
-		CompareGe, 
-		CompareGt, 
+		CompareLt,
+		CompareLe,
+		CompareEq,
+		CompareGe,
+		CompareGt,
 		CompareNe
 	}
 \endverbatim
@@ -1098,7 +1089,7 @@ is the total number of values in the vector \a parameter.
 \li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
 <!-- end sparse_conditional_exp_op -->
 
-\param nz_compare
+\param dependency
 Are the derivatives with respect to left and right of the expression below
 considered to be non-zero:
 \code
@@ -1121,7 +1112,7 @@ This identifies which of the dependent variables depeond on the variable y_3.
 On input, this pattern corresponds to the function G.
 On ouput, it corresponds to the function H.
 \n
-\b Output: 
+\b Output:
 The set with index T is
 the sparsity pattern corresponding to z.
 This identifies which of the dependent variables depend on the variable z.
@@ -1129,56 +1120,35 @@ On input and output, this pattern corresponds to the function G.
 */
 template <class Vector_set>
 inline void reverse_sparse_jacobian_cond_op(
-	bool                nz_compare    ,
+	bool                dependency    ,
 	size_t              i_z           ,
-	const addr_t*       arg           , 
+	const addr_t*       arg           ,
 	size_t              num_par       ,
 	Vector_set&         sparsity      )
-{	
+{
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
-
 # ifndef NDEBUG
-	if( arg[1] & 1 )
-	{
-	}
-	else
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
-	}
-	if( arg[1] & 2 )
-	{
-	}
-	else
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
-	}
-	if( ! ( arg[1] & 4 ) )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_par );
-	}
-	if( ! ( arg[1] & 8 ) )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
+	size_t k = 1;
+	for( size_t j = 0; j < 4; j++)
+	{	if( ! ( arg[1] & k ) )
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[2+j]) < num_par );
+		k *= 2;
 	}
 # endif
-	if( nz_compare )
+	if( dependency )
 	{	if( arg[1] & 1 )
-		{
 			sparsity.binary_union(arg[2], arg[2], i_z, sparsity);
-		}
 		if( arg[1] & 2 )
-		{
 			sparsity.binary_union(arg[3], arg[3], i_z, sparsity);
-		}
 	}
 	// --------------------------------------------------------------------
 	if( arg[1] & 4 )
-	{
 		sparsity.binary_union(arg[4], arg[4], i_z, sparsity);
-	}
 	if( arg[1] & 8 )
-	{
 		sparsity.binary_union(arg[5], arg[5], i_z, sparsity);
-	}
 	return;
 }
 
@@ -1187,7 +1157,7 @@ Compute reverse Hessian sparsity patterns for op = CExpOp.
 
 This routine is given the sparsity patterns
 for a function G(z, y, x, ... )
-and it uses them to compute the sparsity patterns for 
+and it uses them to compute the sparsity patterns for
 \verbatim
 	H( y, x, w , u , ... ) = G[ z(x,y) , y , x , w , u , ... ]
 \endverbatim
@@ -1198,11 +1168,11 @@ The C++ source code coresponding to this operation is
 \verbatim
 	z = CondExpRel(y_0, y_1, y_2, y_3)
 \endverbatim
-where Rel is one of the following: Lt, Le, Eq, Ge, Gt. 
+where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-\c sparse_pack, \c sparse_set, or \c sparse_list.
+sparse_pack or sparse_list.
 
 \param i_z
 is the AD variable index corresponding to the variable z.
@@ -1213,11 +1183,11 @@ is the AD variable index corresponding to the variable z.
 is static cast to size_t from the enum type
 \verbatim
 	enum CompareOp {
-		CompareLt, 
-		CompareLe, 
-		CompareEq, 
-		CompareGe, 
-		CompareGt, 
+		CompareLt,
+		CompareLe,
+		CompareEq,
+		CompareGe,
+		CompareGt,
 		CompareNe
 	}
 \endverbatim
@@ -1262,45 +1232,45 @@ is the total number of values in the vector \a parameter.
 
 
 \param jac_reverse
-\a jac_reverse[i_z] 
-is false (true) if the Jacobian of G with respect to z is always zero 
+\a jac_reverse[i_z]
+is false (true) if the Jacobian of G with respect to z is always zero
 (may be non-zero).
 \n
 \n
-\a jac_reverse[ arg[4] ] 
+\a jac_reverse[ arg[4] ]
 If y_2 is a variable,
-\a jac_reverse[ arg[4] ] 
-is false (true) if the Jacobian with respect to y_2 is always zero 
+\a jac_reverse[ arg[4] ]
+is false (true) if the Jacobian with respect to y_2 is always zero
 (may be non-zero).
 On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 \n
 \n
-\a jac_reverse[ arg[5] ] 
+\a jac_reverse[ arg[5] ]
 If y_3 is a variable,
-\a jac_reverse[ arg[5] ] 
-is false (true) if the Jacobian with respect to y_3 is always zero 
+\a jac_reverse[ arg[5] ]
+is false (true) if the Jacobian with respect to y_3 is always zero
 (may be non-zero).
 On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 
 \param hes_sparsity
-The set with index \a i_z in \a hes_sparsity 
+The set with index \a i_z in \a hes_sparsity
 is the Hessian sparsity pattern for the function G
 where one of the partials is with respect to z.
 \n
 \n
 If y_2 is a variable,
-the set with index \a arg[4] in \a hes_sparsity 
-is the Hessian sparsity pattern 
+the set with index \a arg[4] in \a hes_sparsity
+is the Hessian sparsity pattern
 where one of the partials is with respect to y_2.
 On input, this pattern corresponds to the function G.
 On output, this pattern corresponds to the function H.
 \n
 \n
 If y_3 is a variable,
-the set with index \a arg[5] in \a hes_sparsity 
-is the Hessian sparsity pattern 
+the set with index \a arg[5] in \a hes_sparsity
+is the Hessian sparsity pattern
 where one of the partials is with respect to y_3.
 On input, this pattern corresponds to the function G.
 On output, this pattern corresponds to the function H.
@@ -1308,46 +1278,31 @@ On output, this pattern corresponds to the function H.
 template <class Vector_set>
 inline void reverse_sparse_hessian_cond_op(
 	size_t               i_z           ,
-	const addr_t*        arg           , 
+	const addr_t*        arg           ,
 	size_t               num_par       ,
 	bool*                jac_reverse   ,
 	Vector_set&          hes_sparsity  )
-{	
+{
 
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
-
 # ifndef NDEBUG
-	if( arg[1] & 1 )
-	{
-	}
-	else
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
-	}
-	if( arg[1] & 2 )
-	{
-	}
-	else
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
-	}
-	if( ! ( arg[1] & 4 ) )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_par );
-	}
-	if( ! ( arg[1] & 8 ) )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
+	size_t k = 1;
+	for( size_t j = 0; j < 4; j++)
+	{	if( ! ( arg[1] & k ) )
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[2+j]) < num_par );
+		k *= 2;
 	}
 # endif
 	if( arg[1] & 4 )
 	{
-
 		hes_sparsity.binary_union(arg[4], arg[4], i_z, hes_sparsity);
 		jac_reverse[ arg[4] ] |= jac_reverse[i_z];
 	}
 	if( arg[1] & 8 )
 	{
-
 		hes_sparsity.binary_union(arg[5], arg[5], i_z, hes_sparsity);
 		jac_reverse[ arg[5] ] |= jac_reverse[i_z];
 	}

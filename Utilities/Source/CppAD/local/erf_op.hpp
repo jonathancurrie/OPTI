@@ -1,10 +1,10 @@
-/* $Id$ */
-# ifndef CPPAD_ERF_OP_INCLUDED
-# define CPPAD_ERF_OP_INCLUDED
-# if CPPAD_COMPILER_HAS_ERF
+// $Id$
+# ifndef CPPAD_LOCAL_ERF_OP_HPP
+# define CPPAD_LOCAL_ERF_OP_HPP
+# if CPPAD_USE_CPLUSPLUS_2011
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -388,12 +388,12 @@ inline void reverse_erf_op(
 	while(j)
 	{	pz_4[j] /= Base(j);
 		for(size_t k = 1; k <= j; k++)
-		{	px[k]     += pz_4[j] * z_3[j-k] * Base(k);
-			pz_3[j-k] += pz_4[j] * x[k] * Base(k);
+		{	px[k]     += azmul(pz_4[j], z_3[j-k]) * Base(k);
+			pz_3[j-k] += azmul(pz_4[j], x[k]) * Base(k);
 		}
 		j--;
 	}
-	px[0] += pz_4[0] * z_3[0];
+	px[0] += azmul(pz_4[0], z_3[0]);
 
 	// z_3 = (2 / sqrt(pi)) * exp( - x * x )
 	addr[0] = arg[2];  // 2 / sqrt(pi)
@@ -425,5 +425,5 @@ inline void reverse_erf_op(
 
 
 } // END_CPPAD_NAMESPACE
-# endif // CPPAD_COMPILER_HAS_ERF
+# endif // CPPAD_USE_CPLUSPLUS_2011
 # endif // CPPAD_ERF_OP_INCLUDED
