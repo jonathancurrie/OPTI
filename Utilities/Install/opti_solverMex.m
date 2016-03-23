@@ -108,6 +108,11 @@ elseif(~isempty(libs))
 else
     lib_str = '';
 end
+
+%UCRT
+inc_str = [inc_str ' -I"C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt"'];
+lib_str = [lib_str ' -L"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10240.0\ucrt\x64" -lucrt'];
+
 lib_str = [lib_str ' -llibut '];
 
 %Post Messages (output name + preprocessors)
