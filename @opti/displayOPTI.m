@@ -467,7 +467,13 @@ else
                 fprintf('Lagrangian Hessian:        %s\n',H);
             end
         end
-        if(~isempty(Hs)), fprintf('Hessian Structure:         %s\n',Hs); end
+        if(~isempty(Hs))
+            if(strcmpi(Hs,'Not Supplied'))
+                fprintf('Hessian Structure:         Assumed 100%% Dense\n'); 
+            else
+                fprintf('Hessian Structure:         %s\n',Hs); 
+            end
+        end
     end
 end
 
