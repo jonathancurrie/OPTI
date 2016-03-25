@@ -1157,7 +1157,13 @@ if(any(strcmpi(prb,{'NLS','DNLS','SCNLE'})))
             prob.weighting = prob.weighting';
         end
         %TAKE THE SQRT of WEIGHTS (matches Stats toolbox + Curve Fitting toolbox)
-        prob.weighting = sqrt(prob.weighting);
+        if(iscell(prob.weighting))
+            for i = 1:length(prob.weighting)
+                prob.weighting{i} = sqrt(prob.weighting{i});
+            end
+        else
+            prob.weighting = sqrt(prob.weighting);
+        end
     end
     
     if(~isempty(prob.weighting))        
