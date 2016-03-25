@@ -32,6 +32,7 @@ prob2.sizes.nqc = length(prob2.qrl);
 prob3 = QCQP2NLP(prob2,optiset)
 prob3 = rowlin2nl(prob3,1,0)
 
+funcs3 = [];
 funcs3.objective = prob3.fun;
 funcs3.gradient = prob3.f;
 funcs3.constraints = prob3.nlcon;

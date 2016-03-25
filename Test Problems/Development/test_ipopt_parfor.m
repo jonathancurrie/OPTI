@@ -27,7 +27,7 @@ end
 toc
 
 %%
-matlabpool(4);
+parpool(4);
 
 %% run parfor (2.6s)
 tic
