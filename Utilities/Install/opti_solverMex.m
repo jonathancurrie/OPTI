@@ -109,10 +109,6 @@ else
     lib_str = '';
 end
 
-%UCRT
-inc_str = [inc_str ' -I"C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt"'];
-lib_str = [lib_str ' -L"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10240.0\ucrt\x64" -lucrt'];
-
 lib_str = [lib_str ' -llibut '];
 
 %Post Messages (output name + preprocessors)
@@ -124,6 +120,15 @@ if(isfield(opts,'pp') && ~isempty(opts.pp))
         end
     else
         post = [post ' -D' opts.pp];
+    end
+end
+
+%If compiling with VS2015 but pre R2015b, need to manually add in UCRT location
+cc = mex.getCompilerConfigurations();
+for i = 1:length(cc)
+    if(~isempty(strfind(cc(i).Name,'Microsoft Visual C++')) && str2double(cc(i).Version) >= 14 && verLessThan('matlab','8.6'))
+        post = [post opti_FindUCRT()];
+        break;
     end
 end
 

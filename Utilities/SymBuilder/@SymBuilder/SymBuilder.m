@@ -583,6 +583,14 @@ classdef SymBuilder < handle
             %Compile if C Code
             if(fgen ~= 'M')
                 if(B.verbose), fprintf('Compiling....'); end
+                %If compiling with VS2015 but pre R2015b, need to manually add in UCRT location
+                cc = mex.getCompilerConfigurations(); post = [];
+                for i = 1:length(cc)
+                    if(~isempty(strfind(cc(i).Name,'Microsoft Visual C++')) && str2double(cc(i).Version) >= 14 && verLessThan('matlab','8.6'))
+                        post = opti_FindUCRT();
+                        break;
+                    end
+                end
                 if(fgen == 'A')
                     src = 'symb_ccb.cpp';
                     %find cppad source (expected in utilities folder)
@@ -590,14 +598,15 @@ classdef SymBuilder < handle
                     if(isempty(str)), error('Cannot find asl to locate CppAD source!'); end
                     idx = strfind(str,filesep); str = str(1:idx(end));
                     str = [str 'Source'];
-                    str = ['mex -largeArrayDims symb_ccb.cpp -I"' str '"'];
+                    str = ['mex -largeArrayDims symb_ccb.cpp -I"' str '" ' post];
                     if(strcmpi(computer,'PCWIN'))
                         str = [str ' -DCPPAD_SIZE_T_SAME_UNSIGNED_INT=1'];
                     end
                 	eval(str);
                 else
                     src = 'symb_ccb.c';
-                    mex -largeArrayDims symb_ccb.c
+                    str = ['mex -largeArrayDims symb_ccb.c ' post];
+                    eval(str);
                 end
                 if(B.verbose), fprintf('Done\n'); end
                 if(strcmpi(opts.srckeep,'no'))
@@ -716,7 +725,9 @@ classdef SymBuilder < handle
                         v = symvar(symobj); alldone = 1;
                         for i = 1:no
                             if(any(se(i) == v))
+                                wstate = warning('off','symbolic:sym:sym:DeprecateExpressions');
                                 symobj = subs(symobj,B.exprsn(i,1),B.exprsn(i,2));
+                                warning(wstate);
                                 alldone = 0;
                             else
                                 if(i == no && alldone) %ensure we have checked them all
@@ -741,7 +752,9 @@ classdef SymBuilder < handle
 %                 end
                 %Substitute constants
                 if(~isempty(B.constnt))
+                    wstate = warning('off','symbolic:sym:sym:DeprecateExpressions');
                     symobj = subs(symobj,B.constnt(:,1),B.constnt(:,2));
+                    warning(wstate);
                 end
                 %Save symbolic vector
                 B.sobj = symobj;
