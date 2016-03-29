@@ -9,10 +9,10 @@ current_version = 2.20;
 
 %History
 
-%2.20 (22/03/16)
-% - Win32 solvers removed from distribution (v2.16 is last 32bit release - https://www.dropbox.com/s/uafexyw3zyaz3bq/OptiToolbox_v2.16.zip?dl=0)
+%2.20 (29/03/16)
+% - Win32 solvers removed from distribution (v2.16 is last 32bit release - https://www.dropbox.com/sh/0pobwbvrxdm8om3/AACbEY25us5zZpIROboMdQhca?dl=0)
 % - Rebuilt all solvers against MKL v11.3 R2
-% - Rebuilt all solvers in 2016a with Visual Studio 2015 & Intel XE 2016
+% - Rebuilt all solvers in 2013a with Visual Studio 2015 & Intel XE 2016
 % - Added primal and dual bounds to SCIP return arguments
 % - Updated CLP to 1.16.10
 % - Updated CBC to 2.9.8
