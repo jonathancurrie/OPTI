@@ -161,7 +161,11 @@ if(misc.forceSNLE && isempty(prob.cl) && isempty(prob.nlrhs))
     if(isempty(siz.ndec))
         error('Please supply the number of decision variables via x0, or via cl,cu = zeros() if not square, to solve a system of nonlinear equations');
     end
-    neqs = length(prob.nlcon(zeros(siz.ndec,1)));
+    if(~isempty(prob.x0) && length(prob.x0) == siz.ndec && all(~isnan(prob.x0)))
+        neqs = length(prob.nlcon(prob.x0));
+    else
+        neqs = length(prob.nlcon(zeros(siz.ndec,1)));
+    end
     prob.cl = zeros(neqs,1);
     prob.cu = zeros(neqs,1);
 end
@@ -902,8 +906,15 @@ if(misc.forceSNLE)
         if(~isempty(prob.nljacstr))
             isNormalSNLE = false; isJacSparse = true;
         %Test if we have a sparse Jacobian
-        elseif(issparse(prob.nljac(zeros(siz.ndec,1))))
-            isNormalSNLE = false; isJacSparse = true;
+        else
+            if(~isempty(prob.x0) && length(prob.x0) == siz.ndec && all(~isnan(prob.x0)))
+                test_x0 = prob.x0;
+            else
+                test_x0 = zeros(siz.ndec,1);
+            end
+            if(issparse(prob.nljac(test_x0)))
+                isNormalSNLE = false; isJacSparse = true;
+            end
         end
     end
     %Check for NLP solver specified to solve problem

@@ -5,9 +5,12 @@ function current_version = optiver
 
 %   Copyright (C) 2011-2016 Jonathan Currie (I2C2)
 
-current_version = 2.20;
+current_version = 2.21;
 
 %History
+
+%2.21 (..)
+% - Fixed bug when nleq cannot accept x0 = zeros(n,1) during function testing (B. Duarte)
 
 %2.20 (29/03/16)
 % - Win32 solvers removed from distribution (v2.16 is last 32bit release - https://www.dropbox.com/sh/0pobwbvrxdm8om3/AACbEY25us5zZpIROboMdQhca?dl=0)
