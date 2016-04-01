@@ -15,7 +15,8 @@ function opti_solverMex(name,src,inc,libs,opts)
 %           pardiso:    Pardiso Library to link against ({[]}, MKL, Basel)
 %           ma57:       MA57 Library to link against ({[]}, MATLAB, HSL)
 %           ma27:       MA27 Library to link against ({[]}, HSL)
-%           mumps:      Link MUMPS (true/{false})
+%           mumps:      Link MUMPS (true/{false}) [v4.0]
+%           mumps5:     Link MUMPS v5.0 (true/{false}) [v5.0]
 %           asl:        Link AMPL Solver Library (true/{false})
 %           expre:      Extra arguments for mex before source file (one string)
 %           ifort:      Link against Intel Fortran Dynamic Libraries {false}
@@ -31,6 +32,7 @@ if(nargin > 4)
     if(~isfield(opts,'ma57')), opts.ma57 = []; end
     if(~isfield(opts,'ma27')), opts.ma27 = []; end
     if(~isfield(opts,'mumps') || isempty(opts.mumps)), opts.mumps = false; end
+    if(~isfield(opts,'mumps5') || isempty(opts.mumps5)), opts.mumps5 = false; end
     if(~isfield(opts,'asl') || isempty(opts.asl)), opts.asl = false; end
     if(~isfield(opts,'pp')), opts.pp = []; end
     if(~isfield(opts,'expre')), opts.expre = []; end
@@ -44,6 +46,7 @@ else
     opts.ma57 = [];
     opts.ma27 = [];
     opts.mumps = false;
+    opts.mumps5 = false;
     opts.asl = false;
     opts.pp = [];
     opts.expre = [];
@@ -199,6 +202,13 @@ end
 if(isfield(opts,'mumps') && ~isempty(opts.mumps))
     if(opts.mumps)
         post = [post ' -DLINK_MUMPS -IInclude\Mumps -llibdmumps_c -llibdmumps_f -llibseq_c -llibseq_f -llibmetis -llibpord '];
+        opts.ifort = true; %assume compiled with OPTI + Ifort  
+    end
+end
+%MUMPS v5 Linking
+if(isfield(opts,'mumps5') && ~isempty(opts.mumps5))
+    if(opts.mumps5)
+        post = [post ' -DLINK_MUMPS -IInclude\Mumps5 -llibdmumps5_c -llibdmumps5_f -llibmumps_common_c -llibseq5_c -llibseq5_f -llibpord5 -llibmetis5 '];
         opts.ifort = true; %assume compiled with OPTI + Ifort  
     end
 end

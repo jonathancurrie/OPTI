@@ -64,10 +64,18 @@ if(isfield(opts,'expath') && ~isempty(opts.expath))
         paths = [paths opts.expath];
     end   
 end
+if(isfield(opts,'expaths') && ~isempty(opts.expaths))
+    if(~iscell(paths))
+        paths = [paths {opts.expaths}];
+    else
+        paths = [paths opts.expaths];
+    end   
+end
 if(~isfield(opts,'pardiso')), PARDISO = []; else PARDISO = opts.pardiso; end
 if(~isfield(opts,'ma57')), MA57 = []; else MA57 = opts.ma57; end
 if(~isfield(opts,'ma27')), MA27 = []; else MA27 = opts.ma27; end
-if(~isfield(opts,'mumps') || isempty(opts.mumps)), MUMPS = []; else MUMPS = opts.mumps; end
+if(~isfield(opts,'mumps') || isempty(opts.mumps)), MUMPS = false; else MUMPS = opts.mumps; end
+if(~isfield(opts,'mumps5') || isempty(opts.mumps5)), MUMPS5 = false; else MUMPS5 = opts.mumps5; end
 if(~isfield(opts,'linloader') || isempty(opts.linloader)), LINLOADER = false; else LINLOADER = opts.linloader; end
 if(~isfield(opts,'libname') || isempty(opts.libname)), LIBNAME = ['lib' lower(solver)]; else LIBNAME = opts.libname; end
 if(~isfield(opts,'copyLibs') || isempty(opts.copyLibs)), COPYLIBS = true; else COPYLIBS = opts.copyLibs; end
@@ -480,6 +488,10 @@ switch(lower(solver))
                 end
             end
             if(~isempty(mumpspath) && MUMPS)
+                checkLibMUMPS(paths(2:end));
+                hdrs = [hdrs [mumpspath '\include'], [mumpspath '\libseq']];
+                opts.exPP = [opts.exPP,'COIN_HAS_METIS','COIN_HAS_MUMPS'];
+            elseif(~isempty(mumpspath) && MUMPS5)
                 checkLibMUMPS(paths(2:end));
                 hdrs = [hdrs [mumpspath '\include'], [mumpspath '\libseq']];
                 opts.exPP = [opts.exPP,'COIN_HAS_METIS','COIN_HAS_MUMPS'];
@@ -1276,7 +1288,7 @@ if(~exist(p,'file'))
 end
 
 function checkLibMUMPS(path)
-%Check to see if libmwma57 exists (pretend library file to allow linking against MATLAB's MA57)
+%Check to see if libmumps exists, build if not
 p = [cd '/Solvers/Source/lib'];
 switch(computer)
     case 'PCWIN'
@@ -1290,7 +1302,11 @@ if(~exist(p,'file'))
     else
         error('OPTI Tried to build MUMPS automatically for you, but you need to specify the METIS path when calling opti_VSBuild');
     end
-    opti_VSBuild('MUMPS',path,opts); %build it
+    if(~isempty(strfind(path,'MUMPS_5')))
+        opti_VSBuild('MUMPS5',path,opts); %build it
+    else
+        opti_VSBuild('MUMPS',path,opts); %build it
+    end
 end
 
 % %% OLD CODE
