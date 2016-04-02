@@ -198,9 +198,9 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
         
         //Write Problem
         if(H)
-            err = m.writeMps(path, 0, 0, 2, pH, no_sets, sets); //as below but with quad
+            err = m.writeMps(path, 0, 1, 2, pH, no_sets, sets); //as below but with quad
         else
-            err = m.writeMps(path, 0, 0, 2, NULL, no_sets, sets); //no compression, normal precision, 2 vals across, no quad
+            err = m.writeMps(path, 0, 1, 2, NULL, no_sets, sets); //no compression, enhanced precision, 2 vals across, no quad
     }
     else if(!strcmp(type,"lp")) {
         if(H)
