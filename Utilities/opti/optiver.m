@@ -11,6 +11,9 @@ current_version = 2.21;
 
 %2.21 (..)
 % - Fixed bug when nleq cannot accept x0 = zeros(n,1) during function testing (B. Duarte)
+% - Fixed bug where fixed binary variables were written as normal binary variables in MPS files
+% - Increased precision in writing MPS files
+% - Updated coinRead to correctly identify binary variables
 
 %2.20 (29/03/16)
 % - Win32 solvers removed from distribution (v2.16 is last 32bit release - https://www.dropbox.com/sh/0pobwbvrxdm8om3/AACbEY25us5zZpIROboMdQhca?dl=0)

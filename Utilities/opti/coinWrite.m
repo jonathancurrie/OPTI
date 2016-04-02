@@ -119,8 +119,16 @@ elseif(ischar(prob.int)) %char string
     bin = prob.int == 'b';
     i(int) = 1;
     i(bin) = 1;
-    prob.lb(bin) = 0;
-    prob.ub(bin) = 1;
+    %Some problems have fixed binary vars (i.e. 0 <= bvar_n <= 0), can't
+    %just blanket modify the bounds
+    lb_idx = prob.lb(bin) ~= 0 & prob.lb(bin) ~= 1;
+    ub_idx = prob.ub(bin) ~= 0 & prob.ub(bin) ~= 1;
+    if(any(lb_idx))
+        prob.lb(lb_idx) = 0;
+    end
+    if(any(ub_idx))
+        prob.ub(ub_idx) = 1;
+    end
     prob.int = i;
 elseif(length(prob.int) ~= length(prob.f) || any(prob.int > 1)) %find indicies (might be wrong though!)
     i = zeros(size(prob.f));

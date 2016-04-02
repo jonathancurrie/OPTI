@@ -100,7 +100,9 @@ end
     
 %Build Integer String
 int = repmat('C',size(f')); ivars = logical(ivars);
-int(ivars) = 'I'; %assume just integer variables (no binary - even with MPS)
+int(ivars) = 'I'; %assume just integer variables initially
+%Correct for binary variables
+int(lb==0 & ub==1 & ivars') = 'B'; %i don't think MPS saves integer vars if fixed at 0 or 1
 %Build SOS
 if(~isempty(sostype))
     sostype = num2str(sostype);
