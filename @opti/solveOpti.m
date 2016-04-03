@@ -157,7 +157,7 @@ switch(opts.solver)
         [x,fval,exitflag,info] = opti_lpsolve(p.f,p.A,p.b,p.Aeq,p.beq,p.lb,p.ub,p.int.str,p.sos,opts);        
     case 'matlab'
         t = tic;
-        [x,fval,exitflag,output] = intlinprog(p.f,p.int.idx,p.A,p.b,p.Aeq,p.beq,p.lb,p.ub,opts.solverOpts);
+        [x,fval,exitflag,output] = intlinprog(p.f,find(p.int.str ~= 'C'),p.A,p.b,p.Aeq,p.beq,p.lb,p.ub,opts.solverOpts);
         info = matlabInfo(output,[],toc(t),'INTLINPROG'); 
     case 'bonmin'
         [x,fval,exitflag,info] = opti_bonmin(nl,nl.x0);    
@@ -190,7 +190,7 @@ switch(opts.solver)
             info = matlabInfo(output,[],toc(t),'BINTPROG');  
         else
             t = tic;
-            [x,fval,exitflag,output] = intlinprog(p.f,p.int.idx,p.A,p.b,p.Aeq,p.beq,p.lb,p.ub,opts.solverOpts);
+            [x,fval,exitflag,output] = intlinprog(p.f,find(p.int.str ~= 'C'),p.A,p.b,p.Aeq,p.beq,p.lb,p.ub,opts.solverOpts);
             info = matlabInfo(output,[],toc(t),'INTLINPROG');
         end
     case 'bonmin'

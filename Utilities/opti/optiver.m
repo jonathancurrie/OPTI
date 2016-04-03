@@ -12,6 +12,7 @@ current_version = 2.21;
 %2.21 (..)
 % - Fixed bug when nleq cannot accept x0 = zeros(n,1) during function testing (B. Duarte)
 % - Fixed bug where fixed binary variables were written as normal binary variables in MPS files
+% - Fixed bug where binary variables were not handled correctly by intlinprog
 % - Increased precision in writing MPS files
 % - Updated coinRead to correctly identify binary variables
 
