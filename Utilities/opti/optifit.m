@@ -223,7 +223,9 @@ classdef optifit
             end
             idx = strfind(str,'[');
             str = str(1:idx(1)-1);
-            disp(str);
+            if(~nargout)
+                disp(str);
+            end
         end
             
         
