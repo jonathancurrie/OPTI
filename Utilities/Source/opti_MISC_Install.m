@@ -7,21 +7,21 @@
 
 % My build platform:
 % - Windows 7 x64
-% - Visual Studio 2013
+% - Visual Studio 2015
 
 %% NETLIB BLAS
 % Download from http://www.netlib.org/blas/
 
 % Build VS Ifort Solution to build .lib
-path = 'C:\Solvers\BLAS';
+path = 'C:\Solvers\blas-3.6.0';
 opti_VSBuild('blas',path)
 
 
 %% NETLIB LAPACK
-% Download from http://www.netlib.org/blas/
+% Download from http://www.netlib.org/lapack/
 
 % Build VS Ifort Solution to build .lib
-path = 'C:\Solvers\lapack-3.5.0';
+path = 'C:\Solvers\lapack-3.6.0';
 opti_VSBuild('lapack',path)
 
 

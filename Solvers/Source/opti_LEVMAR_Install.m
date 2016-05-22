@@ -20,6 +20,17 @@
 % Builder included with OPTI. Use the following commands, substituting the 
 % required path on your computer:
 
+% Intel MKL 11.3 R3 Change (due to workspace query NULLs) in Axb_core.c line 1026:
+% if(!nb){
+%     LM_REAL tmp;
+% 	  LM_REAL tmpa;
+% 	  LM_REAL tmppiv;
+% 
+%     work_sz=-1; // workspace query; optimal size is returned in tmp
+%     SYTRF("L", (int *)&m, &tmpa, (int *)&m, &tmppiv, (LM_REAL *)&tmp, (int *)&work_sz, (int *)&info);
+%     nb=((int)tmp)/m; // optimal worksize is m*nb
+%   }
+
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
 % path = 'C:\Solvers\levmar-2.6'; %FULL path to LEVMAR
 % opti_VSBuild('LEVMAR',path);

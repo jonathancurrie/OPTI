@@ -1126,6 +1126,7 @@ switch(lower(solver))
 %                         'dsecnd_INT_ETIME.f','dsecnd_NONE.f','dsecndtst.f'};
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = []; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
         %Write the Solution File
+        fprintf(2,'\nNote path error - find and replace in fortran project the full path to deprecated files....\n\n');
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
         projs = {LIBNAME};  
