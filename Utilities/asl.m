@@ -1,4 +1,4 @@
-% ASL  Real an AMPL .NL file and convert to Matlab Values
+% ASL  Read an AMPL .NL file and convert to Matlab Values
 %
 %   NOTE - This API has substantially changed from OPTI v1.79
 %
