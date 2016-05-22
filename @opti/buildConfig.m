@@ -367,6 +367,12 @@ if(~isempty(p))
             [nlprob.fun,nlprob.f,nlprob.ydata] = setupDataFit(nlprob,warn);
             nlprob = convMatlab(nlprob,opts);
             
+        case 'snle'
+            %Copy Prob
+            nlprob = prob;
+            %Assign Callback
+            nlprob = convMatlab(nlprob,opts);
+            
         case {'nlp','uno'}
             prob = fixNlin('gen',prob,warn,'MATLAB'); %Check & Fix Nonlinear Constraints
             nlprob = convMatlab(prob,opts);
