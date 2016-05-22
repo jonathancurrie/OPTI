@@ -9,10 +9,12 @@ current_version = 2.21;
 
 %History
 
-%2.21 (..)
+%2.21 (22/05/16)
+% - Rebuilt all solvers against MKL v11.3 R3
 % - Fixed bug when nleq cannot accept x0 = zeros(n,1) during function testing (B. Duarte)
 % - Fixed bug where fixed binary variables were written as normal binary variables in MPS files
 % - Fixed bug where binary variables were not handled correctly by intlinprog
+% - Fixed bug where SNLE problems not handled correctly by MATLAB solvers
 % - Increased precision in writing MPS files
 % - Updated coinRead to correctly identify binary variables
 
