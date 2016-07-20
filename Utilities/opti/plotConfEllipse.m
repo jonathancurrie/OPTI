@@ -4,7 +4,7 @@ function h = plotConfEllipse(thetaOpt,confStats)
 
 scov = confStats.Cov;
 nparam = length(confStats.ConfInt);
-ndata = size(confStats.ConfBnds,1);
+ndata = size(confStats.ConfBnds.bnds,1);
 clim = confStats.Conf;
 ci = confStats.ConfInt;
 
