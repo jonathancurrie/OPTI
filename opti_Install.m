@@ -191,7 +191,7 @@ switch(mexext)
     case 'mexw32'
         error(['From v2.20 OPTI Toolbox only supports 64bit (Windows x64) platforms. Realistically, you should consider upgrading to 64bit for the best performance with OPTI.\n'...
                '\nIf however you would like to persist with 32bit, please download the last 32bit maintained version (v2.16) from the OPTI dropbox account:\n'...
-               '%s'],'https://www.dropbox.com/s/uafexyw3zyaz3bq/OptiToolbox_v2.16.zip?dl=0');
+               '%s'],'https://www.dropbox.com/s/ct2wmn1ajvujb3g/OptiToolbox_v2.16.zip?dl=0');
     case 'mexw64'
         fprintf('MATLAB %s 64bit (Windows x64) detected\n',mver.Release);
     otherwise
