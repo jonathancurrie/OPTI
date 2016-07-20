@@ -848,7 +848,8 @@ if(strcmpi(prb,'NLP') && ~misc.forceSNLE)
     try
         l = length(prob.fun(x0));
     catch ME
-        error('OPTI detected an error running a test objective call. Please correct the error below and try again:\n\n%s\n',ME.message);
+        fprintf(2,'OPTI detected an error running a test objective call. Please correct the error below and try again:\n\n');
+        rethrow(ME); %so user can see it
     end
     if(l > 1)
         %Check n = n

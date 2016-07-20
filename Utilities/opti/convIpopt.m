@@ -101,7 +101,8 @@ end
 try
     f = prob.fun(x0);  %#ok<NASGU>
 catch ME
-    error('There was an error when running a test objective function call. Please ensure this function exists and runs without error.\nError: %s',ME.message);
+    fprintf(2,'There was an error when running a test objective function call. Please ensure this function exists and runs without error.\n\n');
+    rethrow(ME);
 end
 if(isempty(prob.f))
     error('The gradient function is empty. Please rebuild the OPTI object specifying IPOPT as the solver');
@@ -109,7 +110,8 @@ end
 try
     g = prob.f(x0); %#ok<NASGU>
 catch ME
-    error('There was an error when running a test objective gradient function call. Please ensure this function exists and runs without error.\nError: %s',ME.message);
+    fprintf(2,'There was an error when running a test objective gradient function call. Please ensure this function exists and runs without error.\n\n');
+    rethrow(ME);
 end
 
 %Objective Callback Functions + Hessian
@@ -123,7 +125,8 @@ else
             try
                 testH = prob.H(x0);
             catch ME
-                error('There was an error when running a test Hessian function call. Please ensure this function exists and runs without error.\nError: %s',ME.message);
+                fprintf(2,'There was an error when running a test Hessian function call. Please ensure this function exists and runs without error.\n\n');
+                rethrow(ME);
             end        
         case 2
             try
@@ -134,7 +137,8 @@ else
                 end
                 testH = prob.H(x0,v0);
             catch ME
-                error('There was an error when running a test Hessian function call. Please ensure this function exists and runs without error.\nError: %s',ME.message);
+                fprintf(2,'There was an error when running a test Hessian function call. Please ensure this function exists and runs without error.\n\n');
+                rethrow(ME);
             end        
         case 3
             %If loaded from an AMPL model, linear constraints also require a lambda entry (although make no difference to the Hessian)
@@ -151,7 +155,8 @@ else
                 end
                 testH = prob.H(x0,1,v0);
             catch ME
-                error('There was an error when running a test Hessian function call. Please ensure this function exists and runs without error.\nError: %s',ME.message);
+                fprintf(2,'There was an error when running a test Hessian function call. Please ensure this function exists and runs without error.\n\n');
+                rethrow(ME);
             end        
     end
     %Check we have a tril matrix
@@ -211,7 +216,8 @@ else
         try
             testHstr = prob.Hstr();
         catch ME
-            error('There was an error when running a test Hessian Structure function call. Please ensure this function exists and runs without error.\nError: %s',ME.message);
+            fprintf(2,'There was an error when running a test Hessian Structure function call. Please ensure this function exists and runs without error.\n\n');
+            rethrow(ME);
         end
         %Check we have a tril matrix
         if(any(any(triu(testHstr,1) ~= 0))); tl = 1; else tl = 0; end        
@@ -239,14 +245,16 @@ if(~isempty(prob.nlcon))
     try
         g = prob.nlcon(x0); %#ok<NASGU>
     catch ME
-        error('There was an error when running a test Constraint function call. Please ensure this function exists and runs without error.\nError: %s',ME.message);
+        fprintf(2,'There was an error when running a test Constraint function call. Please ensure this function exists and runs without error.\n\n');
+        rethrow(ME);
     end    
     funcs.constraints = prob.nlcon;
     %Get sample jacobian back
     try
         testJ = prob.nljac(x0);
     catch ME
-        error('There was an error when running a test Jacobian function call. Please ensure this function exists and runs without error.\nError: %s',ME.message);
+        fprintf(2,'There was an error when running a test Jacobian function call. Please ensure this function exists and runs without error.\n\n');
+        rethrow(ME);
     end
     %transpose decision variable vector (seems odd..?)
     if(size(testJ,2) ~= length(x0)); xt = 1; else xt = 0; end
@@ -277,7 +285,8 @@ if(~isempty(prob.nlcon))
         try
             testJstr = prob.nljacstr();
         catch ME
-            error('There was an error when running a test Jacobian structure function call. Please ensure this function exists and runs without error.\nError: %s',ME.message);
+            fprintf(2,'There was an error when running a test Jacobian structure function call. Please ensure this function exists and runs without error.\n\n');
+            rethrow(ME);
         end
         if(~issparse(testJstr))
             if(warn > 1)

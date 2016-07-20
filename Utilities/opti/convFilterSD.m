@@ -66,7 +66,8 @@ end
 try
     f = prob.fun(x0);  %#ok<NASGU>
 catch ME
-    error('There was an error when running a test objective function call. Please ensure this function exists and runs without error.\nError: %s',ME.message);
+    fprintf(2,'There was an error when running a test objective function call. Please ensure this function exists and runs without error.\n\n');
+    rethrow(ME);
 end
 if(isempty(prob.f))
     error('The gradient function is empty. Please rebuild the OPTI object specifying FilterSD as the solver');
@@ -74,7 +75,8 @@ end
 try
     g = prob.f(x0); %#ok<NASGU>
 catch ME
-    error('There was an error when running a test gradient function call. Please ensure this function exists and runs without error.\nError: %s',ME.message);
+    fprintf(2,'There was an error when running a test gradient function call. Please ensure this function exists and runs without error.\n\n');
+    rethrow(ME);
 end
 
 %Objective Callback Functions
@@ -87,13 +89,15 @@ if(~isempty(prob.nlcon))
     try
         g = prob.nlcon(x0); %#ok<NASGU>
     catch ME
-        error('There was an error when running a test Constraint function call. Please ensure this function exists and runs without error.\nError: %s',ME.message);
+        fprintf(2,'There was an error when running a test Constraint function call. Please ensure this function exists and runs without error.\n\n');
+        rethrow(ME);
     end    
     %Get sample jacobian back
     try
         testJ = prob.nljac(x0);
     catch ME
-        error('There was an error when running a test Jacobian function call. Please ensure this function exists and runs without error.\nError: %s',ME.message);
+        fprintf(2,'There was an error when running a test Jacobian function call. Please ensure this function exists and runs without error.\n\n');
+        rethrow(ME);
     end
     %Check for sparse Jacobian
     if(issparse(testJ))
@@ -110,7 +114,8 @@ if(~isempty(prob.nlcon))
             try
                 testJstr = prob.nljacstr();
             catch ME
-                error('There was an error when running a test Jacobian structure function call. Please ensure this function exists and runs without error.\nError: %s',ME.message);
+                fprintf(2,'There was an error when running a test Jacobian structure function call. Please ensure this function exists and runs without error.\n\n');
+                rethrow(ME);
             end
             if(~issparse(testJstr))
                 if(warn > 1)
