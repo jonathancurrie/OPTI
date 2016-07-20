@@ -1,7 +1,7 @@
 function [Opt,SymB] = optisym(fun,x0,lb,ub,con,cl,cu,xtype,sopts,verbose)
 %OPTSYM  Generate an OPTI Optimization Problem using SymBuilder + Symbolic Toolbox
 %
-%  [optiOpj,SymBobj] = optisym(fun,x0,lb,ub,con,cl,cu,xtype,sopts,verbose)
+%  [optiObj,SymBobj] = optisym(fun,x0,lb,ub,con,cl,cu,xtype,sopts,verbose)
 %
 %   optiObj = optisym(fun,x0) takes a standard MATLAB function (fun) and
 %   initial solution guess (x0) and converts the problem to a Symbolic

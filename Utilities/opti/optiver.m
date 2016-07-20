@@ -5,9 +5,12 @@ function current_version = optiver
 
 %   Copyright (C) 2011-2016 Jonathan Currie (I2C2)
 
-current_version = 2.21;
+current_version = 2.22;
 
 %History
+
+%2.22 (..)
+% - Added suggestion to rethrow errors when function testing (V. Pericoli)
 
 %2.21 (22/05/16)
 % - Rebuilt all solvers against MKL v11.3 R3
