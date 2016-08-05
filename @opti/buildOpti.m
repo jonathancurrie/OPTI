@@ -215,12 +215,21 @@ if(cnl)
     if(isempty(prob.cl) && isempty(prob.nlrhs))
         %If we know ndec, we can assume all constraints are <= 0, otherwise error
         if(~isempty(siz.ndec))
-            if(warn)
-               optiwarn('opti:nlempty','You have not supplied the right hand side (nlrhs) or bounds (cl,cu) of the Nonlinear Constraints. OPTI will assume all are <= 0.'); 
+            %See if we have nle
+            if(~isempty(prob.nle))
+                if(warn)
+                   optiwarn('opti:nlnorhs','You have not supplied the right hand side (nlrhs) or bounds (cl,cu) of the Nonlinear Constraints. OPTI will assume nlrhs = zeros(nnlcon,1).'); 
+                end
+                nnl = length(prob.nle);
+                prob.nlrhs = zeros(nnl,1);
+            else
+                if(warn)
+                   optiwarn('opti:nlempty','You have not supplied the right hand side (nlrhs), nonlinear equation type (nle) or bounds (cl,cu) of the Nonlinear Constraints. OPTI will assume all nonlinear constraints are <= 0.'); 
+                end
+                testC = prob.nlcon(zeros(siz.ndec,1)); nnl = length(testC);
+                prob.nlrhs = zeros(nnl,1);
+                prob.nle = -1*ones(nnl,1);
             end
-            testC = prob.nlcon(zeros(siz.ndec,1)); nnl = length(testC);
-            prob.nlrhs = zeros(nnl,1);
-            prob.nle = -1*ones(nnl,1);
         else
             error('You must supply the Right Hand Side (nlrhs) OR constraint bounds (cl, cu) for Nonlinear Constraints! If you wish to default to all <= 0, please supply ndec.');
         end
