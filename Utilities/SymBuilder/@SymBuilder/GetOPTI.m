@@ -27,8 +27,18 @@ olin = B.objlin(B.indobj);
 clin = B.conlin; clin(B.indobj) = [];
 
 %Default options
-sOpts = opts.solverOpts;
-Oopts = optiset(opts.optiOpts,'warnings','off','solver',opts.solver,'display',opts.display,'maxnodes',opts.maxnodes,'maxtime',opts.maxtime,'tolrfun',opts.tolrfun);
+if(~isempty(opts.optiOpts))
+    Oopts = optiset(opts.optiOpts,'warnings','off'); %overrides solver and display settings
+    %check if user has specified a solver/display
+    if(~strcmpi(opts.solver,'auto'))
+        optiwarn('OPTI:SymBSolver','As you have supplied optiOpts to symbset, your solver selection within symbset has been overwritten by the solver specified in optiOpts.');
+    end
+    if(~strcmpi(opts.display,'off'))
+        optiwarn('OPTI:SymBDisplay','As you have supplied optiOpts to symbset, your display setting within symbset has been overwritten by the display setting specified in optiOpts.');
+    end
+else
+    Oopts = optiset(opts.optiOpts,'warnings','off','solver',opts.solver,'display',opts.display);
+end
 
 %Check for Linear Problem
 if(olin == 1 && all(clin == 1))
@@ -55,7 +65,11 @@ elseif(olin <= 3 && all(clin <= 3))
         for i = 1:length(nlvars)
             varlin(logical(nlvars(i) == B.vars)) = 0;
         end
-        Oopts = optiset(Oopts,'warnings','off','solverOpts',bonminset(sOpts,'cons_lin',cons_lin,'var_lin',varlin));
+        if(~isempty(Oopts.solverOpts))
+            Oopts = optiset(Oopts,'warnings','off','solverOpts',bonminset(Oopts.solverOpts,'cons_lin',cons_lin,'var_lin',varlin));
+        else
+            Oopts = optiset(Oopts,'warnings','off','solverOpts',bonminset('cons_lin',cons_lin,'var_lin',varlin));
+        end
     end
     %Build OPTI object
     O = opti(GetNLProb(B,opts),'options',Oopts);

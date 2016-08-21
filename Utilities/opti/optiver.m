@@ -11,6 +11,7 @@ current_version = 2.22;
 
 %2.22 (..)
 % - Added suggestion to rethrow errors when function testing (V. Pericoli)
+% - [API Change] Changed symbset interface to now only accept optiset options via 'optiOpts' field.
 
 %2.21 (22/05/16)
 % - Rebuilt all solvers against MKL v11.3 R3
