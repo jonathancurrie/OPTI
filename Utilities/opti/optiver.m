@@ -9,8 +9,10 @@ current_version = 2.22;
 
 %History
 
-%2.22 (..)
+%2.22 (19/09/16)
 % - Added suggestion to rethrow errors when function testing (V. Pericoli)
+% - Fixed handling of very large QP problems (skips non-convex checks)
+% - Fixed excessive memory when checking of symmetric/tril/triu Hessians by using builtin MATLAB routines (H. Mittelmann)
 % - [API Change] Changed symbset interface to now only accept optiset options via 'optiOpts' field.
 
 %2.21 (22/05/16)
