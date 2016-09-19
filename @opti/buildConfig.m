@@ -87,7 +87,7 @@ switch(lower(opts.solver))
 end
 
 %Build General Objective & Constraint Callbacks
-prob.objective = buildObjectiveCallback(prob);
+prob.objective = buildObjectiveCallback(prob,warn);
 prob.constraints = buildConstraintsCallback(prob);
 
 
@@ -545,7 +545,7 @@ prob.lb = []; prob.ub = [];
 
 
 %Build general objective callback function
-function obj = buildObjectiveCallback(prob)
+function obj = buildObjectiveCallback(prob,warn)
 switch(lower(prob.type))
     case 'sle'
         obj = @(x) sum((prob.A*x - prob.b).^2);
@@ -556,12 +556,24 @@ switch(lower(prob.type))
             obj = @(x) prob.f'*x;
         end
     case {'qp','miqp','qcqp','miqcqp'}
-        %See if H looks tril        
-        if(all(triu(prob.H,1)==0))
+        %See if H is symmetric      
+        if(~optiIsSymmetric(prob.H))
+            %Determine if tril or triu
+            switch(optiIsTriULD(prob.H))
+                case 'L'
+                    H = (prob.H + tril(prob.H,-1).');
+                case 'U'
+                    H = (prob.H + triu(prob.H,1).');
+                otherwise
+                    H = prob.H;
+                    if(warn)
+                        optiwarn('opti:qpH','%s objective H matrix is not symmetric, tri-lower or tri-upper!',prob.type);
+                    end
+            end
             if(prob.objbias)
-                obj = @(x) 0.5*x'*(prob.H + tril(prob.H,-1)')*x + prob.f'*x + prob.objbias;
+                obj = @(x) 0.5*x'*H*x + prob.f'*x + prob.objbias;
             else
-                obj = @(x) 0.5*x'*(prob.H + tril(prob.H,-1)')*x + prob.f'*x;
+                obj = @(x) 0.5*x'*H*x + prob.f'*x;
             end
         else
             if(prob.objbias)
@@ -581,6 +593,8 @@ switch(lower(prob.type))
     otherwise %assume general nonlinear
         obj = prob.fun;
 end
+
+
 
 %Build general constraints callback function
 function con = buildConstraintsCallback(prob)
@@ -773,7 +787,7 @@ end
 function prob = fixSymHL(prob,warn,solver)
 
 if(~isa(prob.H,'function_handle'))
-    if(any(any(triu(prob.H,1) ~= 0)))
+    if(optiIsSymmetric(prob.H))
         if(warn > 1)
             optiwarn('opti:clp','%s Config - The H matrix should be Symmetric Lower Triangular, correcting: [tril(H)]',upper(solver));
         end
@@ -786,9 +800,7 @@ end
 function checkSymH(prob,solver)
 
 if(~isempty(prob.H))
-    %Check for symmetrical H
-    sym = abs(tril(prob.H,-1)-triu(prob.H,1)') > 1e-12;
-    if(any(any(sym)))       
+    if(~optiIsSymmetric(prob.H))      
         error('%s Config - The H matrix must be Symmetric.',upper(solver));
     end
 end

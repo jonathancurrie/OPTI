@@ -119,46 +119,9 @@ funcs.objective = prob.fun;
 funcs.gradient = prob.f;
 if(isempty(prob.H))    
     options.ipopt.hessian_approximation = 'limited-memory';
-else   
-    switch(nargin(prob.H))
-        case 1
-            try
-                testH = prob.H(x0);
-            catch ME
-                fprintf(2,'There was an error when running a test Hessian function call. Please ensure this function exists and runs without error.\n\n');
-                rethrow(ME);
-            end        
-        case 2
-            try
-                if(~isempty(prob.cl))
-                    v0 = ones(size(prob.cl));
-                else
-                    v0 = ones(prob.sizes.nnlineq+prob.sizes.nnleq,1); %take a guess
-                end
-                testH = prob.H(x0,v0);
-            catch ME
-                fprintf(2,'There was an error when running a test Hessian function call. Please ensure this function exists and runs without error.\n\n');
-                rethrow(ME);
-            end        
-        case 3
-            %If loaded from an AMPL model, linear constraints also require a lambda entry (although make no difference to the Hessian)
-            if(isfield(prob,'ampl') && ~isempty(prob.ampl.path))
-                nlin = length(prob.rl);
-            else
-                nlin = 0;
-            end
-            try
-                if(~isempty(prob.cl))
-                    v0 = ones(length(prob.cl)+nlin,1);
-                else
-                    v0 = ones(prob.sizes.nnlineq+prob.sizes.nnleq+nlin,1); %take a guess
-                end
-                testH = prob.H(x0,1,v0);
-            catch ME
-                fprintf(2,'There was an error when running a test Hessian function call. Please ensure this function exists and runs without error.\n\n');
-                rethrow(ME);
-            end        
-    end
+else  
+    %Generate a test Hessian
+    testH = optiGenTestHessian(prob,x0);    
     %Check we have a tril matrix
     if(any(any(triu(testH,1) ~= 0))); tl = 1; else tl = 0; end
     %Check it is sparse

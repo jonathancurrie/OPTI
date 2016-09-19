@@ -5,14 +5,17 @@ function [prob,opts] = buildOpti(varargin)
 
 %   Copyright (C) 2011-2012 Jonathan Currie (I2C2)
 
+% Build Settings
+settings.QUAD_EIG_MAX_SIZE = 1e8;    %Maximum size (rows*cols) for a quadratic matrix before skipping eig() for non-convex check
+
 %API Change to make optiprob redundant (1/5/12)
 [prob,opts] = exPrbOpts(varargin{:});
 
 %Check and correct problem size and setup errors
-[prob,opts] = checkOpti(prob,opts);
+[prob,opts] = checkOpti(prob,opts,settings);
 
 
-function [prob,opts] = checkOpti(prob,opts)
+function [prob,opts] = checkOpti(prob,opts,settings)
 %Check the objective, constraints and options when building an OPTI object
 
 %Get Warning Level
@@ -616,13 +619,13 @@ if(cqc)
            rl = prob.qrl(i);
            ru = prob.qru(i);
            %Check constraint
-           QCisconvex = QCisconvex & chkQC(Q,l,rl,ru,i,siz.ndec,opts.solver);
+           QCisconvex = QCisconvex & chkQC(Q,l,rl,ru,i,siz.ndec,opts.solver,settings.QUAD_EIG_MAX_SIZE);
        end
     else 
         %Check Data Type
         prob.Q = chkdouble(prob.Q,'prob.Q',warn > 1);
         %Check constraint
-        QCisconvex = QCisconvex & chkQC(prob.Q,prob.l,prob.qrl,prob.qru,1,siz.ndec,opts.solver);
+        QCisconvex = QCisconvex & chkQC(prob.Q,prob.l,prob.qrl,prob.qru,1,siz.ndec,opts.solver,settings.QUAD_EIG_MAX_SIZE);
     end
 end
 
@@ -1338,19 +1341,21 @@ prob.ampl = ampl;
 prob.save = [];
 
 %Check for non-convex QP/QCQP
-if(~isempty(strfind(prb,'QP')))
-    try
-       e = eig(prob.H); 
-    catch %#ok<CTCH>
-       e = eigs(prob.H); 
-    end
-    %Check for non-convex QP
-    if(any(e < 0))
-        if(strcmpi(opts.solver,'cplex') && ~isfield(opts.solverOpts,'solutiontarget'))
-           opts.solverOpts.solutiontarget.Cur = 2; %allow indefinite
-        elseif(warn)
-            optiwarn('OPTI:NonconvexQP','QP objective appears non-convex, you may not obtain a globally optimal solution');
-        end      
+if(~isempty(strfind(prb,'QP')))    
+    if(prod(size(prob.H)) < settings.QUAD_EIG_MAX_SIZE) %#ok<PSIZE>
+        try
+           e = eig(prob.H); 
+        catch %#ok<CTCH>
+           e = eigs(prob.H); 
+        end
+        %Check for non-convex QP
+        if(any(e < 0))
+            if(strcmpi(opts.solver,'cplex') && ~isfield(opts.solverOpts,'solutiontarget'))
+               opts.solverOpts.solutiontarget.Cur = 2; %allow indefinite
+            elseif(warn)
+                optiwarn('OPTI:NonconvexQP','QP objective appears non-convex, you may not obtain a globally optimal solution');
+            end      
+        end
     end
     %Check for non-convex QCs
     if(~QCisconvex)
@@ -1571,7 +1576,7 @@ if(~isa(var,'double'))
     var = double(var);
 end
 
-function isconvex = chkQC(Q,l,rl,ru,i,ndec,solver)
+function isconvex = chkQC(Q,l,rl,ru,i,ndec,solver,QUAD_EIG_MAX_SIZE)
 %Check a quadratic constraint for solver suitability
 isconvex = true;
 if((ndec ~= size(Q,1)) || (ndec ~= size(Q,2)))
@@ -1591,15 +1596,18 @@ if(~any(strcmpi(solver,{'auto','scip','baron','ipopt','bonmin'}))) %allow scip o
     if(rl == ru)
         error('Quadratic Constraint %d is an equality constraint. Please specify a global solver such as SCIP to solve this problem.\nAlternatively you may try IPOPT/BONMIN for a local solution.',i);
     end
-    if(isinf(rl))
-        chkQCConvex(Q,i,'upper bound constraint',solver);
-    elseif(isinf(ru))
-        chkQCConvex(-Q,i,'lower bound constraint',solver);
-    elseif(~isinf(rl) && ~isinf(ru)) %bit of waste really...
-        chkQCConvex(Q,i,'upper bound constraint',solver);
-        chkQCConvex(-Q,i,'lower bound constraint',solver);
-    else
-        error('Quadratic Constraint %d has infinite lower and upper bounds!');
+    %If within 'sensible' size limit for checking convexity
+    if(prod(size(Q)) < QUAD_EIG_MAX_SIZE) %#ok<PSIZE>
+        if(isinf(rl))
+            chkQCConvex(Q,i,'upper bound constraint',solver);
+        elseif(isinf(ru))
+            chkQCConvex(-Q,i,'lower bound constraint',solver);
+        elseif(~isinf(rl) && ~isinf(ru)) %bit of waste really...
+            chkQCConvex(Q,i,'upper bound constraint',solver);
+            chkQCConvex(-Q,i,'lower bound constraint',solver);
+        else
+            error('Quadratic Constraint %d has infinite lower and upper bounds!');
+        end
     end
 end
 

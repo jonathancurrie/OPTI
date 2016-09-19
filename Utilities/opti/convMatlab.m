@@ -133,7 +133,9 @@ switch(upper(prob.type))
         
         %Check for Hessian
         if(~isempty(prob.H))
-            H = @(x,lambda) mHess(prob.H,x,lambda,max_in,min_in,eq,nc);
+            %Determine type of Hessian passed (sym/tril/triu)
+            hfmt = optiMatType(optiGenTestHessian(prob));
+            H = @(x,lambda) mHess(prob.H,x,lambda,max_in,min_in,eq,nc,hfmt);
             %Set Hessian        
             mprob.options = optimset(mprob.options,'Hessian','user-supplied','HessFcn',H);
         elseif(strcmpi(mprob.algorithm,'trust-region-reflective'))
@@ -198,11 +200,11 @@ if(nargout > 2)
         dceq = sol(eq,:);
     end
     %MATLAB expects transposed Jac
-    dcin = dcin';
+    dcin = dcin.';
     dceq = dceq';
 end
 
-function H = mHess(fun,x,lambda,max_in,min_in,eq,nc)
+function H = mHess(fun,x,lambda,max_in,min_in,eq,nc,hfmt)
 % Handle to convert Matlab Hessian to OPTI Hessian
 
 %Get Lambda as an array (assume Matlab has not reordered constraints)
@@ -213,6 +215,7 @@ if(nc)
    l(max_in) = -l(max_in); %flip for >= constraints
 end
 
+%Evaluate callback
 switch(nargin(fun))
     case 1
         H = fun(x);
@@ -223,10 +226,14 @@ switch(nargin(fun))
     otherwise
         error('Unknown Hessian callback format, only 1-3 arguments are supported');
 end
-%Matlab requires a full symmetric Hessian
-if(~all(all(H==H'))) %quick symmetry test
-    H = H + triu(H',1);
+%Adjust as Matlab requires a full symmetric Hessian
+switch(lower(hfmt))
+    case 'l'
+        H = H + tril(H,-1).';
+    case 'u'
+        H = H + triu(H,1).';
 end
+
 
 function stop = mCall(x,optimValues,state,fun)
 % Handle to convert MATLAB callback to OPTI callback
