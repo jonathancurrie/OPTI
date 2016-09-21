@@ -11,13 +11,10 @@
 % - Visual Studio 2013
 
 % 1) Get AMPL Solver Library
-% The generic NL reader for AMPL is available free from Netlib 
-% (http://www.netlib.org/ampl/solvers/). You will need to download all .c
-% and .h as well as .hd files. Note this is not the AMPL engine
-% (www.ampl.com) which is a commerical product, but code to allow people to
-% connect their solvers to AMPL. Alternatively send a blank email to 
-% "netlib@netlib.org" with "send all from ampl/solvers" as the subject to 
-% retrieve all files.
+% The generic NL reader for AMPL is available free from AMPL 
+% (http://www.ampl.com/netlib/ampl/solvers/). Download the gzipped tar of
+% all files. Note this is not the AMPL engine which is a commerical product, 
+% but code to allow people to connect their solvers to AMPL.
 
 % 2) Compile ASL
 % The easiest way to compile ASL is to use the Visual Studio Project
@@ -43,6 +40,7 @@ libs = 'libasl';
 %Options
 opts = [];
 opts.verb = false;
+opts.debug = false;
 opts.util = true;
 opts.pp = 'NO_STDIO1';
 

@@ -5,9 +5,13 @@ function current_version = optiver
 
 %   Copyright (C) 2011-2016 Jonathan Currie (I2C2)
 
-current_version = 2.22;
+current_version = 2.23;
 
 %History
+
+%2.23 (..)
+% - Updated ASL to v20160915, including VSBuild for auto compilation
+% - Changed ASL behaviour to skip constraint linearity checking if forced to read a nonlinear model (due to RAM use in large models)
 
 %2.22 (19/09/16)
 % - Added suggestion to rethrow errors when function testing (V. Pericoli)

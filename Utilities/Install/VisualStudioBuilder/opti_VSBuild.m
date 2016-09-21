@@ -1029,13 +1029,29 @@ switch(lower(solver))
             fp = fopen([aslpath '/mainexit.c'],'w'); fprintf(fp,'%s',str); fclose(fp);
             str = fileread([aslpath '/stderr.c']);
             str = strrep(str,'AllocConsole();','//AllocConsole();');
-            fp = fopen([aslpath '/stderr.c'],'w'); fprintf(fp,'%s',str); fclose(fp);
+            str = strrep(str,'ssize_t','intptr_t');            
+            fp = fopen([aslpath '/stderr.c'],'w'); fprintf(fp,'%s',str); fclose(fp);            
             str = fileread([aslpath '/jac0dim.c']);
             str = strrep(str,sprintf('what_prog();\n\t\tfprintf(Stderr,\n'),'//what_prog();');
+            str = strrep(str,sprintf('what_prog();\r\n\t\tfprintf(Stderr,\r\n'),'//what_prog();');
             str = regexprep(str,'"jacdim: got M = %d,','//"jacdim: got M = %d,');
+            str = regexprep(str,'k = Sscanf(s, " %D %D"','k = Sscanf(s, " %d %d"');
             str = strrep(str,'exit(1);','//exit(1);');
             str = strrep(str,'if (n_con < 0 || n_var <= 0 || n_obj < 0) {','if (n_con < 0 || n_var <= 0 || n_obj < 0) { return NULL;');
-            fp = fopen([aslpath '/jac0dim.c'],'w'); fprintf(fp,'%s',str); fclose(fp);
+            fp = fopen([aslpath '/jac0dim.c'],'w'); fprintf(fp,'%s',str); fclose(fp);            
+            str = fileread([aslpath '/arith.h']);
+            str = strrep(str,'/*#define IEEE_8087*/','#define IEEE_8087');
+            fp = fopen([aslpath '/arith.h'],'w'); fprintf(fp,'%s',str); fclose(fp);           
+            str = fileread([aslpath '/mqpcheckv.c']);
+            str = strrep(str,'cq = M1alloc(i*sizeof(cgrad));','cq = (cgrad*)M1alloc(i*sizeof(cgrad));');
+            str = strrep(str,'mb1 = Malloc(sizeof(Memblock));','mb1 = (Memblock*)Malloc(sizeof(Memblock));');
+            fp = fopen([aslpath '/mqpcheckv.c'],'w'); fprintf(fp,'%s',str); fclose(fp);           
+            str = fileread([aslpath '/nqpcheck.c']);
+            str = strrep(str,'cq = M1alloc(i*sizeof(cgrad));','cq = (cgrad*)M1alloc(i*sizeof(cgrad));');
+            fp = fopen([aslpath '/nqpcheck.c'],'w'); fprintf(fp,'%s',str); fclose(fp);
+            str = fileread([aslpath '/asl.h']);
+            str = strrep(str,'#ifndef Long',sprintf('#if defined(_MSC_VER)\r\n#include <BaseTsd.h>\r\ntypedef SSIZE_T ssize_t;\r\n#endif\r\n\r\n#ifndef Long'));
+            fp = fopen([aslpath '/asl.h'],'w'); fprintf(fp,'%s',str); fclose(fp);
         end
         %Copy header files
         if(~exist([cdir '/Utilities/Source/Include/Asl'],'dir'))
