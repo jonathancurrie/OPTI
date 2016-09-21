@@ -208,27 +208,39 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             if(objtype[0] == 1)
                 *sense = -1; //max
             else
-                *sense = 1; //min            
+                *sense = 1; //min  
             
-            //Determine Objective Linearity
-            nqpz = nqpcheck(0, &QP_ir, &QP_jc, &QP_pr); //check objective for qp
-            //Determine Constraints Linearity
-            for(ii = 0; ii < n_con; ii++) {
-                con_lin[ii] = (double)nqpcheck(-(ii+1), &QP_ir, &QP_jc, &QP_pr);
-                if(con_lin[ii] < 0)
-                    nlcon = true;
-                else if(con_lin[ii] > 0)
-                {
-                    //nqpz indicates quadratic constraint, ensure is inequality
-                    if(LUrhs[ii] != Urhsx[ii])
-                        nqc_con++;
-                    else
-                        nlcon = true; //quadratic equalities not currently handled by any explicit QCQP solver (I know of), make nl
-                }                    
-            }
-            //Check to force for NL
+            //Check to force to read as nonlinear problem
             if(nrhs > 2 && *mxGetPr(prhs[2])==1)
                 nlcon = true;
+            //If not forcing nonlinear, carry out constraint linearity checking
+            if(!nlcon)
+            {            
+                //Determine Objective Linearity
+                nqpz = nqpcheck(0, &QP_ir, &QP_jc, &QP_pr); //check objective for qp
+                //Determine Constraints Linearity
+                for(ii = 0; ii < n_con; ii++) {
+                    con_lin[ii] = (double)nqpcheck(-(ii+1), &QP_ir, &QP_jc, &QP_pr);
+                    if(con_lin[ii] < 0)
+                        nlcon = true;
+                    else if(con_lin[ii] > 0)
+                    {
+                        //nqpz (in con_lin) indicates quadratic constraint, ensure is inequality
+                        if(LUrhs[ii] != Urhsx[ii])
+                            nqc_con++;
+                        else
+                            nlcon = true; //quadratic equalities not currently handled by any explicit QCQP solver (I know of), make nl
+                    }                    
+                }
+            }
+            //For now - assume all nonlinear constraints (bad)
+            else
+            {
+                for(ii = 0; ii < n_con; ii++) 
+                {
+                    con_lin[ii] = -1;                    
+                }
+            }            
             
             //If objective or any constraint is nonlinear, then we have to process as an NLP
             if(nqpz < 0 || nlcon) {
