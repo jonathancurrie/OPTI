@@ -13,8 +13,9 @@
 % 1) Get AMPL Solver Library
 % The generic NL reader for AMPL is available free from AMPL 
 % (http://www.ampl.com/netlib/ampl/solvers/). Download the gzipped tar of
-% all files. Note this is not the AMPL engine which is a commerical product, 
-% but code to allow people to connect their solvers to AMPL.
+% all files AND degree.c individually if it is empty! Note this is not the 
+% AMPL engine which is a commerical product, but code to allow people to 
+% connect their solvers to AMPL.
 
 % 2) Compile ASL
 % The easiest way to compile ASL is to use the Visual Studio Project

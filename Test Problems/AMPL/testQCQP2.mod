@@ -3,7 +3,7 @@
 # Number of variables: 3
 # Number of constraints: 3
 # Objective quadratic
-# 1 quad con, 2 linear constraints
+# 2 quad con, 1 linear constraints
 
 var x {1..3};
 

@@ -38,7 +38,7 @@
 %           x0 - initial decision variable guess
 %           v0 - initial dual variable guess
 %           sense - 1: minimization, -1: maximization
-%           conlin - vector of constraint linearity (0 linear,<0  nonlinear, >0 quadratic)           
+%           conlin - vector of constraint linearity (0 constant, 1 linear, 2 quadratic, 3 general nonlinear)           
 %
 %       sizes - vector of problem sizes (see amplRead.m)
 %

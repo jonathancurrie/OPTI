@@ -10,8 +10,8 @@ current_version = 2.23;
 %History
 
 %2.23 (..)
-% - Updated ASL to v20160915, including VSBuild for auto compilation
-% - Changed ASL behaviour to skip constraint linearity checking if forced to read a nonlinear model (due to RAM use in large models)
+% - Updated ASL to v20160922, including VSBuild for auto compilation
+% - [API Change] Changed return codes for constraint linearity in ASL interface
 
 %2.22 (19/09/16)
 % - Added suggestion to rethrow errors when function testing (V. Pericoli)

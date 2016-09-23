@@ -49,6 +49,13 @@ THIS SOFTWARE.
 #define ASLCMD_WRITESOL 14
 #define ASLCMD_CONVERT  15
 
+//Degree Return Types (see degree.c)
+#define ASL_DEGREE_INV  -1
+#define ASL_DEGREE_CONS 0
+#define ASL_DEGREE_LIN  1
+#define ASL_DEGREE_QUAD 2
+#define ASL_DEGREE_NLIN 3
+
 //Structure Arguments
 enum{eH,eF,eLB,eUB,eA,eCL,eCU,eQ,eL,eQCIND,eX0,eV0,eSENSE,eOBJBIAS,eCONLIN};
 
@@ -65,6 +72,7 @@ int getCommand(const mxArray *prhs0);
 static void mexExit(void);
 static double* sizechk(const mxArray *mp, char *who, int m);
 static bool comp_x(double *xbase, double *xnew, int n);
+static double linCheck(ASL *asl, int con);
 
 //Global
 static char msgbuf[FLEN];            
@@ -90,19 +98,20 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int icmd = ASLCMD_ERROR;    //Command Integer
     double *sense;              //Objective sense
     double *objbias;            //Objective bias
-    double *con_lin;            //linearity of the constraints (<0 nl, 0 lin, >0 quad)  
+    int obj_lin;                //linearity of the objectiuve (see ASL_DEGREE_ defines)
+    double *con_lin;            //linearity of the constraints (see ASL_DEGREE_ defines)  
     double *isopen;             //Is ASL open
     bool nlcon = false;         //indicates whether any constraint is nonlinear
     double *x;                  //Evaluation point
     double *f, *g, *c = NULL;   //Return pointers
     int nerror;                 //eval errors
-    
+
     //Sparse Indexing
     mwIndex *Ir, *Jc;
     double *Pr;
 
     //QP Checking Vars
-    int nqpz;                   //Number of nz in QP Objective Quadratic Part 
+    int nqpz = 0;               //number of nzs in quadratic objective
     int nqc_con = 0;            //number of quadratic constraints
     int *QP_ir, *QP_jc;         //Pointers used when calling nqpcheck
     double *QP_pr;
@@ -209,41 +218,31 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 *sense = -1; //max
             else
                 *sense = 1; //min  
-            
+                      
+            //Determine Objective Linearity
+            obj_lin = linCheck(asl, 0);
+            //Determine Constraints Linearity
+            for(ii = 0; ii < n_con; ii++) {
+                con_lin[ii] = linCheck(asl, -(ii+1));
+                //Check if nonlinear or quadratic
+                if(con_lin[ii] >= ASL_DEGREE_NLIN)
+                    nlcon = true;
+                else if(con_lin[ii] == ASL_DEGREE_QUAD)
+                {
+                    //con_lin indicates quadratic constraint, ensure is inequality
+                    if(LUrhs[ii] != Urhsx[ii])
+                        nqc_con++;
+                    else
+                        nlcon = true; //quadratic equalities not currently handled by any explicit QCQP solver (I know of), make nl
+                }                    
+            }
+    
             //Check to force to read as nonlinear problem
             if(nrhs > 2 && *mxGetPr(prhs[2])==1)
                 nlcon = true;
-            //If not forcing nonlinear, carry out constraint linearity checking
-            if(!nlcon)
-            {            
-                //Determine Objective Linearity
-                nqpz = nqpcheck(0, &QP_ir, &QP_jc, &QP_pr); //check objective for qp
-                //Determine Constraints Linearity
-                for(ii = 0; ii < n_con; ii++) {
-                    con_lin[ii] = (double)nqpcheck(-(ii+1), &QP_ir, &QP_jc, &QP_pr);
-                    if(con_lin[ii] < 0)
-                        nlcon = true;
-                    else if(con_lin[ii] > 0)
-                    {
-                        //nqpz (in con_lin) indicates quadratic constraint, ensure is inequality
-                        if(LUrhs[ii] != Urhsx[ii])
-                            nqc_con++;
-                        else
-                            nlcon = true; //quadratic equalities not currently handled by any explicit QCQP solver (I know of), make nl
-                    }                    
-                }
-            }
-            //For now - assume all nonlinear constraints (bad)
-            else
-            {
-                for(ii = 0; ii < n_con; ii++) 
-                {
-                    con_lin[ii] = -1;                    
-                }
-            }            
             
             //If objective or any constraint is nonlinear, then we have to process as an NLP
-            if(nqpz < 0 || nlcon) {
+            if(obj_lin == ASL_DEGREE_NLIN || nlcon) {
                 //Free the QP read memory
                 ASL_free(&asl);
                 //Re-open for full NLP read
@@ -262,13 +261,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             }
             //Otherwise we can process as a LP, QP or QCQP
             else {                
-                //Re open for new QP read [appears we can only use nqpcheck once]
-                nl = jac0dim(fpath,(ftnlen)strlen(fpath));  //read in passed file
                 //Assign objective bias
                 *objbias = objconst(0);
-                qp_read(nl,0); 
                 //Check for quadratic objective
-                if(nqpz > 0) {
+                if(obj_lin == ASL_DEGREE_QUAD) {
                     //Capture Pointers
                     nqpz = nqpcheck(0, &QP_ir, &QP_jc, &QP_pr); //check objective for qp
                     //Create QP H
@@ -318,7 +314,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                     //Fill In Constraints
                     for(ii=0,j=0;ii<n_con;ii++) {
                         //Quadratic Constraints
-                        if(con_lin[ii] > 0) {
+                        if(con_lin[ii] == ASL_DEGREE_QUAD) {
                             //Create index
                             pqi[j] = ii+1; //increment for matlab index
                             //Capture Pointers
@@ -617,10 +613,22 @@ static double* sizechk(const mxArray *mp, char *who, int m)
     size_t nel;
     nel = mxGetNumberOfElements(mp); 
     if (nel != m) {
-        sprintf(msgbuf,"Expected %s to be %d x 1 rather than %d x %d\n", who, m, mxGetM(mp), mxGetN(mp));
+        sprintf(msgbuf,"Expected %s to be %d x 1 rather than %zd x %zd\n", who, m, mxGetM(mp), mxGetN(mp));
         mexErrMsgTxt(msgbuf);
     }
     return mxGetPr(mp);
+}
+
+//Check if specifed constraint (or objective) is linear/quadratic/nonlinear
+static double linCheck(ASL* asl, int con)
+{
+    void *vdeg = 0; //degree checking memory
+    double lin = degree_ASL(asl, con, &vdeg); 
+    if(vdeg) 
+    {
+        free(vdeg);
+    }
+    return lin;
 }
 
 //Compare x to determine if new obj / con eval required for Hessian
