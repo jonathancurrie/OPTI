@@ -64,7 +64,7 @@ enum{eH,eF,eLB,eUB,eA,eCL,eCU,eQ,eL,eQCIND,eX0,eV0,eSENSE,eOBJBIAS,eCONLIN};
 #define CHECKASL(aslptr) { if(!asl) { mexErrMsgTxt("You have not opened the ASL interface! Use asl('open','file path') first\n"); } }
 #define CHECKNRHS(nrhs,no) { if(nrhs < no) { sprintf(msgbuf, "Wrong number of right hand side arguments! Expected %d\n", no); mexErrMsgTxt(msgbuf); } }
 //Set error jump (long jumps back to setjmp if ASL detects an error later)
-#define SETERRJMP() {nerror = -1; err_jmp = &err_jmp0; what = "(?)"; whatp = &what; if (setjmp(err_jmp0.jb)) { sprintf(msgbuf, "AMPL Solver Library (ASL) had trouble evaluating the %s callback.\n\nThis is normally due to an operation that results in Inf or NaN. Check your initial guess (x0)!\n", *whatp); mexErrMsgTxt(msgbuf); mexExit(); return; } }
+#define SETERRJMP() {nerror = -1; err_jmp = &err_jmp0; what = "(?)"; whatp = &what; if (setjmp(err_jmp0.jb)) { sprintf(msgbuf, "AMPL Solver Library (ASL) had trouble evaluating the %s callback.\n\nThis is normally due to an operation that results in Inf or NaN. Check your initial guess (x0)!\n", *whatp); mexErrMsgTxt(msgbuf); return; } }
 
 //Function Prototypes
 void printUtilityInfo();
