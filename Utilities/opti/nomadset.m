@@ -40,7 +40,7 @@ Names = {'bb_input_type','bb_output_type','direction_type','f_target','halton_se
          'history_file','solution_file','stats_file','param_file','iterfun','disable','epsilon','opt_only_sgte','sgte_cost','sgte_eval_sort','has_sgte',...
          'sgte_cache_file','max_sgte_eval'}';
 Defaults = {[],[],'ortho n+1 quad',[],[],[],[],[],[],1,1,[],[],1,[],[],0,0,1e20,[],'L2',[],[],2000,[],[],[],[],[],1,-1,4,... %mesh_update_basis
-            [],[],1,4,1,1,500,[],2,0,[],'product',0,0,[],[],[],[],0.1,[],[],1,1,[],0,1,[],25,0,0,[],[],...
+            [],[],0,4,1,1,500,[],2,0,[],'product',0,0,[],[],[],[],0.1,[],[],1,1,[],0,1,[],25,0,0,[],[],...
             [],[],[],[],1e-13,0,[],1,0,[],[]}';        
 
 %Collect Sizes and lowercase matches         
@@ -285,7 +285,7 @@ fprintf('                 vns_search: [ Variable Neighbourhood Search (Multiple 
 
 fprintf('\nDEVELOPER PARAMETERS:\n');
 fprintf('                    epsilon: [ Precision on real numbers {1e-13} ]\n');
-fprintf('   model_eval_sort_cautious: [ If the model ordering strategy is cautious: No (0), Yes {1} ] \n');
+fprintf('   model_eval_sort_cautious: [ If the model ordering strategy is cautious: No {0}, Yes (1) ] \n');
 fprintf(' model_search_max_trial_pts: [ Maximum trial points for one model search {4} ] \n');
 fprintf('  model_search_proj_to_mesh: [ If model search trial points are projected to mesh: No (0), Yes {1} ] \n');
 fprintf('      model_quad_max_y_size: [ Upper limit on the size of interpolation sets for quadratic models {500} ] \n');
