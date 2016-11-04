@@ -98,7 +98,10 @@ else
 end       
 
 %Check obj + grad functions are ok (will segment error otherwise!)
-try
+if(isempty(prob.fun))
+    error('Your nonlinear objective function is empty - either you are trying to solve a linear problem with a nonlinear solver, or you have forgotten to add your objective (both are errors!)');
+end
+try        
     f = prob.fun(x0);  %#ok<NASGU>
 catch ME
     fprintf(2,'There was an error when running a test objective function call. Please ensure this function exists and runs without error.\n\n');

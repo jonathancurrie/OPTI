@@ -492,6 +492,11 @@ end
 function [x,fval,exitflag,info] = solveMINLP(nl,opts)
 %Solve a Mixed Integer Nonlinear Program using a selected solver
 
+%Should not happen, but worthwhile to check
+if(isempty(nl))
+    error('The Solver %s cannot be used to solve a MINLP',opts.solver);
+end
+
 if(~isfield(nl,'x0')), error('You must supply x0 to solve an MINLP'); end
 
 switch(opts.solver)
