@@ -11,6 +11,7 @@ current_version = 2.23;
 
 %2.23 (..)
 % - Updated ASL to v20160922, including VSBuild for auto compilation
+% - Fixed bug where maxnodes instead of maxiter was used for BARON maxiter setting.
 % - [API Change] Changed return codes for constraint linearity in ASL interface
 
 %2.22 (19/09/16)

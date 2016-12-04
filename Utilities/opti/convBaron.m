@@ -59,7 +59,7 @@ options = baronset(opts.solverOpts);
 options.epsa = opts.tolafun;
 options.epsr = opts.tolrfun;
 options.inttol = opts.tolint;
-options.maxiter = opts.maxnodes;
+options.maxiter = opts.maxiter;
 options.maxtime = opts.maxtime;    
 options.prlevel = dispLevel(opts.display);
 %Save Options Structure
