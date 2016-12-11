@@ -21,7 +21,7 @@ end
 
 %Check initial point
 if(~isempty(x0))
-    if(length(x0) ~= optObj.prob.sizes.ndec), error('x0 is not the correct length! Expected %d x 1',optObj.prob.sizes.ndec);end
+    if(numel(x0) ~= optObj.prob.sizes.ndec), error('x0 is not the correct length! Expected %d x 1',optObj.prob.sizes.ndec);end
     if(size(x0,2) > 1), x0 = x0'; end     
     if(any(isnan(x0))), error('Initial Guess (x0) Contains NaN!'); end
     if(any(isinf(x0))), error('Initial Guess (x0) Contains Inf!'); end

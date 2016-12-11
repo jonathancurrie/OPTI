@@ -12,6 +12,7 @@ current_version = 2.23;
 %2.23 (..)
 % - Updated ASL to v20160922, including VSBuild for auto compilation
 % - Fixed bug where maxnodes instead of maxiter was used for BARON maxiter setting.
+% - Fixed bug where x0 as a matrix could be supplied as solve(opt,x0) and skip error generation.
 % - [API Change] Changed return codes for constraint linearity in ASL interface
 
 %2.22 (19/09/16)
