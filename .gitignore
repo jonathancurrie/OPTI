@@ -3,7 +3,6 @@ Solvers/Source/Include/
 Utilities/Source/Include/
 _vti_cnf/
 _vti_pvt/
-*.mexw64
 *.mexw32
 *.nl
 *.cfe
@@ -11,6 +10,7 @@ _vti_pvt/
 *.cfs
 *.si
 *.exp
+scip.mexw64
 Help/OPTI_HTML/tex/
 Utilities/Install/VisualStudioBuilder/guids.txt
 *.lib
