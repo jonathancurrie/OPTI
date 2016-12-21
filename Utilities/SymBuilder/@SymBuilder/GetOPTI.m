@@ -3,7 +3,7 @@ function O = GetOPTI(B,opts)
 %
 %   Called By SYMBUILDER Class
 
-%   Copyright (C) 2012-2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2012-2013 Jonathan Currie (IPL)
 
 if(nargin < 2), opts = symbset; else opts = symbset(opts); end
 

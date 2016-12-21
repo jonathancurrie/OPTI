@@ -6,7 +6,7 @@ function prob = mosekProb(H,f,A,rl,ru,Q,l,qrl,qru,lb,ub,xint,sdcone,x0,opts)
 %   This function is based in parts on examples from the MOSEK Toolbox, 
 %   Copyright (c) 1998-2011 MOSEK ApS, Denmark.
 
-%   Copyright (C) 2012 Jonathan Currie (I2C2)
+%   Copyright (C) 2012 Jonathan Currie (IPL)
 
 %Get warning status
 warn = strcmpi(opts.warnings,'all');

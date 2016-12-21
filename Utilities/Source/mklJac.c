@@ -1,5 +1,5 @@
 /* MKLJAC - A simple MEX Interface to the MKL djacobi Function
- * Copyright (C) 2011 Jonathan Currie (I2C2)                             
+ * Copyright (C) 2011 Jonathan Currie (IPL)                             
  */
 
 #include <mex.h>

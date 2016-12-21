@@ -1,7 +1,7 @@
 function plotNLCon(fun,con,rl,ru,x1,x2,color,data)
 %PLOTNLCON  Plot Hatched Nonlinear Constraint on Current Axes
 
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)
 
 if(nargin < 6), color = [0.2 0.2 0.2]; end
 ss = warning('off','MATLAB:contour:ConstantData');

@@ -11,4 +11,4 @@
 %   Return arguments:
 %       sol - solution vector
 
-%   Copyright (C) 2014 Jonathan Currie (I2C2)
+%   Copyright (C) 2014 Jonathan Currie (IPL)

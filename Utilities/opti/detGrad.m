@@ -1,7 +1,7 @@
 function [f,g] = detGrad(fun,x0,xdata)
 %DETGRAD  Determine whether supplied function contains gradient information
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 %Sort out gradient (unfortunately rather inefficient)
 no = nargout(fun);

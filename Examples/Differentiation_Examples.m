@@ -4,7 +4,7 @@
 % supplied with the OPTI Toolbox. Note you should be familiar with the 
 % operation of OPTI Toolbox by reading the accompanying examples.
 %
-%   Copyright (C) 2014 Jonathan Currie (I2C2)
+%   Copyright (C) 2014 Jonathan Currie (IPL)
 
 %Also see the following webpage for more examples:
 web('http://i2c2.aut.ac.nz/Wiki/OPTI/index.php/Advanced/Deriv1');

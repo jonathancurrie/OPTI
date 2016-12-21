@@ -27,7 +27,7 @@ function [x,fval,exitflag,info] = opti_dsdp(f,A,b,lb,ub,sdcone,x0,opts)
 %   THIS IS A WRAPPER FOR DSDP USING THE MEX INTERFACE
 %   See supplied License
 
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)
 
 t = tic;
 

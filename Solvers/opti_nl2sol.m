@@ -22,7 +22,7 @@ function [x,fval,exitflag,info] = opti_nl2sol(fun,grad,x0,ydata,lb,ub,opts)
 %   THIS IS A WRAPPER FOR NL2SOL + NL2SNO
 %   See referenced ACM License
 
-%   Copyright (C) 2012 Jonathan Currie (I2C2)
+%   Copyright (C) 2012 Jonathan Currie (IPL)
 
 if(nargin < 7), opts = optiset; end
 if(nargin < 6), ub = []; end

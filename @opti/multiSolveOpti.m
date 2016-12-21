@@ -7,7 +7,7 @@ function [x,fval,exitflag,info] = multiSolveOpti(optObj,user_x0,ndivs,penalty,so
 %   pretty much an exhaustive search. However it has been very useful on
 %   problems where an initial guess is hard to find!
 
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)
 
 %Number of 'best points' to keep during search
 nbestpts = 10;

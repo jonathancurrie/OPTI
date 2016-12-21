@@ -5,7 +5,7 @@ classdef scipvar
 %   deterministic MATLAB function into an SCIP MEX Interface compatible
 %   instruction list. Use 'methods(scipvar)' to see available functions.
 %
-%   Copyright (C) 2012/2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2012/2013 Jonathan Currie (IPL)
     
     %#ok<*STOUT,*MANU,*INUSD>
     

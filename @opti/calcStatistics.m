@@ -3,7 +3,7 @@ function stats = calcStatistics(optObj,limit)
 %
 %   Called By opti fitStats
 
-%   Copyright (C) 2011-2014 Jonathan Currie (I2C2)
+%   Copyright (C) 2011-2014 Jonathan Currie (IPL)
 
 % This function uses ideas from:
 % - David M. Himmelblau. Process Analysis by Statistical Methods. 

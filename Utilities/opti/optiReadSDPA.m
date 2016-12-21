@@ -18,7 +18,7 @@ function [f,A,b,sdcone,xtype] = optiReadSDPA(filename,dense,print)
 % *sdcone will be a cell array, where each cell is a sparse matrix of the
 % form [C(:) A0(:) A1(:) ... ], containing symmetric matrices.
 
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)
 %#ok<*AGROW>
 
 if(nargin < 2), dense = 0; end

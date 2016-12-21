@@ -2,7 +2,7 @@ function prob = sedumi2opti(prob)
 %SEDUMI2OPTI  Converts a SEDUMI Problem (At, b, C, K) to OPTI Format
 % prob = sedumi2opti(prob)
 
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)
 
 if(~isfield(prob,'sdcone') || isempty(prob.sdcone) || ~isstruct(prob.sdcone))
     error('This function expects a prob.sdcone to contain a structure');

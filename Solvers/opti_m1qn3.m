@@ -18,7 +18,7 @@ function [x,fval,exitflag,info] = opti_m1qn3(fun,grad,x0,opts)
 %   THIS IS A WRAPPER FOR M1QN3
 %   See supplied GPL v3 License
 
-%   Copyright (C) 2012 Jonathan Currie (I2C2)
+%   Copyright (C) 2012 Jonathan Currie (IPL)
 
 if(nargin < 4), opts = optiset; end
 if(nargin < 3), error('M1QN3 requires at least 3 arguments'); end

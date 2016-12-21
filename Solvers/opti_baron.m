@@ -6,7 +6,7 @@ function [x,fval,exitflag,info] = opti_baron(nlprob,x0)
 %
 %   THIS IS A WRAPPER FOR BARON
 
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)
 
 t = tic;
 %Check required fields

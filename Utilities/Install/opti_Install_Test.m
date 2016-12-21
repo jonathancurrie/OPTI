@@ -4,7 +4,7 @@ function ok = opti_Install_Test(verb)
 % A collection of tests to verify the installation of the toolbox has been
 % successful. 
 
-%   Copyright (C) 2012 Jonathan Currie (I2C2)
+%   Copyright (C) 2012 Jonathan Currie (IPL)
 
 % 14/3/12 Changed to Rel Error Check
 % 8/2/14 Changed tol to 1e-3

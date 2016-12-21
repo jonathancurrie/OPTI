@@ -1,5 +1,5 @@
 /* SYMB_CTEMP - Template for generating SymBuilder C Code Callbacks
- * Copyright (C) 2014 Jonathan Currie (I2C2)                              
+ * Copyright (C) 2014 Jonathan Currie (IPL)                              
  */
 
 #include <mex.h>

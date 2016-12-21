@@ -1,5 +1,5 @@
 /* COINW - A simple Wrapper to Use COIN-OR File Writing Routines
- * Copyright (C) 2011 Jonathan Currie (I2C2)
+ * Copyright (C) 2011 Jonathan Currie (IPL)
  */
 
 #include <mex.h>

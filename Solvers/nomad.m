@@ -37,4 +37,4 @@
 %   NOMAD is released under the Lesser GNU Public License (LGPL).
 %   Type nomad('-info') to see license and author details.
 %
-%   MEX Interface Copyright (C) 2012 Jonathan Currie (I2C2)
+%   MEX Interface Copyright (C) 2012 Jonathan Currie (IPL)

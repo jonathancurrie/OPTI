@@ -1,6 +1,6 @@
 /* SYMB_CTEMP - Template for generating SymBuilder C Code Callbacks
  * This Version also Uses CppAD for generating Derivatives
- * Copyright (C) 2014-2016 Jonathan Currie (I2C2)                              
+ * Copyright (C) 2014-2016 Jonathan Currie (IPL)                              
  */
 
 #include <mex.h>

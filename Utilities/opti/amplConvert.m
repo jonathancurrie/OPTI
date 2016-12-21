@@ -19,7 +19,7 @@ function filename = amplConvert(filename,extraArgs,amplPath)
 % You must have a licensed version of AMPL (or the student edition) present
 % on your computer. For more information see www.ampl.com.
 
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)
 
 % Attempt to find AMPL exectuable
 if(nargin < 3 || isempty(amplPath))

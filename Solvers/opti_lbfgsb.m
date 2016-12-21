@@ -19,7 +19,7 @@ function [x,fval,exitflag,info] = opti_lbfgsb(fun,grad,lb,ub,x0,opts)
 %   THIS IS A WRAPPER FOR L-BFGS-B
 %   See referenced BSD License
 
-%   Copyright (C) 2012 Jonathan Currie (I2C2)
+%   Copyright (C) 2012 Jonathan Currie (IPL)
 
 if(nargin < 6), opts = optiset; end
 if(nargin < 5), error('LBFGSB requires at least 5 arguments'); end

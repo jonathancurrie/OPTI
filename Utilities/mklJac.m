@@ -18,4 +18,4 @@
 %   was successful, or 0 if it failed.
 %
 %
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)

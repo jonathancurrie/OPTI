@@ -23,7 +23,7 @@ THIS SOFTWARE.
 ****************************************************************/
 
 /* Code is largely modified from the original by J.Currie Oct 2011 
-   Copyright (C) 2011-2013 Jonathan Currie (I2C2)
+   Copyright (C) 2011-2013 Jonathan Currie (IPL)
  */
 
 #include "mex.h"

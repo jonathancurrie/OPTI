@@ -9,7 +9,7 @@ function [x,fval,exitflag,info] = opti_bonmin(nlprob,x0)
 %   THIS IS A WRAPPER FOR BONMIN
 %   See supplied Eclipse Public License
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 t = tic;
 %Check required fields

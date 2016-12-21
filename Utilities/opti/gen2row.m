@@ -2,7 +2,7 @@ function [A,rl,ru] = gen2row(Ain,b,Aeq,beq)
 %GEN2ROW Convert Linear Inequality & Equality Constraints to Linear A with Row Bounds
 %   [A,rl,ru] = gen2row(Ain,b,Aeq,beq)
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 if(isempty(Ain) && isempty(Aeq))
     A = []; rl = []; ru = [];

@@ -1,7 +1,7 @@
 function [nlcon,nlrhs,nle] = detNlcon(nonlcon,x0)
 %DETNLCON  Determine OPTI format Nonlinear Constraints
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 %Sort out nonlinear constraints (unfortunately rather inefficient)
 if(isempty(nonlcon))

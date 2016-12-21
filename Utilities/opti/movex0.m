@@ -1,7 +1,7 @@
 function x0 = movex0(lb,ub,x0,warn)
 %MOVEX0 Ensure x0 is within problem bounds
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 if(~exist('warn','var') || isempty(warn))
     warn = 1;

@@ -16,7 +16,7 @@ function [dfdz,dfdp,sym_dfdz,sym_dfdp] = symDynJac(ode,nstates,nparam)
 %   parameter is not specified in the original equation to pad DFDP with 
 %   zeros.
 
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)
 
 if(nargin < 3), nparam = 0; end
 if(nargin < 2), nstates = 0; end

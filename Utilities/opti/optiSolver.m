@@ -38,7 +38,7 @@ function ret = optiSolver(instr,err)
 %   D2 - Requires Second Derivatives (Hessian) (* indicates optional)
 %   GL - Global Solver
 
-%   Copyright (C) 2011-2015 Jonathan Currie (I2C2)
+%   Copyright (C) 2011-2015 Jonathan Currie (IPL)
 
 
 global SLE LP MILP BILP QP QCQP MIQP MIQCQP SDP MISDP SNLE SCNLE NLS UNO NLP MINLP DESC PTYPES

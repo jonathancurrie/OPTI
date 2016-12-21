@@ -9,7 +9,7 @@ function [x,fval,exitflag,info] = opti_ipopt(nlprob,x0)
 %   THIS IS A WRAPPER FOR IPOPT
 %   See supplied Eclipse Public License
 
-%   Copyright (C) 2011-2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2011-2013 Jonathan Currie (IPL)
 
 t = tic;
 %Check required fields

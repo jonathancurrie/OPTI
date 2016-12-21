@@ -10,7 +10,7 @@ function [x,fval,exitflag,info] = opti_lpsolve(f,A,b,Aeq,beq,lb,ub,int,sos,opts)
 %   THIS IS A WRAPPER FOR LP_SOLVE USING THE MEX INTERFACE
 %   See supplied LGPL License
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 % Modified Version of lp_solve.m supplied with LP_SOLVE distribution
 

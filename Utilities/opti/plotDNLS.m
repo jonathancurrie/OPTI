@@ -1,7 +1,7 @@
 function [t,z] = plotDNLS(prob,opts,xb,confStats,tspan)
 %plotDNLS Plot Parameter Estimation Problem
 
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)
 
 if(nargin < 5), tspan = []; end
 if(nargin < 4), confStats = []; end

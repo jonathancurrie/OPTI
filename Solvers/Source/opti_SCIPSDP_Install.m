@@ -1,5 +1,5 @@
 %% SCIP-SDP Install for OPTI Toolbox
-% Copyright (C) 2014 Jonathan Currie (I2C2)
+% Copyright (C) 2014 Jonathan Currie (IPL)
 
 % This file will help you compile Solving Constraint Integer Programs (SCIP) 
 % Semidefinite Program (SDP) Extension for use with MATLAB. 

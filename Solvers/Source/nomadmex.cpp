@@ -10,7 +10,7 @@
 /*                                                                                     */
 /*  funded in part by AFOSR and Exxon Mobil                                            */
 /*                                                                                     */
-/*  MEX Interface Author: Jonathan Currie 2012-2013 (I2C2)                             */
+/*  MEX Interface Author: Jonathan Currie 2012-2013 (IPL)                             */
 /*                                                                                     */
 /*  MEX Interface Contact information:                                                 */
 /*    jocurrie@aut.ac.nz                                                               */

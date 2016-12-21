@@ -2,7 +2,7 @@ function plotBounds(lb,ub,mplot)
 %PLOTBOUNDS Plot bounds on the current figure
 %   plotBounds(lb,ub)
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 xl = xlim; yl = ylim; idx = mplot.idx;
 hold on;

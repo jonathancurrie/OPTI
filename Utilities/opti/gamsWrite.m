@@ -7,7 +7,7 @@ function gamsWrite(prob,filename)
 % You may specify a full path to the file, or if you specify a filename
 % only, it will be written to the current directory.
 
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)
 
 ext = 'gms';
 

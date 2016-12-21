@@ -38,4 +38,4 @@
 %       8 - maximum time reached
 %
 %   
-%   Copyright (C) 2012 Jonathan Currie (I2C2)
+%   Copyright (C) 2012 Jonathan Currie (IPL)

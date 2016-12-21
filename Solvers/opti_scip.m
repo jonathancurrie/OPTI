@@ -30,7 +30,7 @@ function [x,fval,exitflag,info] = opti_scip(H,f,A,rl,ru,lb,ub,xint,sos,qc,opts)
 %   THIS IS A WRAPPER FOR SCIP USING THE MEX INTERFACE
 %   See supplied ZIB Academic License
 
-%   Copyright (C) 2012 Jonathan Currie (I2C2)
+%   Copyright (C) 2012 Jonathan Currie (IPL)
 
 t = tic;
 

@@ -30,7 +30,7 @@ function [x,fval,exitflag,info] = opti_cbc(H,f,A,rl,ru,lb,ub,xtype,sos,x0,opts)
 %   THIS IS A WRAPPER FOR CBC USING THE MEX INTERFACE
 %   See supplied Eclipse Public License
 
-%   Copyright (C) 2012 Jonathan Currie (I2C2)
+%   Copyright (C) 2012 Jonathan Currie (IPL)
 
 t = tic;
 

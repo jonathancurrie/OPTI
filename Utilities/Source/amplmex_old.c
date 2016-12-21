@@ -23,7 +23,7 @@ THIS SOFTWARE.
 ****************************************************************/
 
 /* Code is largely modified from the original by J.Currie Oct 2011 
-   Copyright (C) 2011 Jonathan Currie (I2C2)
+   Copyright (C) 2011 Jonathan Currie (IPL)
  */
 
 /* Note I am not 100% sure how to deal with mxCreate() functions and their

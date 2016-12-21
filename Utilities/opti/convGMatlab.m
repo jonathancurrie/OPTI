@@ -3,7 +3,7 @@ function mprob = convGMatlab(prob,opts)
 %
 %   mprob = convGMatlab(prob,opts)
 
-%   Copyright (C) 2012 Jonathan Currie (I2C2)
+%   Copyright (C) 2012 Jonathan Currie (IPL)
 
 %Ensure all args passed
 if(nargin < 2)

@@ -14,7 +14,7 @@ function [x,fval,exitflag,info,Opt] = opti_lsqcurvefit(fun,x0,xdata,ydata,lb,ub,
 %   [x,...,info,Opt] = opti_lsqcurvefit(fun,...) returns the internally 
 %   built OPTI object.
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 
 % Handle missing arguments

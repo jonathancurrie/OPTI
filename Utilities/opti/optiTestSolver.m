@@ -8,7 +8,7 @@ function [tstop,res] = optiTestSolver(prob,solver,no,wbar)
 %   [..] = optiTestSolver(prob,solver,no) runs 'no' number of problems
 %   across each solver.
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 if(nargin < 2)
     error('You must supply the problem type and solver to testSolver');

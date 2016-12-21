@@ -15,7 +15,7 @@ function [x,fval,exitflag,info,lambda,Opt] = opti_linprog(f,A,b,Aeq,beq,lb,ub,x0
 %   [x,...,lambda,Opt] = opti_linprog(f,...) returns the internally built
 %   OPTI object.
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 
 % Handle missing arguments

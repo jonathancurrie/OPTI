@@ -4,7 +4,7 @@
 % them using the OPTI Toolbox. You should complete BasicUsage.m before
 % completing this file.
 %
-%   Copyright (C) 2014 Jonathan Currie (I2C2)
+%   Copyright (C) 2014 Jonathan Currie (IPL)
 
 % There is also a page on the Wiki which supplements this example:
 web('http://i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/LP');

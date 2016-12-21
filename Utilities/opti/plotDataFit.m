@@ -1,7 +1,7 @@
 function plotDataFit(prob,xb,confStats,doLog)
 %PLOTDATAFIT Add new Plot with Data + Fit
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
     
 %Measurement Plot Color & Style
 if(~isempty(confStats))
