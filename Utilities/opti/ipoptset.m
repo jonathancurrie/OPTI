@@ -17,7 +17,7 @@ function options = ipoptset(varargin)
 %
 % See supplied IPOPT Documentation for further details of these options.
 
-%   Copyright (C) 2011-2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2011-2013 Jonathan Currie (IPL)
 
 %Default mode (bonmin mode uses slightly different options)
 mode = 'ipopt';

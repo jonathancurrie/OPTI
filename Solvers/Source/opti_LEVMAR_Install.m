@@ -1,5 +1,5 @@
 %% LEVMAR Install for OPTI Toolbox
-% Copyright (C) 2012 Jonathan Currie (I2C2)
+% Copyright (C) 2012 Jonathan Currie (IPL)
 
 % This file will help you compile Levenberg-Marquardt in C/C++ (LEVMAR) for 
 % use with MATLAB. 

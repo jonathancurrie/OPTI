@@ -44,6 +44,6 @@
 %   Code is based in parts on original MEX interface by E. Michael Gertz, 
 %   Stephen J. Wright
 %
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)
 %
 %   See Also opti_ooqp ooqpset

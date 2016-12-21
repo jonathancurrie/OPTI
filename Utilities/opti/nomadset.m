@@ -15,7 +15,7 @@ function options = nomadset(varargin)
 %
 % nomadset() prints a list of all possible fields and their function.
 
-%   Copyright (C) 2012 Jonathan Currie (I2C2)
+%   Copyright (C) 2012 Jonathan Currie (IPL)
 
 %Valid direction types
 global dirtypes
@@ -29,7 +29,7 @@ if (nargin == 0) && (nargout == 0)
 end
 
 %Names and Defaults
-Names = {'bb_input_type','bb_output_type','direction_type','f_target','halton_seed','initial_mesh_size','lh_search','max_bb_eval',...
+Names = {'bb_input_type','bb_output_type','direction_type','f_target','initial_mesh_size','lh_search','max_bb_eval',...
          'max_time','model_eval_sort','model_search','multi_nb_mads_runs','multi_overall_bb_eval','opportunistic_eval','opportunistic_lh','seed','vns_search',...
          'cache_search','h_max_0','h_min','h_norm','initial_mesh_index','l_curve_target','max_cache_memory','max_consecutive_failed_iterations',...
          'max_eval','max_iterations','max_mesh_index','max_sim_bb_eval','mesh_coarsening_exponent','mesh_refining_exponent','mesh_update_basis',...
@@ -39,8 +39,8 @@ Names = {'bb_input_type','bb_output_type','direction_type','f_target','halton_se
          'snap_to_bounds','speculative_search','stat_sum_target','stop_if_feasible','add_seed_to_file_names','cache_file','cache_save_period','display_degree','display_all_eval',...
          'history_file','solution_file','stats_file','param_file','iterfun','disable','epsilon','opt_only_sgte','sgte_cost','sgte_eval_sort','has_sgte',...
          'sgte_cache_file','max_sgte_eval'}';
-Defaults = {[],[],'ortho n+1 quad',[],[],[],[],[],[],1,1,[],[],1,[],[],0,0,1e20,[],'L2',[],[],2000,[],[],[],[],[],1,-1,4,... %mesh_update_basis
-            [],[],0,4,1,1,500,[],2,0,[],'product',0,0,[],[],[],[],0.1,[],[],1,1,[],0,1,[],25,0,0,[],[],...
+Defaults = {[],[],'ortho n+1 quad',[],[],[],[],[],1,1,[],[],1,1,0,0,0,1e20,[],'L2',[],[],2000,[],[],[],[],[],1,-1,4,... %mesh_update_basis
+            [],[],0,10,1,1,500,[],2,0,[],'product',0,0,[],[],[],-1,0.1,[],[],1,1,[],0,1,[],25,0,0,[],[],...
             [],[],[],[],1e-13,0,[],1,0,[],[]}';        
 
 %Collect Sizes and lowercase matches         
@@ -128,7 +128,7 @@ err = [];
 
 switch lower(field)   
     %Scalar double
-    case {'f_target','halton_seed','max_bb_eval','max_time','model_eval_sort',...
+    case {'f_target','max_bb_eval','max_time','model_eval_sort',...
          'model_search','multi_nb_mads_runs','multi_overall_bb_eval','opportunistic_eval','opportunistic_lh','seed','vns_search',...
          'cache_search','h_max_0','h_min','initial_mesh_index','l_curve_target','max_cache_memory','max_consecutive_failed_iterations',...
          'max_eval','max_iterations','max_mesh_index','max_sim_bb_eval','mesh_coarsening_exponent','mesh_refining_exponent','mesh_update_basis',...
@@ -245,7 +245,6 @@ fprintf('                  sgte_cost: [ The cost of c surrogate evaluations is e
 fprintf('             sgte_eval_sort: [ If surrogates are used to sort list of trial points: Off (0), On {1} ] \n');
 fprintf('               cache_search: [ Use Cache search: Off {0}, On (1) ] \n');
 fprintf('                    disable: [ Forcefully disable NOMAD features {[]} ] \n');
-fprintf('                halton_seed: [ Halton seed for Ortho-MADS {[]} ]\n');
 fprintf('                    h_max_0: [ Initial value of hmax {1e20} ] \n');
 fprintf('                      h_min: [ x is feasible if h(x) >= v {0.0} ] \n');
 fprintf('                     h_norm: [ Norm used to compute h: ''L1'', {''L2''}, ''Linf'' ] \n');
@@ -272,11 +271,11 @@ fprintf('         multi_nb_mads_runs: [ Number of MADS runs in Biobjective Optim
 fprintf('      multi_overall_bb_eval: [ Maximum number of BB evals for all MADS runs {[]} ] \n');
 fprintf(' opportunistic_cache_search: [ Opportunistic cache search: Off {0}, On (1) ] \n');
 fprintf('         opportunistic_eval: [ Opportunistic strategy: Off (0), On {1} ] \n');
-fprintf('           opportunistic_lh: [ Opportunistic strategy for LH search: {[]} ] \n');
+fprintf('           opportunistic_lh: [ Opportunistic strategy for LH search: Off(0), On {1} ] \n');
 fprintf('     opportunistic_min_eval: [ Do not terminate below i evaluations {[]} ] \n');
 fprintf('                        rho: [ Parameter of the progressive barrier {0.1} ] \n');
 fprintf('                    scaling: [ Scaling on the variables (vector of scaling values for each variable) {[]} ] \n');
-fprintf('                       seed: [ Random Seed: {[]} ] \n');
+fprintf('                       seed: [ Random Seed: {0} ] \n');
 fprintf('             snap_to_bounds: [ Snap to boundary trial points that are generated outside of bounds: No (0), Yes {1} ] \n');
 fprintf('         speculative_search: [ MADS speculative search: No (0), Yes {1} ] \n');
 fprintf('            stat_sum_target: [ Terminates if stat_sum reaches this value {[]} ] \n');
@@ -286,7 +285,7 @@ fprintf('                 vns_search: [ Variable Neighbourhood Search (Multiple 
 fprintf('\nDEVELOPER PARAMETERS:\n');
 fprintf('                    epsilon: [ Precision on real numbers {1e-13} ]\n');
 fprintf('   model_eval_sort_cautious: [ If the model ordering strategy is cautious: No {0}, Yes (1) ] \n');
-fprintf(' model_search_max_trial_pts: [ Maximum trial points for one model search {4} ] \n');
+fprintf(' model_search_max_trial_pts: [ Maximum trial points for one model search {10} ] \n');
 fprintf('  model_search_proj_to_mesh: [ If model search trial points are projected to mesh: No (0), Yes {1} ] \n');
 fprintf('      model_quad_max_y_size: [ Upper limit on the size of interpolation sets for quadratic models {500} ] \n');
 fprintf('      model_quad_min_y_size: [ Inf limit on the size of interpolation sets for quadratic models {[]} ] \n');
@@ -296,7 +295,7 @@ fprintf('          multi_formulation: [ Single objective reformulation: ''normal
 fprintf('       multi_use_delta_crit: [ Use stopping criterion based on the delta criterion: Off {0}, On (1) ] \n');
 fprintf('   opportunistic_lucky_eval: [ Perform an additional BB eval after an improvement: Off {0}, On (1) ] \n');
 fprintf('  opportunistic_min_f_imprvmt: [ Terminate only if f is reduced by r%% {[]} ] \n');
-fprintf(' opportunistic_min_nb_success: [ Do not terminate before i successes {[]} ] \n');
+fprintf(' opportunistic_min_nb_success: [ Do not terminate before i successes {-1} ] \n');
 fprintf('              opt_only_sgte: [ Minimize only with surrogates: No {0}, Yes (1) ]\n');
 fprintf('          sec_poll_dir_type: [ Type of directions for the secondary poll (see below) {[]} ] \n');
 
@@ -304,7 +303,7 @@ fprintf('\nOUTPUT PARAMETERS:\n');
 fprintf('     add_seed_to_file_names: [ If the seed is added to the output file names: Off (0), On {1} ]\n');
 fprintf('                 cache_file: [ Cache file: Off {[]}, On ''filename'' ]\n');
 fprintf('          cache_save_period: [ Cache files are saved every i iterations: {25} ]\n');
-fprintf('             display_degree: [ Display level: None {0}, Increasing (>0) ] \n');
+fprintf('             display_degree: [ Display level: Increasing (>=0 and <=3) {0}  ] \n');
 fprintf('           display_all_eval: [ Display all Points: Off {0}, On (1) ] \n');
 fprintf('               history_file: [ File containing all trial points: Off {[]}, On ''filename'' ]\n');
 fprintf('              solution_file: [ File to save the current best feasible point: Off {[]}, On ''filename'' ]\n');

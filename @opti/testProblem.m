@@ -7,7 +7,7 @@ function [tstop,res] = testProblem(optObj,solvers)
 %   [times,results] = testProblems(optObj,solvers) runs only the selected
 %   solvers across the supplied problem.
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 
 %Setup default arguments

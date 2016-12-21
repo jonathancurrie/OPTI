@@ -1,9 +1,9 @@
 /* NL2SOLMEX - A MATLAB MEX Interface to NL2SOL
  * Released Under the BSD 3-Clause License:
- * http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/DL/License
+ * https://www.inverseproblem.co.nz/OPTI/index.php/DL/License
  *
  * Copyright (C) Jonathan Currie 2011-2013
- * www.i2c2.aut.ac.nz
+ * www.inverseproblem.co.nz
  */
 
 #include "mex.h"
@@ -575,6 +575,6 @@ void printSolverInfo()
     mexPrintf(" NL2SOL: Adaptive Nonlinear Least Squares [v%s, Built %s, VS%s]\n",NL2SOL_VERSION,__DATE__,vbuf);              
     mexPrintf("  - Source available from: http://netlib.sandia.gov/cgi-bin/netlib/netlibfiles.tar?filename=netlib/port\n\n");
 
-    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.i2c2.aut.ac.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.inverseproblem.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

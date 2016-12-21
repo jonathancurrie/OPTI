@@ -8,7 +8,7 @@ function [prob,sol,fmin] = nls_prob(varargin)
 %
 %   no = nls_prob() returns the number of problems available for testing.
 
-%   (C) 2012 Jonathan Currie (I2C2)
+%   (C) 2012 Jonathan Currie (IPL)
 
 % Functions are taken from:
 % More, J. J., B. S. Garbow, and K. E. Hillstrom. "Testing Unconstrained 

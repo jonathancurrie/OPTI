@@ -3,7 +3,7 @@ function mprob = convMatlab(prob,opts)
 %
 %   mprob = convMatlab(prob,opts)
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 %Ensure all args passed
 if(nargin < 2)

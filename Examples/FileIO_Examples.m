@@ -7,12 +7,12 @@
 % The underlying parser uses CoinUtils + GLPK for reading and writing all
 % file types.
 %
-%   Copyright (C) 2014 Jonathan Currie (I2C2)
+%   Copyright (C) 2014 Jonathan Currie (IPL)
 
 %This page is supplemented by examples on the following pages:
-web('http://i2c2.aut.ac.nz/Wiki/OPTI/index.php/File/MPS');
-web('http://i2c2.aut.ac.nz/Wiki/OPTI/index.php/File/SDPA','-new');
-web('http://i2c2.aut.ac.nz/Wiki/OPTI/index.php/File/GAMS','-new');
+web('https://www.inverseproblem.co.nz/OPTI/index.php/File/MPS');
+web('https://www.inverseproblem.co.nz/OPTI/index.php/File/SDPA','-new');
+web('https://www.inverseproblem.co.nz/OPTI/index.php/File/GAMS','-new');
 
 %% Loading a MPS Problem
 % OPTI Toolbox is supplied with a number of example LP, MILP & QP problems

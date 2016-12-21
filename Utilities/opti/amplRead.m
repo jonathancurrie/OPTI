@@ -25,7 +25,7 @@ function [prob,p] = amplRead(filename,extraArgs,amplPath,isNLP)
 % have a licensed version of AMPL (or the student edition) present on your 
 % computer to read .mod files. For more information see www.ampl.com.
 
-%   Copyright (C) 2011-2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2011-2013 Jonathan Currie (IPL)
 
 %Optional args
 if(nargin < 4), isNLP = 0; end

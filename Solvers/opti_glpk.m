@@ -9,7 +9,7 @@ function [x,fval,exitflag,info] = opti_glpk(f,A,b,Aeq,beq,lb,ub,int,opts)
 %   THIS IS A WRAPPER FOR GLPK USING GLPKMEX
 %   See supplied GNU License
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 t = tic;
 

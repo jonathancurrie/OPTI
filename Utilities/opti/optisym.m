@@ -33,7 +33,7 @@ function [Opt,SymB] = optisym(fun,x0,lb,ub,con,cl,cu,xtype,sopts,verbose)
 %
 %   See also opti opti.solve 
 %
-%   Copyright (C) 2011-2014 Jonathan Currie (www.i2c2.aut.ac.nz)
+%   Copyright (C) 2011-2014 Jonathan Currie (www.inverseproblem.co.nz)
 
 if(nargin < 10), verbose = false; end
 if(nargin < 9 || isempty(sopts)), sopts = symbset; end

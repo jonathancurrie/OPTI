@@ -3,7 +3,7 @@ function displayBuilder(B)
 %
 %   Called By SYMBUILDER Class
 
-%   Copyright (C) 2012 Jonathan Currie (I2C2)
+%   Copyright (C) 2012 Jonathan Currie (IPL)
 
 disp('------------------------------------------------------');
 disp('SymBuilder Object');

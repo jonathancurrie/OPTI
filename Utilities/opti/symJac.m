@@ -23,7 +23,7 @@ function [jac,pattern,symjac] = symJac(fun,nvar,tran,var,file)
 %   [jac,pattern] = symJac(...) also returns the sparsity pattern as a
 %   function handle.
 
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)
 
 if(nargin < 5), file = []; end
 if(nargin < 4 || isempty(var)), var = 'x'; end    

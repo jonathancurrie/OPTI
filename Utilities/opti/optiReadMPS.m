@@ -21,7 +21,7 @@ function prob = optiReadMPS(filename)
 % to use coinRead() instead! This function will be removed in a future
 % release.
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 % Make sure we have file extension!
 if(isempty(strfind(filename,'.mps')) && isempty(strfind(filename,'.qps')) && isempty(strfind(filename,'.')))

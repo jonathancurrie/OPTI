@@ -12,7 +12,7 @@ function [x,fval,exitflag,info,Opt] = opti_fminunc(fun,x0,opts)
 %   [x,...,info,Opt] = opti_fminunc(fun,...) returns the internally 
 %   built OPTI object.
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 
 % Handle missing arguments

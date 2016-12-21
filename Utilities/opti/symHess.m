@@ -16,7 +16,7 @@ function [hess,pattern,symhess] = symHess(fun,nvar,isTril,var)
 %   [hess,pattern] = symHess(...) also returns the sparsity pattern as a
 %   function handle.
 
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)
 
 if(nargin < 4), var = 'x'; end
 if(nargin < 3), isTril = false; end

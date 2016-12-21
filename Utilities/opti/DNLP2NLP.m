@@ -2,7 +2,7 @@ function prob = DNLP2NLP(prob,opts)
 %DNLS2NLS  Converts a Dynamic NLP problem into a NLP problem
 % prob= DNLP2NLP(prob,opts)
 
-%   Copyright (C) 2014 Jonathan Currie (I2C2)
+%   Copyright (C) 2014 Jonathan Currie (IPL)
 
 % if(~isfield(prob,'type') || isempty(prob.type))
 %     error('This function is not for user use, and should only be called from OPTI');

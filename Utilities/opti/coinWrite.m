@@ -16,7 +16,7 @@ function coinWrite(prob,filename,type)
 % The routines underneath use COIN-OR utilities for File IO. See 
 % attached EPL License.
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 %Quick Checks
 if(~exist('type','var') || isempty(type))

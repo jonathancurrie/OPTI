@@ -37,7 +37,7 @@ classdef opti < handle
 %
 %   See also opti.solve optiset opti.plot 
 %
-%   Copyright (C) 2011-2015 Jonathan Currie (www.i2c2.aut.ac.nz)
+%   Copyright (C) 2011-2017 Jonathan Currie (www.inverseproblem.co.nz)
     
     properties (SetAccess = private)
         prob        % Problem Structure (optiprob)

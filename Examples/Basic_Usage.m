@@ -15,10 +15,10 @@
 %   - Validating the solution
 %   - Plotting the solution
 %
-%   Copyright (C) 2014 Jonathan Currie (I2C2)
+%   Copyright (C) 2014 Jonathan Currie (IPL)
 
 % There is also a page on the Wiki which supplements this example:
-web('http://i2c2.aut.ac.nz/Wiki/OPTI/index.php/GetStart/Basics');
+web('https://www.inverseproblem.co.nz/OPTI/index.php/GetStart/Basics');
 
 %% Checking solvers available with your OPTI distribution
 % Not all solvers are supplied with the OPTI Toolbox, so to check which are
@@ -65,7 +65,7 @@ opti;
 clc
 optiset
 
-web('http://i2c2.aut.ac.nz/Wiki/OPTI/index.php/Advanced/Opts','-new');
+web('https://www.inverseproblem.co.nz/OPTI/index.php/Advanced/Opts','-new');
 
 %% Example 1
 % This is a simple two decision variable Linear Program (LP) which we will

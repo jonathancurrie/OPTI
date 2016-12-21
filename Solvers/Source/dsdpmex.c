@@ -1,9 +1,9 @@
 /* DSDPMEX - A MATLAB MEX Interface to DSDP
  * Released Under the BSD 3-Clause License:
- * http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/DL/License
+ * https://www.inverseproblem.co.nz/OPTI/index.php/DL/License
  *
  * Copyright (C) Jonathan Currie 2013
- * www.i2c2.aut.ac.nz
+ * www.inverseproblem.co.nz
  */
 
 /* Based in parts on dsdpmex.c supplied with DSDP 5.8 */
@@ -738,6 +738,6 @@ void printSolverInfo()
         mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
     #endif
 
-    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.i2c2.aut.ac.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.inverseproblem.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

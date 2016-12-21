@@ -1,9 +1,9 @@
 /* NLOPTMEX - A MATLAB MEX Interface to NLOPT
  * Released Under the BSD 3-Clause License:
- * http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/DL/License
+ * https://www.inverseproblem.co.nz/OPTI/index.php/DL/License
  *
  * Copyright (C) Jonathan Currie 2013
- * www.i2c2.aut.ac.nz
+ * www.inverseproblem.co.nz
  */
 
 /* Based in parts on nlopt_optimize-mex.c supplied with NLOPT */
@@ -816,6 +816,6 @@ void printSolverInfo()
     mexPrintf("  - Released under the GNU Lesser General Public License: http://www.gnu.org/copyleft/lesser.html\n");
     mexPrintf("  - Source available from: http://ab-initio.mit.edu/wiki/index.php/NLopt\n");
 
-    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.i2c2.aut.ac.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.inverseproblem.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

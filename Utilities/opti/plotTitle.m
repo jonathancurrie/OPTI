@@ -1,7 +1,7 @@
 function str = plotTitle(prob,xb,data)
 %PLOTTITLE Add Plot Title to Current Axes
     
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 if(nargin < 2), xb = []; end
 

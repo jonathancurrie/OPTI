@@ -3,14 +3,18 @@ function current_version = optiver
 %  Return OPTI software version. This file also contains version update
 %  information.
 
-%   Copyright (C) 2011-2016 Jonathan Currie (I2C2)
+%   Copyright (C) 2011-2017 Jonathan Currie (IPL)
 
 current_version = 2.23;
 
 %History
 
-%2.23 (..)
+%2.23 (21/12/16)
+% - Updated documentation to match move to Inverse Problem Limited
+% - Rebuilt all solvers against MKL v11.3 R4
+% - Updated IPOPT to 3.12.6
 % - Updated ASL to v20160922, including VSBuild for auto compilation
+% - Updated nomadset to latest spec (C. Tribes)
 % - Fixed bug where maxnodes instead of maxiter was used for BARON maxiter setting.
 % - Fixed bug where x0 as a matrix could be supplied as solve(opt,x0) and skip error generation.
 % - [API Change] Changed return codes for constraint linearity in ASL interface

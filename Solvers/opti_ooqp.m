@@ -20,7 +20,7 @@ function [x,fval,exitflag,info] = opti_ooqp(H,f,A,rl,ru,Aeq,beq,lb,ub,opts)
 %   THIS IS A WRAPPER FOR OOQP USING OOQP MEX INTERFACE
 %   See supplied License
 
-%   Copyright (C) 2012 Jonathan Currie (I2C2)
+%   Copyright (C) 2012 Jonathan Currie (IPL)
 
 t = tic;
 

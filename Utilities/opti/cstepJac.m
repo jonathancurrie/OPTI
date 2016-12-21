@@ -16,7 +16,7 @@ function jac = cstepJac(fun,x,nrow,h)
 %   1e-8.
 %
 %
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)
 
 if(nargin < 4), h = 1e-8; end
 if(nargin < 3), nrow = []; end

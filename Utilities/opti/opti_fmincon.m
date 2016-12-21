@@ -15,7 +15,7 @@ function [x,fval,exitflag,info,Opt] = opti_fmincon(fun,x0,A,b,Aeq,beq,lb,ub,nonl
 %   [x,...,info,Opt] = opti_fmincon(fun,...) returns the internally 
 %   built OPTI object.
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 
 %Handle missing arguments

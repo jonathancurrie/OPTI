@@ -21,7 +21,7 @@ function [x,fval,exitflag,info] = opti_pswarm(fun,lb,ub,x0,A,b,opts)
 %   THIS IS A WRAPPER FOR PSwarm
 %   See referenced Lesser GNU Public License
 
-%   Copyright (C) 2012 Jonathan Currie (I2C2)
+%   Copyright (C) 2012 Jonathan Currie (IPL)
 
 if(nargin < 7), opts = optiset; else opts = optiset(opts); end
 if(nargin < 6), b = []; end

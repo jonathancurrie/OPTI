@@ -55,4 +55,4 @@
  
 %   Based in parts on the original MEX interface by Prof. Steven Johnson.
 %
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)

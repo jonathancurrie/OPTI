@@ -1,5 +1,5 @@
 /* MKLJAC - A simple MEX Interface to the MKL djacobi Function
- * Copyright (C) 2011 Jonathan Currie (I2C2)                             
+ * Copyright (C) 2011 Jonathan Currie (IPL)                             
  */
 
 #include <mex.h>
@@ -142,6 +142,6 @@ void printSolverInfo()
     
     mexPrintf("\n Usage: [jac,status] = mklJac(fun,x,nrow)\n");
     
-    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.i2c2.aut.ac.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.inverseproblem.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

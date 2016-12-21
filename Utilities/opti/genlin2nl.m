@@ -1,7 +1,7 @@
 function prob = genlin2nl(prob,sparsity,warn)
 %GENLIN2NL Convert General Linear Constraints to Mixed Nonlinear Constraints
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 if(isempty(prob.A) && isempty(prob.Aeq))
     return; %nothing to do

@@ -17,7 +17,7 @@ function options = bonminset(varargin)
 %
 % See supplied BONMIN and IPOPT Documentation for further details of these options.
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 % Print out possible values of properties.
 if((nargin == 0) && (nargout == 0))

@@ -1,9 +1,9 @@
 /* MKLTRNLSMEX - A MATLAB MEX Interface to MKL Trust Region NLS
  * Released Under the BSD 3-Clause License:
- * http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/DL/License
+ * https://www.inverseproblem.co.nz/OPTI/index.php/DL/License
  *
  * Copyright (C) Jonathan Currie 2013
- * www.i2c2.aut.ac.nz
+ * www.inverseproblem.co.nz
  */
 
 #include "mex.h"
@@ -609,6 +609,6 @@ void printSolverInfo()
     mexPrintf(" MKLTRNLS: Intel MKL Trust Region Nonlinear Least Squares [v%d.%d R%d, Built %s, VS%s]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__,__DATE__,vbuf);              
     mexPrintf("  - Released as part of the Intel Math Kernel Library\n  - http://software.intel.com/en-us/intel-mkl\n");
     
-    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.i2c2.aut.ac.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.inverseproblem.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

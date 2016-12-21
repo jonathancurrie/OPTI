@@ -1,5 +1,5 @@
 %% L-BFGS-B Install for OPTI Toolbox
-% Copyright (C) 2014 Jonathan Currie (I2C2)
+% Copyright (C) 2014 Jonathan Currie (IPL)
 
 % This file will help you compile Limited Memory Broyden-Fletcher-Goldfarb-
 % Shanno Bounded Optimization (L-BFGS-B) for use with MATLAB. 

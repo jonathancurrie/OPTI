@@ -23,7 +23,7 @@ THIS SOFTWARE.
 ****************************************************************/
 
 /* Code is largely modified from the original by J.Currie Oct 2011 
-   Copyright (C) 2011 Jonathan Currie (I2C2)
+   Copyright (C) 2011 Jonathan Currie (IPL)
  */
 
 /* Note I am not 100% sure how to deal with mxCreate() functions and their
@@ -578,6 +578,6 @@ void printUtilityInfo()
     mexPrintf(" ASL: AMPL Solver Library [v%d]\n",ASLdate_ASL);
     mexPrintf("  - Source available from: http://www.netlib.org/ampl/solvers/\n");
 
-    mexPrintf("\n MEX Interface J.Currie 2013 (www.i2c2.aut.ac.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 (www.inverseproblem.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

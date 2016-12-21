@@ -17,7 +17,7 @@ function [hess,pattern,symhess] = symHessLag(obj,nlcon,nvar,isTril,var)
 %   [hess,pattern] = symHessLag(...) also returns the sparsity pattern as a
 %   function handle.
 
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)
 
 if(nargin < 5), var = 'x'; end
 if(nargin < 4), isTril = false; end

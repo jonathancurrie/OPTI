@@ -3,7 +3,7 @@ function nlprob = convIpopt(prob,opts)
 %
 %   nlprob = convIpopt(prob,opts)
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 %Ensure all args passed
 if(nargin < 2)

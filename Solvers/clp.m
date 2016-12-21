@@ -48,6 +48,6 @@
 %       5 - User Exited
 %
 %
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)
 %
 %   See Also opti_clp

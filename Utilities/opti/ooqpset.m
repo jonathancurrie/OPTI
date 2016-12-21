@@ -17,7 +17,7 @@ function options = ooqpset(varargin)
 %
 % See supplied OOQP Documentation for further details of these options.
 
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)
 
 % Print out possible values of properties.
 if((nargin == 0) && (nargout == 0))

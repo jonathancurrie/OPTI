@@ -19,7 +19,7 @@ function [x,fval,exitflag,info] = opti_lmder(fun,grad,x0,ydata,opts)
 %   THIS IS A WRAPPER FOR LM_DER + LM_DIF
 %   See supplied License
 
-%   Copyright (C) 2012 Jonathan Currie (I2C2)
+%   Copyright (C) 2012 Jonathan Currie (IPL)
 
 if(nargin < 5), opts = optiset; end
 if(nargin < 4), error('LM_DER requires at least 4 arguments'); end

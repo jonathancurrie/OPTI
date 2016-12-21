@@ -4,7 +4,7 @@ function opti_Install
 % In order to run this tool, please run this file to setup the required
 % directories. You MUST be in the current directory of this file!
 
-%   Copyright (C) 2012 Jonathan Currie (I2C2)
+%   Copyright (C) 2016 Jonathan Currie (IPL)
 
 cpath = cd;
 try

@@ -1,7 +1,7 @@
 function options = opticheckset(Names,Defaults,checkfun,varargin)
 %OPTICHECKSET  Default Algorithm for dealing with solver option setting
 
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)
 
 %Transpose as required
 if(size(Names,2) > 1), Names = Names'; end

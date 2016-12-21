@@ -15,7 +15,7 @@ function options = optidynset(varargin)
 %
 % optidynset() prints a list of all possible fields and their function.
 
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)
 
 % Print out possible values of properties.
 if((nargin == 0) && (nargout == 0))

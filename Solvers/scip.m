@@ -82,4 +82,4 @@
 %	  same directory as the input file. Remember SCIP does not solve models with 
 %	  trigonometric functions.
 %
-%   Copyright (C) 2012-2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2012-2013 Jonathan Currie (IPL)

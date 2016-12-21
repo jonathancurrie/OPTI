@@ -1,9 +1,9 @@
 /* HYBRJMEX - A MATLAB MEX Interface to HBYRJ + HYBRD
  * Released Under the BSD 3-Clause License:
- * http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/DL/License
+ * https://www.inverseproblem.co.nz/OPTI/index.php/DL/License
  *
  * Copyright (C) Jonathan Currie 2013
- * www.i2c2.aut.ac.nz
+ * www.inverseproblem.co.nz
  */
 
 
@@ -526,6 +526,6 @@ void printSolverInfo()
     mexPrintf("  - Released as part of the MINPACK project: http://www.netlib.org/minpack/disclaimer\n");
     mexPrintf("  - Source available from: http://www.netlib.org/minpack/\n\n");
 
-    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.i2c2.aut.ac.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.inverseproblem.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

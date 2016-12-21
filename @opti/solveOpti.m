@@ -3,7 +3,7 @@ function [x,fval,exitflag,info] = solveOpti(optObj,x0)
 %
 %   Called By opti Solve
 
-%   Copyright (C) 2011-2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2011-2013 Jonathan Currie (IPL)
 
 %Allocate input args
 prob = optObj.prob; 

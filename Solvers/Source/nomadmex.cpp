@@ -10,10 +10,8 @@
 /*                                                                                     */
 /*  funded in part by AFOSR and Exxon Mobil                                            */
 /*                                                                                     */
-/*  MEX Interface Author: Jonathan Currie 2012-2013 (I2C2)                             */
+/*  MEX Interface Author: Jonathan Currie 2012-2013 (IPL)                              */
 /*                                                                                     */
-/*  MEX Interface Contact information:                                                 */
-/*    jocurrie@aut.ac.nz                                                               */
 /*                                                                                     */
 /*  This program is free software: you can redistribute it and/or modify it under the  */
 /*  terms of the GNU Lesser General Public License as published by the Free Software   */
@@ -1283,6 +1281,6 @@ void printSolverInfo()
     mexPrintf("  - Released under the GNU Lesser General Public License: http://www.gnu.org/copyleft/lesser.html\n");
     mexPrintf("  - Source available from: http://www.gerad.ca/NOMAD/Project/Home.html\n");
 
-    mexPrintf("\n MEX Interface J.Currie 2013 (www.i2c2.aut.ac.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 (www.inverseproblem.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

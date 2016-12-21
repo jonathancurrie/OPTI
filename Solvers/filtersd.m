@@ -49,4 +49,4 @@
 %       9 and above - LCP solver problem
 %       105 - User Exit
 %
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)

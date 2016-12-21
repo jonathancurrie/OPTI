@@ -5,11 +5,11 @@
 %   derivative expressions. It is also a basic modelling language,
 %   extending the functionality of the Symbolic Toolbox (required).
 %
-%   Copyright (C) 2014 Jonathan Currie (I2C2)
+%   Copyright (C) 2014 Jonathan Currie (IPL)
 clear
 
 % There is also a page on the Wiki which supplements this example:
-web('http://i2c2.aut.ac.nz/Wiki/OPTI/index.php/Advanced/SymBuilder');
+web('https://www.inverseproblem.co.nz/OPTI/index.php/Advanced/SymBuilder');
 
 % NOTE - If you get an error similar to "Undefined function 'symb_cb'" when
 % using SymBuilder then try type "rehash" at the MATLAB command line. This 

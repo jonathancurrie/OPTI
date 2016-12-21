@@ -6,7 +6,7 @@ function [x,info] = opti_mumps(A,b)
 %   THIS IS A WRAPPER FOR MUMPS USING THE MEX INTERFACE
 %   See supplied License
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 if(~isreal(A) || ~isreal(b))
     error('opti_mumps only solves real problems. Use opti_zmumps for complex problems.');

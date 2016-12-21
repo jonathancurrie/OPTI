@@ -12,7 +12,7 @@ function [x,fval,exitflag,info] = opti_sedumi(At,b,c,K,opts)
 %
 %   THIS IS A WRAPPER FOR SEDUMI (GPL)
 
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)
 
 if(nargin < 5), opts = optiset; end
 if(nargin < 4), K = []; end

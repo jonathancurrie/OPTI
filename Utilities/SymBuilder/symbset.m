@@ -15,7 +15,7 @@ function options = symbset(varargin)
 %
 % symbset() prints a list of all possible fields and their function.
 
-%   Copyright (C) 2013 Jonathan Currie (I2C2)
+%   Copyright (C) 2013 Jonathan Currie (IPL)
 
 % Print out possible values of properties.
 numberargs = nargin;

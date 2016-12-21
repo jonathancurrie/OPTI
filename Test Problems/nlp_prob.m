@@ -11,7 +11,7 @@ function [prob,sol,fmin] = nlp_prob(varargin)
 %   NOTE as implemented problems 1-50 return a Hock-Schittkowski
 %   problem (see nlp_HS), while other numbers are other problems.
 
-%   (C) 2011 Jonathan Currie (I2C2)
+%   (C) 2011 Jonathan Currie (IPL)
 
 %Check if just returning no problems
 if(nargin < 1)

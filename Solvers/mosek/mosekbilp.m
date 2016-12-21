@@ -19,7 +19,7 @@ function [x,fval,exitflag,info] = mosekbilp(f,A,rl,ru,x0,opts)
 %   This function is based in parts on examples from the MOSEK Toolbox, 
 %   Copyright (c) 1998-2011 MOSEK ApS, Denmark.
 
-%   Copyright (C) 2012 Jonathan Currie (I2C2)
+%   Copyright (C) 2012 Jonathan Currie (IPL)
 
 t = tic;
 

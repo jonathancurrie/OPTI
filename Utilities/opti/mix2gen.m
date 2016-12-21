@@ -4,7 +4,7 @@ function [Ain,bin,Aeq,beq] = mix2gen(A,b,e)
 %
 %   Use -1 for <=, 0 for =, and 1 for >= in vector e
 
-%   Copyright (C) 2011 Jonathan Currie (I2C2)
+%   Copyright (C) 2011 Jonathan Currie (IPL)
 
 if(size(A,1) ~= length(b))
     error('A and b sizes do not correspond');

@@ -6,7 +6,7 @@
 
 % My build platform:
 % - Windows 7 x64
-% - Visual Studio 2015
+% - Visual Studio 2013
 % - Intel Compiler XE (FORTRAN)
 % - Intel Math Kernel Library
 
@@ -32,16 +32,18 @@
 opts = [];
 opts.pardiso = 'MKL'; %use Intel MKL's Pardiso Library (empty to not use pardiso)
 opts.ma57 = 'Matlab'; %use MATLAB's supplied MA57 library (empty to not use ma57)
-opts.mumps = true; %link MUMPS (add path below when compiling lib)
+opts.mumps = true; %link MUMPS v5.0 (add path below when compiling lib)
 opts.ma27 = ''; %do not link ma27
 opts.linloader = false; %do not use HSL's linear solver dynamically loaded library (you must compile this separately)
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% path = 'C:\Solvers\Ipopt-3.12.6\Ipopt'; %FULL path to IPOPT
-% mumpspath = 'C:\Solvers\MUMPS_4.10.0'; %FULL path to MUMPS (or leave blank to skip linking MUMPS)
-% metispath = 'C:\Solvers\metis-4.0.3'; % FULL path to METIS (leave blank if not linking MUMPS) [max version 4.0.3]
-% opts.expaths = {mumpspath,metispath};
-% opti_VSBuild('IPOPT',path,opts);
+path = 'C:\Solvers\Ipopt-3.12.4\Ipopt'; %FULL path to IPOPT
+mumpspath = 'C:\Solvers\MUMPS_5.0.1'; %FULL path to MUMPS (or leave blank to skip linking MUMPS)
+metispath = 'C:\Solvers\metis-5.1.0'; % FULL path to METIS (leave blank if not linking MUMPS)
+mumpspath = 'C:\Solvers\MUMPS_4.10.0'; %FULL path to MUMPS (or leave blank to skip linking MUMPS)
+metispath = 'C:\Solvers\metis-4.0.3'; % FULL path to METIS (leave blank if not linking MUMPS)
+opts.expaths = {mumpspath,metispath};
+opti_VSBuild('IPOPT',path,opts);
 
 % 3) Compile the MEX File
 % The code below will automatically include all required libraries and
