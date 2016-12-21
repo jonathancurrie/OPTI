@@ -353,7 +353,7 @@ if(~isempty(p))
                 if(~prob.sizes.nineq && ~prob.sizes.neq) %bounded problem
                     opts.solverOpts = optimset(opts.solverOpts,'Algorithm','trust-region-reflective');
                 else %linearly constrained
-                    if(issparse(prob.H))
+                    if(issparse(prob.H) || ~verLessThan('matlab','9.1.0')) %2016b doesn't support active-set
                         opts.solverOpts = optimset(opts.solverOpts,'Algorithm','interior-point-convex');
                     else
                         opts.solverOpts = optimset(opts.solverOpts,'Algorithm','active-set');
