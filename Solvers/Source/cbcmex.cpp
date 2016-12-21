@@ -1,9 +1,9 @@
 /* CBCMEX - A MATLAB MEX Interface to CBC
  * Released Under the BSD 3-Clause License:
- * http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/DL/License
+ * https://www.inverseproblem.co.nz/OPTI/index.php/DL/License
  *
  * Copyright (C) Jonathan Currie 2012-2013
- * www.i2c2.aut.ac.nz
+ * www.inverseproblem.co.nz
  */
 
 #include "mex.h"
@@ -620,7 +620,7 @@ void printSolverInfo()
     mexPrintf("  - CoinUtils [v%s] (Eclipse Public License)\n",COINUTILS_VERSION);
     mexPrintf("  - OSI    [v%s] (Eclipse Public License)\n",OSI_VERSION);
     
-    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.i2c2.aut.ac.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.inverseproblem.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }
 

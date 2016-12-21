@@ -384,7 +384,7 @@ void printInfo()
     mexPrintf("  - CpPAD Source available from: http://www.coin-or.org/CppAD\n");
 	mexPrintf("\n Call - symb_ccb(mode,x)\n");
     mexPrintf("\n Modes: 'obj', 'grad', 'con', 'jac' 'jacstr', 'hess' or 'hstr'\n");
-    mexPrintf("\n J.Currie 2014-2016 (www.i2c2.aut.ac.nz)\n");
+    mexPrintf("\n J.Currie 2014-2016 (www.inverseproblem.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }
 

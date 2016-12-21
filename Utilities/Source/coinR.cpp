@@ -389,6 +389,6 @@ void printUtilityInfo()
     mexPrintf(" This binary is statically linked to the following software:\n");
     mexPrintf("  - GLPK [v%s] (GPL)\n",glp_version());
     
-    mexPrintf("\n MEX Interface J.Currie 2013 (www.i2c2.aut.ac.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 (www.inverseproblem.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

@@ -578,6 +578,6 @@ void printUtilityInfo()
     mexPrintf(" ASL: AMPL Solver Library [v%d]\n",ASLdate_ASL);
     mexPrintf("  - Source available from: http://www.netlib.org/ampl/solvers/\n");
 
-    mexPrintf("\n MEX Interface J.Currie 2013 (www.i2c2.aut.ac.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 (www.inverseproblem.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

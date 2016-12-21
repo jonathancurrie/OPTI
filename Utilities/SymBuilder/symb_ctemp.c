@@ -134,7 +134,7 @@ void printInfo()
     mexPrintf(" SYMBUILDER C CODE CALLBACK [Built %s]\n",__DATE__);
 	mexPrintf("\n Call - symb_ccb(mode,x)\n");
     mexPrintf("\n Modes: 'obj', 'grad', 'con', 'jac' or 'hess'\n");
-    mexPrintf("\n J.Currie 2014 (www.i2c2.aut.ac.nz)\n");
+    mexPrintf("\n J.Currie 2014 (www.inverseproblem.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }
 
