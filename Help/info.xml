@@ -17,7 +17,7 @@
 
 <listitem>
 <label>Product Page (Web)</label>
-<callback>web http://www.i2c2.aut.ac.nz/Wiki/OPTI/ -browser;</callback>
+<callback>web https://www.inverseproblem.co.nz/OPTI/ -browser;</callback>
 <icon>$toolbox/matlab/icons/webicon.gif</icon>
 </listitem>
 

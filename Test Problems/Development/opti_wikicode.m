@@ -13,7 +13,7 @@ set(gcf,'position',stdsize);
 set(gcf,'PaperPositionMode','auto');
 
 %% Basic OPTI Usage
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/GetStart/Basics
+% https://www.inverseproblem.co.nz/OPTI/index.php/GetStart/Basics
 
 % Ex1
 % Problem
@@ -79,7 +79,7 @@ if(~isempty(figDir))
 end
 
 %% MATLAB Optimization Toolbox Overloads
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/GetStart/Overloads
+% https://www.inverseproblem.co.nz/OPTI/index.php/GetStart/Overloads
 
 % Ex1
 % Problem
@@ -127,7 +127,7 @@ opts = optiset('solver','nomad');
 [x,fval] = opti_fmincon(fun,x0,[],[],[],[],lb,ub,[],opts)
 
 %% Linear Program
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/LP
+% https://www.inverseproblem.co.nz/OPTI/index.php/Probs/LP
 
 % Ex 1
 % Objective
@@ -236,7 +236,7 @@ Opt = opti('f',f,'objbias',objbias,'ineq',A,b,'bounds',lb,ub)
 [x,fval] = solve(Opt)
 
 %% MILP
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/MILP
+% https://www.inverseproblem.co.nz/OPTI/index.php/Probs/MILP
 
 % Ex1
 % Objective
@@ -328,7 +328,7 @@ nB = 10; %Number of Binary Variables
 xtype = [repmat('C',1,nC),repmat('I',1,nI),repmat('B',1,nB)]
 
 %% SDP
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/SDP
+% https://www.inverseproblem.co.nz/OPTI/index.php/Probs/SDP
 
 % Ex1
 % Objective
@@ -413,7 +413,7 @@ if(~isempty(which('sedumi.m')))
 end
 
 %% QP
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/QP
+% https://www.inverseproblem.co.nz/OPTI/index.php/Probs/QP
 
 % Ex 1
 % Objective
@@ -500,7 +500,7 @@ if(~isempty(figDir))
 end
 
 %% MIQP
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/MIQP
+% https://www.inverseproblem.co.nz/OPTI/index.php/Probs/MIQP
 
 % Ex 1
 % Objective
@@ -527,7 +527,7 @@ if(~isempty(figDir))
 end
 
 %% QCQP
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/QCQP
+% https://www.inverseproblem.co.nz/OPTI/index.php/Probs/QCQP
 
 % Ex1
 % Objective
@@ -668,7 +668,7 @@ if(~isempty(figDir))
 end
 
 %% MIQCQPs
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/MIQCQP
+% https://www.inverseproblem.co.nz/OPTI/index.php/Probs/MIQCQP
 
 %Ex1
 % Objective
@@ -698,7 +698,7 @@ if(~isempty(figDir))
 end
 
 %% SNLE
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/SNLE
+% https://www.inverseproblem.co.nz/OPTI/index.php/Probs/SNLE
 
 % Ex 1
 % System of Nonlinear Equations
@@ -745,7 +745,7 @@ Opt = opti('nleq',nleq,'nlJac',nlJac,'nlJacstr',nlJacstr,'x0',x0)
 [x,fval,exitflag,info] = solve(Opt)
 
 %% SCNLE
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/SCNLE
+% https://www.inverseproblem.co.nz/OPTI/index.php/Probs/SCNLE
 
 % Ex1
 % System of Nonlinear Equations
@@ -766,7 +766,7 @@ Opt = opti('nleq',nleq,'bounds',lb,ub,'x0',x0)
 plot(Opt,0.75,1)
 
 %% NLS
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/NLS
+% https://www.inverseproblem.co.nz/OPTI/index.php/Probs/NLS
 
 % Ex1
 % Objective (Fitting) Function
@@ -930,7 +930,7 @@ if(~isempty(figDir))
 end
 
 %% DNLS
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Dynamic/DynamicSystemParameterEstimation
+% https://www.inverseproblem.co.nz/OPTI/index.php/Dynamic/DynamicSystemParameterEstimation
 
 %Ex1
 % ODE System
@@ -1244,7 +1244,7 @@ Opt = opti('ode',ode,'data',tm,zm,'bounds',0.5,2.5,'z0',z0,...
 [theta,fval,exitflag,info] = solve(Opt)
 
 %% NLP
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/NLP
+% https://www.inverseproblem.co.nz/OPTI/index.php/Probs/NLP
 
 %Ex1
 % Objective
@@ -1407,7 +1407,7 @@ end
 clf;
 
 %% GNLP
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/GNLP
+% https://www.inverseproblem.co.nz/OPTI/index.php/Probs/GNLP
 
 %Ex1
 % Objective
@@ -1469,7 +1469,7 @@ if(~isempty(figDir))
 end
 
 %% MINLP
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/MINLP
+% https://www.inverseproblem.co.nz/OPTI/index.php/Probs/MINLP
 
 %Ex1
 % Objective
@@ -1530,7 +1530,7 @@ end
 clf;
 
 %% OPTIFIT
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/ModelFit
+% https://www.inverseproblem.co.nz/OPTI/index.php/Probs/ModelFit
 
 %Ex 1
 % Fitting Data
@@ -1586,7 +1586,7 @@ if(~isempty(figDir))
 end
 
 %% Plot
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Advanced/Plots
+% https://www.inverseproblem.co.nz/OPTI/index.php/Advanced/Plots
 
 %Ex1
 % Objective (supplied with OPTI)
@@ -1735,7 +1735,7 @@ set(gcf,'position',stdsize); %return to normal
 
 
 %% Multi solve
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Advanced/MultiSolve
+% https://www.inverseproblem.co.nz/OPTI/index.php/Advanced/MultiSolve
 
 %Ex 1
 % QP Objective
@@ -1804,7 +1804,7 @@ if(~isempty(figDir))
 end
 
 %% SymBuilder
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Advanced/SymBuilder
+% https://www.inverseproblem.co.nz/OPTI/index.php/Advanced/SymBuilder
 % Create SymBuilder Object
 B = SymBuilder();
 % Create SymBuilder Object with suppressed command line output 
@@ -2035,7 +2035,7 @@ catch
 end
 
 %% Two Cons
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Advanced/Cons
+% https://www.inverseproblem.co.nz/OPTI/index.php/Advanced/Cons
 
 % Objective (f'x)
 f = -[1 2 3]';
@@ -2120,7 +2120,7 @@ Opt = opti('fun',fun,'nl',nlcon,cl,cu,'bounds',lb,ub)
 [x,fval] = solve(Opt,x0)
 
 %% Low Level
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Advanced/LowLevel
+% https://www.inverseproblem.co.nz/OPTI/index.php/Advanced/LowLevel
 
 % Ex1
 % Load Large LP Test Problem
@@ -2193,7 +2193,7 @@ Opt = opti('fun',fun,'nl',nlcon,cl,cu,'x0',x0)
 
 
 %% 1st Ders
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Advanced/Deriv1
+% https://www.inverseproblem.co.nz/OPTI/index.php/Advanced/Deriv1
 
 % Objective
 fun = @(x) x(1)*x(4)*(x(1) + x(2) + x(3)) + x(3);
@@ -2355,7 +2355,7 @@ Opt = opti('fun',fun,'grad',grad,'nl',nlcon,cl,cu,'jac',jac,'jacstr',jacstr,...
 
 
 %% 2nd Ders
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Advanced/Deriv2
+% https://www.inverseproblem.co.nz/OPTI/index.php/Advanced/Deriv2
 
 % Objective
 fun = @(x) x(1)*x(4)*(x(1) + x(2) + x(3)) + x(3);
@@ -2420,7 +2420,7 @@ Opt = opti('fun',fun,'grad',grad,'nl',nlcon,cl,cu,'jac',jac,'jacstr',jacstr,...
 
 
 %% MPS
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/File/MPS
+% https://www.inverseproblem.co.nz/OPTI/index.php/File/MPS
  
 prob = coinRead('testLP.mps')
  % Build an OPTI object of the returned problem 
@@ -2490,7 +2490,7 @@ prob = amplRead('hs100.nl')
 prob.conlin
 
 %% SDPA
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/File/SDPA
+% https://www.inverseproblem.co.nz/OPTI/index.php/File/SDPA
 
 prob = sdpRead('arch0.dat-s')
 % Build an OPTI object of the returned problem 
@@ -2509,7 +2509,7 @@ OptSDMI = opti(prob)
 
 
 %% WhiteBox Solvers
-% http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Advanced/WhiteBox
+% https://www.inverseproblem.co.nz/OPTI/index.php/Advanced/WhiteBox
 clc
 
 % SCIP variable vector

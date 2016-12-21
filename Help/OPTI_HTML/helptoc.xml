@@ -5,8 +5,8 @@
 
     <tocitem target="Opti_main.html">OPTI Toolbox		
         <tocitem target="Functions.html" image="$toolbox/matlab/icons/help_fx.png">Functions</tocitem>
-		<tocitem target="http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php/Examples/Examples" image="$toolbox/matlab/icons/help_ex.png">Examples</tocitem>
-		<tocitem target="http://www.i2c2.aut.ac.nz/Wiki/OPTI/index.php" image="$toolbox/matlab/icons/help_rn.png">Release notes</tocitem>
+		<tocitem target="https://www.inverseproblem.co.nz/OPTI/index.php/Examples/Examples" image="$toolbox/matlab/icons/help_ex.png">Examples</tocitem>
+		<tocitem target="https://www.inverseproblem.co.nz/OPTI/index.php" image="$toolbox/matlab/icons/help_rn.png">Release notes</tocitem>
         <tocitem target="Contact.html">Contact</tocitem>        
     </tocitem>
 </toc>
