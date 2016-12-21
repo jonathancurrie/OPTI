@@ -37,7 +37,7 @@ opts.ma27 = ''; %do not link ma27
 opts.linloader = false; %do not use HSL's linear solver dynamically loaded library (you must compile this separately)
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% path = 'C:\Solvers\Ipopt-3.12.5\Ipopt'; %FULL path to IPOPT
+% path = 'C:\Solvers\Ipopt-3.12.6\Ipopt'; %FULL path to IPOPT
 % mumpspath = 'C:\Solvers\MUMPS_4.10.0'; %FULL path to MUMPS (or leave blank to skip linking MUMPS)
 % metispath = 'C:\Solvers\metis-4.0.3'; % FULL path to METIS (leave blank if not linking MUMPS) [max version 4.0.3]
 % opts.expaths = {mumpspath,metispath};
