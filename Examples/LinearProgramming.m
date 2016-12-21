@@ -7,7 +7,7 @@
 %   Copyright (C) 2014 Jonathan Currie (IPL)
 
 % There is also a page on the Wiki which supplements this example:
-web('http://i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/LP');
+web('https://www.inverseproblem.co.nz/OPTI/index.php/Probs/LP');
 
 %% Example 1
 % This is a simple two decision variable LP which will use for the next few

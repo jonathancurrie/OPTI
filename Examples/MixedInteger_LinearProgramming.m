@@ -7,7 +7,7 @@
 %   Copyright (C) 2014 Jonathan Currie (IPL)
 
 % There is also a page on the Wiki which supplements this example:
-web('http://i2c2.aut.ac.nz/Wiki/OPTI/index.php/Probs/MILP');
+web('https://www.inverseproblem.co.nz/OPTI/index.php/Probs/MILP');
 
 %% Determing which Solver to Use
 % OPTI Toolbox comes with a number of MILP solvers, thus to determine which

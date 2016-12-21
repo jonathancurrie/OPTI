@@ -20,7 +20,7 @@
 %   Copyright (C) 2014 Jonathan Currie (IPL)
 
 % There is also a page on the Wiki which supplements this example:
-web('http://i2c2.aut.ac.nz/Wiki/OPTI/index.php/GetStart/Overloads');
+web('https://www.inverseproblem.co.nz/OPTI/index.php/GetStart/Overloads');
 
 %% Example 1 - opti_linprog()
 % Solved using an OPTI LP solver. Note the function prototype is identical

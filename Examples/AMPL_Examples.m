@@ -9,7 +9,7 @@
 %   Copyright (C) 2014 Jonathan Currie (IPL)
 
 % There is also a page on the Wiki which supplements this example:
-web('http://i2c2.aut.ac.nz/Wiki/OPTI/index.php/File/AMPL');
+web('https://www.inverseproblem.co.nz/OPTI/index.php/File/AMPL');
 
 %% Loading an AMPL Problem
 % OPTI Toolbox is supplied with a number of example AMPL problems ranging
