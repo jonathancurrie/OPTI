@@ -155,7 +155,7 @@ Opt = opti('grad',f,'mix',A,b,e,'int','III','options',opts)
 
 %% MILP6
 clc
-%Objectie + Constraints
+%Objective + Constraints
 f = [-1 -1 -3 -2 -2]';
 A = [-1 -1 1 1 0;
      1 0 1 -3 0];
