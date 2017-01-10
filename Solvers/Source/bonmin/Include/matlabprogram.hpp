@@ -105,8 +105,10 @@ public:
 				      const IpoptData* ip_data,
 				      IpoptCalculatedQuantities* ip_cq);
   
+  //Return SOS constraint information
+  virtual const SosInfo * sosConstraints() const;
+  
   //Unused
-  virtual const SosInfo * sosConstraints() const{return NULL;}
   virtual const BranchingInfo* branchingInfo() const{return NULL;}
 
 protected:

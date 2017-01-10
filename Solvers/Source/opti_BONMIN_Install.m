@@ -32,7 +32,7 @@ opts.ma27 = ''; %do not link ma27
 
 % %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
 % path = 'C:\Solvers\Bonmin-1.8.4\Bonmin'; %FULL path to BONMIN
-% ipoptpath = 'C:\Solvers\Ipopt-3.12.4\Ipopt'; %FULL path to IPOPT
+% ipoptpath = 'C:\Solvers\Ipopt-3.12.6\Ipopt'; %FULL path to IPOPT
 % cbcpath = 'C:\Solvers\Cbc-2.9.8\Cbc'; % FULL path to CBC
 % clppath = 'C:\Solvers\Clp-1.16.10\Clp'; % FULL path to CLP
 % mumpspath = 'C:\Solvers\MUMPS_4.10.0'; %FULL path to MUMPS (or leave blank to skip linking MUMPS)

@@ -1137,7 +1137,7 @@ if(strcmpi(opts.solver,'auto'))
 end
 
 %Only certain solvers solve SOS problems
-if(csos && ~any(strcmpi(opts.solver,{'CPLEX','LP_SOLVE','CBC','SCIP'})))
+if(csos && ~any(strcmpi(opts.solver,{'CPLEX','LP_SOLVE','CBC','SCIP','BONMIN'})))
     oS = opts.solver;
     if(optiSolver('cplex',0)) %prefer cplex, but may not be available
         opts.solver = 'cplex';

@@ -75,6 +75,20 @@ bool MatlabProgram::get_constraints_linearity(Index m, Ipopt::TNLP::LinearityTyp
     }
 }
 
+const Bonmin::TMINLP::SosInfo * MatlabProgram::sosConstraints() const
+{
+    try 
+    {
+        return options.sos_constraints();
+    } 
+    catch (std::exception& error) 
+    {
+        mexPrintf(error.what());
+        mexPrintf("\n");
+        throw;
+    }
+}
+
 bool MatlabProgram::get_nlp_info (int& n, int& m, int& sizeOfJ, int& sizeOfH, 
 				  TNLP::IndexStyleEnum& indexStyle) 
   try {

@@ -102,3 +102,7 @@ else
         mprob.options.cons_lin = conslin;
     end
 end
+%Setup SOS
+if(isfield(prob,'sos') && ~isempty(prob.sos))
+    mprob.options.sos = prob.sos;
+end

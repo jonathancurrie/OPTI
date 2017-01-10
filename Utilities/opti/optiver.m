@@ -10,6 +10,7 @@ current_version = 2.24;
 %History
 
 %2.24 (..)
+% - Added SOS functionality to BONMIN
 
 %2.23 (21/12/16)
 % - Updated documentation to match move to Inverse Problem Limited

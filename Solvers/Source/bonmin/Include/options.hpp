@@ -61,12 +61,14 @@ public:
   const TMINLP::VariableType* variable_types()       const { return var_type; };
   const TNLP::LinearityType*  variable_linearity()   const { return var_lin; };
   const TNLP::LinearityType*  constraint_linearity() const { return cons_lin; };
+  const TMINLP::SosInfo*      sos_constraints()      const { return &sos_info; };
   
 protected:
   int            n;       // The number of optimization variables.
   int            m;       // The number of constraints.
   int            nlin;    // Number of linear constraints
   int            nnlin;   // Number of nonlinear constraints
+  int            nsos;    // Number of SOS constraints
   double*        lb;      // Lower bounds on the variables.
   double*        ub;      // Upper bounds on the variables.
   double*        cl;      // Lower bounds on constraints.
@@ -81,6 +83,7 @@ protected:
   TMINLP::VariableType*  var_type;  // Decision Variable Type (Binary / Integer / Continuous)
   TNLP::LinearityType*   var_lin;   // Decision Variable Linearity
   TNLP::LinearityType*   cons_lin;  // Constraint Variable Linearity
+  TMINLP::SosInfo        sos_info;  // SOS Constraint Info
 
   // These are helper functions used by the class constructor.
   static double* loadLowerBounds      (int n, const mxArray* ptr, 
@@ -98,6 +101,7 @@ protected:
   static TMINLP::VariableType* loadVariableTypes(int n, const mxArray *ptr);
   static TNLP::LinearityType*  loadVariableLinearity(int n, const mxArray *ptr);
   static TNLP::LinearityType*  loadConstraintLinearity(int m, int nlin, int nnlin, const mxArray *ptr);
+  static int                   loadSOSConstraints(TMINLP::SosInfo* sos, const mxArray *ptr);
 };
 
 #endif

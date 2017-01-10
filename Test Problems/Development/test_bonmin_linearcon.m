@@ -225,3 +225,156 @@ opts.display = 2;
 [x,output] = bonmin(x0,funcs,opts)
 
 
+
+%% SOS Testing - 1
+clc
+
+%Problem Data
+f = [-1 -1 -3 -2 -2]';
+A = [-1 -1 1 1 0;
+     1 0 1 -3 0];
+b = [30;30];
+ub = [40;1;100;100;1];
+
+sos = [];
+sos.type = '1';
+sos.index = 1:5;
+sos.weight = sos.index;
+
+% Objective & Gradient
+fun = @(x) f'*x;
+grad = @(x) f';
+
+% Linear constraints
+rl = -100*ones(size(b));
+ru = b;
+
+% Starting Guess
+x0 =zeros(size(f));
+% Build Function Structure
+funcs = [];
+funcs.objective = fun;
+funcs.gradient = grad;
+
+% Build Options Structure 
+opts = [];
+opts.lb = zeros(size(ub)); 
+opts.ub = ub; 
+opts.rl = rl; 
+opts.ru = ru; 
+opts.A = sparse(A); 
+opts.sos = sos;
+opts.ipopt.hessian_approximation = 'limited-memory';
+opts.display = 2;
+
+% Call BONMIN
+[x,output] = bonmin(x0,funcs,opts)
+
+%Check it
+Opt = opti('f',f,'lin',A,rl,ru,'bounds',opts.lb,opts.ub,'sos',sos);
+[x,fval] = solve(Opt)
+
+
+%% SOS Testing - 2
+clc
+
+%Problem Data
+f = [-1 -1 -3 -2 -2]';
+A = [-1 -1 1 1 0;
+     1 0 1 -3 0];
+b = [30;30];
+ub = [40;1;inf;inf;1];
+
+sos = [];
+sos.type = '2';
+sos.index = [3:5]';
+sos.weight = [3:5]';
+
+% Objective & Gradient
+fun = @(x) f'*x;
+grad = @(x) f';
+
+% Linear constraints
+rl = -Inf(size(b));
+ru = b;
+
+% Starting Guess
+x0 =zeros(size(f));
+% Build Function Structure
+funcs = [];
+funcs.objective = fun;
+funcs.gradient = grad;
+
+% Build Options Structure 
+opts = [];
+opts.lb = -Inf(size(ub)); 
+opts.ub = ub; 
+opts.rl = rl; 
+opts.ru = ru; 
+opts.A = sparse(A); 
+opts.sos = sos;
+opts.ipopt.hessian_approximation = 'limited-memory';
+opts.display = 2;
+
+% Call BONMIN
+[x,output] = bonmin(x0,funcs,opts)
+
+%Check it
+Opt = opti('f',f,'lin',A,rl,ru,'bounds',opts.lb,opts.ub,'sos',sos);
+[x,fval] = solve(Opt)
+
+
+%% SOS Testing - 12
+clc
+
+%Problem Data
+f = [-1 -1 -3 -2 -2]';
+A = [-1 -1 1 1 0;
+     1 0 1 -3 0];
+b = [30;30];
+ub = [40;1;inf;inf;1];
+
+sos = [];
+sos.type = '12';
+sos.index = {[1:2]' [3:5]'};
+sos.weight = {[1:2]' [3:5]'};
+
+% Objective & Gradient
+fun = @(x) f'*x;
+grad = @(x) f';
+
+% Linear constraints
+rl = -Inf(size(b));
+ru = b;
+
+% Starting Guess
+x0 =zeros(size(f));
+% Build Function Structure
+funcs = [];
+funcs.objective = fun;
+funcs.gradient = grad;
+
+% Build Options Structure 
+opts = [];
+opts.lb = -Inf(size(ub)); 
+opts.ub = ub; 
+opts.rl = rl; 
+opts.ru = ru; 
+opts.A = sparse(A); 
+opts.sos = sos;
+opts.ipopt.hessian_approximation = 'limited-memory';
+opts.display = 2;
+
+% Call BONMIN
+[x,output] = bonmin(x0,funcs,opts)
+
+%Check it
+Opt = opti('f',f,'lin',A,rl,ru,'bounds',opts.lb,opts.ub,'sos',sos);
+[x,fval] = solve(Opt)
+
+
+%% OPTI call version of SOS 12
+clc
+opts = optiset('display','iter','solver','bonmin','warnings','all');
+Opt = opti('fun',fun,'lin',A,rl,ru,'bounds',zeros(size(ub)),ub,'sos',sos,'opts',opts);
+[x,fval] = solve(Opt,x0)

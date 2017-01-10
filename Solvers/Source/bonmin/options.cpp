@@ -15,7 +15,7 @@
 // -----------------------------------------------------------------
 Options::Options (const Iterate& x, BonminSetup& app, 
 		  const mxArray* ptr) 
-  : n(numvars(x)), m(0), lb(0), ub(0), cl(0), cu(0), zl(0), zu(0),
+  : n(numvars(x)), m(0), nsos(0), lb(0), ub(0), cl(0), cu(0), zl(0), zu(0),
     lambda(0), var_type(0), var_lin(0), cons_lin(0), auxdata(0),
 
     // Process the BONMIN and IPOPT options.
@@ -38,6 +38,9 @@ Options::Options (const Iterate& x, BonminSetup& app,
   var_type = loadVariableTypes(n,ptr);
   var_lin  = loadVariableLinearity(n,ptr);
   cons_lin = loadConstraintLinearity(m,nlin,nnlin,ptr);
+  
+  // Load the SOS constraints
+  nsos = loadSOSConstraints(&sos_info,ptr);
 
   // Load the auxiliary data.
   auxdata = mxGetField(ptr,0,"auxdata");
@@ -337,4 +340,141 @@ TNLP::LinearityType* Options::loadConstraintLinearity(int m, int nlin, int nnlin
     }
         
     return conslin;
+}
+
+int Options::loadSOSConstraints(TMINLP::SosInfo* sos, const mxArray *ptr)
+{
+    const mxArray *pSOS = mxGetField(ptr,0,"sos");
+    
+    //If some SOS constraints specified
+    if(pSOS)
+    {
+        //Check user input
+        if(!mxIsStruct(pSOS))
+            throw MatlabException("The SOS argument must be a structure!");       
+        if(mxGetFieldNumber(pSOS,"type") < 0)
+            throw MatlabException("The sos structure should contain the field 'type'");
+        if(mxGetFieldNumber(pSOS,"index") < 0)
+            throw MatlabException("The sos structure should contain the field 'index'");
+        if(mxGetFieldNumber(pSOS,"weight") < 0)
+            throw MatlabException("The sos structure should contain the field 'weight'");
+        
+        int no_sets = (int)mxGetNumberOfElements(mxGetField(pSOS,0,"type")); 
+        if(no_sets > 1) {
+            if(!mxIsCell(mxGetField(pSOS,0,"index")) || mxIsEmpty(mxGetField(pSOS,0,"index")))
+                throw MatlabException("sos.index must be a cell array, and not empty!");
+            if(!mxIsCell(mxGetField(pSOS,0,"weight")) || mxIsEmpty(mxGetField(pSOS,0,"weight")))
+                throw MatlabException("sos.weight must be a cell array, and not empty!");
+            if(mxGetNumberOfElements(mxGetField(pSOS,0,"index")) != no_sets)
+                throw MatlabException("sos.index cell array is not the same length as sos.type!");
+            if(mxGetNumberOfElements(mxGetField(pSOS,0,"weight")) != no_sets)
+                throw MatlabException("sos.weight cell array is not the same length as sos.type!");        
+        }
+        
+        //Create SosInfo structure if constraints present
+        if(no_sets > 0) {
+            //Determine number of nzs, also check lengths as we go
+            int numNz = 0, numInd, numWt;
+            for(int i = 0; i < no_sets; i++)
+            {
+                if(mxIsCell(mxGetField(pSOS,0,"index")))
+                    numInd = (int)mxGetNumberOfElements(mxGetCell(mxGetField(pSOS,0,"index"),i));
+                else 
+                    numInd = (int)mxGetNumberOfElements(mxGetField(pSOS,0,"index"));
+                
+                if(mxIsCell(mxGetField(pSOS,0,"weight"))) 
+                    numWt = (int)mxGetNumberOfElements(mxGetCell(mxGetField(pSOS,0,"weight"),i));
+                else
+                    numWt = (int)mxGetNumberOfElements(mxGetField(pSOS,0,"weight"));
+            
+                if(numInd != numWt)
+                {
+                    throw MatlabException("An SOS constraint does not contain the same number of indices as weights!");
+                }
+                numNz += numInd; 
+            }
+            
+            //Allocate SosInfo memory (automatically cleared by SosInfo destructor)
+            sos->num = no_sets;
+            sos->types = new char[no_sets];
+            sos->priorities = new int[no_sets];
+            sos->numNz = numNz;
+            sos->starts = new int[no_sets+1];
+            sos->indices = new int[numNz];
+            sos->weights = new double[numNz];            
+            
+            //Collect Types
+            char *sostype = mxArrayToString(mxGetField(pSOS,0,"type"));
+            //Add each set
+            int numInSet, setStart = 0;
+            double *sosind, *soswt;
+            for(int i = 0; i < no_sets; i++)
+            {
+                //Types
+                sos->types[i] = sostype[i] - '0';
+                //Priorities (not really sure what these do as we don't specify variable priorities)
+                sos->priorities[i] = 10;
+                //Set Start
+                sos->starts[i] = setStart;
+                
+                //Collect novars + ind + wt
+                if(mxIsCell(mxGetField(pSOS,0,"index"))) {
+                    numInSet = (int)mxGetNumberOfElements(mxGetCell(mxGetField(pSOS,0,"index"),i));
+                    sosind = mxGetPr(mxGetCell(mxGetField(pSOS,0,"index"),i));
+                }
+                else {
+                    numInSet = (int)mxGetNumberOfElements(mxGetField(pSOS,0,"index"));
+                    sosind = mxGetPr(mxGetField(pSOS,0,"index"));
+                }
+                if(mxIsCell(mxGetField(pSOS,0,"weight"))) 
+                    soswt = mxGetPr(mxGetCell(mxGetField(pSOS,0,"weight"),i));
+                else
+                    soswt = mxGetPr(mxGetField(pSOS,0,"weight"));
+                
+                //Copy in
+                for(int j = 0, k = setStart; j < numInSet; j++, k++)
+                {
+                    sos->indices[k] = (int)sosind[j]-1; //-1 for matlab index
+                }
+                memcpy(&sos->weights[setStart],soswt,numInSet*sizeof(double));
+                
+                //Move start forward
+                setStart += numInSet;              
+            }
+            //End of set?
+            sos->starts[no_sets] = setStart;
+            
+            mxFree(sostype);
+            
+            #ifdef DEBUG
+            mexPrintf("%d SOS Sets with %d NNZ\nIndx: [",sos->num ,sos->numNz);
+            for(int i = 0; i < numNz; i++)
+            {
+                mexPrintf("%d ",sos->indices[i]);
+            }
+            mexPrintf("]\nWts: [");
+            for(int i = 0; i < numNz; i++)
+            {
+                mexPrintf("%.0f ",sos->weights[i]);
+            }
+            mexPrintf("]\nStarts: [");
+            for(int i = 0; i <= no_sets; i++)
+            {
+                mexPrintf("%d ",sos->starts[i]);
+            }
+            mexPrintf("]\nTypes: [");
+            for(int i = 0; i < no_sets; i++)
+            {
+                mexPrintf("'%d' ",sos->types[i]);
+            }
+            mexPrintf("]\n");
+            #endif
+        }
+        
+        return no_sets;
+    }
+    else
+    {
+        return 0; //none specified
+    }
 }
