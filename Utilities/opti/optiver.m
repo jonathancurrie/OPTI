@@ -5,9 +5,11 @@ function current_version = optiver
 
 %   Copyright (C) 2011-2017 Jonathan Currie (IPL)
 
-current_version = 2.23;
+current_version = 2.24;
 
 %History
+
+%2.24 (..)
 
 %2.23 (21/12/16)
 % - Updated documentation to match move to Inverse Problem Limited
