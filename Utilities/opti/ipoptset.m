@@ -58,14 +58,14 @@ Names = {'dual_inf_tol','constr_viol_tol','compl_inf_tol','acceptable_tol','acce
         'derivative_test_tol','derivative_test_print_all','derivative_test_first_index','point_perturbation_radius',...
         'ma57_pivtol','ma57_pivtolmax','ma57_pre_alloc','ma57_pivot_order','ma57_automatic_scaling','ma57_block_size',...
         'ma57_node_amalgamation','ma57_small_pivot_flag','mumps_pivtol','mumps_pivtolmax','mumps_mem_percent','mumps_permuting_scaling',...
-        'mumps_pivot_order','mumps_scaling','pardiso_redo_symbolic_fact_only_if_inertia_wrong'};
+        'mumps_pivot_order','mumps_scaling','pardiso_redo_symbolic_fact_only_if_inertia_wrong','pardiso_order'};
 
 Defaults = {1,0.0001,0.0001,1e-6,15,0.01,1e10,0.01,1e20,1e20,1,'gradient-based',100,1e-8,1e-8,'yes','no',-1e19,1e19,...
         'make_parameter','no','no','no',0.01,0.01,0.01,0.01,1,1000,'constant','no','monotone','quality-function',...
         8,'average_compl','obj-constr-filter',0.1,1000,100000,1e-11,0,10,0.2,1.5,'primal',10,'no',1e-6,...
         4,10,3,'no','no',0.001,0.001,0.001,0.001,0.001,1e-6,'no',0.001,1e8,'no',0.9999,0.9,1000,0,'yes',...
         'ma57','none','yes',10,1,1e20,1e-20,0.0001,100,8,1/3,1e-8,'exact',6,2,'scalar1',1,1e8,1e-8,'no',...
-        'none',1e-8,0.0001,'no',-2,10,1e-8,0.0001,1.05,5,'yes',16,16,0,1e-6,0.1,1000,7,7,77,'no'};
+        'none',1e-8,0.0001,'no',-2,10,1e-8,0.0001,1.05,5,'yes',16,16,0,1e-6,0.1,1000,7,7,77,'no','metis'};
 
 %Modify defaults if setting up for BONMIN
 if(strcmpi(mode,'bonmin'))
@@ -170,6 +170,8 @@ switch lower(field)
         err = opticheckval.checkValidString(value,field,{'scalar1','scalar2','scalar3','scalar4','constant'});
     case 'derivative_test'
         err = opticheckval.checkValidString(value,field,{'none','first-order','second-order','only-second-order'});
+    case 'pardiso_order'
+        err = opticheckval.checkValidString(value,field,{'metis','amd','pmetis'});
     %Unknown Parameter
     otherwise  
         err = MException('OPTI:SetFieldError','Unrecognized parameter name ''%s''.', field);
@@ -334,6 +336,7 @@ fprintf('                      mumps_scaling: [ Controls Scaling {77} ]\n');
 
 fprintf('\n  IPOPT PARDISO LINEAR SOLVER SETTINGS:\n');
 fprintf(' pardiso_redo_symbolic_fact_only_if_inertia_wrong: [ Always redo symbolic factorization when elements were perturbed {''no''}, Only if Perturbed and Inertia Wrong (''yes'') ]\n');
+fprintf('                      pardiso_order: [ Controls Fill-In Reduction Ordering Algorithm {''metis''}, ''amd'', ''pmetis'' ]\n');
 
 
 fprintf('\n');
