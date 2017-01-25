@@ -30,7 +30,7 @@
 % clear
 % path = 'C:\Solvers\scipoptsuite-3.2.1\scip-3.2.1'; %e.g. 'C:\Solvers\SCIP'
 % splxpath = 'C:\Solvers\scipoptsuite-3.2.1\soplex-2.2.1'; %e.g. 'C:\Solvers\SOPLEX'
-% ipoptpath = 'C:\Solvers\Ipopt-3.12.4\Ipopt'; %e.g. 'C:\Solvers\IPOPT'
+% ipoptpath = 'C:\Solvers\Ipopt-3.12.6\Ipopt'; %e.g. 'C:\Solvers\IPOPT'
 % n = 1;
 % % SCIP
 % sdir = [path '\src'];
@@ -93,8 +93,10 @@
 %      while for 64bit change it to
 %           # define CPPAD_SIZE_T_SAME_UNSIGNED_INT 0
 %           # define CPPAD_TAPE_ADDR_TYPE size_t
-%   c) Build a Win32 or x64 Release of each project to compile the code.
-%   d) Copy the generated .lib files to the following folder:
+%   c) You MAY need to change line 2789 of nlpi_ipopt.cpp to "#ifdef F77_FUNC"
+%      if you encounter linker errors around "SCIPsolveLinearProb".
+%   d) Build a Win32 or x64 Release of each project to compile the code.
+%   e) Copy the generated .lib files to the following folder:
 %
 %   OPTI/Solvers/scip/Source/lib/win32 or win64
 %

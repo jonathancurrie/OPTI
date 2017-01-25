@@ -13,6 +13,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <cmath>
+#include <limits>
 
 #include "scip/scip.h"
 #include "scip/scipdefplugins.h"
@@ -663,6 +664,12 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
             if(aslMode) //write ampl solution by default
                 SCIPwriteAmplSolReaderNl(scip,NULL);
             #endif
+        }
+        else //no solution found
+        {
+            *fval = std::numeric_limits<double>::quiet_NaN();
+            *gap = std::numeric_limits<double>::infinity();
+            *pbound = std::numeric_limits<double>::quiet_NaN();
         }
         //Get Solution Status
         *exitflag = (double)SCIPgetStatus(scip);
