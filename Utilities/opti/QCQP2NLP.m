@@ -12,10 +12,11 @@ ndec = length(prob.f);
 nqc = prob.sizes.nqc;
 
 %All require converting objective from LP / QP to NLP
-H = prob.H; f = prob.f; prob.H = []; prob.f = []; 
+H = prob.H; f = prob.f; bias = prob.objbias; prob.H = []; prob.f = []; prob.objbias = [];
+if(isempty(bias)), bias = 0; end
 [r,c] = size(H);
 if(r+c == 0) %Check for LP
-    prob.fun = @(x) f'*x;
+    prob.fun = @(x) f'*x + bias;
     %Gradient
     prob.f = @(x) f;
     %Hessian
@@ -23,7 +24,7 @@ if(r+c == 0) %Check for LP
     prob.H = @(x,sigma,lambda) Hc;
     prob.Hstr = @() Hc;
 else %Must be QP
-    prob.fun = @(x) 0.5*x'*H*x + f'*x;
+    prob.fun = @(x) 0.5*x'*H*x + f'*x + bias;
     %Const H Part
     Hc = 0.5*(H + H');
     %Gradient

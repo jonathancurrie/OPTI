@@ -11,6 +11,8 @@ current_version = 2.24;
 
 %2.24 (..)
 % - Added SOS functionality to BONMIN
+% - Changed QCQP2NLP to accept objbias term (S.Kampezidou)
+% - Changed SCIP to return Gap=Inf if no solutions found (A.Stamps)
 
 %2.23 (21/12/16)
 % - Updated documentation to match move to Inverse Problem Limited
