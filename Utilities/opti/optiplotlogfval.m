@@ -23,7 +23,7 @@ end
 fval = log10(abs(fval));
 
 %Check for new solver run
-if(iter <= liter)
+if(iter < liter)
     h = plot(iter,fval,'b*');
     title(sprintf('Current Function Value: %g',fval));
     xlabel('Iteration /  Function Evaluation');
