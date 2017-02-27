@@ -9,10 +9,11 @@ current_version = 2.24;
 
 %History
 
-%2.24 (..)
+%2.24 (27/02/17)
 % - Added SOS functionality to BONMIN
 % - Changed QCQP2NLP to accept objbias term (S.Kampezidou)
 % - Changed SCIP to return Gap=Inf if no solutions found (A.Stamps)
+% - Rebuilt all solvers against MKL v2017.0 R2
 
 %2.23 (21/12/16)
 % - Updated documentation to match move to Inverse Problem Limited
