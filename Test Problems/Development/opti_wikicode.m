@@ -2462,26 +2462,29 @@ Opt = opti(prob)
 % Solve the resulting OPTI object
 [x,fval] = solve(Opt)
 
-% Load an AMPL MIQCQP from Model File (but read as MINLP)
-prob = amplRead('trimlon.mod','trimlon2.dat',[],1)
+try
+    % Load an AMPL MIQCQP from Model File (but read as MINLP)
+    prob = amplRead('trimlon.mod','trimlon2.dat',[],1)
 
-% Build an OPTI object of the returned problem 
-Opt = opti(prob)
+    % Build an OPTI object of the returned problem 
+    Opt = opti(prob)
 
-% Solve the resulting OPTI object
-[x,fval] = solve(Opt)
+    % Solve the resulting OPTI object
+    [x,fval] = solve(Opt)
 
-% Load an AMPL MIQCQP from Model File
-prob = amplRead('trimlon.mod','trimlon2.dat')
+    % Load an AMPL MIQCQP from Model File
+    prob = amplRead('trimlon.mod','trimlon2.dat')
 
-% Set SCIP as the solver
-opts = optiset('solver','scip','display','iter');
+    % Set SCIP as the solver
+    opts = optiset('solver','scip','display','iter');
 
-% Build an OPTI object of the returned problem 
-Opt = opti(prob,opts)
+    % Build an OPTI object of the returned problem 
+    Opt = opti(prob,opts)
 
-% Solve the resulting OPTI object
-[x,fval] = solve(Opt)
+    % Solve the resulting OPTI object
+    [x,fval] = solve(Opt)
+catch
+end
 
 % Load an AMPL NLP from Model File
 prob = amplRead('hs100.nl')
