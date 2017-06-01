@@ -22,7 +22,7 @@ function [projPath,guid] = VS_WriteProj(srcpath,projName,incpath,opts)
 %                       'openMP'   true / false {false}
 %                       'mkl'      true / false to include MKL headers {false}
 %                       'charset'  Character Set {'unicode'}, 'multibyte'
-%                       'toolset'  'v100' for VS2010, 'v110' for VS2012, v120 for VS2013, v140 for VS2015 {v140}
+%                       'toolset'  'v100' for VS2010, 'v110' for VS2012, v120 for VS2013, v140 for VS2015, v141 for VS2017 {v141}
 %                       'ifortver' Intel Fortran version 'XE11' for XE2011/SP1, 'XE13' for XE2013/SP1, 'XE15' for XE2015, 'XE16' for XE2016 {XE16}
 %                       'exclude'  cell array of source files to exclude from project {[]}
 %                       'exFilter' cell array of filtered source files (e.g. abc*) to exclude from project {[]}
@@ -57,7 +57,7 @@ if(~isfield(opts,'ex64PP')), opts.ex64PP = []; end
 if(~isfield(opts,'openMP')), opts.openMP = false; end
 if(~isfield(opts,'charset')), opts.charset = 'unicode'; end
 if(~isfield(opts,'mkl')), opts.mkl = false; end
-if(~isfield(opts,'toolset')), opts.toolset = 'v140'; end
+if(~isfield(opts,'toolset')), opts.toolset = 'v141'; end
 if(~isfield(opts,'ifortver')), opts.ifortver = 'XE16'; end
 if(~isfield(opts,'include')), opts.include = []; end
 if(~isfield(opts,'exclude')), opts.exclude = []; end
@@ -180,7 +180,9 @@ if(opts.cpp)
     docNode = com.mathworks.xml.XMLUtils.createDocument('Project');
     p = docNode.getDocumentElement;
     p.setAttribute('DefaultTargets','Build');
-    if(strcmpi(opts.toolset,'v140'))
+    if(strcmpi(opts.toolset,'v141'))
+        p.setAttribute('ToolsVersion','15.0');
+    elseif(strcmpi(opts.toolset,'v140'))
         p.setAttribute('ToolsVersion','14.0');
     elseif(strcmpi(opts.toolset,'v120'))
         p.setAttribute('ToolsVersion','12.0');
