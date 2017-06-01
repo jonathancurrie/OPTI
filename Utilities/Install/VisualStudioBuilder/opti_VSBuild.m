@@ -21,6 +21,8 @@ function opti_VSBuild(solver,paths,opts)
 %           linloader       Include IPOPT Linear System Loader DLL Code {false}
 
 %Constants (modify to suit your PC)
+vs17Comdir  = 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE';
+vs17dir     = 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Common7\IDE';
 vs15dir     = 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE';
 vs13dir     = 'C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE';
 vs12dir     = 'C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE';
@@ -42,6 +44,7 @@ if(nargin < 3 || isempty(opts))
     opts.linloader = false;
     opts.libname = ['lib' lower(solver)];
     opts.copyLibs = true;
+    otps.build32bit = false;
 end
 
 %Special paths
@@ -79,12 +82,17 @@ if(~isfield(opts,'mumps5') || isempty(opts.mumps5)), MUMPS5 = false; else MUMPS5
 if(~isfield(opts,'linloader') || isempty(opts.linloader)), LINLOADER = false; else LINLOADER = opts.linloader; end
 if(~isfield(opts,'libname') || isempty(opts.libname)), LIBNAME = ['lib' lower(solver)]; else LIBNAME = opts.libname; end
 if(~isfield(opts,'copyLibs') || isempty(opts.copyLibs)), COPYLIBS = true; else COPYLIBS = opts.copyLibs; end
+if(~isfield(opts,'build32bit') || isempty(opts.build32bit)), build32bit = false; else build32bit = opts.copyLibs; end
 
 %Visual Studio Setup
 if(isfield(opts,'vsver') && ~isempty(opts.vsver))
     vsver = opts.vsver;
 else %find suitable version
-    if(exist([vs15dir '\devenv.exe'],'file'))
+    if(exist([vs17Comdir '\devenv.exe'],'file'))
+        vsver = 'VS2017';
+    elseif(exist([vs17dir '\devenv.exe'],'file'))
+        vsver = 'VS2017';
+    elseif(exist([vs15dir '\devenv.exe'],'file'))
         vsver = 'VS2015';
     elseif(exist([vs13dir '\devenv.exe'],'file'))
         vsver = 'VS2013';
@@ -129,6 +137,16 @@ cdir = cd;
 
 %Find Visual Studio devenv.exe 
 switch(lower(vsver))
+    case {'vs2017','2017'}
+        if(~exist([vs17Comdir '\devenv.exe'],'file'))
+            if(~exist([vs17dir '\devenv.exe'],'file'))            
+                error('Could not find Visual Studio 2017 Install - Looked in ''%s'' and ''%s''',vs17dir,vs17Comdir);
+            else
+                vsdir = vs17dir;
+            end
+        else
+            vsdir = vs17Comdir;
+        end
     case {'vs2015','2015'}
         if(~exist([vs15dir '\devenv.exe'],'file'))
             error('Could not find Visual Studio 2015 Install - Looked in ''%s''',vs15dir);
@@ -150,7 +168,7 @@ switch(lower(vsver))
         end
         vsdir = vs10dir;        
     otherwise
-        error('Unknown Visual Studio Version - Use VS2010, VS2012 or VS2013');
+        error('Unknown Visual Studio Version - Use VS2010, VS2012, VS2013, VS2015 or VS2017');
 end
 %Misc Defines
 bthdr = [cdir '/Solvers/Source/Include/BuildTools']; %Build Tools Headers for Coin Solvers
@@ -1170,10 +1188,10 @@ end
 %Compile Projects             
 if(~isempty(projs))
     try
-        compileProjects(vsdir,projs,comps,solpath,vsver);
+        compileProjects(vsdir,projs,comps,solpath,vsver,build32bit);
         %Copy out compiled libraries
         if(COPYLIBS)
-            copyLibs(solpath,projs,comps,cdir);
+            copyLibs(solpath,projs,comps,cdir,build32bit);
         end
         %Special case of mwma57, delete unzipped dir
         if(strcmpi(projs{1},'libmwma57'))
@@ -1186,7 +1204,7 @@ if(~isempty(projs))
         for i = 1:length(projs)
             str = sprintf('%s    - %s\n',str,projs{i});
         end
-        str = sprintf('%s\nThen move each of the above libraries (Win32 + Win64) to the following folder:\n',str);
+        str = sprintf('%s\nThen move each of the above libraries to the following folder:\n',str);
         str = sprintf('%s - %s/Source/libs/win32 or win64\n\n',str,strrep(cdir,filesep,'/'));
         str = sprintf('%sThe Visual Studio Solution is located at:\n - %s\n',str,strrep(solpath,filesep,'/'));
         error([str '\n\nError: %s'],ME.message);
@@ -1194,7 +1212,7 @@ if(~isempty(projs))
 end
 
 
-function copyLibs(solpath,projs,comps,cdir)
+function copyLibs(solpath,projs,comps,cdir,build32bit)
 
 fprintf('Copying Compiled Libraries:\n');
 pause(0.5); %allow files to be created
@@ -1216,14 +1234,20 @@ for i = 1:length(projs)
             w32lib = [spath '..\' projs{i} '\Release' filesep projs{i} '.lib'];
             w64lib = [spath '..\' projs{i} '\x64' filesep '\Release' filesep projs{i} '.lib'];
     end
-    fprintf('Copying win32 and win64 libraries of ''%s''...',projs{i}); 
-    try
-        copyfile(w32lib,[cdir '/' d '/Source/lib/win32/' projs{i} '.lib'],'f');
-        ok32 =1;
-    catch ME
-        fprintf(2,'\nCould not find 32-bit library - ensure it compiled without error. [Error: %s]\n',ME.message);
-        ok32 = 0;
+    if(build32bit)
+        fprintf('Copying win32 and win64 libraries of ''%s''...',projs{i}); 
+        try
+            copyfile(w32lib,[cdir '/' d '/Source/lib/win32/' projs{i} '.lib'],'f');
+            ok32 =1;
+        catch ME
+            fprintf(2,'\nCould not find 32-bit library - ensure it compiled without error. [Error: %s]\n',ME.message);
+            ok32 = 0;
+        end
+    else
+        ok32 = 1;
+        fprintf('Copying win64 library of ''%s''...',projs{i}); 
     end
+    
     try
         copyfile(w64lib,[cdir '/' d '/Source/lib/win64/' projs{i} '.lib'],'f');
         ok64 = 1;
@@ -1238,7 +1262,7 @@ end
 fprintf('\n');
 
 
-function compileProjects(vsdir,projs,comps,solpath,vsver)
+function compileProjects(vsdir,projs,comps,solpath,vsver,build32bit)
 
 fprintf('Compiling Visual Studio Projects using %s [This May Take a Few Minutes]:\n',upper(vsver));
 ccdir = cd;
@@ -1253,7 +1277,7 @@ for i = 1:length(projs)
             else
                 cmp = 'Intel Fortran';
             end
-            if(strcmpi(vsver,'vs2013') || strcmpi(vsver,'vs2015'))
+            if(strcmpi(vsver,'vs2013') || strcmpi(vsver,'vs2015')  || strcmpi(vsver,'vs2017'))
                 estr32 = ['!devenv "' solpath '" /build "Release|Win32" /project ' projs{i} ' /projectconfig "Release|Win32"'];
                 estr64 = ['!devenv "' solpath '" /build "Release|x64" /project ' projs{i} ' /projectconfig "Release|x64"'];
             else
@@ -1267,9 +1291,12 @@ for i = 1:length(projs)
             estr32 = ['!devenv "' spath projs{i} filesep projs{i} '.vcxproj" /build Release|Win32'];
             estr64 = ['!devenv "' spath projs{i} filesep projs{i} '.vcxproj" /build Release|x64'];
     end
-    fprintf('Compiling Project (%d of %d) ''%s'' [%s: Win32]...',n,2*length(projs),projs{i},cmp); n = n + 1;
-    eval(estr32);
-    fprintf('Done!\nCompiling Project (%d of %d) ''%s'' [%s: Win64]...',n,2*length(projs),projs{i},cmp); n = n + 1;
+    if(build32bit)
+        fprintf('Compiling Project (%d of %d) ''%s'' [%s: Win32]...',n,2*length(projs),projs{i},cmp); n = n + 1;
+        eval(estr32);
+        fprintf('Done!\n');
+    end
+    fprintf('Compiling Project (%d of %d) ''%s'' [%s: Win64]...',n,2*length(projs),projs{i},cmp); n = n + 1;
     eval(estr64);
     fprintf('Done!\n');
 end

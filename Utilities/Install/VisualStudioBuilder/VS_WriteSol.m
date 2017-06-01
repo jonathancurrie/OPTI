@@ -7,7 +7,7 @@ function solPath = VS_WriteSol(projStruct,vsver)
 if(~isstruct(projStruct))
     error('The supplied argument must be a structure');
 end
-if(nargin < 2), vsver = 'VS2013'; end
+if(nargin < 2), vsver = 'VS2015'; end
 len = numel(projStruct);
 PATHS = cell(len,1);
 IDS = cell(len,1);
@@ -22,8 +22,10 @@ switch(lower(vsver))
         toolset = 'v120';
     case {'vs2015','2015','v140'}
         toolset = 'v140';
+    case {'vs2017','2017','v141'}
+        toolset = 'v141';
     otherwise
-        error('Unknown Visual Studio Version! Only VS2010, VS2012, VS2013, VS2015 accepted');
+        error('Unknown Visual Studio Version! Only VS2010, VS2012, VS2013, VS2015, VS2017 accepted');
 end
 
 fprintf('Generating Visual Studio Projects and Solution:\n');
@@ -56,7 +58,9 @@ solPath = [PATHS{1} filesep projStruct(1).name '.sln'];
 fid = fopen(solPath,'w+');
 if(fid < 0), error('Error writing solution file'); end  
 try
-    if(strcmpi(toolset,'v140'))
+    if(strcmpi(toolset,'v141'))
+        fprintf(fid,'Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio 15\n'); 
+    elseif(strcmpi(toolset,'v140'))
         fprintf(fid,'Microsoft Visual Studio Solution File, Format Version 14.00\n# Visual Studio 2015\n'); 
     elseif(strcmpi(toolset,'v120'))
         fprintf(fid,'Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio 2013\n');  
