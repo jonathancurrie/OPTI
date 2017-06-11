@@ -1085,9 +1085,13 @@ switch(lower(solver))
         opts = [];
         opts.exPP = {'Arith_Kind_ASL=1','Sscanf=sscanf','Printf=printf','Sprintf=sprintf',...
                      'Fprintf=fprintf','NO_STDIO1','_CRT_SECURE_NO_WARNINGS','_CRT_NONSTDC_NO_DEPRECATE'};
-        %VS2015 doesn't need snprintf
-        if(~strcmpi(vsver,'VS2015'))
+        %VS2015/7 doesn't need snprintf
+        if(~strcmpi(vsver,'VS2015') && ~strcmpi(vsver,'VS2017'))
             opts.exPP = [opts.exPP 'snprintf=_snprintf'];
+        end
+        %VS2017 includes dtoa even with exclude, define arith type
+        if(strcmpi(vsver,'VS2017'))
+            opts.exPP = [opts.exPP,'IEEE_8087'];
         end
         opts.exclude = {'arithchk.c','atof.c','b_search.c','dtoa.c','fpinit.c','funcadd.c',...
                         'funcadd0.c','funcaddk.c','funcaddr.c','obj_adj0.c','sjac0dim.c',...
@@ -1268,7 +1272,7 @@ fprintf('Compiling Visual Studio Projects using %s [This May Take a Few Minutes]
 ccdir = cd;
 cd(vsdir);
 %estr = ['!devenv ' solpath ' /build Release /project ']; 
-n = 1;
+n = 1; mul = 1;
 for i = 1:length(projs)
     switch(comps{i})
         case {'vc','if'}
@@ -1292,11 +1296,12 @@ for i = 1:length(projs)
             estr64 = ['!devenv "' spath projs{i} filesep projs{i} '.vcxproj" /build Release|x64'];
     end
     if(build32bit)
-        fprintf('Compiling Project (%d of %d) ''%s'' [%s: Win32]...',n,2*length(projs),projs{i},cmp); n = n + 1;
+        mul = 2;
+        fprintf('Compiling Project (%d of %d) ''%s'' [%s: Win32]...',n,mul*length(projs),projs{i},cmp); n = n + 1;
         eval(estr32);
         fprintf('Done!\n');
     end
-    fprintf('Compiling Project (%d of %d) ''%s'' [%s: Win64]...',n,2*length(projs),projs{i},cmp); n = n + 1;
+    fprintf('Compiling Project (%d of %d) ''%s'' [%s: Win64]...',n,mul*length(projs),projs{i},cmp); n = n + 1;
     eval(estr64);
     fprintf('Done!\n');
 end
