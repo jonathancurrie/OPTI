@@ -9,6 +9,10 @@ current_version = 2.24;
 
 %History
 
+%2.25 (...)
+% - Removed HTML documentation (problems with R2016b+ help index)
+% - Updated Visual Studio Builder for VS2017
+
 %2.24 (27/02/17)
 % - Added SOS functionality to BONMIN
 % - Changed QCQP2NLP to accept objbias term (S.Kampezidou)
