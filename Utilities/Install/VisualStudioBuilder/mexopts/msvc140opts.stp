@@ -1,0 +1,141 @@
+
+sub msvc140opts 
+{
+    my $input = shift;
+    my $default_location = "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0";
+    my $sdk_dir = "";
+    my $registry_lookup_fcn = $input->{"registry_lookup"};
+
+    # Attempt to find the Windows sdk that corresponds to VS2015
+	my $sdk_dir = &$registry_lookup_fcn("SOFTWARE\\Microsoft\\Microsoft SDKs\\Windows\v8.1" , 
+							  "InstallationFolder");
+	if ($sdk_dir eq "" || !-e "$sdk_location\\bin\\x64\\mt.exe"){
+		$sdk_dir = &$registry_lookup_fcn("SOFTWARE\\Wow6432Node\\Microsoft\\Microsoft SDKs\\Windows\\v8.1" , 
+					  "InstallationFolder");
+	}
+
+    my @language_handled = ('C');
+    my $locate_fcn = sub {
+        my @valid_locations = ();
+        my $env_location;
+        my $registry_location;
+        my $candidate_location;
+
+        my $is_valid_root_fcn = sub {
+            #===================================================================
+            # is_valid_root_fcn: Validates the version and file structure of the
+            # candidate_location.
+            #
+            # Check install and location using the 32-bit CL.EXE; check for 
+            # 64-bit compiler later.  This allows 32-bit-only installs to appear  
+            # as installed, then throw an error at selection-time.  
+            # This is easier to debug than not listing the compiler.
+            # 
+            # Since MSVC 2013 Professional ed. and the Express ed. use the same
+            # root_location, use the directory structure to differentiate 
+            # between the two.
+            #===================================================================
+
+            my $candidate_location = shift;
+            my $isvalid = 0;
+            if ($candidate_location ne "" &&  
+                -e "$candidate_location\\VC\\bin\\cl.exe" &&
+                -e "$candidate_location\\Common7\\IDE\\devenv.exe" ) { 
+                $oldPath = $ENV{'PATH'};
+                $ENV{'PATH'} = "$candidate_location\\Common7\\IDE;$oldPath";
+                if (&correct_version("$candidate_location\\VC\\bin\\cl.exe","19.0")){ 
+                    $isvalid = 1;
+                }
+                $ENV{'PATH'} = "$oldPath";
+            }
+            return $isvalid;
+        };
+
+        # Search the default environment variable location.               
+        $env_location = $ENV{'VS140COMNTOOLS'}; 
+        $env_location =~ s|\\+Common7\\+Tools\\*$||i; 
+        $candidate_location = $env_location;
+        if (&$is_valid_root_fcn($candidate_location)) {
+            push(@valid_locations, $candidate_location);
+        }
+
+        # Search the registry. 
+        $registry_location = &$registry_lookup_fcn("SOFTWARE\\Microsoft\\VisualStudio\\14.0\\" .
+                                            "Setup\\VS", "ProductDir");
+        $candidate_location = $registry_location;
+        if (&$is_valid_root_fcn($candidate_location)) {
+            push(@valid_locations, $candidate_location);
+        }
+
+        # Search the default install location. 
+        $candidate_location = $default_location;
+        if (&$is_valid_root_fcn($candidate_location)) {
+            push(@valid_locations, $candidate_location);
+        }
+
+        return @valid_locations;
+    };
+
+    my $root_val = sub {
+        my $erred = 0;
+        my $base_directory = shift;
+        my $err_msg, $warn_msg;
+        if (!-e "$base_directory\\VC\\bin\\amd64\\cl.exe"){
+            $err_msg = "\n*****************************************************************************\n" .
+                  "  Error: Could not find the 64-bit compiler.  This may indicate that the \n" .
+                  "         \"X64 Compilers and Tools\" or the Microsoft Windows Software \n" .
+                  "         Development Kit (SDK) is not installed.  To build 64-bit MEX-files \n" .
+                  "         Microsoft Visual C++ 2013 requires that these two packages are \n" .
+                  "         installed properly. \n" .
+                  "*****************************************************************************\n";
+            $erred = 1;
+        }
+        my $sdk_location = &$registry_lookup_fcn("SOFTWARE\\Microsoft\\Microsoft SDKs\\Windows\\v8.1" , 
+                                  "InstallationFolder");
+        if ($sdk_location eq "" ||
+            !-e "$sdk_location\\bin\\x64\\mt.exe"){ 
+				$sdk_location = &$registry_lookup_fcn("SOFTWARE\\Wow6432Node\\Microsoft\\Microsoft SDKs\\Windows\\v8.1" , 
+										  "InstallationFolder");
+			if ($sdk_location eq "" ||
+				!-e "$sdk_location\\bin\\x64\\mt.exe"){ 
+					$err_msg = "\n*****************************************************************************\n" .
+						  "  Error: Microsoft Visual C++ 2015 requires the Microsoft Windows Software \n" .
+						  "         Development Kit (SDK), but the SDK cannot be found.  Examine your  \n" .
+						  "         Microsoft Visual C++ 2015 installation.\n" .
+						  "*****************************************************************************\n";
+					$erred = 1;
+			}
+		}
+        
+        if (!$erred) {
+            $warn_msg = "\n" .
+                  "***************************************************************************\n" .
+                  "  Warning: MEX-files generated using Microsoft Visual C++ 2015 require\n" .
+                  "           that Microsoft Visual Studio 2015 run-time libraries be \n" .
+                  "           available on the computer they are run on.\n" .
+                  "           If you plan to redistribute your MEX-files to other MATLAB\n" .
+                  "           users, be sure that they have the run-time libraries.\n" . 
+                  "***************************************************************************\n";
+        }
+
+        return ($err_msg, $warn_msg);
+    };
+
+# In the case of the VS2015 compiler the link_val key is used to specify
+# the location of the SDK
+
+    return {
+        "vendor_name"      => "Microsoft Visual C++ 2015",
+        "version"          => "",                          #This version is left blank intentionally.
+        "group_id"         => "MSVC",
+        "serial"           => 14.0,
+        "root_var"         => "VSINSTALLDIR",
+        "optfile_name"     => "msvc140opts.bat",
+        "default_location" => $default_location,
+        "language_handled" => \@language_handled,
+        "root_val"         => $root_val,
+        "link_val"         => $sdk_dir,
+        "locate"           => $locate_fcn,
+        };
+}
+1;
