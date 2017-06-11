@@ -40,17 +40,17 @@ genp = regexp(genp,';','split');
 %Folders to exclude from adding to Matlab path
 i = 1;
 rInd{:,:,i} = strfind(genp,'Documentation + Licenses'); i = i + 1;
-rInd{:,:,i} = strfind(genp,'vti_cnf'); i = i + 1;
-rInd{:,:,i} = strfind(genp,'vti_pvt'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'Source'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'CppAD'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'misdp'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'tex'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'.git'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'Crash Files'); i = i + 1;
+rInd{:,:,i} = strfind(genp,'mexopts'); i = i + 1;
 if(~exist([cd '\Solvers\Source\lib\win32\libclp.lib'],'file'))
     rInd{:,:,i} = strfind(genp,'Development'); i = i + 1;
 end
+
 ind = NaN(length(rInd{1}),1);
 %Track indices of paths to remove from list
 for i = 1:length(rInd{1})
@@ -83,8 +83,8 @@ if(strcmpi(in,'y'))
     opti_Install_Test(1);
 end
 
-%Launch Help Browser [no longer works well >= R2012b]
-web('Opti_Main.html','-helpbrowser');
+%Launch Examples page
+web('https://inverseproblem.co.nz/OPTI/index.php/Examples/Examples','-browser');
 
 %Finished
 fprintf('\n\nOPTI Toolbox Installation Complete!\n');
@@ -187,6 +187,7 @@ if(str2double(vv{1}) < 8)
         end
     end
 end
+
 switch(mexext)
     case 'mexw32'
         error(['From v2.20 OPTI Toolbox only supports 64bit (Windows x64) platforms. Realistically, you should consider upgrading to 64bit for the best performance with OPTI.\n'...
