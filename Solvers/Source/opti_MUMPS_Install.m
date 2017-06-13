@@ -52,6 +52,7 @@ opts.verb = false;
 opts.blas = 'MKL';
 opts.pp = {'MUMPS_ARITH=2'};
 opts.ifort = true;
+opts.ifortStatic = true;
 
 %Compile
 opti_solverMex('mumps',src,inc,libs,opts);
@@ -68,6 +69,7 @@ opts.verb = false;
 opts.blas = 'MKL';
 opts.pp = {'MUMPS_ARITH=8'};
 opts.ifort = true;
+opts.ifortStatic = true;
 
 %Compile
 opti_solverMex('zmumpsmex',src,inc,libs,opts);

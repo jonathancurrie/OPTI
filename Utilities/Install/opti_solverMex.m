@@ -20,6 +20,7 @@ function opti_solverMex(name,src,inc,libs,opts)
 %           asl:        Link AMPL Solver Library (true/{false})
 %           expre:      Extra arguments for mex before source file (one string)
 %           ifort:      Link against Intel Fortran Dynamic Libraries {false}
+%           ifortStatic: Link against Intel Fortran Static Libraries {false}
 %           util:       Utility, not a solver, includes extra paths
 
 
@@ -38,6 +39,7 @@ if(nargin > 4)
     if(~isfield(opts,'expre')), opts.expre = []; end
     if(~isfield(opts,'util') || isempty(opts.util)), opts.util = false; end
     if(~isfield(opts,'ifort') || isempty(opts.ifort)), opts.ifort = false; end
+    if(~isfield(opts,'ifortStatic') || isempty(opts.ifortStatic)), opts.ifortStatic = false; end
 else
     opts.verb = false;
     opts.debug = false;
@@ -52,6 +54,7 @@ else
     opts.expre = [];
     opts.util = false;
     opts.ifort = false;
+    opts.ifortStatic = false;
 end
 
 %Check conflicting BLAS/PARDISO
@@ -201,8 +204,9 @@ end
 %MUMPS Linking
 if(isfield(opts,'mumps') && ~isempty(opts.mumps))
     if(opts.mumps)
-        post = [post ' -DLINK_MUMPS -IInclude\Mumps -llibdmumps_c -llibdmumps_f -llibseq_c -llibseq_f -llibmetis -llibpord '];
-        opts.ifort = true; %assume compiled with OPTI + Ifort  
+        post = [post ' -DLINK_MUMPS -IInclude\Mumps -llibdmumps_c -llibdmumps_f -llibseq_c -llibseq_f -llibmetis -llibpord '];   
+        opts.ifort = true;
+        opts.ifortStatic = true; %assume compiled with OPTI + Ifort (statically linked IFort Libs) 
     end
 end
 %MUMPS v5 Linking
@@ -224,10 +228,10 @@ end
 %Intel Fortran Linking
 if(isfield(opts,'ifort') && ~isempty(opts.ifort) && opts.ifort)
     if(isempty(strfind(lower(opts.blas),'mkl'))) %link MKL as well
-        [~,fstr,~,~,cmplr] = opti_FindMKL();
+        [~,fstr,~,~,cmplr] = opti_FindMKL(false,opts.ifortStatic);
         post = [post ' -L"' cmplr '" ' fstr ' '];
     else
-        [~,fstr] = opti_FindMKL();
+        [~,fstr] = opti_FindMKL(false,opts.ifortStatic);
         post = [post ' ' fstr ' '];
     end
 end

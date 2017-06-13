@@ -406,7 +406,7 @@ switch(lower(solver))
         hdrs = {[mumpspath '\include'],[mumpspath '\libseq']};
         name = 'libdmumps_f';
         opts = [];
-        opts.cpp = false; opts.ifortver = ifortver;
+        opts.cpp = false; opts.ifortver = ifortver; opts.ifortStaticLink = true;
         opts.exPP = {'pord','metis'};
         opts.exFilter = {'cmumps*','smumps*','zmumps*'};
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = hdrs; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
@@ -422,7 +422,7 @@ switch(lower(solver))
         hdrs = {[mumpspath '\include'],[mumpspath '\libseq']};
         name = 'libzmumps_f';
         opts = [];
-        opts.cpp = false; opts.ifortver = ifortver;
+        opts.cpp = false; opts.ifortver = ifortver; opts.ifortStaticLink = true;
         opts.exPP = {'pord','metis'};
         opts.exFilter = {'cmumps*','smumps*','dmumps*'};
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = hdrs; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
@@ -436,7 +436,7 @@ switch(lower(solver))
         sdir = [mumpspath '\libseq'];
         name = 'libseq_f';
         opts = [];       
-        opts.cpp = false; opts.ifortver = ifortver;
+        opts.cpp = false; opts.ifortver = ifortver; opts.ifortStaticLink = true;
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = []; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
         % PORD
         sdir = [mumpspath '\PORD\lib'];
@@ -449,7 +449,7 @@ switch(lower(solver))
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
         projs = {'libdmumps_c','libzmumps_c','libseq_c','libpord','libdmumps_f','libzmumps_f','libseq_f'};  
-        comps = {'vc','vc','vc','if','if','if','if'};
+        comps = {'vc','vc','vc','vc','if','if','if'};
         
     case 'ipopt'
         ipoptpath = paths{1};

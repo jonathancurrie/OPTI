@@ -1,4 +1,4 @@
-function [mkl_link,mkl_forstr,mkl_inc,mkl_lib,mkl_cmplr,mkl_ver] = opti_FindMKL(seq)
+function [mkl_link,mkl_forstr,mkl_inc,mkl_lib,mkl_cmplr,mkl_ver] = opti_FindMKL(seq,ifortStatic)
 %Finds Intel MKL Libraries and returns path and version
 
 %Sequential build stuff
@@ -6,6 +6,9 @@ if(nargin && ((ischar(seq) && strcmpi(seq,'seq')) || seq))
     seq = true;
 else
     seq = false;
+end
+if (nargin < 2 || isempty(ifortStatic))
+    ifortStatic = false;
 end
 
 %Known MKL path locations (Modify to suit your system by adding to cell arrays, or create a new structure for other versions)
@@ -40,7 +43,7 @@ MKLLIB = {MKL11_3,MKL11_2,MKL11_1,MKL11,MKL10_3_1,MKL10_3};
 %DO NOT MODIFY BELOW HERE
 for i = 1:length(MKLLIB)
     %Check for MKL
-    [ok,mkl_link,mkl_forstr,mkl_inc,mkl_lib,mkl_cmplr,mkl_ver] = checkMKLVer(MKLLIB{i},seq); 
+    [ok,mkl_link,mkl_forstr,mkl_inc,mkl_lib,mkl_cmplr,mkl_ver] = checkMKLVer(MKLLIB{i},seq,ifortStatic); 
     if(ok), return; end
 end
 
@@ -48,7 +51,7 @@ end
 error('Could not find the Intel MKL Location on your computer. Please modify this file to locate it');
 
 
-function [ok,mkl_link,mkl_forstr,mkl_inc,mkl_lib,mkl_cmplr,mkl_ver] = checkMKLVer(mklstr,seq)
+function [ok,mkl_link,mkl_forstr,mkl_inc,mkl_lib,mkl_cmplr,mkl_ver] = checkMKLVer(mklstr,seq,ifortStatic)
 %Local check function
 ok = false; mkl_link ='';
 %Find MKL
@@ -103,7 +106,11 @@ for i = 1:length(mklstr.compiler)
         %Complete linker string
         mkl_link = [mkl_link ' -L"' mkl_cmplr '" -llibiomp5md ']; %#ok<AGROW>
         %Optional Fortran linker string
-        mkl_forstr = ' -lifconsol -llibifcoremd -llibifportmd -llibmmd -llibirc -lsvml_disp -lsvml_dispmd ';
+        if(ifortStatic)
+            mkl_forstr = ' -lifconsol -llibifcoremt -llibifport -llibmmt -llibirc -lsvml_dispmt ';
+        else
+            mkl_forstr = ' -lifconsol -llibifcoremd -llibifportmd -llibmmd -llibirc -lsvml_disp -lsvml_dispmd ';
+        end
         break;
     end
 end
