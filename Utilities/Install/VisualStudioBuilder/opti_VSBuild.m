@@ -823,14 +823,14 @@ switch(lower(solver))
             copyfile([cd '/Solvers/Source/nlopt/config12.h'],[nloptpath '\api\config.h'],'f');
         end
         %VS2013 no-vector fix for cobyla.c (see https://connect.microsoft.com/VisualStudio/feedback/details/1028781/c1001-on-release-build)
-        if(strcmpi(vsver,'VS2013') || strcmpi(vsver,'VS2015'))
+        if(strcmpi(vsver,'VS2013') || strcmpi(vsver,'VS2015') || strcmpi(vsver,'VS2017'))
             str = fileread([nloptpath '/cobyla/cobyla.c']);
             str = strrep(str,sprintf('i__1 = nact;\r\n  for (k = 1;'),sprintf('i__1 = nact;\r\n  #pragma loop(no_vector)\r\n  for (k = 1;'));
             fp = fopen([nloptpath '/cobyla/cobyla.c'],'w');
             fprintf(fp,'%s',str); fclose(fp);
         end
         %VS2015 fix for extra math fncs
-        if(strcmpi(vsver,'VS2015'))
+        if(strcmpi(vsver,'VS2015')|| strcmpi(vsver,'VS2017'))
             str = fileread([nloptpath '/api/nlopt.h']);
             str = strrep(str,'and size_t */',sprintf('and size_t */\r\n#define HAVE_COPYSIGN\r\n#define HAVE_ISNAN\r\n'));
             fp = fopen([nloptpath '/api/nlopt.h'],'w');
