@@ -39,6 +39,7 @@ function [projPath,guid] = VS_WriteProj(srcpath,projName,incpath,opts)
 %                       'compileAsCpp' compile .c as cpp
 %                       'ExcepwCExtern' Accept C exceptions as extern
 %                       'winKitVer' Windows kit version to use (only VS2017), blank skips the setting {'latest'}
+%                       'additionalOpts' Extra command line args to use (ifort only) {[]}
 
 %Extract first source path if multiple paths specified (first is assumed base)
 allpaths = srcpath;
@@ -78,6 +79,7 @@ if(~isfield(opts,'archname')), opts.archname = false; end
 if(~isfield(opts,'compileAsCpp')), opts.compileAsCpp = false; end
 if(~isfield(opts,'ExcepwCExtern')), opts.ExcepwCExtern = false; end
 if(~isfield(opts,'winKitVer')), opts.winKitVer = 'latest'; end
+if(~isfield(opts,'additionalOpts')), opts.additionalOpts = []; end
 
 %If VS2010 (vs100), remove from options (not required)
 if(strcmpi(opts.toolset,'v100')), opts.toolset = []; end
@@ -409,10 +411,10 @@ if(opts.cpp)
 else %FORTRAN
     %Configurations
     pc = createSection(docNode,'Configurations');
-    pc.appendChild(writeIFortConfig(docNode,'Debug','Win32',opts.ex32PP,incpaths,opts.ifortver,opts.ifortStaticLink));
-    pc.appendChild(writeIFortConfig(docNode,'Release','Win32',opts.ex64PP,incpaths,opts.ifortver,opts.ifortStaticLink));
-    pc.appendChild(writeIFortConfig(docNode,'Debug','x64',opts.ex32PP,incpaths,opts.ifortver,opts.ifortStaticLink));
-    pc.appendChild(writeIFortConfig(docNode,'Release','x64',opts.ex64PP,incpaths,opts.ifortver,opts.ifortStaticLink));
+    pc.appendChild(writeIFortConfig(docNode,'Debug','Win32',opts.ex32PP,incpaths,opts.ifortver,opts.ifortStaticLink,opts.additionalOpts));
+    pc.appendChild(writeIFortConfig(docNode,'Release','Win32',opts.ex64PP,incpaths,opts.ifortver,opts.ifortStaticLink,opts.additionalOpts));
+    pc.appendChild(writeIFortConfig(docNode,'Debug','x64',opts.ex32PP,incpaths,opts.ifortver,opts.ifortStaticLink,opts.additionalOpts));
+    pc.appendChild(writeIFortConfig(docNode,'Release','x64',opts.ex64PP,incpaths,opts.ifortver,opts.ifortStaticLink,opts.additionalOpts));
     p.appendChild(pc);
     %Write VS Filters
 %     VS_WriteFilters(projPath,projName,allpaths,src,projhdr);
@@ -541,7 +543,7 @@ addElemText(docNode,pc,'Configuration',config)
 addElemText(docNode,pc,'Platform',plat);
 
 %Write Fortran Configuration Section
-function pc = writeIFortConfig(docNode,config,plat,exPP,exInc,ifortver,staticLink)
+function pc = writeIFortConfig(docNode,config,plat,exPP,exInc,ifortver,staticLink,additionalOpts)
 pc = docNode.createElement('Configuration');
 pc.setAttribute('Name',[config '|' plat]);
 if(strcmpi(plat,'x64'))
@@ -552,6 +554,9 @@ end
 pc.setAttribute('ConfigurationType','typeStaticLibrary');
 tl = docNode.createElement('Tool');
 tl.setAttribute('Name','VFFortranCompilerTool');
+if (~isempty(additionalOpts))
+    tl.setAttribute('AdditionalOptions',additionalOpts);
+end
 tl.setAttribute('SuppressStartupBanner','true');
 tl.setAttribute('Preprocess','preprocessYes');
 tl.setAttribute('EnableEnhancedInstructionSet','codeArchSSE2');

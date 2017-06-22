@@ -211,9 +211,9 @@ end
 
 %Print Missing PreReqs
 if(~havVC)
-    fprintf(2,'Cannot find the Microsoft VC++ 2015 %s Redistributable!\n',arch); 
+    fprintf(2,'Cannot find the Microsoft VC++ 2017 %s Redistributable!\n',arch); 
 else
-    fprintf('Found the Microsoft VC++ 2015 %s Redistributable\n',arch); 
+    fprintf('Found the Microsoft VC++ 2017 %s Redistributable\n',arch); 
 end
 % if(~havIC) %[not req from OPTI v >= 2.12]
 %     fprintf(2,'Cannot find the Intel C++ XE 2013 %s Redistributable!\n',arch);
@@ -221,9 +221,9 @@ end
 %     fprintf('Found the Intel C++ XE 2013 %s Redistributable\n',arch); 
 % end
 if(~havIF)
-    fprintf(2,'Cannot find the Intel Fortran XE 2016 %s Redistributable!\n',arch);
+    fprintf(2,'Cannot find the Intel Fortran XE 2017 %s Redistributable!\n',arch);
 else
-    fprintf('Found the Intel Fortran XE 2016 %s Redistributable\n',arch); 
+    fprintf('Found the Intel Fortran XE 2017 %s Redistributable\n',arch); 
 end    
 
 %Install Instructions for each Package

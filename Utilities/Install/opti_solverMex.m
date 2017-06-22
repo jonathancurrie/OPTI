@@ -206,7 +206,7 @@ if(isfield(opts,'mumps') && ~isempty(opts.mumps))
     if(opts.mumps)
         post = [post ' -DLINK_MUMPS -IInclude\Mumps -llibdmumps_c -llibdmumps_f -llibseq_c -llibseq_f -llibmetis -llibpord '];   
         opts.ifort = true;
-        opts.ifortStatic = true; %assume compiled with OPTI + Ifort (statically linked IFort Libs) 
+%         opts.ifortStatic = true; %assume compiled with OPTI + Ifort (statically linked IFort Libs) 
     end
 end
 %MUMPS v5 Linking

@@ -12,7 +12,7 @@ function opti_VSBuild(solver,paths,opts)
 %      - path:              FULL path to the solver source directory
 %      - opts_structure:    structure with the following fields:          
 %           expath:         FULL paths to extra required source directories (cell array)
-%           vsver:          Visual Studio Version (default find the highest version, otherwise 'VS2015', 'VS2013', 'VS2010' and 'VS2012' supported)
+%           vsver:          Visual Studio Version (default find the highest version, otherwise 'VS2017', 'VS2015', 'VS2013', 'VS2010' and 'VS2012' supported)
 %           ifortver:       Intel Fortran Version (default find the highest version, otherwise 'XE16', 'XE15', 'XE13SP1', 'XE13', 'XE11SP1' and 'XE11' also supported)
 %           ma57            Include MA57 in build {[]} ('HSL' - HSL Fortran source version, 'Matlab' - DLL included with MATLAB) [see opti_MISC_Install]
 %           ma27            Include MA27 in build {[]} ('HSL' - HSL Fortran source version) [see opti_MISC_Install]
@@ -406,7 +406,7 @@ switch(lower(solver))
         hdrs = {[mumpspath '\include'],[mumpspath '\libseq']};
         name = 'libdmumps_f';
         opts = [];
-        opts.cpp = false; opts.ifortver = ifortver; opts.ifortStaticLink = true;
+        opts.cpp = false; opts.ifortver = ifortver; opts.additionalOpts = '/nostandard-realloc-lhs';
         opts.exPP = {'pord','metis'};
         opts.exFilter = {'cmumps*','smumps*','zmumps*'};
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = hdrs; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
@@ -422,7 +422,7 @@ switch(lower(solver))
         hdrs = {[mumpspath '\include'],[mumpspath '\libseq']};
         name = 'libzmumps_f';
         opts = [];
-        opts.cpp = false; opts.ifortver = ifortver; opts.ifortStaticLink = true;
+        opts.cpp = false; opts.ifortver = ifortver; opts.additionalOpts = '/nostandard-realloc-lhs';
         opts.exPP = {'pord','metis'};
         opts.exFilter = {'cmumps*','smumps*','dmumps*'};
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = hdrs; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
@@ -436,7 +436,7 @@ switch(lower(solver))
         sdir = [mumpspath '\libseq'];
         name = 'libseq_f';
         opts = [];       
-        opts.cpp = false; opts.ifortver = ifortver; opts.ifortStaticLink = true;
+        opts.cpp = false; opts.ifortver = ifortver; opts.additionalOpts = '/nostandard-realloc-lhs';
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = []; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
         % PORD
         sdir = [mumpspath '\PORD\lib'];
