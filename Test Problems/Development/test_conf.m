@@ -5,6 +5,8 @@ clear
 % format compact
 % format short g
 
+haveStatsToolbox = exist('NonlinearModel.m','file');
+
 %% Himmelblau Example
 clc
 %Function
@@ -24,7 +26,9 @@ clf
 plot(Opt)
 
 % Repeat with Statistics Toolbox
-mdl = NonLinearModel.fit(p,r,Rxn_rate,x0)   
+if (haveStatsToolbox)
+    mdl = NonLinearModel.fit(p,r,Rxn_rate,x0)   
+end
 
 %Compare with curve fitting toolbox if available
 if(~isempty(which('cfit')))
@@ -69,7 +73,9 @@ stats = fitStats(Opt,0.95,1);
 plot(Opt)
 
 % Repeat with Statistics Toolbox
-mdl = NonLinearModel.fit(p,r,Rxn_rate,x0,'weights',wts)
+if (haveStatsToolbox)
+    mdl = NonLinearModel.fit(p,r,Rxn_rate,x0,'weights',wts)
+end
 
 %Compare with curve fitting toolbox if available
 if(~isempty(which('cfit')))
@@ -260,7 +266,9 @@ s=fitStats(Opt,0.95,1);
 plot(Opt)
 
 % Repeat with Statistics Toolbox
-mdl = NonLinearModel.fit(n,r,eKin,x0)
+if (haveStatsToolbox)
+    mdl = NonLinearModel.fit(n,r,eKin,x0)
+end
 
 %Compare with curve fitting toolbox if available
 if(~isempty(which('cfit')))
@@ -288,21 +296,22 @@ end
 
 %% Stats Toolbox Example
 clc
-load carbig
-X = [Horsepower,Weight];
-y = MPG;
-idx = ~isnan(X(:,1)) & ~isnan(y); X = X(idx,:); y = y(idx);
-modelfun = @(b,x)b(1) + b(2)*x(:,1).^b(3) + b(4)*x(:,2).^b(5);
-beta0 = [-50 500 -1 500 -1];
+if (haveStatsToolbox)
+    load carbig
+    X = [Horsepower,Weight];
+    y = MPG;
+    idx = ~isnan(X(:,1)) & ~isnan(y); X = X(idx,:); y = y(idx);
+    modelfun = @(b,x)b(1) + b(2)*x(:,1).^b(3) + b(4)*x(:,2).^b(5);
+    beta0 = [-50 500 -1 500 -1];
 
-%Build & Solve
-Opt = opti('fun',modelfun,'data',X,y,'x0',beta0,'opts',optiset('solver','auto','display','off'));
-[x,fval,exitflag,info] = solve(Opt);
-fitStats(Opt,0.95);
+    %Build & Solve
+    Opt = opti('fun',modelfun,'data',X,y,'x0',beta0,'opts',optiset('solver','auto','display','off'));
+    [x,fval,exitflag,info] = solve(Opt);
+    fitStats(Opt,0.95);
 
-% Repeat with Statistics Toolbox
-mdl = NonLinearModel.fit(X,y,modelfun,beta0)
-
+    % Repeat with Statistics Toolbox
+    mdl = NonLinearModel.fit(X,y,modelfun,beta0)
+end
 
 %% Himmelblau Example Nonlinear Programming Solver
 clc
@@ -322,7 +331,9 @@ fitStats(Opt,0.95);
 plot(Opt)
 
 % Repeat with Statistics Toolbox
-mdl = NonLinearModel.fit(p,r,Rxn_rate,x0)   
+if (haveStatsToolbox)
+    mdl = NonLinearModel.fit(p,r,Rxn_rate,x0)   
+end
 
 
 

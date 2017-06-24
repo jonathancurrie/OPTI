@@ -196,44 +196,45 @@ plot(Opt)
 
 %% DNLS Example8
 clc
-% Declare Symbolic Variables
-syms p1 p2 z1 z2 z3
-% Symbolic ODE
-ODE = [-p1*z1 + 4; 
-      2*z1 - p1*z2 + 5; 
-      -4*z1 - 2*z2*z3 - p2];
+if (exist('syms.m','file'))
+    % Declare Symbolic Variables
+    syms p1 p2 z1 z2 z3
+    % Symbolic ODE
+    ODE = [-p1*z1 + 4; 
+          2*z1 - p1*z2 + 5; 
+          -4*z1 - 2*z2*z3 - p2];
 
-% Evaluate Jacobians
-dfdz_sym = jacobian(ODE,[z1 z2 z3])
-dfdp_sym = jacobian(ODE,[p1 p2])
+    % Evaluate Jacobians
+    dfdz_sym = jacobian(ODE,[z1 z2 z3])
+    dfdp_sym = jacobian(ODE,[p1 p2])
 
-[dfdz,dfdp] = symDynJac(ode)
+    [dfdz,dfdp] = symDynJac(ode)
 
 
-% Analytical Derivative Expressions
- dfdz = @(t,z,p) [-p(1) 0,       0;
-                  2,    -p(1),   0;
-                  -4,   -2*z(3), -2*z(2)];
- dfdp = @(t,z,p) [-z(1), 0;
-                  -z(2), 0;
-                  0,    -1];
+    % Analytical Derivative Expressions
+     dfdz = @(t,z,p) [-p(1) 0,       0;
+                      2,    -p(1),   0;
+                      -4,   -2*z(3), -2*z(2)];
+     dfdp = @(t,z,p) [-z(1), 0;
+                      -z(2), 0;
+                      0,    -1];
 
-% Set Dynamic Options
- dopts = optidynset('dfdz',dfdz,'dfdp',dfdp,'sensitivity','User','initialT',0);
+    % Set Dynamic Options
+     dopts = optidynset('dfdz',dfdz,'dfdp',dfdp,'sensitivity','User','initialT',0);
 
-% General OPTI Options
- opts = optiset('display','iter','derivCheck','on','dynamicOpts',dopts);
+    % General OPTI Options
+     opts = optiset('display','iter','derivCheck','on','dynamicOpts',dopts);
 
-% Create OPTI Object
-  Opt = opti('ode',ode,'data',tm_multi,zm_multi,'z0',z0,'theta0',theta0,...
-             'options',opts)
+    % Create OPTI Object
+      Opt = opti('ode',ode,'data',tm_multi,zm_multi,'z0',z0,'theta0',theta0,...
+                 'options',opts)
 
-% Solve
-[theta,fval,exitflag,info] = solve(Opt)
+    % Solve
+    [theta,fval,exitflag,info] = solve(Opt)
 
-% Plot the Solution
-plot(Opt)
-
+    % Plot the Solution
+    plot(Opt)
+end
 
 %% DNLS Ex9
 clc

@@ -1699,6 +1699,10 @@ subplot(2,1,2);
 h = plot(tm2, zm2,'o', tfit, zfit(:,2),'-', tfit0, zfit0(:,2),'-');  % raw data 
 set(h(3),'color',0.8*[1,1,1]); 
 
+%% Symbolic testing
+if (~exist('syms.m','file'))
+    return;
+end
 
 %% Analyical Derivatives1
 % ode = @(t,z,p) [p(1)*(z(2) - z(1));

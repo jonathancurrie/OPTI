@@ -484,15 +484,17 @@ plot(ofit)
 
 %% Stats Toolbox Example
 clc
-load carbig
-X = Horsepower;
-Y = Weight;
-Z = MPG;
-modelfun = @(b,xdata,ydata)b(1) + b(2)*xdata.^b(3) + b(4)*ydata.^b(5);
-beta0 = [-50 500 -1 500 -1];
+if (exist('NonlinearModel.m','file'))
+    load carbig
+    X = Horsepower;
+    Y = Weight;
+    Z = MPG;
+    modelfun = @(b,xdata,ydata)b(1) + b(2)*xdata.^b(3) + b(4)*ydata.^b(5);
+    beta0 = [-50 500 -1 500 -1];
 
-ofit = optifit(X,{Y Z},modelfun,0*beta0)
-plot(ofit)
+    ofit = optifit(X,{Y Z},modelfun,0*beta0)
+    plot(ofit)
+end
 
 %% Himmelblau
 clc

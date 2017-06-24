@@ -4,6 +4,11 @@ clc
 clear 
 tol = 1e-6;
 
+if (~exist('tinv.m','file'))
+    fprintf('The statistics toolbox is not installed, skipping test\n');
+    return;
+end
+
 %% Student's t distribution
 fprintf('Comparing T Distribution\n');
 x = 0; q = 1.0589; p = 0.95; df = 1:10;

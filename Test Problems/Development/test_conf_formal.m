@@ -3,6 +3,11 @@ function test_conf_formal()
 clc
 clear
 
+if (~exist('NonLinearModel.m','file'))
+    fprintf('The statistics toolbox must be installed, skipping test\n');
+    return;
+end
+
 %% Himmelblau Example
 clc
 %Function
