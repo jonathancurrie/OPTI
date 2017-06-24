@@ -93,6 +93,11 @@ else
             return;
         end
     end
+    
+    % if 'DNLS' - change to nls
+    if (strcmpi(instr,'dnls'))
+        instr = 'nls';
+    end
 
     %If we got here, check for a known problem type
     for i = 1:length(PTYPES)
