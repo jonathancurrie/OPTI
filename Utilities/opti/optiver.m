@@ -5,9 +5,18 @@ function current_version = optiver
 
 %   Copyright (C) 2011-2017 Jonathan Currie (IPL)
 
-current_version = 2.24;
+current_version = 2.25;
 
 %History
+
+%2.25 (24/06/17)
+% - Removed HTML documentation (problems with R2016b+ help index)
+% - Updated Visual Studio Builder for VS2017
+% - Rebuilt all solvers with VS2017
+% - Rebuilt all solvers against MKL v2017.0 R3
+% - Updated NOMAD to 3.8.1
+% - Updated IPOPT to 3.12.7
+% - Updated SCIP to v4.0.0
 
 %2.24 (27/02/17)
 % - Added SOS functionality to BONMIN

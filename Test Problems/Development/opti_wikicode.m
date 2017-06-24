@@ -90,7 +90,9 @@ lb = [0;0];                 %Bounds on x (lb <= x <= ub)
 ub = [10;10];
 
 % Solve using MATLAB's linprog:
-x = linprog(f,A,b,[],[],lb,ub)
+if (exist('linprog.m','file'))
+    x = linprog(f,A,b,[],[],lb,ub)  
+end
 
 % Solve using corresponding OPTI overload:
 x = opti_linprog(f,A,b,[],[],lb,ub)
@@ -1134,47 +1136,49 @@ if(~isempty(figDir))
 end
 
 %Ex8
-% Declare Symbolic Variables
-syms p1 p2 z1 z2 z3
+if (exist('syms.m'))
+    % Declare Symbolic Variables
+    syms p1 p2 z1 z2 z3
 
-% Symbolic ODE RHS
-ODE = [-p1*z1 + 4; 
-       2*z1 - p1*z2 + 5; 
-       -4*z1 - 2*z2*z3 - p2];
+    % Symbolic ODE RHS
+    ODE = [-p1*z1 + 4; 
+           2*z1 - p1*z2 + 5; 
+           -4*z1 - 2*z2*z3 - p2];
 
-% Solve Jacobians
-dfdz_sym = jacobian(ODE,[z1 z2 z3])
-dfdp_sym = jacobian(ODE,[p1 p2])
-% ODE System
- ode = @(t,z,p) [-p(1)*z(1) + 4; 
-                 2*z(1) - p(1)*z(2) + 5; 
-                 -4*z(1) - 2*z(2)*z(3) - p(2)];
+    % Solve Jacobians
+    dfdz_sym = jacobian(ODE,[z1 z2 z3])
+    dfdp_sym = jacobian(ODE,[p1 p2])
+    % ODE System
+     ode = @(t,z,p) [-p(1)*z(1) + 4; 
+                     2*z(1) - p(1)*z(2) + 5; 
+                     -4*z(1) - 2*z(2)*z(3) - p(2)];
 
-% Simple Symbolic + String Parsing Derivative Generation
-[dfdz,dfdp] = symDynJac(ode)
-% Analytical Derivative Expressions
-dfdz = @(t,z,p) [-p(1) 0,       0;
-                 2,    -p(1),   0;
-                 -4,   -2*z(3), -2*z(2)];
-dfdp = @(t,z,p) [-z(1), 0;
-                 -z(2), 0;
-                 0,    -1];
+    % Simple Symbolic + String Parsing Derivative Generation
+    [dfdz,dfdp] = symDynJac(ode)
+    % Analytical Derivative Expressions
+    dfdz = @(t,z,p) [-p(1) 0,       0;
+                     2,    -p(1),   0;
+                     -4,   -2*z(3), -2*z(2)];
+    dfdp = @(t,z,p) [-z(1), 0;
+                     -z(2), 0;
+                     0,    -1];
 
-% Set Dynamic Options
-dopts = optidynset('dfdz',dfdz,'dfdp',dfdp,'initialT',0);
+    % Set Dynamic Options
+    dopts = optidynset('dfdz',dfdz,'dfdp',dfdp,'initialT',0);
 
-% General OPTI Options
-opts = optiset('display','iter','derivCheck','on','dynamicOpts',dopts);
+    % General OPTI Options
+    opts = optiset('display','iter','derivCheck','on','dynamicOpts',dopts);
 
-% Create OPTI Object
- Opt = opti('ode',ode,'data',tm_multi,zm_multi,'z0',z0,'theta0',theta0,...
-            'options',opts)
+    % Create OPTI Object
+     Opt = opti('ode',ode,'data',tm_multi,zm_multi,'z0',z0,'theta0',theta0,...
+                'options',opts)
 
-% Solve
-[theta,fval,exitflag,info] = solve(Opt)
+    % Solve
+    [theta,fval,exitflag,info] = solve(Opt)
 
-% Plot the Solution
-plot(Opt)
+    % Plot the Solution
+    plot(Opt)
+end
 
 % Ex9
 % Flame ODE System
@@ -1804,234 +1808,236 @@ if(~isempty(figDir))
 end
 
 %% SymBuilder
-% https://www.inverseproblem.co.nz/OPTI/index.php/Advanced/SymBuilder
-% Create SymBuilder Object
-B = SymBuilder();
-% Create SymBuilder Object with suppressed command line output 
-Bs = SymBuilder(false);
+if (exist('syms.m','file'))
+    % https://www.inverseproblem.co.nz/OPTI/index.php/Advanced/SymBuilder
+    % Create SymBuilder Object
+    B = SymBuilder();
+    % Create SymBuilder Object with suppressed command line output 
+    Bs = SymBuilder(false);
 
-% Add as a String (scalar expression only)
-B.AddObj('-6*x1 -5*x2')
+    % Add as a String (scalar expression only)
+    B.AddObj('-6*x1 -5*x2')
 
-% Add as a Symbolic Expression
-x = sym('x',[2 1]); %define symbolic variables
-Bs.AddObj(-[6;5]'*x)
+    % Add as a Symbolic Expression
+    x = sym('x',[2 1]); %define symbolic variables
+    Bs.AddObj(-[6;5]'*x)
 
-% Add as strings
-B.AddCon('x1 + 4*x2 <= 16');
-B.AddCon('6*x1 + 4*x2 <= 28')
+    % Add as strings
+    B.AddCon('x1 + 4*x2 <= 16');
+    B.AddCon('6*x1 + 4*x2 <= 28')
 
-% Add as Symbolic Expressions with specified cl, cu
-Bs.AddCon(x(1) + 4*x(2),-Inf,16);
-Bs.AddCon(6*x(1) + 4*x(2),-Inf,28)
+    % Add as Symbolic Expressions with specified cl, cu
+    Bs.AddCon(x(1) + 4*x(2),-Inf,16);
+    Bs.AddCon(6*x(1) + 4*x(2),-Inf,28)
 
-% Method 1) Individually as Strings
-B.AddBound('0 <= x1 <= 10');
-B.AddBound('0 <= x2 <= 10')
+    % Method 1) Individually as Strings
+    B.AddBound('0 <= x1 <= 10');
+    B.AddBound('0 <= x2 <= 10')
 
-% Method 2) Vectorized, 'x' is recognised as belonging to all 'xn' variables
-B.AddBound('0 <= x <= 10');
+    % Method 2) Vectorized, 'x' is recognised as belonging to all 'xn' variables
+    B.AddBound('0 <= x <= 10');
 
-% Method 3) As a symbolic variable vector with numerical bounds
-Bs.AddBounds(x,[0;0],[10;10])
+    % Method 3) As a symbolic variable vector with numerical bounds
+    Bs.AddBounds(x,[0;0],[10;10])
 
-% Build Optimization Problem
-Build(B)
-% Solve SymBuilder Optimization Problem
-[x,fval,ef,info] = Solve(B)
+    % Build Optimization Problem
+    Build(B)
+    % Solve SymBuilder Optimization Problem
+    [x,fval,ef,info] = Solve(B)
 
-% New SymBuilder Object
-B = SymBuilder();
+    % New SymBuilder Object
+    B = SymBuilder();
 
-% Add Quadratic Objective
-B.AddObj('0.5*x1^2 + 0.5*x2^2 + 0.5*x3^2 - 2*x1 - 3*x2 - x3');
+    % Add Quadratic Objective
+    B.AddObj('0.5*x1^2 + 0.5*x2^2 + 0.5*x3^2 - 2*x1 - 3*x2 - x3');
 
-% Add Linear Constraints
-B.AddCon('x1 + x2 + x3 <= 1');
-B.AddCon('3*x1 - 2*x2 - 3*x3 <= 1');
-B.AddCon('x1 - 3*x2 + 2*x2 <= 1');
+    % Add Linear Constraints
+    B.AddCon('x1 + x2 + x3 <= 1');
+    B.AddCon('3*x1 - 2*x2 - 3*x3 <= 1');
+    B.AddCon('x1 - 3*x2 + 2*x2 <= 1');
 
-% Add Integer Constraint (also possible with Symbolic Variables)
-B.AddInteger('x2 = I');
+    % Add Integer Constraint (also possible with Symbolic Variables)
+    B.AddInteger('x2 = I');
 
-% Build Object
-Build(B)
+    % Build Object
+    Build(B)
 
-% Solve Problem
-[x,fval,ef,info] = Solve(B)
+    % Solve Problem
+    [x,fval,ef,info] = Solve(B)
 
-% New SymBuilder Object
-B = SymBuilder();
+    % New SymBuilder Object
+    B = SymBuilder();
 
-% Add Nonlinear Objective with 2 Constants
-B.AddObj('sin(pi*x1/a1)*cos(pi*x2/a2)');
+    % Add Nonlinear Objective with 2 Constants
+    B.AddObj('sin(pi*x1/a1)*cos(pi*x2/a2)');
 
-% Add Linear Constraints
-B.AddCon('-x1 + 2.5*x2 <= 1');
-B.AddCon('x1 + 2.5*x2 <= -15');
+    % Add Linear Constraints
+    B.AddCon('-x1 + 2.5*x2 <= 1');
+    B.AddCon('x1 + 2.5*x2 <= -15');
 
-% Add Integer Constraint (note also vectorized)
-B.AddInteger('x = I');
+    % Add Integer Constraint (note also vectorized)
+    B.AddInteger('x = I');
 
-% Declare Constants with Numerical Values
-B.AddConstant('a1',12);
-B.AddConstant('a2',16);
+    % Declare Constants with Numerical Values
+    B.AddConstant('a1',12);
+    B.AddConstant('a2',16);
 
-% Build It
-Build(B)
+    % Build It
+    Build(B)
 
-% Inspect resulting equations
-B.sobj
-% New SymBuilder Object
-B = SymBuilder();
+    % Inspect resulting equations
+    B.sobj
+    % New SymBuilder Object
+    B = SymBuilder();
 
-% Add Nonlinear Objective with 2 Intermediate Expressions
-B.AddObj('sin(e1)*cos(e2)');
+    % Add Nonlinear Objective with 2 Intermediate Expressions
+    B.AddObj('sin(e1)*cos(e2)');
 
-% Add Linear Constraints
-B.AddCon('-x1 + 2.5*x2 <= 1');
-B.AddCon('x1 + 2.5*x2 <= -15');
+    % Add Linear Constraints
+    B.AddCon('-x1 + 2.5*x2 <= 1');
+    B.AddCon('x1 + 2.5*x2 <= -15');
 
-% Add Integer Constraint
-B.AddInteger('x = I');
+    % Add Integer Constraint
+    B.AddInteger('x = I');
 
-% Add Intemediate Variable Expressions (with Constants for this example)
-B.AddExpression('e1 = pi*x1/a1');
-B.AddExpression('e2 = pi*x2/a2');
+    % Add Intemediate Variable Expressions (with Constants for this example)
+    B.AddExpression('e1 = pi*x1/a1');
+    B.AddExpression('e2 = pi*x2/a2');
 
-% Define Constants
-B.AddConstant('a1',12);
-B.AddConstant('a2',16);
+    % Define Constants
+    B.AddConstant('a1',12);
+    B.AddConstant('a2',16);
 
-% Add Now Build It
-Build(B)
+    % Add Now Build It
+    Build(B)
 
-% New SymBuilder Object (verbose=false)
-B = SymBuilder(false);
+    % New SymBuilder Object (verbose=false)
+    B = SymBuilder(false);
 
-% Add Quadratic Objective
-B.AddObj('(x1-x2)^2 + (x2+x3-2)^2 + (x4-1)^2 + (x5-1)^2');
+    % Add Quadratic Objective
+    B.AddObj('(x1-x2)^2 + (x2+x3-2)^2 + (x4-1)^2 + (x5-1)^2');
 
-% Add Linear Constraints
-B.AddCon('x1 + 3*x2 = 5');
-B.AddCon('x3 + x4 - 2*x5 = 0');
-B.AddCon('x2 - x5 = 0');
+    % Add Linear Constraints
+    B.AddCon('x1 + 3*x2 = 5');
+    B.AddCon('x3 + x4 - 2*x5 = 0');
+    B.AddCon('x2 - x5 = 0');
 
-% Add Result Groups (the letter is arbitrary, any group name can be used)
-B.AddResultGroup('A','Fuel Usage [l]');
-B.AddResultGroup('B','Distance [km]');
+    % Add Result Groups (the letter is arbitrary, any group name can be used)
+    B.AddResultGroup('A','Fuel Usage [l]');
+    B.AddResultGroup('B','Distance [km]');
 
-% Add Result Expressions (Group:Name, Variable or Expression)
-B.AddResultExp('A:Truck 1','x1');
-B.AddResultExp('A:Truck 2','x2');
-B.AddResultExp('B:Route 1','x3');
-B.AddResultExp('B:Route 2','x4');
-B.AddResultExp('B:Route 3','x5-x3'); %expressions with variables OK too
+    % Add Result Expressions (Group:Name, Variable or Expression)
+    B.AddResultExp('A:Truck 1','x1');
+    B.AddResultExp('A:Truck 2','x2');
+    B.AddResultExp('B:Route 1','x3');
+    B.AddResultExp('B:Route 2','x4');
+    B.AddResultExp('B:Route 3','x5-x3'); %expressions with variables OK too
 
-% Build Object
-Build(B);
+    % Build Object
+    Build(B);
 
-% Solve
-Solve(B,[ 2.5 0.5 2 -1 0.5 ]);
+    % Solve
+    Solve(B,[ 2.5 0.5 2 -1 0.5 ]);
 
-% Enter Problem
-B = SymBuilder();
-B.AddObj('(x1-x2)^2 + (x2+x3-2)^2 + (x4-1)^2 + (x5-1)^2');
-B.AddCon('x1^2 + 3*x2 = 4');
-B.AddCon('x3 + x4 - 2*x5 = 0');
-B.AddCon('x2 - x5 = 0');
+    % Enter Problem
+    B = SymBuilder();
+    B.AddObj('(x1-x2)^2 + (x2+x3-2)^2 + (x4-1)^2 + (x5-1)^2');
+    B.AddCon('x1^2 + 3*x2 = 4');
+    B.AddCon('x3 + x4 - 2*x5 = 0');
+    B.AddCon('x2 - x5 = 0');
 
-% Draft Model
-Draft(B)
+    % Draft Model
+    Draft(B)
 
-% Initial Guess
-x0 = [ 2.5 0.5 2 -1 0.5 ];
+    % Initial Guess
+    x0 = [ 2.5 0.5 2 -1 0.5 ];
 
-% Generate C-Code Model and Solve Problem
-[x,fval,ef,info] = Solve(B,x0,symbset('cbmode','ccode'))
+    % Generate C-Code Model and Solve Problem
+    [x,fval,ef,info] = Solve(B,x0,symbset('cbmode','ccode'))
 
-% Generate C++ Code Model with CppAD and Solve Problem
-[x,fval,ef,info] = Solve(B,x0,symbset('cbmode','cppad'))
+    % Generate C++ Code Model with CppAD and Solve Problem
+    [x,fval,ef,info] = Solve(B,x0,symbset('cbmode','cppad'))
 
-% New SymBuilder Object
-B = SymBuilder(false);
+    % New SymBuilder Object
+    B = SymBuilder(false);
 
-% Add Nonlinear Objective
-B.AddObj('sin(pi*x1/12)*cos(pi*x2/16)');
+    % Add Nonlinear Objective
+    B.AddObj('sin(pi*x1/12)*cos(pi*x2/16)');
 
-% Add Linear Constraints
-B.AddCon('-x1 + 2.5*x2 <= 1');
-B.AddCon('x1 + 2.5*x2 <= -15');
+    % Add Linear Constraints
+    B.AddCon('-x1 + 2.5*x2 <= 1');
+    B.AddCon('x1 + 2.5*x2 <= -15');
 
-% Build Object
-Build(B);
+    % Build Object
+    Build(B);
 
-% Get Nonlinear Problem Data
-nlprob = GetNLProb(B)
+    % Get Nonlinear Problem Data
+    nlprob = GetNLProb(B)
 
-% Objective Function (min fun(x))
-fun = @(x) x(1)*x(4)*sum(x(1:3)) + x(3);
+    % Objective Function (min fun(x))
+    fun = @(x) x(1)*x(4)*sum(x(1:3)) + x(3);
 
-% Nonlinear Constraint Function (cl <= con(x) <= cu)
-con = @(x) [ prod(x);
-             sum(x.^2)];
-cl = [25;40];
-cu = [Inf;40];
+    % Nonlinear Constraint Function (cl <= con(x) <= cu)
+    con = @(x) [ prod(x);
+                 sum(x.^2)];
+    cl = [25;40];
+    cu = [Inf;40];
 
-% Bounds + x0
-lb = ones(4,1);
-ub = 5*ones(4,1);
-x0 = [1 5 5 1]';
+    % Bounds + x0
+    lb = ones(4,1);
+    ub = 5*ones(4,1);
+    x0 = [1 5 5 1]';
 
-% Build OPTI Object
-Opt = optisym(fun,x0,lb,ub,con,cl,cu)
+    % Build OPTI Object
+    Opt = optisym(fun,x0,lb,ub,con,cl,cu)
 
-% Solve
-[x,fval,exitflag,info] = solve(Opt)
+    % Solve
+    [x,fval,exitflag,info] = solve(Opt)
 
-B = SymBuilder();
+    B = SymBuilder();
 
-% Enter Objective
-B.AddObj('(x1-x2)^2 + (x2+x3-2)^2 + (x4-1)^2 + (x5-1)^2');
+    % Enter Objective
+    B.AddObj('(x1-x2)^2 + (x2+x3-2)^2 + (x4-1)^2 + (x5-1)^2');
 
-% Add Constraints
-B.AddCon('x1^2 + 3*x2 = 4');
-B.AddCon('x3 + x4 - 2*x5 = 0');
-B.AddCon('x2 - x5 = 0');
+    % Add Constraints
+    B.AddCon('x1^2 + 3*x2 = 4');
+    B.AddCon('x3 + x4 - 2*x5 = 0');
+    B.AddCon('x2 - x5 = 0');
 
-Draft(B)
-Build(B)
+    Draft(B)
+    Build(B)
 
-% Enter Problem
-B = SymBuilder();
-B.AddObj('(x1-x2)^2 + (x2+x3-2)^2 + (x4-1)^2 + (x5-1)^2');
-B.AddCon('x1^2 + 3*x2 = 4');
-B.AddCon('x3 + x4 - 2*x5 = 0');
-B.AddCon('x2 - x5 = 0');
-% Draft
-Draft(B)
+    % Enter Problem
+    B = SymBuilder();
+    B.AddObj('(x1-x2)^2 + (x2+x3-2)^2 + (x4-1)^2 + (x5-1)^2');
+    B.AddCon('x1^2 + 3*x2 = 4');
+    B.AddCon('x3 + x4 - 2*x5 = 0');
+    B.AddCon('x2 - x5 = 0');
+    % Draft
+    Draft(B)
 
-% Solve
-x0 = [ 2.5 0.5 2 -1 0.5 ];
-[x,fval,ef,info] = Solve(B,x0)
+    % Solve
+    x0 = [ 2.5 0.5 2 -1 0.5 ];
+    [x,fval,ef,info] = Solve(B,x0)
 
-% Solve without generating 2nd derivative callback
-[x,fval,ef,info] = Solve(B,x0,symbset('use2ndDerivs','no'))
+    % Solve without generating 2nd derivative callback
+    [x,fval,ef,info] = Solve(B,x0,symbset('use2ndDerivs','no'))
 
-rehash
-clear symb_ccb
-clear symcb
-try
-    delete('symb_ccb.mexw64')
-catch
-end
-try
-    delete('symb_ccb.mexw32')
-catch    
-end
-try
-   delete('symb_cb.m') 
-catch
+    rehash
+    clear symb_ccb
+    clear symcb
+    try
+        delete('symb_ccb.mexw64')
+    catch
+    end
+    try
+        delete('symb_ccb.mexw32')
+    catch    
+    end
+    try
+       delete('symb_cb.m') 
+    catch
+    end
 end
 
 %% Two Cons
@@ -2210,11 +2216,13 @@ dfa = autoJac(fun,x0)
 dfc = cstepJac(fun,x0)
 
 % Symbolic Differentiation
-grad = symJac(fun)
+if (exist('syms.m','file'))
+    grad = symJac(fun)
 
-% Evaluate
-dfs = grad(x0)
-
+    % Evaluate
+    dfs = grad(x0)
+end
+    
 % NLP Ex
 % Objective
 fun = @(x) x(1)*x(4)*(x(1) + x(2) + x(3)) + x(3);
@@ -2590,53 +2598,55 @@ x0 = [2;2] %Initial Guess
 
 
 % BARON variable vector
-x = barvec(2,1);
-% Test Function
-fun = @(x) log(1 + x(1)^2) - x(2);
+if (exist('barvec.m','file'))
+    x = barvec(2,1);
+    % Test Function
+    fun = @(x) log(1 + x(1)^2) - x(2);
 
-%Evaluate Function using BARON variables
-fun(x)
+    %Evaluate Function using BARON variables
+    fun(x)
 
-% Objective
-fun = @(x) 100*(x(2)-x(1)^2)^2 + (1-x(1))^2;    %Objective Function Vector (min f(x))
+    % Objective
+    fun = @(x) 100*(x(2)-x(1)^2)^2 + (1-x(1))^2;    %Objective Function Vector (min f(x))
 
-% Nonlinear Constraints
-nlcon = @(x) [x(1) + x(2)^2;                    %cl <= nlcon(x) <= cu
-              x(1)^2 + x(2);
-              x(1)^2 + x(2)^2 - 1];
-cl = [0;0;0];
-cu = [Inf;Inf;Inf];
+    % Nonlinear Constraints
+    nlcon = @(x) [x(1) + x(2)^2;                    %cl <= nlcon(x) <= cu
+                  x(1)^2 + x(2);
+                  x(1)^2 + x(2)^2 - 1];
+    cl = [0;0;0];
+    cu = [Inf;Inf;Inf];
 
-% Bounds
-lb = [-0.5;-inf];                               %lb <= x <= ub
-ub = [0.5;inf];
+    % Bounds
+    lb = [-0.5;-inf];                               %lb <= x <= ub
+    ub = [0.5;inf];
 
-% Create OPTI Object
-opts = optiset('solver','baron','display','iter');
-Opt = opti('fun',fun,'nl',nlcon,cl,cu,'bounds',lb,ub,'opts',opts)
+    % Create OPTI Object
+    opts = optiset('solver','baron','display','iter');
+    Opt = opti('fun',fun,'nl',nlcon,cl,cu,'bounds',lb,ub,'opts',opts)
 
-% Solve the NLP problem
-x0 = [-2;1] %Initial Guess
-[x,fval,exitflag,info] = solve(Opt,x0)
+    % Solve the NLP problem
+    x0 = [-2;1] %Initial Guess
+    [x,fval,exitflag,info] = solve(Opt,x0)
 
 
-% Objective
-fun = @(x) log(1 + x(1)^2) - x(2);    %Objective Function Vector (min f(x))
+    % Objective
+    fun = @(x) log(1 + x(1)^2) - x(2);    %Objective Function Vector (min f(x))
 
-% Nonlinear Constraints
-nlcon = @(x) (1 + x(1)^2)^2 + x(2)^2; %Nonlinear Equality Constraint
-cl = 4;
-cu = 4;
+    % Nonlinear Constraints
+    nlcon = @(x) (1 + x(1)^2)^2 + x(2)^2; %Nonlinear Equality Constraint
+    cl = 4;
+    cu = 4;
 
-% Create OPTI Object
-opts = optiset('solver','baron','display','iter');
-Opt = opti('fun',fun,'nl',nlcon,cl,cu,'ndec',2,'opts',opts)
+    % Create OPTI Object
+    opts = optiset('solver','baron','display','iter');
+    Opt = opti('fun',fun,'nl',nlcon,cl,cu,'ndec',2,'opts',opts)
 
-% Solve the NLP problem
-x0 = [2;2] %Initial Guess
-[x,fval,exitflag,info] = solve(Opt,x0)
+    % Solve the NLP problem
+    x0 = [2;2] %Initial Guess
+    [x,fval,exitflag,info] = solve(Opt,x0)
+end
 
 %%
 clc
-fprintf('Done!');
+fprintf('Done!\n');
 

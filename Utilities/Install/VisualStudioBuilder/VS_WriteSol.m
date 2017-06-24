@@ -7,7 +7,7 @@ function solPath = VS_WriteSol(projStruct,vsver)
 if(~isstruct(projStruct))
     error('The supplied argument must be a structure');
 end
-if(nargin < 2), vsver = 'VS2015'; end
+if(nargin < 2), vsver = 'VS2017'; end
 len = numel(projStruct);
 PATHS = cell(len,1);
 IDS = cell(len,1);

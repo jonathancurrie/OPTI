@@ -24,7 +24,7 @@ addpath([cd '/Utilities/Source'])
 
 %% -- VS2015 Solvers --
 clc
-fprintf(2,'Please Specify Visual Studio 2015 as your Compiler...\n\n');
+fprintf(2,'Please Specify Visual Studio 2017 as your Compiler...\n\n');
 mex -setup
 %% CLP
 opti_CLP_Install

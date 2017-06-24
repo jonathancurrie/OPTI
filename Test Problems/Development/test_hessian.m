@@ -83,9 +83,11 @@ end
 
 %% HS71 Manual fmincon
 clc
-mopts = optimset('display','iter','Algorithm','interior-point','GradObj','on','GradConstr','on','Hessian','user-supplied','HessFcn',@hs71H);
+if (exist('fmincon.m','file'))
+    mopts = optimset('display','iter','Algorithm','interior-point','GradObj','on','GradConstr','on','Hessian','user-supplied','HessFcn',@hs71H);
 
-[x,fv,e,i] = fmincon(@hs71F,x0,[],[],[],[],lb,ub,@hs71C,mopts)
+    [x,fv,e,i] = fmincon(@hs71F,x0,[],[],[],[],lb,ub,@hs71C,mopts)
+end
 
 
 %% HS71 From AMPL Comparison

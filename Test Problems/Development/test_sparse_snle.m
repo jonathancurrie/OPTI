@@ -46,13 +46,15 @@ nleq = @(x) [10*(x(2) - x(1)^2)
             sqrt(90)*(x(4)-x(3)^2)
             sqrt(10)*(x(2) + x(4) - 2)
             (1/sqrt(10))*(x(2) - x(4))];
-[nljac,nljacstr] = symJac(nleq);        
-        
-x0 = [-30 -10 -30 -10]';        
+if (exist('syms.m','file'))        
+    [nljac,nljacstr] = symJac(nleq);        
 
-Opt = opti('nleq',nleq,'nljac',nljac,'x0',x0,'options',optiset('solver','auto'))
+    x0 = [-30 -10 -30 -10]';        
 
-[x,f,e,i] = solve(Opt)
+    Opt = opti('nleq',nleq,'nljac',nljac,'x0',x0,'options',optiset('solver','auto'))
+
+    [x,f,e,i] = solve(Opt)
+end
 
 %% As above but new construct [w grad SPARSE]
 clc
@@ -60,13 +62,15 @@ nleq = @(x) [10*(x(2) - x(1)^2)
             sqrt(90)*(x(4)-x(3)^2)
             sqrt(10)*(x(2) + x(4) - 2)
             (1/sqrt(10))*(x(2) - x(4))];
-[nljac,nljacstr] = symJac(nleq); nljac = @(x) sparse(nljac(x));       
+if (exist('syms.m','file'))  
+    [nljac,nljacstr] = symJac(nleq); nljac = @(x) sparse(nljac(x));       
 
-x0 = [-30 -10 -30 -10]';        
+    x0 = [-30 -10 -30 -10]';        
 
-Opt = opti('nleq',nleq,'nljac',nljac,'nljacstr',nljacstr,'x0',x0,'options',optiset('solver','auto'))
+    Opt = opti('nleq',nleq,'nljac',nljac,'nljacstr',nljacstr,'x0',x0,'options',optiset('solver','auto'))
 
-[x,f,e,i] = solve(Opt)
+    [x,f,e,i] = solve(Opt)
+end
 
 %% As above but new construct [w grad SPARSE alt nl format]
 clc
@@ -74,13 +78,15 @@ nleq = @(x) [10*(x(2) - x(1)^2)
             sqrt(90)*(x(4)-x(3)^2)
             sqrt(10)*(x(2) + x(4) - 2)
             (1/sqrt(10))*(x(2) - x(4))];
-[nljac,nljacstr] = symJac(nleq); nljac = @(x) sparse(nljac(x));       
-        
-x0 = [-30 -10 -30 -10]';        
+if (exist('syms.m','file'))          
+    [nljac,nljacstr] = symJac(nleq); nljac = @(x) sparse(nljac(x));       
 
-Opt = opti('nleq',nleq,'nljac',nljac,'nljacstr',nljacstr,'x0',x0,'options',optiset('solver','auto'))
+    x0 = [-30 -10 -30 -10]';        
 
-[x,f,e,i] = solve(Opt)
+    Opt = opti('nleq',nleq,'nljac',nljac,'nljacstr',nljacstr,'x0',x0,'options',optiset('solver','auto'))
+
+    [x,f,e,i] = solve(Opt)
+end
 
 %% As above but new construct [w grad SPARSE alt nl format w lin]
 clc
@@ -88,14 +94,16 @@ nleq = @(x) [10*(x(2) - x(1)^2)
             sqrt(90)*(x(4)-x(3)^2)
             sqrt(10)*(x(2) + x(4) - 2)
             (1/sqrt(10))*(x(2) - x(4))];
-[nljac,nljacstr] = symJac(nleq); nljac = @(x) sparse(nljac(x));       
-A = [0 1 0 1]; b = 2;
-        
-x0 = [-30 -10 -30 -10]';        
+if (exist('syms.m','file'))  
+    [nljac,nljacstr] = symJac(nleq); nljac = @(x) sparse(nljac(x));       
+    A = [0 1 0 1]; b = 2;
 
-Opt = opti('nleq',nleq,'ineq',A,b,'nljac',nljac,'nljacstr',nljacstr,'x0',x0,'options',optiset('solver','auto'))
+    x0 = [-30 -10 -30 -10]';        
 
-[x,f,e,i] = solve(Opt)
+    Opt = opti('nleq',nleq,'ineq',A,b,'nljac',nljac,'nljacstr',nljacstr,'x0',x0,'options',optiset('solver','auto'))
+
+    [x,f,e,i] = solve(Opt)
+end
 
 %% As above but new construct [w grad SPARSE alt nl format w lin + int]
 clc
@@ -103,14 +111,16 @@ nleq = @(x) [10*(x(2) - x(1)^2)
             sqrt(90)*(x(4)-x(3)^2)
             sqrt(10)*(x(2) + x(4) - 2)
             (1/sqrt(10))*(x(2) - x(4))];
-[nljac,nljacstr] = symJac(nleq); nljac = @(x) sparse(nljac(x));       
-A = [0 1 0 1]; b = 2;
-        
-x0 = [-30 -10 -30 -10]';        
+if (exist('syms.m','file'))          
+    [nljac,nljacstr] = symJac(nleq); nljac = @(x) sparse(nljac(x));       
+    A = [0 1 0 1]; b = 2;
 
-Opt = opti('nleq',nleq,'ivars',2,'lin',A,-Inf,b,'nljac',nljac,'nljacstr',nljacstr,'x0',x0,'options',optiset('solver','auto'))
+    x0 = [-30 -10 -30 -10]';        
 
-[x,f,e,i] = solve(Opt)
+    Opt = opti('nleq',nleq,'ivars',2,'lin',A,-Inf,b,'nljac',nljac,'nljacstr',nljacstr,'x0',x0,'options',optiset('solver','auto'))
+
+    [x,f,e,i] = solve(Opt)
+end
 
 %% As above but new construct [w grad SPARSE alt nl format w ineq]
 clc
@@ -119,16 +129,18 @@ nleq = @(x) [10*(x(2) - x(1)^2)
             sqrt(10)*(x(2) + x(4) - 2)
             (1/sqrt(10))*(x(2) - x(4))
             x(3)];
-[nljac,nljacstr] = symJac(nleq); nljac = @(x) sparse(nljac(x));       
-nlrhs = zeros(5,1);
-nle = [zeros(4,1);-1];
-A = [0 1 0 1]; b = 2;
-        
-x0 = [-30 -10 -30 -10]';        
+if (exist('syms.m','file'))          
+    [nljac,nljacstr] = symJac(nleq); nljac = @(x) sparse(nljac(x));       
+    nlrhs = zeros(5,1);
+    nle = [zeros(4,1);-1];
+    A = [0 1 0 1]; b = 2;
 
-Opt = opti('nlmix',nleq,nlrhs,nle,'ineq',A,b,'nljac',nljac,'nljacstr',nljacstr,'x0',x0,'options',optiset('solver','auto'))
+    x0 = [-30 -10 -30 -10]';        
 
-[x,f,e,i] = solve(Opt)
+    Opt = opti('nlmix',nleq,nlrhs,nle,'ineq',A,b,'nljac',nljac,'nljacstr',nljacstr,'x0',x0,'options',optiset('solver','auto'))
+
+    [x,f,e,i] = solve(Opt)
+end
 
 %% Wiki Ex 1
 clc

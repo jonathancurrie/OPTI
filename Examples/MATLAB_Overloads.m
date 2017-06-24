@@ -17,7 +17,7 @@
 % As well as setting up OPTI solver options which can be used with the
 % overloaded functions.
 %
-%   Copyright (C) 2014 Jonathan Currie (IPL)
+%   Copyright (C) 2017 Jonathan Currie (IPL)
 
 % There is also a page on the Wiki which supplements this example:
 web('https://www.inverseproblem.co.nz/OPTI/index.php/GetStart/Overloads');
@@ -47,7 +47,7 @@ b = [6;9;1;3];
 [x,fval,exitflag,info] = opti_bintprog(f,A,b)
 
 
-%% Example 3 - opti_minprog()
+%% Example 3 - opti_mintprog()
 % Solved using an OPTI MILP solver. Note this function existed before
 % intlinprog.
 clc

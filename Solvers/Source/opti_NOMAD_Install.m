@@ -19,7 +19,7 @@
 % required path on your computer:
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% path = 'C:\Solvers\NOMAD-3.7.2'; % FULL path to NOMAD
+% path = 'C:\Solvers\NOMAD-3.8.1'; % FULL path to NOMAD
 % opti_VSBuild('Nomad',path);
 
 % 3) Compile the MEX File
@@ -31,7 +31,7 @@
 %MEX Interface Source Files
 src = 'nomadmex.cpp';
 %Include Directories
-inc = 'Include/Nomad';
+inc = {'Include/Nomad','Include/Nomad/sgtelib'};
 %Lib Names [static libraries to link against]
 libs = 'libnomad';
 %Options

@@ -1,4 +1,9 @@
 
+if (~exist('syms.m','file'))  
+    fprintf('The symbolic toolbox is not installed, skipping test\n');
+    return;
+end
+
 %% Gradients
 clear
 clc

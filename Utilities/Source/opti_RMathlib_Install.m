@@ -32,7 +32,7 @@
 % VS_WriteProj(sdir,name,inc,opts)
 % %%
 % Once complete, you will have a directory called R\libRmathlib. Open the
-% Visual Studio 2015 project file, then complete the following steps:
+% Visual Studio project file, then complete the following steps:
 %   a) Copy from Utilities/Source/Include/RMathlib Rconfig.h and Rmath.h to
 %   the R/src/nmath folder. 
 %   b) Change nmath.h 110-112 to (VS2015)

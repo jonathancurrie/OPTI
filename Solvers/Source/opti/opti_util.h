@@ -12,6 +12,8 @@ void getVSVer(char vbuf[6])
         strcpy(vbuf,"2013");
     #elif (_MSC_VER == 1900)
         strcpy(vbuf,"2015");
+    #elif (_MSC_VER == 1910)
+        strcpy(vbuf,"2017");
     #else
         strcpy(vbuf,"?");
     #endif

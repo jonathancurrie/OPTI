@@ -12,7 +12,7 @@ function opti_VSBuild(solver,paths,opts)
 %      - path:              FULL path to the solver source directory
 %      - opts_structure:    structure with the following fields:          
 %           expath:         FULL paths to extra required source directories (cell array)
-%           vsver:          Visual Studio Version (default find the highest version, otherwise 'VS2015', 'VS2013', 'VS2010' and 'VS2012' supported)
+%           vsver:          Visual Studio Version (default find the highest version, otherwise 'VS2017', 'VS2015', 'VS2013', 'VS2010' and 'VS2012' supported)
 %           ifortver:       Intel Fortran Version (default find the highest version, otherwise 'XE16', 'XE15', 'XE13SP1', 'XE13', 'XE11SP1' and 'XE11' also supported)
 %           ma57            Include MA57 in build {[]} ('HSL' - HSL Fortran source version, 'Matlab' - DLL included with MATLAB) [see opti_MISC_Install]
 %           ma27            Include MA27 in build {[]} ('HSL' - HSL Fortran source version) [see opti_MISC_Install]
@@ -406,7 +406,7 @@ switch(lower(solver))
         hdrs = {[mumpspath '\include'],[mumpspath '\libseq']};
         name = 'libdmumps_f';
         opts = [];
-        opts.cpp = false; opts.ifortver = ifortver;
+        opts.cpp = false; opts.ifortver = ifortver; opts.additionalOpts = '/nostandard-realloc-lhs';
         opts.exPP = {'pord','metis'};
         opts.exFilter = {'cmumps*','smumps*','zmumps*'};
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = hdrs; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
@@ -422,7 +422,7 @@ switch(lower(solver))
         hdrs = {[mumpspath '\include'],[mumpspath '\libseq']};
         name = 'libzmumps_f';
         opts = [];
-        opts.cpp = false; opts.ifortver = ifortver;
+        opts.cpp = false; opts.ifortver = ifortver; opts.additionalOpts = '/nostandard-realloc-lhs';
         opts.exPP = {'pord','metis'};
         opts.exFilter = {'cmumps*','smumps*','dmumps*'};
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = hdrs; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
@@ -436,7 +436,7 @@ switch(lower(solver))
         sdir = [mumpspath '\libseq'];
         name = 'libseq_f';
         opts = [];       
-        opts.cpp = false; opts.ifortver = ifortver;
+        opts.cpp = false; opts.ifortver = ifortver; opts.additionalOpts = '/nostandard-realloc-lhs';
         VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = []; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
         % PORD
         sdir = [mumpspath '\PORD\lib'];
@@ -449,7 +449,7 @@ switch(lower(solver))
         solpath = VS_WriteSol(VSPRJ,vsver);
         %List of projects to compile and move
         projs = {'libdmumps_c','libzmumps_c','libseq_c','libpord','libdmumps_f','libzmumps_f','libseq_f'};  
-        comps = {'vc','vc','vc','if','if','if','if'};
+        comps = {'vc','vc','vc','vc','if','if','if'};
         
     case 'ipopt'
         ipoptpath = paths{1};
@@ -823,14 +823,14 @@ switch(lower(solver))
             copyfile([cd '/Solvers/Source/nlopt/config12.h'],[nloptpath '\api\config.h'],'f');
         end
         %VS2013 no-vector fix for cobyla.c (see https://connect.microsoft.com/VisualStudio/feedback/details/1028781/c1001-on-release-build)
-        if(strcmpi(vsver,'VS2013') || strcmpi(vsver,'VS2015'))
+        if(strcmpi(vsver,'VS2013') || strcmpi(vsver,'VS2015') || strcmpi(vsver,'VS2017'))
             str = fileread([nloptpath '/cobyla/cobyla.c']);
             str = strrep(str,sprintf('i__1 = nact;\r\n  for (k = 1;'),sprintf('i__1 = nact;\r\n  #pragma loop(no_vector)\r\n  for (k = 1;'));
             fp = fopen([nloptpath '/cobyla/cobyla.c'],'w');
             fprintf(fp,'%s',str); fclose(fp);
         end
         %VS2015 fix for extra math fncs
-        if(strcmpi(vsver,'VS2015'))
+        if(strcmpi(vsver,'VS2015')|| strcmpi(vsver,'VS2017'))
             str = fileread([nloptpath '/api/nlopt.h']);
             str = strrep(str,'and size_t */',sprintf('and size_t */\r\n#define HAVE_COPYSIGN\r\n#define HAVE_ISNAN\r\n'));
             fp = fopen([nloptpath '/api/nlopt.h'],'w');
@@ -1085,9 +1085,13 @@ switch(lower(solver))
         opts = [];
         opts.exPP = {'Arith_Kind_ASL=1','Sscanf=sscanf','Printf=printf','Sprintf=sprintf',...
                      'Fprintf=fprintf','NO_STDIO1','_CRT_SECURE_NO_WARNINGS','_CRT_NONSTDC_NO_DEPRECATE'};
-        %VS2015 doesn't need snprintf
-        if(~strcmpi(vsver,'VS2015'))
+        %VS2015/7 doesn't need snprintf
+        if(~strcmpi(vsver,'VS2015') && ~strcmpi(vsver,'VS2017'))
             opts.exPP = [opts.exPP 'snprintf=_snprintf'];
+        end
+        %VS2017 includes dtoa even with exclude, define arith type
+        if(strcmpi(vsver,'VS2017'))
+            opts.exPP = [opts.exPP,'IEEE_8087'];
         end
         opts.exclude = {'arithchk.c','atof.c','b_search.c','dtoa.c','fpinit.c','funcadd.c',...
                         'funcadd0.c','funcaddk.c','funcaddr.c','obj_adj0.c','sjac0dim.c',...
@@ -1268,7 +1272,7 @@ fprintf('Compiling Visual Studio Projects using %s [This May Take a Few Minutes]
 ccdir = cd;
 cd(vsdir);
 %estr = ['!devenv ' solpath ' /build Release /project ']; 
-n = 1;
+n = 1; mul = 1;
 for i = 1:length(projs)
     switch(comps{i})
         case {'vc','if'}
@@ -1292,11 +1296,12 @@ for i = 1:length(projs)
             estr64 = ['!devenv "' spath projs{i} filesep projs{i} '.vcxproj" /build Release|x64'];
     end
     if(build32bit)
-        fprintf('Compiling Project (%d of %d) ''%s'' [%s: Win32]...',n,2*length(projs),projs{i},cmp); n = n + 1;
+        mul = 2;
+        fprintf('Compiling Project (%d of %d) ''%s'' [%s: Win32]...',n,mul*length(projs),projs{i},cmp); n = n + 1;
         eval(estr32);
         fprintf('Done!\n');
     end
-    fprintf('Compiling Project (%d of %d) ''%s'' [%s: Win64]...',n,2*length(projs),projs{i},cmp); n = n + 1;
+    fprintf('Compiling Project (%d of %d) ''%s'' [%s: Win64]...',n,mul*length(projs),projs{i},cmp); n = n + 1;
     eval(estr64);
     fprintf('Done!\n');
 end

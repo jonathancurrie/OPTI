@@ -40,17 +40,17 @@ genp = regexp(genp,';','split');
 %Folders to exclude from adding to Matlab path
 i = 1;
 rInd{:,:,i} = strfind(genp,'Documentation + Licenses'); i = i + 1;
-rInd{:,:,i} = strfind(genp,'vti_cnf'); i = i + 1;
-rInd{:,:,i} = strfind(genp,'vti_pvt'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'Source'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'CppAD'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'misdp'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'tex'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'.git'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'Crash Files'); i = i + 1;
+rInd{:,:,i} = strfind(genp,'mexopts'); i = i + 1;
 if(~exist([cd '\Solvers\Source\lib\win32\libclp.lib'],'file'))
     rInd{:,:,i} = strfind(genp,'Development'); i = i + 1;
 end
+
 ind = NaN(length(rInd{1}),1);
 %Track indices of paths to remove from list
 for i = 1:length(rInd{1})
@@ -83,8 +83,8 @@ if(strcmpi(in,'y'))
     opti_Install_Test(1);
 end
 
-%Launch Help Browser [no longer works well >= R2012b]
-web('Opti_Main.html','-helpbrowser');
+%Launch Examples page
+web('https://inverseproblem.co.nz/OPTI/index.php/Examples/Examples','-browser');
 
 %Finished
 fprintf('\n\nOPTI Toolbox Installation Complete!\n');
@@ -187,6 +187,7 @@ if(str2double(vv{1}) < 8)
         end
     end
 end
+
 switch(mexext)
     case 'mexw32'
         error(['From v2.20 OPTI Toolbox only supports 64bit (Windows x64) platforms. Realistically, you should consider upgrading to 64bit for the best performance with OPTI.\n'...
@@ -210,9 +211,9 @@ end
 
 %Print Missing PreReqs
 if(~havVC)
-    fprintf(2,'Cannot find the Microsoft VC++ 2015 %s Redistributable!\n',arch); 
+    fprintf(2,'Cannot find the Microsoft VC++ 2017 %s Redistributable!\n',arch); 
 else
-    fprintf('Found the Microsoft VC++ 2015 %s Redistributable\n',arch); 
+    fprintf('Found the Microsoft VC++ 2017 %s Redistributable\n',arch); 
 end
 % if(~havIC) %[not req from OPTI v >= 2.12]
 %     fprintf(2,'Cannot find the Intel C++ XE 2013 %s Redistributable!\n',arch);
@@ -220,9 +221,9 @@ end
 %     fprintf('Found the Intel C++ XE 2013 %s Redistributable\n',arch); 
 % end
 if(~havIF)
-    fprintf(2,'Cannot find the Intel Fortran XE 2016 %s Redistributable!\n',arch);
+    fprintf(2,'Cannot find the Intel Fortran XE 2017 %s Redistributable!\n',arch);
 else
-    fprintf('Found the Intel Fortran XE 2016 %s Redistributable\n',arch); 
+    fprintf('Found the Intel Fortran XE 2017 %s Redistributable\n',arch); 
 end    
 
 %Install Instructions for each Package
@@ -230,9 +231,14 @@ if(missing)
     fprintf(2,'\nYou are missing one or more pre-requisites. Please read the instructions below carefully to install them:\n\n');
     
     if(~havVC)
-        fprintf(2,' Microsoft VC++ 2015:\n  - Download from: https://www.microsoft.com/en-us/download/details.aspx?id=49984\n');
-        fprintf(2,'  - When prompted, select the ''%s'' package. Once downloaded, install it.\n\n',arch);
-        fprintf(2,['NOTE: If you have already downloaded and installed VC++ 2015 (and restarted MATLAB) - it may be that you are missing the Universal C Runtime (Universal CRT).\nThis is automatically installed '...
+        fprintf(2,' Microsoft VC++ 2017:\n');
+        switch(arch)
+            case 'x64'
+                fprintf(2,'- Download from: https://go.microsoft.com/fwlink/?LinkId=746572\n');
+            case 'x86'
+                fprintf(2,'- Download from: https://go.microsoft.com/fwlink/?LinkId=746571\n');
+        end
+        fprintf(2,['NOTE: If you have already downloaded and installed VC++ 2017 (and restarted MATLAB) - it may be that you are missing the Universal C Runtime (Universal CRT).\nThis is automatically installed '...
                     'with Windows Updates - but if you don''t have those turned on, you can download it from here:\nhttps://www.microsoft.com/en-us/download/details.aspx?id=48234\n\n']);
     end
     
@@ -243,7 +249,7 @@ if(missing)
 %     end
     
     if(~havIF) 
-        fprintf(2,' Intel Fortran XE 2016:\n  - Download from: https://software.intel.com/en-us/articles/redistributables-for-intel-parallel-studio-xe-2016-composer-edition-for-windows\n');
+        fprintf(2,' Intel Fortran XE 2017:\n  - Download from: https://software.intel.com/en-us/articles/redistributables-for-intel-parallel-studio-xe-2017-composer-edition-for-windows\n');
         fprintf(2,'  - The download page will contain multiple links. Download the latest (highest number) update from the ''Intel Fortran Compiler for Windows Table''\n');
         fprintf(2,'  - The download package will contain two files. Install the ''%s'' package.\n\n',icarch);
     end

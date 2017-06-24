@@ -31,8 +31,8 @@ classdef opti < handle
 %   optObj = opti('obj',obj,'options',optiset('solver','nomad'))
 %
 %
-%   For HTML documentation type:
-%    >> web('Opti_Main.html','-helpbrowser')
+%   For detailed documentation see the Wiki:
+%      https://inverseproblem.co.nz/OPTI
 %
 %
 %   See also opti.solve optiset opti.plot 

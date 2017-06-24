@@ -24,6 +24,7 @@ function [projPath,guid] = VS_WriteProj(srcpath,projName,incpath,opts)
 %                       'charset'  Character Set {'unicode'}, 'multibyte'
 %                       'toolset'  'v100' for VS2010, 'v110' for VS2012, v120 for VS2013, v140 for VS2015, v141 for VS2017 {v141}
 %                       'ifortver' Intel Fortran version 'XE11' for XE2011/SP1, 'XE13' for XE2013/SP1, 'XE15' for XE2015, 'XE16' for XE2016 {XE16}
+%                       'ifortStaticLink' Whether to statically link the Fortran runtime libraries {false}
 %                       'exclude'  cell array of source files to exclude from project {[]}
 %                       'exFilter' cell array of filtered source files (e.g. abc*) to exclude from project {[]}
 %                       'exFolder' cell array of source folders to exclude from project {[]}
@@ -37,6 +38,8 @@ function [projPath,guid] = VS_WriteProj(srcpath,projName,incpath,opts)
 %                       'def'      module definition file (only compatible with DLL projects) {[]}
 %                       'compileAsCpp' compile .c as cpp
 %                       'ExcepwCExtern' Accept C exceptions as extern
+%                       'winKitVer' Windows kit version to use (only VS2017), blank skips the setting {'latest'}
+%                       'additionalOpts' Extra command line args to use (ifort only) {[]}
 
 %Extract first source path if multiple paths specified (first is assumed base)
 allpaths = srcpath;
@@ -59,6 +62,7 @@ if(~isfield(opts,'charset')), opts.charset = 'unicode'; end
 if(~isfield(opts,'mkl')), opts.mkl = false; end
 if(~isfield(opts,'toolset')), opts.toolset = 'v141'; end
 if(~isfield(opts,'ifortver')), opts.ifortver = 'XE16'; end
+if(~isfield(opts,'ifortStaticLink')), opts.ifortStaticLink = false; end
 if(~isfield(opts,'include')), opts.include = []; end
 if(~isfield(opts,'exclude')), opts.exclude = []; end
 if(~isfield(opts,'exFolder')), opts.exFolder = []; end
@@ -74,6 +78,8 @@ if(~isfield(opts,'empty')), opts.empty = false; end
 if(~isfield(opts,'archname')), opts.archname = false; end
 if(~isfield(opts,'compileAsCpp')), opts.compileAsCpp = false; end
 if(~isfield(opts,'ExcepwCExtern')), opts.ExcepwCExtern = false; end
+if(~isfield(opts,'winKitVer')), opts.winKitVer = 'latest'; end
+if(~isfield(opts,'additionalOpts')), opts.additionalOpts = []; end
 
 %If VS2010 (vs100), remove from options (not required)
 if(strcmpi(opts.toolset,'v100')), opts.toolset = []; end
@@ -202,6 +208,12 @@ if(opts.cpp)
     addElemText(docNode,pc,'ProjectGuid',['{' guid '}']); 
     addElemText(docNode,pc,'Keyword','Win32Proj');
     addElemText(docNode,pc,'RootNamespace',projName);
+    if(~isempty(opts.winKitVer))
+        if(strcmp(opts.winKitVer,'latest'))
+            [~,~,~,opts.winKitVer] = opti_FindUCRT();
+        end        
+        addElemText(docNode,pc,'WindowsTargetPlatformVersion',opts.winKitVer);
+    end
     p.appendChild(pc);
     %Import
     p.appendChild(createImport(docNode,'$(VCTargetsPath)\Microsoft.Cpp.Default.props',[],[]));        
@@ -399,10 +411,10 @@ if(opts.cpp)
 else %FORTRAN
     %Configurations
     pc = createSection(docNode,'Configurations');
-    pc.appendChild(writeIFortConfig(docNode,'Debug','Win32',opts.ex32PP,incpaths,opts.ifortver));
-    pc.appendChild(writeIFortConfig(docNode,'Release','Win32',opts.ex64PP,incpaths,opts.ifortver));
-    pc.appendChild(writeIFortConfig(docNode,'Debug','x64',opts.ex32PP,incpaths,opts.ifortver));
-    pc.appendChild(writeIFortConfig(docNode,'Release','x64',opts.ex64PP,incpaths,opts.ifortver));
+    pc.appendChild(writeIFortConfig(docNode,'Debug','Win32',opts.ex32PP,incpaths,opts.ifortver,opts.ifortStaticLink,opts.additionalOpts));
+    pc.appendChild(writeIFortConfig(docNode,'Release','Win32',opts.ex64PP,incpaths,opts.ifortver,opts.ifortStaticLink,opts.additionalOpts));
+    pc.appendChild(writeIFortConfig(docNode,'Debug','x64',opts.ex32PP,incpaths,opts.ifortver,opts.ifortStaticLink,opts.additionalOpts));
+    pc.appendChild(writeIFortConfig(docNode,'Release','x64',opts.ex64PP,incpaths,opts.ifortver,opts.ifortStaticLink,opts.additionalOpts));
     p.appendChild(pc);
     %Write VS Filters
 %     VS_WriteFilters(projPath,projName,allpaths,src,projhdr);
@@ -531,7 +543,7 @@ addElemText(docNode,pc,'Configuration',config)
 addElemText(docNode,pc,'Platform',plat);
 
 %Write Fortran Configuration Section
-function pc = writeIFortConfig(docNode,config,plat,exPP,exInc,ifortver)
+function pc = writeIFortConfig(docNode,config,plat,exPP,exInc,ifortver,staticLink,additionalOpts)
 pc = docNode.createElement('Configuration');
 pc.setAttribute('Name',[config '|' plat]);
 if(strcmpi(plat,'x64'))
@@ -542,6 +554,9 @@ end
 pc.setAttribute('ConfigurationType','typeStaticLibrary');
 tl = docNode.createElement('Tool');
 tl.setAttribute('Name','VFFortranCompilerTool');
+if (~isempty(additionalOpts))
+    tl.setAttribute('AdditionalOptions',additionalOpts);
+end
 tl.setAttribute('SuppressStartupBanner','true');
 tl.setAttribute('Preprocess','preprocessYes');
 tl.setAttribute('EnableEnhancedInstructionSet','codeArchSSE2');
@@ -554,13 +569,17 @@ end
 if(strcmpi(config,'debug'))
     tl.setAttribute('DebugInformationFormat','debugEnabled');
     tl.setAttribute('Optimization','optimizeDisabled');
-    tl.setAttribute('RuntimeLibrary','rtMultiThreadedDebugDLL');
+    if(~staticLink)
+        tl.setAttribute('RuntimeLibrary','rtMultiThreadedDebugDLL');
+    end
     tl.setAttribute('Traceback','true');
     tl.setAttribute('BoundsCheck','true');
     tl.setAttribute('StackFrameCheck','true');
 else
     tl.setAttribute('Optimization','optimizeFull');
-    tl.setAttribute('RuntimeLibrary','rtMultiThreadedDLL');
+    if(~staticLink)
+        tl.setAttribute('RuntimeLibrary','rtMultiThreadedDLL');
+    end
 end
 pc.appendChild(tl);
 if(strcmpi(ifortver,'XE15'))
