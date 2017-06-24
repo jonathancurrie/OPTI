@@ -980,9 +980,20 @@ if(cnl && cqc)
 	error('Specifying separate quadratic and nonlinear constraints is not currently supported. Please specify all constraints as nonlinear constraints');
 end
 
+
+
+
 %Matlab MI check
 if(strcmpi(opts.solver,'matlab'))    
-    if(any(strcmpi(prb,{'MILP','MIQP','MIQCQP','SDP','MINLP'})))
+    % If the user has specified MATLAB as the solver, ensure it is available
+    % for the problem type (optiSolver can't check this before here)
+    if (~any(strcmp(optiSolver(prb),'matlab')))
+        solver = optiSolver(['best_' prb]);
+        if (warn)
+            optiwarn('opti:nomatlab','MATLAB''s Optimization Toolbox is not available.\nUsing %s instead.',solver);
+        end
+        opts = optiset(opts,'solver',solver);
+    elseif(any(strcmpi(prb,{'MILP','MIQP','MIQCQP','SDP','MINLP'})))
         if(~strcmpi(prb,'milp') && isempty(which('intlinprog.m'))) %check for 2014a intlinprog
             solver = optiSolver(['best_' prb]);
             if(warn)
