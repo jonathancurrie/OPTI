@@ -43,6 +43,7 @@ classdef SymBuilder < handle
     methods
         function B = SymBuilder(verbose)
             if(nargin < 1), verbose = true; end
+            if (~exist('syms.m','file')), error('The Symbolic Math Toolbox must be installed to use SymBuilder!'); end
             %Initialization
             B.noObjs = 0;
             B.noCons = 0;
