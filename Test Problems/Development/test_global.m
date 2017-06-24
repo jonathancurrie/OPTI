@@ -41,13 +41,14 @@ ub = [9.422;5.9023;267.417085245];
 x0 = [1,1,1];
 
 %Setup Options
-opts = optiset('solver','gmatlab','display','iter'); 
-%Build & Solve
-Opt = opti('fun',fun,'nl',nlcon,cl,cu,'bounds',lb,ub,'options',opts)
-[x,fval,exitflag,info] = solve(Opt,x0)  
-%Check Solution
-[ok,msg] = checkSol(Opt)
-
+if(optiSolver('gmatlab',0))
+    opts = optiset('solver','gmatlab','display','iter'); 
+    %Build & Solve
+    Opt = opti('fun',fun,'nl',nlcon,cl,cu,'bounds',lb,ub,'options',opts)
+    [x,fval,exitflag,info] = solve(Opt,x0)  
+    %Check Solution
+    [ok,msg] = checkSol(Opt)
+end
 %% St_e03 [fval = -1.1613e3]
 clc
 %Objective
@@ -72,12 +73,14 @@ ub = [2000;16000;120;5000;2000;93;95;12;4;162];
 x0 = [1;1;1;1;1;85;90;3;1.2;145];
 
 %Setup Options
-opts = optiset('solver','gmatlab','display','iter'); 
-%Build & Solve
-Opt = opti('fun',fun,'lin',A,rl,ru,'nl',nlcon,cl,cu,'bounds',lb,ub,'options',opts)
-[x,fval,exitflag,info] = solve(Opt,x0)  
-%Check Solution
-[ok,msg] = checkSol(Opt)
+if(optiSolver('gmatlab',0))
+    opts = optiset('solver','gmatlab','display','iter'); 
+    %Build & Solve
+    Opt = opti('fun',fun,'lin',A,rl,ru,'nl',nlcon,cl,cu,'bounds',lb,ub,'options',opts)
+    [x,fval,exitflag,info] = solve(Opt,x0)  
+    %Check Solution
+    [ok,msg] = checkSol(Opt)
+end
 
 %% St_e04 [x = 0, 94.1779, 0.0001, 80, fval = 5.1949e3]
 clc
@@ -95,12 +98,14 @@ ub = [15.1;94.2;5371;80];
 x0 = [1;14.7;1;1];
 
 %Setup Options
-opts = optiset('solver','gmatlab','display','iter','solverOpts',psoptimset('MaxFunEvals',10e4)); 
-%Build & Solve
-Opt = opti('fun',fun,'nl',nlcon,cl,cu,'bounds',lb,ub,'options',opts)
-[x,fval,exitflag,info] = solve(Opt,x0)  
-%Check Solution
-[ok,msg] = checkSol(Opt)
+if(optiSolver('gmatlab',0))
+    opts = optiset('solver','gmatlab','display','iter','solverOpts',psoptimset('MaxFunEvals',10e4)); 
+    %Build & Solve
+    Opt = opti('fun',fun,'nl',nlcon,cl,cu,'bounds',lb,ub,'options',opts)
+    [x,fval,exitflag,info] = solve(Opt,x0)  
+    %Check Solution
+    [ok,msg] = checkSol(Opt)
+end
 
 %% St_e05 [fval = 7.0492e3]
 clc
@@ -122,12 +127,14 @@ ub = [15834;36250;10000;300;400];
 x0 = [1;1;1;100;100];
 
 %Setup Options
-opts = optiset('solver','gmatlab','display','iter'); 
-%Build & Solve
-Opt = opti('fun',fun,'lin',A,rl,ru,'nl',nlcon,cl,cu,'bounds',lb,ub,'options',opts)
-[x,fval,exitflag,info] = solve(Opt,x0)  
-%Check Solution
-[ok,msg] = checkSol(Opt)
+if(optiSolver('gmatlab',0))
+    opts = optiset('solver','gmatlab','display','iter'); 
+    %Build & Solve
+    Opt = opti('fun',fun,'lin',A,rl,ru,'nl',nlcon,cl,cu,'bounds',lb,ub,'options',opts)
+    [x,fval,exitflag,info] = solve(Opt,x0)  
+    %Check Solution
+    [ok,msg] = checkSol(Opt)
+end
 
 %% St_e08 [x = 0.1294, 0.4830, fval = 0.7418]
 clc
