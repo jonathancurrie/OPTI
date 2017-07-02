@@ -12,8 +12,8 @@ Once you have cloned or downloaded OPTI to your PC, simply open MATLAB and navig
 #### Using OPTI
 The best way to start using OPTI is to have a look at the [Examples](https://inverseproblem.co.nz/OPTI/index.php/Examples/Examples) on the OPTI Wiki. There are lots of problem and code examples (which all work) as well as helpful definitions. The [Basic Usage](https://inverseproblem.co.nz/OPTI/index.php/GetStart/Basics) page is a good place to start for all new users.
 
-#### Troubleshooting
-The OPTI [Q&A Forum](https://groups.google.com/forum/#!forum/opti-toolbox-forum) is where all OPTI related questions can be posted and someone will normally get back to you within a day or two!
+#### Troubleshooting + New Release Information
+The OPTI [Q&A Forum](https://groups.google.com/forum/#!forum/opti-toolbox-forum) is where all OPTI related questions can be posted and someone will normally get back to you within a day or two! In addition, I announce new release of OPTI here, so subscribe if you want to be kept up to date.
 
 #### License
 OPTI is released under the 3-clause BSD license, as detailed [here](https://inverseproblem.co.nz/OPTI/index.php/DL/License). It is free software, and is released as an open-source package. Please however be aware that many of the solvers within OPTI are licensed using different agreements to OPTI, thus ensure you are familiar with them before using OPTI in any commercial work, or generating products based on OPTI.
