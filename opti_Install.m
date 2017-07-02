@@ -50,7 +50,7 @@ if (~exist([cd filesep 'Solvers/Source/lib/win64/libclp.lib'],'file')) % skip on
         end
         doDownload = false;
         if (~exist(['rmathlib.' mexext], 'file'))
-            if (verNum ~= cur_ver)
+            if (cur_ver < verNum)
                 fprintf(2,'Your version of OPTI is not the most recent, please update it from GitHub (https://github.com/jonathancurrie/OPTI) before continuing.\n');
                 error('OPTI Install Error: OPTI version mismatch');
             else
@@ -361,7 +361,7 @@ numAssets = length(gitData.assets);
 for i = 1:numAssets   
     asset = gitData.assets(i);
     if(~isempty(asset))
-        fprintf('Downloading %d of %d %18s (%.2f MB)...',i,numAssets,asset.name,asset.size/(1024 * 1e3));
+        fprintf('Downloading %2d of %2d %18s (%.2f MB)...',i,numAssets,asset.name,asset.size/(1024 * 1e3));
         [~,name] = fileparts(asset.name);
         % See if utility or solver
         isUtil = false;
