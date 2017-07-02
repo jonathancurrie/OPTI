@@ -15,3 +15,4 @@ Help/OPTI_HTML/tex/
 Utilities/Install/VisualStudioBuilder/guids.txt
 *.lib
 *.exe
+*.mexw64
