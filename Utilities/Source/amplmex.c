@@ -135,8 +135,17 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     Jmp_buf err_jmp0;
     
     //If no inputs, just return info
-    if(nrhs < 1) {
-        printUtilityInfo();
+    if(nrhs < 1) 
+    {
+        if (nlhs >= 1)
+        {
+            sprintf(msgbuf,"%s %s",__TIME__,__DATE__);
+            plhs[0] = mxCreateString(msgbuf);
+        }
+        else
+        {
+            printUtilityInfo();
+        }
         return;
     }
         
@@ -649,7 +658,7 @@ void printUtilityInfo()
 {
     char vbuf[6]; getVSVer(vbuf);  
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" ASL: AMPL Solver Library [v%d, Built %s, %s]\n",ASLdate_ASL,__DATE__,vbuf);
+    mexPrintf(" ASL: AMPL Solver Library [v%d, Built %s, VS%s]\n",ASLdate_ASL,__DATE__,vbuf);
     mexPrintf("  - Source available from: http://www.ampl.com/netlib/ampl/solvers/\n");
 
     mexPrintf("\n MEX Interface J.Currie 2013 (www.inverseproblem.co.nz)\n");

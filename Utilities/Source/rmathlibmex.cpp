@@ -155,7 +155,12 @@ namespace RMathlibMEX
             if(nlhs < 1)
                 printSolverInfo();
             else
+            {
                 plhs[0] = mxCreateString(R_VERSION_STRING);
+                char msgbuf[1024];
+                sprintf(msgbuf,"%s %s",__TIME__,__DATE__);
+                plhs[1] = mxCreateString(msgbuf);
+            }
             return;
         } 
 
