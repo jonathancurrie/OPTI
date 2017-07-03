@@ -22,6 +22,7 @@ function opti_solverMex(name,src,inc,libs,opts)
 %           ifort:      Link against Intel Fortran Dynamic Libraries {false}
 %           ifortStatic: Link against Intel Fortran Static Libraries {false}
 %           util:       Utility, not a solver, includes extra paths
+%           quiet:      Don't print anything
 
 
 %Process Options
@@ -40,6 +41,7 @@ if(nargin > 4)
     if(~isfield(opts,'util') || isempty(opts.util)), opts.util = false; end
     if(~isfield(opts,'ifort') || isempty(opts.ifort)), opts.ifort = false; end
     if(~isfield(opts,'ifortStatic') || isempty(opts.ifortStatic)), opts.ifortStatic = false; end
+    if(~isfield(opts,'quiet') || isempty(opts.quiet)), opts.quiet = false; end
 else
     opts.verb = false;
     opts.debug = false;
@@ -55,6 +57,7 @@ else
     opts.util = false;
     opts.ifort = false;
     opts.ifortStatic = false;
+    opts.quiet = false;
 end
 
 %Check conflicting BLAS/PARDISO
@@ -69,8 +72,10 @@ end
 %Remove existing mex file from memory
 clear(name);
 
-fprintf('\n------------------------------------------------\n');
-fprintf('%s MEX FILE INSTALL\n\n',upper(name));
+if (~opts.quiet)
+    fprintf('\n------------------------------------------------\n');
+    fprintf('%s MEX FILE INSTALL\n\n',upper(name));
+end
 
 %Build Source File String
 if(iscell(src))
@@ -246,16 +251,22 @@ end
 %Compile & Move
 try
     evalstr = ['mex' verb debug '-largeArrayDims ' opts.expre src_str inc_str lib_str post];
-    fprintf('MEX Call:\n%s\n\n',evalstr);
+    if (~opts.quiet)
+        fprintf('MEX Call:\n%s\n\n',evalstr);
+    end
     eval(evalstr)
     movefile([name '.' mexext],'../','f')
-    fprintf('Done!\n');
+    if (~opts.quiet)
+        fprintf('Done!\n');
+    end
 catch ME
     cd(cdir);
     error('opti:nlopt','Error Compiling %s!\n%s',upper(name),ME.message);
 end
 cd(cdir);
-fprintf('------------------------------------------------\n');
+if (~opts.quiet)
+    fprintf('------------------------------------------------\n');
+end
 
 
 

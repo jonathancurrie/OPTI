@@ -16,3 +16,4 @@ Utilities/Install/VisualStudioBuilder/guids.txt
 *.lib
 *.exe
 *.mexw64
+*.zip

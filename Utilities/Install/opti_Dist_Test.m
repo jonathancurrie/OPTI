@@ -118,4 +118,5 @@ pause(0.1); rehash;
 delete('opti_debug.txt');
 
 clc
+opti_package;
 fprintf('\nAll Appears OK!\n\n');
