@@ -112,8 +112,10 @@ void mexFunction (int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         if(nlhs < 1)
             printSolverInfo();
         else
+        {
             plhs[0] = mxCreateString(M1QN3_VERSION);
-            
+            plhs[1] = mxCreateDoubleScalar(OPTI_VER);
+        }         
         return;
     }
 
@@ -397,9 +399,9 @@ void checkInputs(const mxArray *prhs[], int nrhs)
 //Print Solver Information
 void printSolverInfo()
 {    
-    char vbuf[6]; getVSVer(vbuf);
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" M1QN3: Large-Scale Unconstrained L-BFGS Minimization [Built %s, VS%s]\n",__DATE__,vbuf);              
+    mexPrintf(" M1QN3: Large-Scale Unconstrained L-BFGS Minimization [v%s]\n", M1QN3_VERSION);     
+    PRINT_BUILD_INFO;
     mexPrintf("  - Released under the GNU General Public License: http://www.gnu.org/copyleft/gpl.html\n");
     mexPrintf("  - Source available from: https://who.rocq.inria.fr/Jean-Charles.Gilbert/modulopt/optimization-routines/m1qn3/m1qn3.html\n\n");
     

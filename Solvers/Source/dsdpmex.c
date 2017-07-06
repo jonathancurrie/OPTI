@@ -109,7 +109,10 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
         if(nlhs < 1)
             printSolverInfo();
         else
+        {
             plhs[0] = mxCreateString(DSDP_VERSION);
+            plhs[1] = mxCreateDoubleScalar(OPTI_VER);
+        }
         return;
     }        
     
@@ -726,10 +729,10 @@ static int DSDPMonitor(DSDP dsdp, void* dummy)
 
 //Print Solver Information
 void printSolverInfo()
-{    
-    char vbuf[6]; getVSVer(vbuf);  
+{     
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" DSDP: Software for Semidefinite Programming [v%s, Built %s, VS%s]\n",DSDP_VERSION,__DATE__,vbuf);
+    mexPrintf(" DSDP: Software for Semidefinite Programming [v%s]\n",DSDP_VERSION);
+    PRINT_BUILD_INFO;
     mexPrintf("  - Copyright 2004 University of Chicago: http://www.mcs.anl.gov/hs/software/DSDP/Copyright.txt\n");
     mexPrintf("  - Source available from: http://www.mcs.anl.gov/hs/software/DSDP/\n\n");
     

@@ -939,7 +939,10 @@ int checkInputs(const mxArray *prhs[], int nrhs, mxArray *plhs[], int nlhs)
         if(nlhs < 1)
             printSolverInfo();
         else
+        {
             plhs[0] = mxCreateString(NOMAD::VERSION.c_str()); 
+            plhs[1] = mxCreateDoubleScalar(OPTI_VER);
+        }
         return 0;
     }
     
@@ -1273,8 +1276,8 @@ void printSolverInfo()
 {    
     mexPrintf("\n-----------------------------------------------------------\n");
     #ifdef OPTI_VERSION
-        char vbuf[6]; getVSVer(vbuf); 
-        mexPrintf(" NOMAD: Nonlinear Optimization using the MADS Algorithm [v%s, Built %s, VS%s]\n",NOMAD::VERSION.c_str(),__DATE__,vbuf);
+        mexPrintf(" NOMAD: Nonlinear Optimization using the MADS Algorithm [v%s]\n",NOMAD::VERSION.c_str());
+        PRINT_BUILD_INFO;
     #else
         mexPrintf(" NOMAD: Nonlinear Optimization using the MADS Algorithm [v%s, Built %s]\n",NOMAD::VERSION.c_str(),__DATE__);              
     #endif

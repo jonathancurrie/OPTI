@@ -33,7 +33,16 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
     
     //Check Inputs
     if(nrhs < 1) {
-        printSolverInfo();
+        if(nlhs < 1)
+            printSolverInfo();
+        else
+        {
+            printSolverInfo();
+            char verstr[128];
+            sprintf(verstr,"%d.%d R%d",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
+            plhs[0] = mxCreateString(verstr);
+            plhs[1] = mxCreateDoubleScalar(OPTI_VER);
+        }
         return;
     }
     checkInputs(nrhs,prhs);    
@@ -135,9 +144,9 @@ MKL_INT dummyCallForSize(const mxArray *prhs[])
 //Print Solver Information
 void printSolverInfo()
 {    
-    char vbuf[6]; getVSVer(vbuf); 
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" mklJac: Intel djacobi [v%d.%d R%d, Built %s, VS%s]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__,__DATE__,vbuf);              
+    mexPrintf(" mklJac: Intel djacobi [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);       
+    PRINT_BUILD_INFO;
     mexPrintf("  - Released as part of the Intel Math Kernel Library\n  - http://software.intel.com/en-us/intel-mkl\n");
     
     mexPrintf("\n Usage: [jac,status] = mklJac(fun,x,nrow)\n");

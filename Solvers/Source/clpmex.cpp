@@ -111,11 +111,15 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
     int *Hrows = NULL, *Arows = NULL;
     CoinBigIndex *Hcols = NULL, *Acols = NULL;
     
+    // No input macro
     if(nrhs < 1) {
         if(nlhs < 1)
             printSolverInfo();
         else
+        {
             plhs[0] = mxCreateString(CLP_VERSION);
+            plhs[1] = mxCreateDoubleScalar(OPTI_VER);
+        }
         return;
     }        
     
@@ -443,7 +447,7 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
     }
     //Error Handling
     catch(CoinError e) {
-        sprintf(errstr,"Caught Coin Error: %s",e.message());
+        sprintf(errstr,"Caught Coin Error: %s",e.message().c_str());
         mexErrMsgTxt(errstr);
     }
     catch(exception& e) {
@@ -558,11 +562,11 @@ void printSolverInfo()
     char vbuf[6];   
     mexPrintf("\n-----------------------------------------------------------\n");
     #ifdef CLP_HAS_ABC
-        mexPrintf(" CLP: COIN-OR Linear Programming [v%s, Built %s] with ABOCA (A Bit of Coin-Or Accelerated)\n",CLP_VERSION,__DATE__);
+        mexPrintf(" CLP: COIN-OR Linear Programming [v%s] with ABOCA (A Bit of Coin-Or Accelerated)\n",CLP_VERSION);
     #else
-        getVSVer(vbuf);  
-        mexPrintf(" CLP: COIN-OR Linear Programming [v%s, Built %s, VS%s]\n",CLP_VERSION,__DATE__,vbuf);
+        mexPrintf(" CLP: COIN-OR Linear Programming [v%s]\n", CLP_VERSION);
     #endif
+    PRINT_BUILD_INFO;
     mexPrintf("  - Released under the Eclipse Public License: http://opensource.org/licenses/eclipse-1.0\n");
     mexPrintf("  - Source available from: https://projects.coin-or.org/Clp\n\n");
     

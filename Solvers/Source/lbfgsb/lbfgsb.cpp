@@ -12,6 +12,7 @@
 #ifdef LINK_MKL
     #include "mkl.h"
 #endif
+#include <string>
 
 #define LBFGSB_VERSION "3.0"
 
@@ -45,7 +46,10 @@ void mexFunction (int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         if(nlhs < 1)
             printSolverInfo();
         else
+        {
             plhs[0] = mxCreateString(LBFGSB_VERSION);
+            plhs[1] = mxCreateDoubleScalar(OPTI_VER);
+        }
         return;
     }
 
@@ -169,10 +173,10 @@ void checkInputs(const mxArray *prhs[], int nrhs)
 
 //Print Solver Information
 void printSolverInfo()
-{    
-    char vbuf[6]; getVSVer(vbuf);  
+{     
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" L-BFGS-B: Limited Memory Broyden-Fletcher-Goldfarb-Shanno Bounded Optimization [%s, Built %s, VS%s]\n",LBFGSB_VERSION,__DATE__,vbuf);
+    mexPrintf(" L-BFGS-B: Limited Memory Broyden-Fletcher-Goldfarb-Shanno Bounded Optimization [%s]\n",LBFGSB_VERSION);
+    PRINT_BUILD_INFO;
     mexPrintf("  - Released under the BSD 3 Clause License: http://en.wikipedia.org/wiki/BSD_licenses\n");
     mexPrintf("  - Source available from: http://users.eecs.northwestern.edu/~nocedal/lbfgsb.html\n\n");
     

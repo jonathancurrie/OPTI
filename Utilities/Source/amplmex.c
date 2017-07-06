@@ -141,6 +141,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         {
             sprintf(msgbuf,"%s %s",__TIME__,__DATE__);
             plhs[0] = mxCreateString(msgbuf);
+            plhs[1] = mxCreateDoubleScalar(OPTI_VER);
         }
         else
         {
@@ -655,10 +656,10 @@ static bool comp_x(double *xbase, double *xnew, int n)
 }
 
 void printUtilityInfo()
-{
-    char vbuf[6]; getVSVer(vbuf);  
+{ 
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" ASL: AMPL Solver Library [v%d, Built %s, VS%s]\n",ASLdate_ASL,__DATE__,vbuf);
+    mexPrintf(" ASL: AMPL Solver Library [v%d]\n",ASLdate_ASL);
+    PRINT_BUILD_INFO;
     mexPrintf("  - Source available from: http://www.ampl.com/netlib/ampl/solvers/\n");
 
     mexPrintf("\n MEX Interface J.Currie 2013 (www.inverseproblem.co.nz)\n");

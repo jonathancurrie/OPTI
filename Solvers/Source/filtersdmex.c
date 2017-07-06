@@ -197,7 +197,10 @@ void mexFunction (int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         if(nlhs < 1)
             printSolverInfo();
         else
+        {
             plhs[0] = mxCreateString("1.0");          
+            plhs[1] = mxCreateDoubleScalar(OPTI_VER);
+        }
         return;
     }
 
@@ -929,13 +932,13 @@ void sparseTranspose(mwIndex *sJc, mwIndex *sIr, double *sPr, mwIndex *dJc, mwIn
 //Print Solver Information
 void printSolverInfo()
 {    
-	char vbuf[6]; getVSVer(vbuf);
     mexPrintf("\n-----------------------------------------------------------\n");
     #ifdef SPARSEVER
-        mexPrintf(" FILTERSD: FilterSD [Sparse Version] Nonlinear Optimizer [v%s, Built %s, VS%s]\n",FILTERSD_VERSION,__DATE__,vbuf);
+        mexPrintf(" FILTERSD: FilterSD [Sparse Version] Nonlinear Optimizer [v%s]\n",FILTERSD_VERSION);
     #else
-        mexPrintf(" FILTERSD: FilterSD [Dense Version] Nonlinear Optimizer [v%s, Built %s, VS%s]\n",FILTERSD_VERSION,__DATE__,vbuf);
-    #endif           
+        mexPrintf(" FILTERSD: FilterSD [Dense Version] Nonlinear Optimizer [v%s]\n",FILTERSD_VERSION);
+    #endif  
+    PRINT_BUILD_INFO;
     mexPrintf("  - Released under the Eclipse Public License: http://opensource.org/licenses/eclipse-1.0\n");
     mexPrintf("  - Source available from: https://projects.coin-or.org/filterSD\n\n");
 

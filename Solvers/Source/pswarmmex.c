@@ -86,7 +86,10 @@ void mexFunction (int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         if(nlhs < 1)
             printSolverInfo();
         else
+        {
             plhs[0] = mxCreateString(PSWARM_VERSION);
+            plhs[1] = mxCreateDoubleScalar(OPTI_VER);
+        }
         return;
     }
     
@@ -484,9 +487,9 @@ double getStatus(int stat, int iter, int fevals)
 //Print Solver Information
 void printSolverInfo()
 {    
-    char vbuf[6]; getVSVer(vbuf);  
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" PSWARM: Particle Swarm and Pattern Based Optimization [v%s, Built %s, VS%s]\n",PSWARM_VERSION,__DATE__,vbuf);              
+    mexPrintf(" PSWARM: Particle Swarm and Pattern Based Optimization [v%s]\n",PSWARM_VERSION);   
+    PRINT_BUILD_INFO;
     mexPrintf("  - Released under the GNU Lesser General Public License: http://lpsolve.sourceforge.net/5.5/LGPL.htm\n");
     mexPrintf("  - Source available from: http://www.norg.uminho.pt/aivaz/pswarm/\n\n");
     

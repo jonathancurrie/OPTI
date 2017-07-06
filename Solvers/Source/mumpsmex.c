@@ -252,7 +252,10 @@ void mexFunction(int nlhs, mxArray *plhs[ ],
       if(nlhs < 1)
             printSolverInfo();
       else
+      {
             plhs[0] = mxCreateString("4.10.0");
+            plhs[1] = mxCreateDoubleScalar(OPTI_VER);
+      }
       return;
   }         
   
@@ -628,13 +631,13 @@ void mexFunction(int nlhs, mxArray *plhs[ ],
 //Print Solver Information
 void printSolverInfo()
 {    
-	char vbuf[6]; getVSVer(vbuf);
     mexPrintf("\n-----------------------------------------------------------\n");
     #if MUMPS_ARITH == MUMPS_ARITH_d
-        mexPrintf(" MUMPS: A Multifrontal Massively Parallel Sparse Direct Solver [DOUBLE PRECISION v%s, Built %s, VS%s]\n",MUMPS_VERSION,__DATE__,vbuf);
+        mexPrintf(" MUMPS: A Multifrontal Massively Parallel Sparse Direct Solver [DOUBLE PRECISION v%s]\n",MUMPS_VERSION);
     #elif MUMPS_ARITH == MUMPS_ARITH_z
-        mexPrintf(" MUMPS: A Multifrontal Massively Parallel Sparse Direct Solver [COMPLEX DOUBLE PRECISION v%s, Built %s, VS%s]\n",MUMPS_VERSION,__DATE__,vbuf);
+        mexPrintf(" MUMPS: A Multifrontal Massively Parallel Sparse Direct Solver [COMPLEX DOUBLE PRECISION v%s]\n",MUMPS_VERSION);
     #endif
+    PRINT_BUILD_INFO;
     mexPrintf("  - Source available from: http://graal.ens-lyon.fr/MUMPS/index.php?page=home\n\n");
     
     mexPrintf(" This binary is statically linked to the following software:\n");

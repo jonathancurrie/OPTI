@@ -24,7 +24,6 @@ function opti_solverMex(name,src,inc,libs,opts)
 %           util:       Utility, not a solver, includes extra paths
 %           quiet:      Don't print anything
 
-
 %Process Options
 if(nargin > 4)
     if(~isfield(opts,'verb') || isempty(opts.verb)), opts.verb = false; end
@@ -240,6 +239,12 @@ if(isfield(opts,'ifort') && ~isempty(opts.ifort) && opts.ifort)
         post = [post ' ' fstr ' '];
     end
 end
+
+% Extra preprocessor defines
+mver = ver('matlab');
+mver = mver.Release;
+if (mver(1) == '('), mver = mver(2:end-1); end
+post = [post ' -DML_VER=' mver ' -DOPTI_VER='  sprintf('%.2f',optiver)];
 
 %CD to Source Directory
 cdir = cd;

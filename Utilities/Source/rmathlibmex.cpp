@@ -157,9 +157,7 @@ namespace RMathlibMEX
             else
             {
                 plhs[0] = mxCreateString(R_VERSION_STRING);
-                char msgbuf[1024];
-                sprintf(msgbuf,"%s %s",__TIME__,__DATE__);
-                plhs[1] = mxCreateString(msgbuf);
+                plhs[1] = mxCreateDoubleScalar(OPTI_VER);
             }
             return;
         } 
@@ -484,9 +482,9 @@ namespace RMathlibMEX
     //Print Solver Information
     void printSolverInfo()
     {    
-        char vbuf[6]; getVSVer(vbuf);  
         mexPrintf("\n-----------------------------------------------------------\n");
-        mexPrintf(" RMATHLIB: R Math Library [v%s, Built %s, VS%s]\n",R_VERSION_STRING,__DATE__,vbuf);              
+        mexPrintf(" RMATHLIB: R Math Library [v%s]\n",R_VERSION_STRING);         
+        PRINT_BUILD_INFO;
         mexPrintf("  - Released under the GNU General Public License: http://www.gnu.org/licenses/gpl-2.0.html\n");
         mexPrintf("  - Source available from: http://cran.stat.sfu.ca/\n");
 

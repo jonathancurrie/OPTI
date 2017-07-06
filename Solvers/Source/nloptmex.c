@@ -140,7 +140,10 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
         if(nlhs < 1)
             printSolverInfo();
         else
+        {
             plhs[0] = mxCreateString(PACKAGE_VERSION);
+            plhs[1] = mxCreateDoubleScalar(OPTI_VER);
+        }
         return;
     } 
     
@@ -809,10 +812,10 @@ bool checkIdentX(const double *x, double *X, int n)
 
 //Print Solver Information
 void printSolverInfo()
-{    
-    char vbuf[6]; getVSVer(vbuf);    
+{     
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" NLOPT: Nonlinear Optimization [v%s, Built %s, VS%s]\n",PACKAGE_VERSION,__DATE__,vbuf);              
+    mexPrintf(" NLOPT: Nonlinear Optimization [v%s]\n",PACKAGE_VERSION);  
+    PRINT_BUILD_INFO;
     mexPrintf("  - Released under the GNU Lesser General Public License: http://www.gnu.org/copyleft/lesser.html\n");
     mexPrintf("  - Source available from: http://ab-initio.mit.edu/wiki/index.php/NLopt\n");
 

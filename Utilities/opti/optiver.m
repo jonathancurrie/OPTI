@@ -5,9 +5,11 @@ function current_version = optiver
 
 %   Copyright (C) 2011-2017 Jonathan Currie (IPL)
 
-current_version = 2.26;
+current_version = 2.27;
 
 %History
+
+%2.27 (..)
 
 %2.26 (02/07/17)
 % - Removed MEX files from Git repository (just getting bigger and bigger)

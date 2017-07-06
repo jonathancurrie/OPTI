@@ -186,6 +186,7 @@ void mexFunction( int nlhs, mxArray * plhs[], int nrhs, const mxArray * prhs[] )
         else {
             sprintf(msgbuf,"%d.%02d.%02d",OOQPVERSIONMAJOR,OOQPVERSIONMINOR,OOQPVERSIONPATCHLEVEL);
             plhs[0] = mxCreateString(msgbuf);
+            plhs[1] = mxCreateDoubleScalar(OPTI_VER);
         }
         return;
     }
@@ -796,9 +797,9 @@ void checkInputs(const mxArray *prhs[], int nrhs)
 //Print Solver Information
 void printSolverInfo()
 {             
-    char vbuf[6]; getVSVer(vbuf);  
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" OOQP: Object Orientated Quadratic Programming [v%d.%02d.%02d, Built %s, VS%s]\n",OOQPVERSIONMAJOR,OOQPVERSIONMINOR,OOQPVERSIONPATCHLEVEL,__DATE__,vbuf);              
+    mexPrintf(" OOQP: Object Orientated Quadratic Programming [v%d.%02d.%02d]\n",OOQPVERSIONMAJOR,OOQPVERSIONMINOR,OOQPVERSIONPATCHLEVEL);     
+    PRINT_BUILD_INFO;
     mexPrintf("  - (C) 2001 University of Chicago\n");
     mexPrintf("  - Source available from: http://pages.cs.wisc.edu/~swright/ooqp/\n\n");
     

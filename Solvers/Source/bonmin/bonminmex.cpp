@@ -78,7 +78,10 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
             if(nlhs < 1)
                 printSolverInfo();
             else
+            {
                 plhs[0] = mxCreateString(BONMIN_VERSION);
+                plhs[1] = mxCreateDoubleScalar(OPTI_VER);
+            }
             return;
         }      
 
@@ -234,9 +237,9 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
 //Print Solver Information
 void printSolverInfo()
 {    
-    char vbuf[6]; getVSVer(vbuf); 
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" BONMIN: Basic Open Source Nonlinear Mixed Integer Optimizer [v%s, Built %s, VS%s]\n",BONMIN_VERSION,__DATE__,vbuf);
+    mexPrintf(" BONMIN: Basic Open Source Nonlinear Mixed Integer Optimizer [v%s]\n",BONMIN_VERSION);
+    PRINT_BUILD_INFO;
     mexPrintf("  - Released under the Eclipse Public License: http://opensource.org/licenses/eclipse-1.0\n");
     mexPrintf("  - Source available from: https://projects.coin-or.org/Bonmin\n\n");
     

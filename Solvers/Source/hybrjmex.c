@@ -108,7 +108,10 @@ void mexFunction (int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         if(nlhs < 1)
             printSolverInfo();
         else
+        {
             plhs[0] = mxCreateString("");  //no version info?         
+            plhs[1] = mxCreateDoubleScalar(OPTI_VER);
+        }
         return;
     }
 
@@ -520,12 +523,12 @@ double getStatus(int stat)
 //Print Solver Information
 void printSolverInfo()
 {    
-	char vbuf[6]; getVSVer(vbuf);
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" HYBRJ + HYBRD: Powell-Hybrid Nonlinear Equation Solver [Built %s, VS%s]\n",__DATE__,vbuf);              
+    mexPrintf(" HYBRJ + HYBRD: Powell-Hybrid Nonlinear Equation Solver\n");         
+    PRINT_BUILD_INFO;
     mexPrintf("  - Released as part of the MINPACK project: http://www.netlib.org/minpack/disclaimer\n");
     mexPrintf("  - Source available from: http://www.netlib.org/minpack/\n\n");
 
-    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.inverseproblem.co.nz)\n");
+    mexPrintf(" MEX Interface J.Currie 2013 [BSD3] (www.inverseproblem.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

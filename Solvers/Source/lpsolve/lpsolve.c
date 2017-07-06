@@ -4654,6 +4654,7 @@ static void mainloop(structlpsolve *lpsolve)
                         else {
                             sprintf(verStr,"%d.%d.%d.%d",majorversion,minorversion,release,build);
                             lpsolve->lpsolvecaller.plhs[0] = mxCreateString(verStr); 
+                            lpsolve->lpsolvecaller.plhs[1] = mxCreateDoubleScalar(OPTI_VER);
                         }
                         return;
                 }
@@ -4735,10 +4736,10 @@ void printSolverInfo()
 {    
     int majorversion, minorversion, release, build;
     lp_solve_version(&majorversion, &minorversion, &release, &build);
-    char vbuf[6]; getVSVer(vbuf); 
-    
+
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" LP_SOLVE: Mixed Integer Linear Programming Solver [%d.%d.%d.%d, Built %s, VS%s]\n",majorversion,minorversion,release,build,__DATE__,vbuf);              
+    mexPrintf(" LP_SOLVE: Mixed Integer Linear Programming Solver [%d.%d.%d.%d]\n",majorversion,minorversion,release,build);   
+    PRINT_BUILD_INFO;
     mexPrintf("  - Released under the GNU Lesser General Public License: http://lpsolve.sourceforge.net/5.5/LGPL.htm\n");
     mexPrintf("  - Source available from: http://lpsolve.sourceforge.net/5.5/index.htm\n");
     

@@ -144,7 +144,10 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
         if(nlhs < 1)
             printSolverInfo();
         else
+        {
             plhs[0] = mxCreateString(CBC_VERSION);
+            plhs[1] = mxCreateDoubleScalar(OPTI_VER);
+        }
         return;
     }        
     
@@ -608,9 +611,9 @@ void checkInputs(const mxArray *prhs[], int nrhs)
 //Print Solver Information
 void printSolverInfo()
 {    
-    char vbuf[6]; getVSVer(vbuf);  
     mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" CBC: COIN-OR Branch and Cut [v%s, Built %s, VS%s]\n",CBC_VERSION,__DATE__,vbuf);
+    mexPrintf(" CBC: COIN-OR Branch and Cut [v%s]\n",CBC_VERSION);
+    PRINT_BUILD_INFO;
     mexPrintf("  - Released under the Eclipse Public License: http://opensource.org/licenses/eclipse-1.0\n");
     mexPrintf("  - Source available from: https://projects.coin-or.org/Cbc\n\n");
     
