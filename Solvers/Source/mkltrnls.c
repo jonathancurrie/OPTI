@@ -204,6 +204,8 @@ void mexFunction (int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             eps[4] = *mxGetPr(mxGetField(prhs[6],0,"tolrfun"));
         if(mxGetField(prhs[6],0,"tolSTEPprec") && !mxIsEmpty(mxGetField(prhs[6],0,"tolSTEPprec")))
             eps[5] = *mxGetPr(mxGetField(prhs[6],0,"tolSTEPprec"));
+        if(mxGetField(prhs[6],0,"trialStepSize") && !mxIsEmpty(mxGetField(prhs[6],0,"trialStepSize")))
+            rs = *mxGetPr(mxGetField(prhs[6],0,"trialStepSize"));
     }       
     
     //Create Outputs
