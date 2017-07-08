@@ -19,58 +19,11 @@ fprintf('\n------------------------------------------------\n')
 fprintf(['  INSTALLING OPTI TOOLBOX ver ' sprintf('%1.2f',cur_ver) '\n'])
 
 cd(cpath);
-% Check if we need to download the MEX files
-if (~exist([cd filesep 'Solvers/Source/lib/win64/libclp.lib'],'file')) % skip on dev machine
-    fprintf('\n- Checking for updated MEX files from GitHub...\n');
-    try
-        if (exist('webread.m','file'))      
-            try
-                gitData = webread('https://api.github.com/repos/jonathancurrie/OPTI/releases/latest');
-            catch ME
-                fprintf(2,'There was an error querying GitHub for the latest MEX file information. Please ensure you are connected to the internet!\n');
-                rethrow(ME);
-            end
-        else
-            fprintf(2,'Your version of MATLAB does not support the required OPTI GitHub interface. Please update your MATLAB version.\n');
-            error('OPTI Install Error: MATLAB Version does not support webread()');
-        end
-        if (isempty(gitData))
-            error('OPTI Install Error: No valid data received from GitHub!');
-        end
-        nameComp = regexp(gitData.name,' ','split');
-        if (length(nameComp) ~= 3)
-            error('OPTI Install Error: The latest version name (%s) is not compatible! Please report this error.',gitData.name);
-        end
-        verNum = str2double(nameComp{3});
-        if (isnan(verNum))
-            verNum = str2double(nameComp{3}(2:end));
-            if (isnan(verNum))
-                error('OPTI Install Error: Could not convert latest release version number (%s) to double! Please report this error.',nameComp{3});
-            end
-        end
-        doDownload = false;
-        if (~exist(['rmathlib.' mexext], 'file'))
-            if (cur_ver < verNum)
-                fprintf(2,'Your version of OPTI is not the most recent, please update it from GitHub (https://github.com/jonathancurrie/OPTI) before continuing.\n');
-                error('OPTI Install Error: OPTI version mismatch');
-            else
-                fprintf('A new OPTI installation is detected, the required solver MEX files will be automatically downloaded from GitHub:\n');
-                doDownload = true;
-            end
-        elseif(checkRMathlibBuildDate(gitData)) % compare the build date in the mex file
-            doDownload = true;
-        end
-        % Download as required
-        if (doDownload)
-            downloadMEXFiles(gitData);
-        end
-    catch ME
-        fprintf(2,'If you continue to see this error, you may manually download the required MEX files (all) from:\nhttps://github.com/jonathancurrie/OPTI/releases/latest\n\n\n');
-        rethrow(ME);
-    end
-end
-%Perform pre-req check
-if(~preReqChecks(cpath))
+% Check ML ver
+matlabVerCheck();
+
+% Perform MEX File check (also checks pre-reqs)
+if (~mexFileCheck(cur_ver, cpath))
     return;
 end
 
@@ -211,20 +164,7 @@ else %old ones to remove
     end    
 end
 
-
-function OK = preReqChecks(cpath)
-%Search for each required prereq
-% Note we no longer search the registry, simply check if we can load a mex
-% file which requires each runtime
-
-if(~isempty(strfind(computer,'64')))
-    arch = 'x64';
-    icarch = 'Intel 64';
-else
-    arch = 'x86';
-    icarch = 'IA32';
-end
-
+function matlabVerCheck()
 mver = ver('MATLAB');
 fprintf('\n- Checking MATLAB version and operating system...\n');
 vv = regexp(mver.Version,'\.','split');
@@ -247,6 +187,20 @@ switch(mexext)
         fprintf('MATLAB %s 64bit (Windows x64) detected\n',mver.Release);
     otherwise
         error('OPTI Toolbox is compiled only for Windows systems - sorry!');
+end
+
+
+function OK = preReqChecks(cpath)
+%Search for each required prereq
+% Note we no longer search the registry, simply check if we can load a mex
+% file which requires each runtime
+
+if(~isempty(strfind(computer,'64')))
+    arch = 'x64';
+    icarch = 'Intel 64';
+else
+    arch = 'x86';
+    icarch = 'IA32';
 end
 
 fprintf('\n- Checking for required pre-requisites...\n');
@@ -312,50 +266,161 @@ else
 end
 
 
+function OK = mexFileCheck(cur_ver,cpath)
 
-function needUpdate = checkRMathlibBuildDate(gitData)
+% Add paths required for checks
+addpath([cd '/Solvers'])
+addpath([cd '/Utilities'])
+addpath([cd '/Utilities/opti'])
 
-needUpdate = false;
-foundAsset = false;
-% Find ASL asset
-numAssets = length(gitData.assets);
-for i = 1:numAssets   
-    asset = gitData.assets(i);
-    if(~isempty(asset))
-        [~,name,ext] = fileparts(asset.name);
-        if (strcmp(name, 'rmathlib'))
-            foundAsset = true;
-            clear('rmathlibTemp');
-            websave([cd filesep 'Utilities' filesep 'rmathlibTemp' ext],asset.browser_download_url); % grab it
-            rehash;
-            rehash;
-            try
-                [~,localTS] = rmathlib;
-                [~,refTS] = rmathlibTemp;                
-                refDateTime = datenum(refTS);
-                localDateTime = datenum(localTS);
-                if (refDateTime > localDateTime)
-                    needUpdate = true;
+try
+    % Check if we have the mex files (user may have cloned the repo without them)
+    if (~exist(['clp.' mexext],'file') || ~exist(['ipopt.' mexext],'file') || ~exist(['asl.' mexext],'file'))
+        fprintf('\n- Checking MEX File Release Information...\n');
+
+        % We need to download the mex files / get the user to download them
+        OK = downloadMexFiles();
+    else
+        % Do a pre-req check before attempting to read solver build versions
+        OK = preReqChecks(cpath);
+        if (OK == false)
+            return; % can't check mex files if missing a pre req
+        end
+        
+        fprintf('\n- Checking MEX File Release Information...\n');
+        % Check if the current OPTI version matches the mex files
+        [mexFilesOK, mexBuildVer] = checkMexFileVersion(cur_ver, false);
+        if (mexFilesOK == false)
+            % One or more mex files are out of date, report to the user
+            if (isnan(mexBuildVer))
+                fprintf(2,'One or more MEX files are not compatible with this version of OPTI\n');
+            else
+                fprintf(2,'One or more MEX files are not compatible with this version of OPTI (MEX v%.2f vs OPTI v%.2f)\n', mexBuildVer, cur_ver);
+            end
+            % See if the user wants to download them
+            OK = downloadMexFiles();
+        else
+            % All up to date, nothing to check
+            fprintf('MEX Files match OPTI Release.\n');
+            OK = true;
+        end
+    end
+catch ME
+    rmpath([cd '/Solvers']);
+    rmpath([cd '/Utilities']);
+    addpath([cd '/Utilities/opti'])
+    rethrow(ME);
+end
+
+
+function [OK,buildVer] = checkMexFileVersion(reqVer, verbose)
+
+OK = true;
+buildVer = reqVer;
+% Get a list of all solvers 
+mexFiles = optiSolver('all');
+% Add in utilities
+mexFiles = [mexFiles,'asl','rmathlib'];
+
+% Now search through and compare version info
+for i = 1:length(mexFiles)
+    if (~any(strcmpi(mexFiles{i},{'baron','cplex','matlab','gmatlab','mosek','sedumi'}))) 
+        try
+            [~,optiBuildVer] = feval(lower(mexFiles{i}));
+        catch 
+            % Initially lots of mex files in the wild which don't support
+            % the second arg, assume out of date
+            OK = false;
+            buildVer = NaN;
+            return;
+        end            
+        if (optiBuildVer ~= reqVer)
+            if (optiBuildVer > reqVer) % unusual case where user has newer mex files than opti source
+                error('The mex files you have appear to be for a newer version of OPTI - please update your source of OPTI from:\n\n https://github.com/jonathancurrie/OPTI\n');
+            else    
+                OK = false;
+                buildVer = optiBuildVer;
+                if (verbose)
+                    fprintf('MEX File ''%s.%s'' is out of date (MEX v%.2f vs OPTI v%.2f)\n',mexFiles{i},mexext, optiBuildVer, reqVer);
+                else
+                    break; % no point continuing check if not displaying
                 end
-            catch
-                needUpdate = true; % safe option - not everyone will have the updated mex file for a while
             end
         end
     end
 end
-if (foundAsset == false)
-    % Failed by here
-    error('OPTI Install Error: Could not find rmathlib in the latest release information! Please report this error');
-else
+
+
+function OK = downloadMexFiles()
+
+gitData = [];
+% See if we can download directly from GitHub (2014b +)
+fprintf('\n- Checking for updated MEX files from GitHub...\n');
+if (exist('webread.m','file'))      
     try
-        delete(which(['rmathlibTemp.' mexext])); 
+        gitData = webread('https://api.github.com/repos/jonathancurrie/OPTI/releases/latest');
     catch
     end
 end
+if (isempty(gitData))
+    % Cannot access internet / ML version too old, other error
+    
+end
+
+
+% Check if we need to download the MEX files
+% if (~exist([cd filesep 'Solvers/Source/lib/win64/libclp.lib'],'file')) % skip on dev machine
+%     fprintf('\n- Checking for updated MEX files from GitHub...\n');
+%     try
+%         if (exist('webread.m','file'))      
+%             try
+%                 gitData = webread('https://api.github.com/repos/jonathancurrie/OPTI/releases/latest');
+%             catch ME
+%                 fprintf(2,'There was an error querying GitHub for the latest MEX file information. Please ensure you are connected to the internet!\n');
+%                 rethrow(ME);
+%             end
+%         else
+%             fprintf(2,'Your version of MATLAB does not support the required OPTI GitHub interface. Please update your MATLAB version.\n');
+%             error('OPTI Install Error: MATLAB Version does not support webread()');
+%         end
+%         if (isempty(gitData))
+%             error('OPTI Install Error: No valid data received from GitHub!');
+%         end
+%         nameComp = regexp(gitData.name,' ','split');
+%         if (length(nameComp) ~= 3)
+%             error('OPTI Install Error: The latest version name (%s) is not compatible! Please report this error.',gitData.name);
+%         end
+%         verNum = str2double(nameComp{3});
+%         if (isnan(verNum))
+%             verNum = str2double(nameComp{3}(2:end));
+%             if (isnan(verNum))
+%                 error('OPTI Install Error: Could not convert latest release version number (%s) to double! Please report this error.',nameComp{3});
+%             end
+%         end
+%         doDownload = false;
+%         if (~exist(['rmathlib.' mexext], 'file'))
+%             if (cur_ver < verNum)
+%                 fprintf(2,'Your version of OPTI is not the most recent, please update it from GitHub (https://github.com/jonathancurrie/OPTI) before continuing.\n');
+%                 error('OPTI Install Error: OPTI version mismatch');
+%             else
+%                 fprintf('A new OPTI installation is detected, the required solver MEX files will be automatically downloaded from GitHub:\n');
+%                 doDownload = true;
+%             end
+%         elseif(checkRMathlibBuildDate(gitData)) % compare the build date in the mex file
+%             doDownload = true;
+%         end
+%         % Download as required
+%         if (doDownload)
+%             downloadMEXFiles(gitData);
+%         end
+%     catch ME
+%         fprintf(2,'If you continue to see this error, you may manually download the required MEX files (all) from:\nhttps://github.com/jonathancurrie/OPTI/releases/latest\n\n\n');
+%         rethrow(ME);
+%     end
+% end
 
 
 function downloadMEXFiles(gitData)
-
 % For each MEX file
 numAssets = length(gitData.assets);
 for i = 1:numAssets   
