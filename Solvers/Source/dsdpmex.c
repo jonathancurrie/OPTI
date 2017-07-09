@@ -335,6 +335,7 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
         GetIntegerOption(pOPTS,"reuse",&reuse);
         GetIntegerOption(pOPTS,"rpos",&rpos);
         GetIntegerOption(pOPTS,"drho",&drho);
+        CheckOptiVersion(pOPTS);
         //Check and set DSDP options without valid defaults
         if(mxGetField(pOPTS,0,"zbar") && !mxIsEmpty(mxGetField(pOPTS,0,"zbar"))) {
             GetDoubleOption(pOPTS,"zbar",&zbar);

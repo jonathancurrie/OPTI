@@ -25,3 +25,28 @@
 #define STR_EXPAND_OPTI(tok) #tok
 #define stringify(tok) STR_EXPAND_OPTI(tok)
 #define PRINT_BUILD_INFO mexPrintf("  - Built %s, Visual Studio %s, MATLAB %s, OPTI v%s\n", __DATE__, VS_VER, stringify(ML_VER), stringify(OPTI_VER));
+
+
+
+void CheckOptiVersion(const mxArray *opts)
+{
+    static bool displayedWarning = false;
+    double localVer = 0.0;
+    if (opts != NULL)
+    {
+        if(mxIsStruct(opts) && mxGetField(opts,0,"optiver") && !mxIsEmpty(mxGetField(opts,0,"optiver")))
+        {
+            localVer = *mxGetPr(mxGetField(opts,0,"optiver"));
+            if(OPTI_VER != localVer)
+            {
+                if (displayedWarning == false)
+                {
+                    char buf[256];
+                    sprintf(buf, "The MEX File Version (%.2f) does not match OPTI's Version (%.2f), please run opti_Install.m to update your MEX files.", OPTI_VER, localVer); 
+                    mexWarnMsgTxt(buf);
+                    displayedWarning = true; // don't spam
+                }
+            }
+        }
+    }
+}

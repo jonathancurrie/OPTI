@@ -200,6 +200,7 @@ end
 if(isfield(opts,'display') && ~isempty(opts.display))
     sopts.display = dispLevel(opts.display);
 end
+sopts.optiver = optiver;
 
 %Run SCIP
 [x,fval,exitflag,stats] = scip([],zeros(ndec,1),A,rl,ru,lb,ub,xint,[],[],nl,sopts);

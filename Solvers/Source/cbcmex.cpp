@@ -184,6 +184,7 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
         GetDoubleOption(pOPTS, "allowableGap", &gap);
         GetDoubleOption(pOPTS, "allowableFracGap", &fracgap);      
         GetDoubleOption(pOPTS, "objbias", &objbias);  
+        CheckOptiVersion(pOPTS);
     }
     
     //Create Outputs

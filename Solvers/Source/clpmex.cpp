@@ -183,6 +183,7 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
             else
                 doPresolve = ClpSolve::presolveOff;
         }
+        CheckOptiVersion(pOPTS);
     }
     
     //Ensure Infinite options are limited to COIN limits

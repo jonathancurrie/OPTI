@@ -61,6 +61,7 @@ popts.intTol = opts.tolint;
 if(isfield(opts,'objbias')), popts.objbias = opts.objbias; end
 %Setup display level
 popts.display = dispLevel(opts.display,1,1);
+popts.optiver = optiver;
 
 %Check sparsity
 if(~issparse(A))

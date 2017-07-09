@@ -31,6 +31,7 @@ if(nargin < 4), error('NL2SOL requires at least 4 arguments'); end
 
 %Setup display level
 opts.display = dispLevel(opts.display);
+opts.optiver = optiver;
 
 %Check we have a valid x0
 if(isempty(x0) || any(isnan(x0)))

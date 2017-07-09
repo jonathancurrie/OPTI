@@ -249,6 +249,7 @@ void mexFunction( int nlhs, mxArray * plhs[], int nrhs, const mxArray * prhs[] )
             else
                 algorithm = (int)*mxGetPr(mxGetField(pOPTS,0,"algorithm"));            
         }
+        CheckOptiVersion(pOPTS);
     }
     
     //Check Linear Solver is Available

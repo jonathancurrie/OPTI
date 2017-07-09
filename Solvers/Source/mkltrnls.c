@@ -206,6 +206,8 @@ void mexFunction (int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             eps[5] = *mxGetPr(mxGetField(prhs[6],0,"tolSTEPprec"));
         if(mxGetField(prhs[6],0,"trialStepSize") && !mxIsEmpty(mxGetField(prhs[6],0,"trialStepSize")))
             rs = *mxGetPr(mxGetField(prhs[6],0,"trialStepSize"));
+        
+        CheckOptiVersion(prhs[6]);
     }       
     
     //Create Outputs

@@ -60,7 +60,8 @@ end
 
 %Setup display level
 opts.display = dispLevel(opts.display);
-        
+opts.optiver = optiver;
+
 t = tic;
 if(sp)
     % Run FILTERSD [Sparse]

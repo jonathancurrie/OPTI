@@ -46,6 +46,7 @@ else
 end
 %Setup display level
 popts.display = dispLevel(opts.display);
+popts.optiver = optiver;
 
 %Ensure Sparsity
 if(~isempty(A) && ~issparse(A))

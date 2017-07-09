@@ -429,6 +429,9 @@ void mexFunction (int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             iterF.prhs[2] = mxCreateDoubleMatrix(1,1,mxREAL);
             iterF.prhs[3] = mxCreateDoubleMatrix(ndec,1,mxREAL);
         }
+        #ifdef OPTI_VERSION
+            CheckOptiVersion(pOPTS);
+        #endif
     }     
     
     //Create Outputs (note x and fval created below, due to allowing bi-objective)
@@ -1221,6 +1224,8 @@ bool isNMDOption(const char *field)
     if(!strcmp(field,"param_file"))
         return false;
     else if(!strcmp(field,"iterfun"))
+        return false;  
+    else if(!strcmp(field,"optiver"))
         return false;
     #ifdef OPTI_VERSION
     else if(!strcmp(field,"bb_output_type"))

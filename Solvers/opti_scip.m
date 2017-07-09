@@ -109,6 +109,7 @@ end
 if(isfield(opts,'display') && ~isempty(opts.display))
     sopts.display = dispLevel(opts.display);
 end
+sopts.optiver = optiver;
 
 %MEX contains error checking
 [x,fval,exitflag,stats] = scip(H, f, A, rl, ru, lb, ub, xint, sos, qc, [], sopts);

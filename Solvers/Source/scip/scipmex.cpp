@@ -170,6 +170,7 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
         //Check for gams/cip writing mode
         getStrOption(OPTS,"gamsfile",gamsfile);
         getStrOption(OPTS,"cipfile",cipfile);
+        CheckOptiVersion(OPTS);
     }       
 
     //Create Outputs

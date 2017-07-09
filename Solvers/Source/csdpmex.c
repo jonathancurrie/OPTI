@@ -348,6 +348,7 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
         GetIntegerOption(pOPTS,"tweakgap",&params.tweakgap); 
         GetIntegerOption(pOPTS,"affine",&params.affine);
         GetDoubleOption(pOPTS,"perturbobj",&params.perturbobj);
+        CheckOptiVersion(pOPTS);
         //Optionally write problem to a SDPA sparse file
         if(mxGetField(pOPTS,0,"writeprob") && !mxIsEmpty(mxGetField(pOPTS,0,"writeprob")) && mxIsChar(mxGetField(pOPTS,0,"writeprob"))) {
             mxGetString(mxGetField(pOPTS,0,"writeprob"),msgbuf,1024);

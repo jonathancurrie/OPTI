@@ -799,6 +799,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
   //-- 9th Input. A structure containing the control parameters.
   
+  CheckOptiVersion(PARAM);
+  
   //-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   //-- Integer parameters
   //-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

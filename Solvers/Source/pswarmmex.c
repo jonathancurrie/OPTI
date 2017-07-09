@@ -218,6 +218,7 @@ void mexFunction (int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             iterF.prhs[2] = mxCreateDoubleMatrix(1,1,mxREAL);
             iterF.prhs[3] = mxCreateDoubleMatrix(ndec,1,mxREAL);
         }
+        CheckOptiVersion(prhs[6]);
     }       
     
     //If not vectorized, we can create x now, otherwise must be done in callback

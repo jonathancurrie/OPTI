@@ -298,6 +298,8 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
         else
             fun.iterF = NULL;
         
+        CheckOptiVersion(pOPTS);
+        
         //Optimizer Config
         if(mxGetField(pOPTS,0,"algorithm"))
             algorithm = (nlopt_algorithm)*mxGetPr(mxGetField(pOPTS,0,"algorithm"));

@@ -25,6 +25,9 @@ if(nargin < 2 || isempty(x0))
     end
 end
 
+% Set optiver for version comparison
+nlprob.options.optiver = optiver;
+
 % Run IPOPT
 [x,output] = ipopt(x0,nlprob.funcs,nlprob.options);
 

@@ -97,6 +97,7 @@ param.itlim = opts.maxiter;
 param.tmlim = opts.maxtime*60; %I think this is in ms?
 param.tolobj = opts.tolrfun;
 param.tolint = opts.tolint;
+param.optiver = optiver;
 
 %Solve Problem
 [x,fval,exitflag,extra] = glpk(f, A, b, lb, ub, ctype, int, 1, param);

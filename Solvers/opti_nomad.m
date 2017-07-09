@@ -54,6 +54,8 @@ nopts = nomadset(nopts,'max_iterations',opts.maxiter,'max_bb_eval',opts.maxfeval
 if(any(isinf(lb)) || any(isinf(ub)) && isempty(nopts.initial_mesh_size))
     nopts = nomadset(nopts,'initial_mesh_size','10'); %better heuristic on size here?
 end
+% Version comparison
+nopts.optiver = optiver;
 %Check we have a valid x0
 if(isempty(x0) || any(isnan(x0)))
     error('NOMAD requires an initial guess, x0!');

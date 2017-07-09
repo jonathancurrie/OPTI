@@ -29,6 +29,7 @@ end
 if(~nlprob.alg_prop.subopt && isfield(nlprob.options,'local_optimizer'))
     nlprob.options = rmfield(nlprob.options,'local_optimizer');
 end
+nlprob.options.optiver = optiver;
 
 % Run NLOPT
 [x, fval, retcode, fevals] = nlopt(nlprob,x0);

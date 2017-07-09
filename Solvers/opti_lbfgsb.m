@@ -36,6 +36,7 @@ popts.maxtime = opts.maxtime;
 popts.maxfeval = opts.maxfeval;
 popts.tolrfun = opts.tolrfun;
 popts.iterfun = opts.iterfun;
+popts.optiver = optiver;
 %Setup display level
 popts.display = dispLevel(opts.display);
 

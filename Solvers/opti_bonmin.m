@@ -24,6 +24,8 @@ if(nargin < 2 || isempty(x0))
         error('You must supply x0 to use bonmin!');
     end
 end
+% Add in local version for version comparison
+nlprob.options.optiver = optiver;
 
 % Run BONMIN build based on Cplex selection
 if(isfield(nlprob.options.bonmin,'milp_solver') && strcmpi(nlprob.options.bonmin.milp_solver,'Cplex'))

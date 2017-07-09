@@ -115,6 +115,7 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
         BonminSetup app(mexprinter);
         app.initializeOptionsAndJournalist();
         Options options(x0,app,prhs[2]);
+        CheckOptiVersion(prhs[2]);
         
         // Set up the BONMIN console
         if(printLevel) {

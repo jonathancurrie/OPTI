@@ -57,6 +57,7 @@ end
 if(isfield(opts,'display') && ~isempty(opts.display))
     sopts.display = dispLevel(opts.display);
 end
+sopts.optiver = optiver;
 
 %Run SCIP
 [x,fval,exitflag,stats] = scip(file,sopts);

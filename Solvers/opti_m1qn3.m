@@ -25,6 +25,7 @@ if(nargin < 3), error('M1QN3 requires at least 3 arguments'); end
 
 %Setup display level
 opts.display = dispLevel(opts.display);
+opts.optiver = optiver;
 
 %Check we have a valid x0
 if(isempty(x0) || any(isnan(x0)))

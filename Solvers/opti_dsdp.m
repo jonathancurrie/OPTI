@@ -70,7 +70,8 @@ end
 dopts.maxtime = opts.maxtime;
 dopts.maxiter = opts.maxiter;
 dopts.display = dispLevel(opts.display);
-    
+dopts.optiver = optiver;    
+
 %MEX contains error checking
 [x,fvals,exitflag,stats,X] = dsdp(-f, A, b, lb, ub, sdcone, x0, dopts);
 

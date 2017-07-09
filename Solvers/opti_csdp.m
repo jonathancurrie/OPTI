@@ -74,6 +74,7 @@ end
 copts.maxtime = opts.maxtime;
 copts.maxiter = opts.maxiter;
 copts.display = dispLevel(opts.display);
+copts.optiver = optiver;
     
 %MEX contains error checking
 [x,fvals,exitflag,stats,X] = csdp(f, A, b, lb, ub, sdcone, x0, copts);

@@ -78,6 +78,7 @@ void mexFunction (int nlhs, mxArray *plhs[],
     // Create a new IPOPT application object and process the options.
     IpoptApplication app(false);
     Options          options(x0,app,prhs[2]);
+    CheckOptiVersion(prhs[2]);
 
     // The first output argument is the value of the optimization
     // variables obtained at the solution.

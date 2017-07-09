@@ -47,6 +47,7 @@ else
 end
 %Setup display level
 popts.display = dispLevel(opts.display);
+popts.optiver = optiver;
 
 %Ensure we have bounds
 if(isempty(lb) || isempty(ub))
