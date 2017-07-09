@@ -203,7 +203,7 @@ else
     icarch = 'IA32';
 end
 
-fprintf('\n- Checking for required pre-requisites...\n');
+fprintf('\n- Checking for the required pre-requisites...\n');
 missing = false;
 cd('Utilities/Install');
 [havVC,havIC,havIF] = opti_PreReqCheck(cpath);
@@ -276,7 +276,7 @@ addpath([cd '/Utilities/opti'])
 try
     % Check if we have the mex files (user may have cloned the repo without them)
     if (~exist(['clp.' mexext],'file') || ~exist(['ipopt.' mexext],'file') || ~exist(['asl.' mexext],'file'))
-        fprintf('\n- Checking MEX File Release Information...\n');
+        fprintf('\n- New OPTI Installation Detected.\n');
 
         % We need to download the mex files / get the user to download them
         OK = downloadMexFiles(localVer);
@@ -328,7 +328,11 @@ mexFiles = [mexFiles,'asl','rmathlib'];
 
 % Now search through and compare version info
 for i = 1:length(mexFiles)
-    if (~any(strcmpi(mexFiles{i},{'baron','cplex','matlab','gmatlab','mosek','sedumi'}))) 
+    if (~any(strcmpi(mexFiles{i},{'baron','cplex','matlab','gmatlab','mosek','sedumi'})))         
+        % If SCIP the user may not have it
+        if (strcmpi(mexFiles{i}, 'scip') && ~exist(['scip.' mexext], 'file'))
+            continue;
+        end
         try
             [~,optiBuildVer] = feval(lower(mexFiles{i}));
         catch 
@@ -336,6 +340,9 @@ for i = 1:length(mexFiles)
             % the second arg, assume out of date
             OK = false;
             buildVer = NaN;
+            if (verbose)
+                fprintf('Error evaluating MEX File: %s\n', lower(mexFiles{i}));
+            end
             return;
         end            
         if (optiBuildVer ~= localVer)
@@ -373,19 +380,6 @@ if (isempty(gitData))
     error('not implemented');
 end
 
-% Check the latest release version
-nameComp = regexp(gitData.name,' ','split');
-if (length(nameComp) ~= 3)
-    error('OPTI Install Error: The latest version name (%s) is not compatible! Please report this error.',gitData.name);
-end
-gitVer = str2double(nameComp{3});
-if (isnan(gitVer))
-    gitVer = str2double(nameComp{3}(2:end));
-    if (isnan(gitVer))
-        error('OPTI Install Error: Could not convert latest release version number (%s) to double! Please report this error.',nameComp{3});
-    end
-end
-
 fprintf(' Found v%.2f\n', gitVer);
 
 % If the Git version > local version, user needs to update OPTI source
@@ -401,6 +395,9 @@ else  % download the latest files, even if local Ver > git Ver
         asset = gitData.assets(i);
         if (~isempty(asset))
             if (~isempty(strfind(asset.name, zipNameNoVer)))
+                % Extract ver number
+                
+                % Start downloading
                 fprintf('Downloading ''%s'' (%.2f MB), please wait...',asset.name,asset.size/(1024 * 1e3));
                 tempLoc = [tempdir asset.name];
                 try
@@ -410,8 +407,9 @@ else  % download the latest files, even if local Ver > git Ver
                 catch ME
                     fprintf(' FAILED!\n');
                     fprintf(2, 'Failure: %s\n', ME.message);
-                    fprintf('\n\nPlease try running the installer again\n');
+                    fprintf(2, '\n\nPlease try running the installer again\n');
                     OK = false;
+                    return;
                 end                                   
                 break;
             end
