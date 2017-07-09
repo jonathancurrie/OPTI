@@ -370,8 +370,8 @@ function OK = downloadMexFiles(localVer)
 OK = true;
 gitData = [];
 % See if we can download directly from GitHub (2014b +)
-fprintf('\n- Checking for updated MEX files from GitHub...');
 if (exist('webread.m','file'))      
+    fprintf('\n- Checking for updated MEX files from GitHub...');
     try
         gitData = webread('https://api.github.com/repos/jonathancurrie/OPTI/releases/latest');
     catch
@@ -379,7 +379,24 @@ if (exist('webread.m','file'))
 end
 if (isempty(gitData))
     % Cannot access internet / ML version too old, other error
-    error('not implemented');
+    fprintf('\nIn order to update the MEX files in your OPTI installation, please visit:\n');
+    disp(' <a href="https://github.com/jonathancurrie/OPTI/releases/latest">https://github.com/jonathancurrie/OPTI/releases/latest</a>')
+    fprintf('and download "optiMEXFiles_%s_x_xx.zip" where x_xx is the latest release number.\n', mexext);
+    input('\nOnce you have downloaded the zipped files, press enter to show OPTI where they are located (press enter to continue):  ', 's'); 
+    [FileName,PathName] = uigetfile('*.zip', 'Select the OPTI MEX Files Download');
+    
+    % Check seems a reasonable folder for opti files
+    if (~ischar(FileName))
+        error('OPTI cannot continue without knowing where you have downloaded the MEX files to. Please re-run the installer to continue.');
+    end
+    [~,~,ext] = fileparts(FileName);
+    if (isempty(strfind(FileName,['optiMEXFiles_' mexext])) || ~strcmp(ext, '.zip'))
+        error('OPTI did not recognise ''%s'' as a valid OPTI MEX File Download. Please run the installer again to select the correct download.',FileName);
+    end
+    
+    % Copy them over
+    OK = copyMexFiles([PathName FileName]);
+    return;
 end
 
 % Download the latest files
@@ -432,76 +449,90 @@ for i = 1:numAssets
 end
 
 if (mexFilesFoundOnGit == true)
-    % After a successful download, extract them
-    [fdir,fname] = fileparts(tempLoc);
-    unzipDir = [fdir filesep fname];
-    % See if unzip directory already exists
-    if (exist(unzipDir, 'dir'))
-        % Delete folder and contents
-        deleteFolder(unzipDir);
-        rehash;
-        rehash;
-    end
-    
-    fprintf('Unzipping MEX Files...');
-    unzip(tempLoc, unzipDir);
-    rehash;
-    rehash;
-    fprintf(' Done!\n');
-    
-    % Now copy mex files
-    try
-        files = dir(unzipDir);
-        for i = 1:length(files)
-            file = files(i);        
-            if (~file.isdir)
-                fullFilePath = [file.folder filesep file.name];
-                [~,mexName] = fileparts(file.name);
-                copyTries = 0;
-                ME = [];
-                while (copyTries < 10) % annoyingly can fail now and then
-                    copyTries = copyTries + 1;
-                    try
-                        clear(mexName);
-                        if (any(strcmp(mexName,{'asl','coinR','coinW','mklJac','rmathlib'})))
-                            destLoc = [cd filesep 'Utilities' filesep];
-                        else
-                            destLoc = [cd filesep 'Solvers' filesep];
-                        end
-                        if (movefile(fullFilePath, [destLoc file.name], 'f'))
-                            break;
-                        end
-                    catch ME
-                        rehash;
-                        pause(0.001);
-                    end
-                end
+    OK = copyMexFiles(tempLoc);
+else
+    fprintf(2,'The OPTI MEX File package was not found in the latest release - please contact support. Sorry!\n');
+    OK = false;
+end
 
-                if (copyTries >= 10)
-                    fprintf(2, 'Failed to copy MEX file ''%s'' from ''%s'' to ''%s''!\n\nEnsure you have adminstrator rights in your OPTI instllation directory.\n',...
-                                file.name, fullFilePath, [destLoc file.name]);
-                    if (~isempty(ME))
-                        fprintf(2,'\n\nError: %s\n', ME.message);
+
+function OK = copyMexFiles(loc)
+
+OK = true;
+
+% After a successful download, extract them
+[fdir,fname] = fileparts(loc);
+unzipDir = [fdir filesep fname];
+% See if unzip directory already exists
+if (exist(unzipDir, 'dir'))
+    % Delete folder and contents
+    deleteFolder(unzipDir);
+    rehash;
+    rehash;
+end
+
+fprintf('Unzipping MEX Files...');
+unzip(loc, unzipDir);
+rehash;
+rehash;
+fprintf(' Done!\n');
+
+% Now copy mex files
+try
+    files = dir(unzipDir);
+    for i = 1:length(files)
+        file = files(i);        
+        if (~file.isdir)
+            if (~isfield(file,'folder'))
+                fullFilePath = [unzipDir filesep file.name];
+            else
+                fullFilePath = [file.folder filesep file.name];
+            end
+            [~,mexName] = fileparts(file.name);
+            copyTries = 0;
+            ME = [];
+            while (copyTries < 10) % annoyingly can fail now and then
+                copyTries = copyTries + 1;
+                try
+                    clear(mexName);
+                    if (any(strcmp(mexName,{'asl','coinR','coinW','mklJac','rmathlib'})))
+                        destLoc = [cd filesep 'Utilities' filesep];
+                    else
+                        destLoc = [cd filesep 'Solvers' filesep];
                     end
-                    OK = false;
-                    break;
+                    if (movefile(fullFilePath, [destLoc file.name], 'f'))
+                        break;
+                    end
+                catch ME
+                    rehash;
+                    pause(0.001);
                 end
             end
+
+            if (copyTries >= 10)
+                fprintf(2, 'Failed to copy MEX file ''%s'' from ''%s'' to ''%s''!\n\nEnsure you have adminstrator rights in your OPTI instllation directory.\n',...
+                            file.name, fullFilePath, [destLoc file.name]);
+                if (~isempty(ME))
+                    fprintf(2,'\n\nError: %s\n', ME.message);
+                end
+                OK = false;
+                break;
+            end
         end
+    end
+    
+    if (OK)
         rehash;
         pause(0.01);
         rehash;        
 
         % Now delete unzip directory
-        deleteFolder(unzipDir);        
-        
-    catch ME
-        fprintf(2,'There was an error copying the MEX files. Please check the below error to see why it failed and correct as required:\n\n');
-        fprintf(2,'Error: %s\n', ME.message);
-        OK = false;
+        OK = deleteFolder(unzipDir);        
     end
-else
-    fprintf(2,'The OPTI MEX File package was not found in the latest release - please contact support. Sorry!\n');
+
+catch ME
+    fprintf(2,'There was an error copying the MEX files. Please check the below error to see why it failed and correct as required:\n\n');
+    fprintf(2,'Error: %s\n', ME.message);
     OK = false;
 end
 
@@ -513,7 +544,11 @@ files = dir(delDir);
 for i = 1:length(files)
     file = files(i);        
     if (~file.isdir)
-        delete([file.folder filesep file.name]);        
+        if (~isfield(file,'folder'))
+            delete([delDir filesep file.name]);        
+        else
+            delete([file.folder filesep file.name]);        
+        end
     end
 end
 rehash;
