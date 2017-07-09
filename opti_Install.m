@@ -13,17 +13,17 @@ catch %#ok<CTCH>
     error('You don''t appear to be in the OPTI Toolbox directory');
 end
 %Get current versions    
-cur_ver = optiver();
+localVer = optiver();
 
 fprintf('\n------------------------------------------------\n')
-fprintf(['  INSTALLING OPTI TOOLBOX ver ' sprintf('%1.2f',cur_ver) '\n'])
+fprintf(['  INSTALLING OPTI TOOLBOX ver ' sprintf('%1.2f',localVer) '\n'])
 
 cd(cpath);
 % Check ML ver
 matlabVerCheck();
 
 % Perform MEX File check (also checks pre-reqs)
-if (~mexFileCheck(cur_ver, cpath))
+if (~mexFileCheck(localVer, cpath))
     return;
 end
 
@@ -266,7 +266,7 @@ else
 end
 
 
-function OK = mexFileCheck(cur_ver,cpath)
+function OK = mexFileCheck(localVer,cpath)
 
 % Add paths required for checks
 addpath([cd '/Solvers'])
@@ -279,32 +279,36 @@ try
         fprintf('\n- Checking MEX File Release Information...\n');
 
         % We need to download the mex files / get the user to download them
-        OK = downloadMexFiles();
-    else
-        % Do a pre-req check before attempting to read solver build versions
-        OK = preReqChecks(cpath);
+        OK = downloadMexFiles(localVer);
         if (OK == false)
-            return; % can't check mex files if missing a pre req
-        end
-        
-        fprintf('\n- Checking MEX File Release Information...\n');
-        % Check if the current OPTI version matches the mex files
-        [mexFilesOK, mexBuildVer] = checkMexFileVersion(cur_ver, false);
-        if (mexFilesOK == false)
-            % One or more mex files are out of date, report to the user
-            if (isnan(mexBuildVer))
-                fprintf(2,'One or more MEX files are not compatible with this version of OPTI\n');
-            else
-                fprintf(2,'One or more MEX files are not compatible with this version of OPTI (MEX v%.2f vs OPTI v%.2f)\n', mexBuildVer, cur_ver);
-            end
-            % See if the user wants to download them
-            OK = downloadMexFiles();
-        else
-            % All up to date, nothing to check
-            fprintf('MEX Files match OPTI Release.\n');
-            OK = true;
+            return;
         end
     end
+    
+    % Do a pre-req check before attempting to read solver build versions
+    OK = preReqChecks(cpath);
+    if (OK == false)
+        return; % can't check mex files if missing a pre req
+    end
+
+    fprintf('\n- Checking MEX File Release Information...\n');
+    % Check if the current OPTI version matches the mex files
+    [mexFilesOK, mexBuildVer] = checkMexFileVersion(localVer, false);
+    if (mexFilesOK == false)
+        % One or more mex files are out of date, report to the user
+        if (isnan(mexBuildVer))
+            fprintf(2,'One or more MEX files are not compatible with this version of OPTI\n');
+        else
+            fprintf(2,'One or more MEX files are not compatible with this version of OPTI (MEX v%.2f vs OPTI v%.2f)\n', mexBuildVer, localVer);
+        end
+        % See if the user wants to download them
+        OK = downloadMexFiles(localVer);
+    else
+        % All up to date, nothing to check
+        fprintf('MEX Files match OPTI Release.\n');
+        OK = true;
+    end
+
 catch ME
     rmpath([cd '/Solvers']);
     rmpath([cd '/Utilities']);
@@ -313,10 +317,10 @@ catch ME
 end
 
 
-function [OK,buildVer] = checkMexFileVersion(reqVer, verbose)
+function [OK,buildVer] = checkMexFileVersion(localVer, verbose)
 
 OK = true;
-buildVer = reqVer;
+buildVer = localVer;
 % Get a list of all solvers 
 mexFiles = optiSolver('all');
 % Add in utilities
@@ -334,14 +338,15 @@ for i = 1:length(mexFiles)
             buildVer = NaN;
             return;
         end            
-        if (optiBuildVer ~= reqVer)
-            if (optiBuildVer > reqVer) % unusual case where user has newer mex files than opti source
-                error('The mex files you have appear to be for a newer version of OPTI - please update your source of OPTI from:\n\n https://github.com/jonathancurrie/OPTI\n');
+        if (optiBuildVer ~= localVer)
+            if (optiBuildVer > localVer) % unusual case where user has newer mex files than opti source
+                fprintf(2,'The MEX files you have appear to be for newer version of OPTI (MEX v%.2f vs OPTI v%.2f)\n', optiBuildVer, localVer);
+                tellUserToUpdateOPTI();
             else    
                 OK = false;
                 buildVer = optiBuildVer;
                 if (verbose)
-                    fprintf('MEX File ''%s.%s'' is out of date (MEX v%.2f vs OPTI v%.2f)\n',mexFiles{i},mexext, optiBuildVer, reqVer);
+                    fprintf('MEX File ''%s.%s'' is out of date (MEX v%.2f vs OPTI v%.2f)\n',mexFiles{i},mexext, optiBuildVer, localVer);
                 else
                     break; % no point continuing check if not displaying
                 end
@@ -351,11 +356,12 @@ for i = 1:length(mexFiles)
 end
 
 
-function OK = downloadMexFiles()
+function OK = downloadMexFiles(localVer)
 
+OK = true;
 gitData = [];
 % See if we can download directly from GitHub (2014b +)
-fprintf('\n- Checking for updated MEX files from GitHub...\n');
+fprintf('\n- Checking for updated MEX files from GitHub...');
 if (exist('webread.m','file'))      
     try
         gitData = webread('https://api.github.com/repos/jonathancurrie/OPTI/releases/latest');
@@ -364,82 +370,142 @@ if (exist('webread.m','file'))
 end
 if (isempty(gitData))
     % Cannot access internet / ML version too old, other error
-    
+    error('not implemented');
 end
 
-
-% Check if we need to download the MEX files
-% if (~exist([cd filesep 'Solvers/Source/lib/win64/libclp.lib'],'file')) % skip on dev machine
-%     fprintf('\n- Checking for updated MEX files from GitHub...\n');
-%     try
-%         if (exist('webread.m','file'))      
-%             try
-%                 gitData = webread('https://api.github.com/repos/jonathancurrie/OPTI/releases/latest');
-%             catch ME
-%                 fprintf(2,'There was an error querying GitHub for the latest MEX file information. Please ensure you are connected to the internet!\n');
-%                 rethrow(ME);
-%             end
-%         else
-%             fprintf(2,'Your version of MATLAB does not support the required OPTI GitHub interface. Please update your MATLAB version.\n');
-%             error('OPTI Install Error: MATLAB Version does not support webread()');
-%         end
-%         if (isempty(gitData))
-%             error('OPTI Install Error: No valid data received from GitHub!');
-%         end
-%         nameComp = regexp(gitData.name,' ','split');
-%         if (length(nameComp) ~= 3)
-%             error('OPTI Install Error: The latest version name (%s) is not compatible! Please report this error.',gitData.name);
-%         end
-%         verNum = str2double(nameComp{3});
-%         if (isnan(verNum))
-%             verNum = str2double(nameComp{3}(2:end));
-%             if (isnan(verNum))
-%                 error('OPTI Install Error: Could not convert latest release version number (%s) to double! Please report this error.',nameComp{3});
-%             end
-%         end
-%         doDownload = false;
-%         if (~exist(['rmathlib.' mexext], 'file'))
-%             if (cur_ver < verNum)
-%                 fprintf(2,'Your version of OPTI is not the most recent, please update it from GitHub (https://github.com/jonathancurrie/OPTI) before continuing.\n');
-%                 error('OPTI Install Error: OPTI version mismatch');
-%             else
-%                 fprintf('A new OPTI installation is detected, the required solver MEX files will be automatically downloaded from GitHub:\n');
-%                 doDownload = true;
-%             end
-%         elseif(checkRMathlibBuildDate(gitData)) % compare the build date in the mex file
-%             doDownload = true;
-%         end
-%         % Download as required
-%         if (doDownload)
-%             downloadMEXFiles(gitData);
-%         end
-%     catch ME
-%         fprintf(2,'If you continue to see this error, you may manually download the required MEX files (all) from:\nhttps://github.com/jonathancurrie/OPTI/releases/latest\n\n\n');
-%         rethrow(ME);
-%     end
-% end
-
-
-function downloadMEXFiles(gitData)
-% For each MEX file
-numAssets = length(gitData.assets);
-for i = 1:numAssets   
-    asset = gitData.assets(i);
-    if(~isempty(asset))
-        fprintf('Downloading %2d of %2d %18s (%.2f MB)...',i,numAssets,asset.name,asset.size/(1024 * 1e3));
-        [~,name] = fileparts(asset.name);
-        % See if utility or solver
-        isUtil = false;
-        if (any(strcmp(name,{'asl','coinR','coinW','mklJac','rmathlib'})))
-            isUtil = true;
-        end
-        clear(name);
-        if (isUtil)
-            websave([cd filesep 'Utilities' filesep asset.name],asset.browser_download_url);
-        else
-            websave([cd filesep 'Solvers' filesep asset.name],asset.browser_download_url);
-        end
-        fprintf(' Done!\n');
+% Check the latest release version
+nameComp = regexp(gitData.name,' ','split');
+if (length(nameComp) ~= 3)
+    error('OPTI Install Error: The latest version name (%s) is not compatible! Please report this error.',gitData.name);
+end
+gitVer = str2double(nameComp{3});
+if (isnan(gitVer))
+    gitVer = str2double(nameComp{3}(2:end));
+    if (isnan(gitVer))
+        error('OPTI Install Error: Could not convert latest release version number (%s) to double! Please report this error.',nameComp{3});
     end
 end
+
+fprintf(' Found v%.2f\n', gitVer);
+
+% If the Git version > local version, user needs to update OPTI source
+if (gitVer > localVer)
+    OK = false;
+    tellUserToUpdateOPTI();
+    return;
+else  % download the latest files, even if local Ver > git Ver
+    zipNameNoVer = ['optiMEXFiles_' mexext];
+    numAssets = length(gitData.assets);
+    mexFilesFoundOnGit = false;
+    for i = 1:numAssets
+        asset = gitData.assets(i);
+        if (~isempty(asset))
+            if (~isempty(strfind(asset.name, zipNameNoVer)))
+                fprintf('Downloading ''%s'' (%.2f MB)... please wait',asset.name,asset.size/(1024 * 1e3));
+                tempLoc = [tempdir asset.name];
+                try
+                    websave(tempLoc,asset.browser_download_url);
+                    mexFilesFoundOnGit = true;
+                    fprintf(' Done!\n');
+                catch ME
+                    fprintf(' FAILED!\n');
+                    fprintf(2, 'Failure: %s\n', ME.message);
+                    fprintf('\n\nPlease try running the installer again\n');
+                    OK = false;
+                end                                   
+                break;
+            end
+        end
+    end
+end
+
+if (mexFilesFoundOnGit == true)
+    % After a successful download, extract them
+    [fdir,fname] = fileparts(tempLoc);
+    unzipDir = [fdir filesep fname];
+    % See if unzip directory already exists
+    if (exist(unzipDir, 'dir'))
+        % Delete folder and contents
+        deleteFolder(unzipDir);
+        rehash;
+        rehash;
+    end
     
+    fprintf('Unzipping MEX Files...');
+    unzip(tempLoc, unzipDir);
+    rehash;
+    rehash;
+    fprintf(' Done!\n');
+    
+    % Now copy mex files
+    try
+        files = dir(unzipDir);
+        for i = 1:length(files)
+            file = files(i);        
+            if (~file.isdir)
+                fullFilePath = [file.folder filesep file.name];
+                [~,mexName] = fileparts(file.name);
+                copyTries = 0;
+                ME = [];
+                while (copyTries < 10) % annoyingly can fail now and then
+                    copyTries = copyTries + 1;
+                    try
+                        clear(mexName);
+                        if (any(strcmp(mexName,{'asl','coinR','coinW','mklJac','rmathlib'})))
+                            destLoc = [cd filesep 'Utilities' filesep];
+                        else
+                            destLoc = [cd filesep 'Utilities' filesep];
+                        end
+                        if (movefile(fullFilePath, [destLoc file.name], 'f'))
+                            break;
+                        end
+                    catch ME
+                        rehash;
+                        pause(0.001);
+                    end
+                end
+
+                if (copyTries >= 10)
+                    fprintf(2, 'Failed to copy MEX file ''%s'' from ''%s'' to ''%s''!\n\nEnsure you have adminstrator rights in your OPTI instllation directory.\n',...
+                                file.name, fullFilePath, [destLoc file.name]);
+                    if (~isempty(ME))
+                        fprintf(2,'\n\nError: %s\n', ME.message);
+                    end
+                    OK = false;
+                    break;
+                end
+            end
+        end
+
+        % Now delete unzip directory
+        deleteFolder(unzipDir);        
+        
+    catch ME
+        fprintf(2,'There was an error copying the MEX files. Please check the below error to see why it failed and correct as required:\n\n');
+        fprintf(2,'Error: %s\n', ME.message);
+        OK = false;
+    end
+else
+    fprintf(2,'The OPTI MEX File package was not found in the latest release - please contact support. Sorry!\n');
+    OK = false;
+end
+
+
+function OK = deleteFolder(delDir)
+
+% Delete each file first
+files = dir(delDir);
+for i = 1:length(files)
+    file = files(i);        
+    if (~file.isdir)
+        delete([file.folder filesep file.name]);        
+    end
+end
+rehash;
+rehash;
+
+% Now delete the directory
+OK = rmdir(delDir);
+rehash;
+
+
