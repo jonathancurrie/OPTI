@@ -401,7 +401,7 @@ else  % download the latest files, even if local Ver > git Ver
         asset = gitData.assets(i);
         if (~isempty(asset))
             if (~isempty(strfind(asset.name, zipNameNoVer)))
-                fprintf('Downloading ''%s'' (%.2f MB)... please wait',asset.name,asset.size/(1024 * 1e3));
+                fprintf('Downloading ''%s'' (%.2f MB), please wait...',asset.name,asset.size/(1024 * 1e3));
                 tempLoc = [tempdir asset.name];
                 try
                     websave(tempLoc,asset.browser_download_url);
@@ -454,7 +454,7 @@ if (mexFilesFoundOnGit == true)
                         if (any(strcmp(mexName,{'asl','coinR','coinW','mklJac','rmathlib'})))
                             destLoc = [cd filesep 'Utilities' filesep];
                         else
-                            destLoc = [cd filesep 'Utilities' filesep];
+                            destLoc = [cd filesep 'Solvers' filesep];
                         end
                         if (movefile(fullFilePath, [destLoc file.name], 'f'))
                             break;
@@ -476,6 +476,9 @@ if (mexFilesFoundOnGit == true)
                 end
             end
         end
+        rehash;
+        pause(0.01);
+        rehash;        
 
         % Now delete unzip directory
         deleteFolder(unzipDir);        
