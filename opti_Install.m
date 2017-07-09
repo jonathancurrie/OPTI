@@ -399,6 +399,10 @@ for i = 1:numAssets
                     OK = false;
                     tellUserToUpdateOPTI();
                     return;
+                elseif(gitVer < localVer) % should not happen
+                    fprintf(2, 'Your version of OPTI (%.2f) is newer than the version of MEX files available (%.2f).\n', localVer, gitVer);
+                    fprintf(2, 'This normally occurs if you are working on the develop branch.\n');
+                    fprintf(2, 'OPTI will download the latest release version, but please check GitHub regularly for an updated release.\n\n');
                 end
             else
                 % Should not happen...
