@@ -380,8 +380,6 @@ if (isempty(gitData))
     error('not implemented');
 end
 
-fprintf(' Found v%.2f\n', gitVer);
-
 % If the Git version > local version, user needs to update OPTI source
 if (gitVer > localVer)
     OK = false;
@@ -395,8 +393,16 @@ else  % download the latest files, even if local Ver > git Ver
         asset = gitData.assets(i);
         if (~isempty(asset))
             if (~isempty(strfind(asset.name, zipNameNoVer)))
-                % Extract ver number
-                
+                % Extract ver number from file name
+                [~,fileName] = fileparts(asset.name);
+                parts = regexp(fileName,'_','split');
+                if (length(parts) == 4)
+                    gitVer = str2double(parts{3}) + str2double(parts{4})/100;                                    
+                    fprintf(' Found v%.2f\n', gitVer);
+                else
+                    % Should not happen...
+                    fprintf(' Found\n');
+                end
                 % Start downloading
                 fprintf('Downloading ''%s'' (%.2f MB), please wait...',asset.name,asset.size/(1024 * 1e3));
                 tempLoc = [tempdir asset.name];
