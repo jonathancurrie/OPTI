@@ -380,45 +380,45 @@ if (isempty(gitData))
     error('not implemented');
 end
 
-% If the Git version > local version, user needs to update OPTI source
-if (gitVer > localVer)
-    OK = false;
-    tellUserToUpdateOPTI();
-    return;
-else  % download the latest files, even if local Ver > git Ver
-    zipNameNoVer = ['optiMEXFiles_' mexext];
-    numAssets = length(gitData.assets);
-    mexFilesFoundOnGit = false;
-    for i = 1:numAssets
-        asset = gitData.assets(i);
-        if (~isempty(asset))
-            if (~isempty(strfind(asset.name, zipNameNoVer)))
-                % Extract ver number from file name
-                [~,fileName] = fileparts(asset.name);
-                parts = regexp(fileName,'_','split');
-                if (length(parts) == 4)
-                    gitVer = str2double(parts{3}) + str2double(parts{4})/100;                                    
-                    fprintf(' Found v%.2f\n', gitVer);
-                else
-                    % Should not happen...
-                    fprintf(' Found\n');
-                end
-                % Start downloading
-                fprintf('Downloading ''%s'' (%.2f MB), please wait...',asset.name,asset.size/(1024 * 1e3));
-                tempLoc = [tempdir asset.name];
-                try
-                    websave(tempLoc,asset.browser_download_url);
-                    mexFilesFoundOnGit = true;
-                    fprintf(' Done!\n');
-                catch ME
-                    fprintf(' FAILED!\n');
-                    fprintf(2, 'Failure: %s\n', ME.message);
-                    fprintf(2, '\n\nPlease try running the installer again\n');
+% Download the latest files
+zipNameNoVer = ['optiMEXFiles_' mexext];
+numAssets = length(gitData.assets);
+mexFilesFoundOnGit = false;
+for i = 1:numAssets
+    asset = gitData.assets(i);
+    if (~isempty(asset))
+        if (~isempty(strfind(asset.name, zipNameNoVer)))
+            % Extract ver number from file name
+            [~,fileName] = fileparts(asset.name);
+            parts = regexp(fileName,'_','split');
+            if (length(parts) == 4)
+                gitVer = str2double(parts{3}) + str2double(parts{4})/100;                                    
+                fprintf(' Found v%.2f\n', gitVer);
+                % If the Git version > local version, user needs to update OPTI source
+                if (gitVer > localVer)
                     OK = false;
+                    tellUserToUpdateOPTI();
                     return;
-                end                                   
-                break;
+                end
+            else
+                % Should not happen...
+                fprintf(' Found\n');
             end
+            % Start downloading
+            fprintf('Downloading ''%s'' (%.2f MB), please wait...',asset.name,asset.size/(1024 * 1e3));
+            tempLoc = [tempdir asset.name];
+            try
+                websave(tempLoc,asset.browser_download_url);
+                mexFilesFoundOnGit = true;
+                fprintf(' Done!\n');
+            catch ME
+                fprintf(' FAILED!\n');
+                fprintf(2, 'Failure: %s\n', ME.message);
+                fprintf(2, '\n\nPlease try running the installer again\n');
+                OK = false;
+                return;
+            end                                   
+            break;
         end
     end
 end
