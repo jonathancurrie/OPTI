@@ -347,8 +347,9 @@ for i = 1:length(mexFiles)
         end            
         if (optiBuildVer ~= localVer)
             if (optiBuildVer > localVer) % unusual case where user has newer mex files than opti source
-                fprintf(2,'The MEX files you have appear to be for newer version of OPTI (MEX v%.2f vs OPTI v%.2f)\n', optiBuildVer, localVer);
-                tellUserToUpdateOPTI();
+                fprintf(2,'The MEX files you have are for newer version of OPTI (MEX v%.2f vs Local OPTI v%.2f)\n', optiBuildVer, localVer);
+                fprintf(2, 'You will need to update your version of OPTI, please follow the instructions below:\n');
+                opti_printUpdateInfo();
             else    
                 OK = false;
                 buildVer = optiBuildVer;
@@ -397,7 +398,9 @@ for i = 1:numAssets
                 % If the Git version > local version, user needs to update OPTI source
                 if (gitVer > localVer)
                     OK = false;
-                    tellUserToUpdateOPTI();
+                    fprintf(2, 'The GitHub MEX Files are for a newer version of OPTI (GitHub %.2f, Local OPTI %.2f)\n', gitVer, localVer);
+                    fprintf(2, 'You will need to update your version of OPTI, please follow the instructions below:\n');
+                    opti_printUpdateInfo();
                     return;
                 elseif(gitVer < localVer) % should not happen
                     fprintf(2, 'Your version of OPTI (%.2f) is newer than the version of MEX files available (%.2f).\n', localVer, gitVer);
