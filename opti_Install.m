@@ -350,6 +350,7 @@ for i = 1:length(mexFiles)
                 fprintf(2,'The MEX files you have are for newer version of OPTI (MEX v%.2f vs Local OPTI v%.2f)\n', optiBuildVer, localVer);
                 fprintf(2, 'You will need to update your version of OPTI, please follow the instructions below:\n');
                 opti_printUpdateInfo();
+                error('OPTI Install Error: OPTI source must be updated');
             else    
                 OK = false;
                 buildVer = optiBuildVer;
