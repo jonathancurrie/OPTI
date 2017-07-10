@@ -27,7 +27,7 @@
 #define PRINT_BUILD_INFO mexPrintf("  - Built %s, Visual Studio %s, MATLAB %s, OPTI v%s\n", __DATE__, VS_VER, stringify(ML_VER), stringify(OPTI_VER));
 
 
-
+#include "mex.h"
 void CheckOptiVersion(const mxArray *opts)
 {
     static bool displayedWarning = false;
