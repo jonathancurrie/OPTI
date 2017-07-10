@@ -9,7 +9,9 @@ current_version = 2.27;
 
 %History
 
-%2.27 (..)
+%2.27 (10/07/17)
+% - Substantial update to OPTI installer, should be much more user friendly
+% now (feedback welcome)
 
 %2.26 (02/07/17)
 % - Removed MEX files from Git repository (just getting bigger and bigger)

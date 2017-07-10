@@ -17,25 +17,10 @@ end
 
 % Zip the files
 fprintf('Compressing MEX Files...');
-name = ['optiMEXFiles_' mexext];
+name = ['optiMEXFiles_' mexext '_' sprintf('%.0f_%.0f',optiver,mod(optiver*100,100))];
 zip(name,files);
 rehash;
 rehash;
-fprintf('Done!\n');
-
-%%
-fprintf('Generating MEX Info File...');
-% Compile the mex info file
-src = 'optiMEXInfo.c';
-%Options
-mver = ver('matlab');
-opts = [];
-opts.pp = {['MEX_HASH=' DataHash([name '.zip'],struct('Format', 'hex', 'Method', 'SHA-256', 'Input', 'file'))],
-           ['ML_VER=' mver.Release]};
-opts.util = true;
-opts.quiet = true;
-%Compile
-opti_solverMex('optiMEXInfo',src,[],[],opts);
 fprintf('Done!\n');
 
 % Update the contents file
@@ -63,8 +48,9 @@ fid = fopen(p,'w');
 if(fid)
     try
         fprintf(fid,'%% %s Toolbox\n',upper(name));
-        fprintf(fid,'%% Version v%.2f %s %s\n',tbxver,mver.Release,datestr(now,1));
-        fprintf(fid,'%%  Copyright (C) %s-%s Jonathan Currie (Inverse Problem Ltd)\n',stDate,datestr(now,10));        
+        fprintf(fid,'%% Version %.2f %s %s\n',tbxver,mver.Release,datestr(now,1));
+        fprintf(fid,'%% Copyright (C) %s-%s Jonathan Currie (Inverse Problem Ltd)\n',stDate,datestr(now,10));
+        fprintf(fid,'%% License: https://inverseproblem.co.nz/OPTI/index.php/DL/License\n');
     catch ME
         fclose(fid);
         rethrow(ME);
