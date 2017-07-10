@@ -105,9 +105,11 @@ b = [1;1;1];
 opts = optiset('solver','auto');
 %Build & Solve
 Opt = opti('hess',H,'grad',f,'ineq',A,b,'int','CIC','options',opts)
-[x,fval,exitflag,info] = solve(Opt)
-
-plot(Opt)
+try
+    [x,fval,exitflag,info] = solve(Opt)
+    plot(Opt)
+catch
+end
 
 %% MIQCQP2 [-0.0942]
 clc

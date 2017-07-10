@@ -434,7 +434,10 @@ b = [1;1;1];
 opts = optiset('solver','auto');
 %Build & Solve
 Opt = opti('hess',H,'grad',f,'ineq',A,b,'int','CIC','options',opts)
+try
 [x,fval,exitflag,info] = solve(Opt)
+catch
+end
 
 %% MIQCQP1 [-2.5429] [non-convex]
 clc
