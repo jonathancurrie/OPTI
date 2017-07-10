@@ -1675,13 +1675,15 @@ xtype = 'CIC';
 
 %Build & Solve
 Opt = opti('qp',H,f,'ineq',A,b,'xtype',xtype)
-[x,fval,exitflag,info] = solve(Opt)
-
-% Plot Problem
-plot(Opt)
-set(gcf,'position',[510   344   688   558]); %BIGGER for higher D
-if(~isempty(figDir))
-    print('-dpng','-r0',[figDir filesep 'ex_plot_3d1']);
+try
+    [x,fval,exitflag,info] = solve(Opt)
+    % Plot Problem
+    plot(Opt)
+    set(gcf,'position',[510   344   688   558]); %BIGGER for higher D
+    if(~isempty(figDir))
+        print('-dpng','-r0',[figDir filesep 'ex_plot_3d1']);
+    end
+catch
 end
 
 % 5D
@@ -1863,7 +1865,10 @@ if (exist('syms.m','file'))
     Build(B)
 
     % Solve Problem
-    [x,fval,ef,info] = Solve(B)
+    try
+        [x,fval,ef,info] = Solve(B)
+    catch
+    end
 
     % New SymBuilder Object
     B = SymBuilder();
