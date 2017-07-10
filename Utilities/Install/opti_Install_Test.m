@@ -21,7 +21,7 @@ fprintf('\nChecking OPTI Toolbox Installation:\n');
 
 %% TEST 1 - Check Main Paths
 if(verb); fprintf('Checking Paths...                '); end
-paths = {'@opti','Utilities','Help','Solvers','opti'};
+paths = {'@opti','Utilities','Solvers','opti'};
 len = length(paths);
 for i = 1:len
     pass = exist(paths{i},'dir');
