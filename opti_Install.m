@@ -369,12 +369,17 @@ function OK = downloadMexFiles(localVer)
 
 OK = true;
 gitData = [];
+
 % See if we can download directly from GitHub (2014b +)
-if (exist('webread.m','file'))      
-    fprintf('\n- Checking for updated MEX files from GitHub...');
-    try
-        gitData = webread('https://api.github.com/repos/jonathancurrie/OPTI/releases/latest');
-    catch
+if (exist('webread.m','file'))  
+    % See if the user wants us to automatically download the mex files
+    in = input('\n- Would You Like OPTI To Attempt to Download the MEX Files Automatically? (Recommended) (y/n): ','s');
+    if (strcmpi(in,'y'))
+        fprintf('\n- Checking for updated MEX files from GitHub...');
+        try
+            gitData = webread('https://api.github.com/repos/jonathancurrie/OPTI/releases/latest');
+        catch
+        end
     end
 end
 if (isempty(gitData))
@@ -412,7 +417,7 @@ for i = 1:numAssets
             parts = regexp(fileName,'_','split');
             if (length(parts) == 4)
                 gitVer = str2double(parts{3}) + str2double(parts{4})/100;                                    
-                fprintf(' Found v%.2f\n', gitVer);
+                fprintf(' Found v%.2f on GitHub\n', gitVer);
                 % If the Git version > local version, user needs to update OPTI source
                 if (gitVer > localVer)
                     OK = false;
