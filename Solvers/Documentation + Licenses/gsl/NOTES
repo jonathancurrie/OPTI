@@ -1,0 +1,76 @@
+#+CATEGORY: GSL
+
+* Tasks:
+
+** Bugs
+
+*** TODO fix overflow problem for k<kk in vector/matrix tests
+
+*** TODO fix handling of finite/isfinite for c99 / solaris - check that everything builds in c99 mode
+
+*** TODO libtool problem on hp-ux [[wl:%news#A8C3A03210F2964EB20B995F47E0751D27A5E1@FRMUR-MX001.fr.infrasha.st.space.corp][Email from Benoit: Bug-gsl gsl-1.9 : error in c]]
+
+*** DONE bug in lmsder_set [[wl:%news#1184254920.28913.20.camel@cholm.priv.nbi.dk][Email from Christian Holm Christensen: Bug-gsl Bug in lm(s)der_set ]]
+    CLOSED: [2007-07-29 Sun 21:38]
+
+*** TODO The workspace size in lmder.c can be reduced  from n to w = gsl_vector_calloc (p);
+
+*** DONE bug infinite loop in svd
+    CLOSED: [2007-08-17 Fri 10:37]
+** Enhancements
+
+*** TODO sparse matrices [[wl:%news#817703933.20070625214455@gnu.org][Email from Andrew Makhorin: Re: Help-gsl sparse matrices]]
+
+** Documentation
+
+*** TODO describe how to use C++ callbacks [[wl:%news#1179961957.8750.6.camel@localhost.localdomain][Email from Pedro Figueiredo Santana: Help-gsl gsl_multifit_functi]]
+
+*** TODO describe how to use frozen parameters in fitting
+
+*** TODO wikipedia plagiarism of GSL vegas description
+
+*** TODO handle negative incx in blas scalar functions
+
+*** TODO LMDER can use fewer parameters in workspace
+
+* Notes
+
+http://plato.la.asu.edu/guide.html
+
+Candidate referees
+
+Random Variates: Luc Devroye (McGill)
+
+RNGs: Makomoto, L'Ecuyer, Marsaglia
+
+Quadrature: Ueberhuber
+
+Special Functions:
+
+Monte Carlo:
+
+FFTs:
+
+Statistics:
+
+Root finding:
+
+Differential Equations:
+
+Linear Algebra, BLAS:
+
+Minimisation:
+
+IEEE: Kahan, Jim Demmel (Berkeley)
+
+http://www.cs.kuleuven.ac.be/cwis/research/natw/research-E.shtml
+
+
+Journals:
+http://www.acm.org/pubs/contents/journals/toms/
+http://www.acm.org/pubs/contents/journals/tomacs/
+http://www.oup.co.uk/imanum/
+http://link.springer.de/journals/nummath/
+
+Papers to look at:
+http://www.acm.org/pubs/citations/proceedings/simulation/224401/p171-cheng/

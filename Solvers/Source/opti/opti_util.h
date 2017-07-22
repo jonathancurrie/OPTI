@@ -1,3 +1,8 @@
+// OPTI Utilities Header File
+// Collection of functions and macros for helping with OPTI MEX files
+
+#ifndef OPTI_UTILS_HDR
+#define OPTI_UTILS_HDR
 
 #if (_MSC_VER == 1500)
     #define VS_VER "2008"
@@ -28,7 +33,9 @@
 
 
 #include "mex.h"
-void CheckOptiVersion(const mxArray *opts)
+#include <string.h>
+
+inline void CheckOptiVersion(const mxArray *opts)
 {
     static bool displayedWarning = false;
     double localVer = 0.0;
@@ -50,3 +57,48 @@ void CheckOptiVersion(const mxArray *opts)
         }
     }
 }
+
+// OPTI Helper Methods
+inline void getIntegerOption(const mxArray *opts, const char *name, int *var)
+{
+    if (opts == NULL) 
+    { 
+        mexErrMsgTxt("Supplied Options mxArray was NULL!\n");
+        return; 
+    }
+    
+    if(mxGetField(opts,0,name) && !mxIsEmpty(mxGetField(opts,0,name)))
+    {
+        *var = (int)*mxGetPr(mxGetField(opts,0,name));
+    }
+}
+inline void getDoubleOption(const mxArray *opts, const char *name, double *var)
+{
+    if (opts == NULL) 
+    { 
+        mexErrMsgTxt("Supplied Options mxArray was NULL!\n");
+        return; 
+    }
+    
+    if(mxGetField(opts,0,name) && !mxIsEmpty(mxGetField(opts,0,name)))
+    {
+        *var = *mxGetPr(mxGetField(opts,0,name));
+    }
+}
+
+
+// Error Message with Printf Functionality
+#define ERR_BUF_LEN (1024)
+#define MEX_ERR(fmt, ...) \
+do { \
+    char errBuf[ERR_BUF_LEN]; \
+   snprintf(errBuf, ERR_BUF_LEN, fmt, __VA_ARGS__); \
+   mexErrMsgTxt(errBuf); \
+} while(0); 
+        
+
+// Ctrl-C Detection 
+extern "C" bool utIsInterruptPending();
+extern "C" void utSetInterruptPending(bool);
+        
+#endif  // OPTI_UTILS_HDR        
