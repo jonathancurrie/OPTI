@@ -268,6 +268,13 @@ end
 
 function OK = mexFileCheck(localVer,cpath)
 
+% Check if a dev version of OPTI
+if (exist([cd '/Solvers/Source/lib/win64/libclp.lib'],'file'))
+    fprintf('\nOPTI Development Version Detected, Skipping MEX File Check\n');
+    OK = true;
+    return;
+end
+
 % Add paths required for checks
 addpath([cd '/Solvers'])
 addpath([cd '/Utilities'])
