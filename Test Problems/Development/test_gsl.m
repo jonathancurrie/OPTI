@@ -1,5 +1,6 @@
 %% NLS1
 clc
+format compact
 %Function
 fun = @(x,xdata) x(1)*exp(x(2)*xdata);
 grad = @(x,xdata) [ exp(x(2).*xdata), x(1).*xdata.*exp(x(2).*xdata)];
@@ -15,8 +16,10 @@ x0 = [100; -1]; % Starting guess
 
 nlprob = Opt.nlprob;
 nlprob.probType = 'nls';
+nlprob.x0 = x0;
+nlprob
 
-gsl(nlprob)
+[x,fval,ef,iter,nfeval,ngeval,covar] = gsl(nlprob)
 
 
 %% NLS2

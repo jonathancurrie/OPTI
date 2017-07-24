@@ -34,6 +34,7 @@ libs = {'libgsl'};
 %Options
 opts = [];
 opts.pp = {};
+opts.blas = 'MKL'; 
 opts.verb = true;
 
 %Compile
