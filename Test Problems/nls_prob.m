@@ -69,7 +69,7 @@ switch(no)
         
     case 6 
         i = (1:10)';
-        fun = @(x) 2 + 2*i - (exp(0.2578*i) + exp(0.2578*i));
+        fun = @(x) 2 + 2*i - (exp(x(1)*i) + exp(x(2)*i));
         ydata = zeros(10,1);
         x0 = [0.3;0.4];
         prob = optiprob('fun',fun,'ydata',ydata,'x0',x0);            
