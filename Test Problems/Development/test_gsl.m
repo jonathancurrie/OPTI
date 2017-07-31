@@ -1,6 +1,5 @@
 %% NLS1
 clc
-format compact
 %Function
 fun = @(x,xdata) x(1)*exp(x(2)*xdata);
 grad = @(x,xdata) [ exp(x(2).*xdata), x(1).*xdata.*exp(x(2).*xdata)];
@@ -9,17 +8,12 @@ xdata = [0.9 1.5 13.8 19.8 24.1 28.2 35.2 60.3 74.6 81.3];
 ydata = [455.2 428.6 124.1 67.3 43.2 28.1 13.1 -0.4 -1.3 -1.5];
 
 %Setup Options
-opts = optiset('solver','lmder','display','iter');
+opts = optiset('solver','gsl','display','iter');
 %Build & Solve
 Opt = opti('fun',fun,'grad',grad,'data',xdata,ydata,'ndec',2,'options',opts)
 x0 = [100; -1]; % Starting guess
 
-nlprob = Opt.nlprob;
-nlprob.probType = 'nls';
-nlprob.x0 = x0;
-nlprob
-
-[x,fval,ef,iter,nfeval,ngeval,covar] = gsl(nlprob)
+[x,e,f,i] = solve(Opt,x0)
 
 
 %% NLS2
@@ -33,42 +27,18 @@ ydata=[5.8728, 5.4948, 5.0081, 4.5929, 4.3574, 4.1198, 3.6843, 3.3642, 2.9742, 3
        1.3825, 1.5087, 1.3624, 1.4206, 1.2097, 1.3129, 1.131, 1.306, 1.2008, 1.3469, 1.1837, 1.2102,...
        0.96518, 1.2129, 1.2003, 1.0743];
 %Setup Options
-opts = optiset('solver','mkltrnls','display','iter','solverOpts',mkltrnlsset('tolTR',1e-9));
+opts = optiset('solver','gsl','display','iter','solverOpts',mkltrnlsset('tolTR',1e-9));
 %Build & Solve
 x0=[1.0; 0.0; 0.0];
 Opt = opti('fun',fun,'data',xdata,ydata,'ndec',3,'options',opts)
 [x,fval,exitflag,info] = solve(Opt,x0)
 plot(Opt)
 
-%% NLS3 (Modified NLP - HS76)
-clc
-%Function
-fun = @(x) [x(1);
-            sqrt(0.5)*x(2);
-            x(3);
-            sqrt(0.5)*x(4);];
-%Fitting Data
-ydata = [0.0, 0.0, 0.0, 0.0];
-%Constraints
-lb = [0.0, 0.0, 0.0, 0.0];
-ub = [inf, inf, inf, inf];
-A = -[-1.0, -2.0, -1.0, -1.0;
-     -3.0, -1.0, -2.0, 1.0];
-b = -[-5.0, -0.4]';
-Aeq = [0.0, 1.0, 4.0, 0.0];
-beq = 1.5;
-%Setup Options
-opts = optiset('solver','levmar','display','iter');
-%Build & Solve
-x0 = [0.5, 0.5, 0.5, 0.5];
-Opt = opti('fun',fun,'ydata',ydata,'ineq',A,b,'eq',Aeq,beq,'bounds',lb,ub,'options',opts)
-[x,fval,exitflag,info] = solve(Opt,x0)
-
 %% NLS Example Prob
 clc
 %Get Problem
-prob = nls_prob(19);
-opts = optiset('display','iter');
+prob = nls_prob(6);
+opts = optiset('display','iter','solver','gsl','maxfeval',30);
 %Build OPTI Object
 Opt = opti(prob,opts);
 %Solve
@@ -81,7 +51,7 @@ clc
 %Objective
 obj = @(x) (1-x(1))^2 + 100 *(x(2)-x(1)^2)^2;
 %Setup Options
-opts = optiset('solver','nlopt','display','iter');
+opts = optiset('solver','gsl','display','iter');
 %Build & Solve
 Opt = opti('obj',obj,'ndec',2,'options',opts)
 x0 = [0 0]';

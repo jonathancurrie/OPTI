@@ -12,6 +12,14 @@
 #include <gsl_blas.h>
 #include <gsl_multifit_nlinear.h>
 
+#include <time.h>
+
+// Extra return codes
+#define GSL_USER_EXIT   (-5)
+#define GSL_MAX_TIME    (-6)
+#define GSL_MAX_FEVAL   (-7)
+#define GSL_NO_SOL      (-8)
+
 // MATLAB data
 #define FLEN 128 /* max length of user function name */
 typedef struct matlab_data_s
@@ -20,9 +28,10 @@ typedef struct matlab_data_s
     mxArray *plhs[1];
     mxArray *prhs[2];
     mxArray *prhs_g[2];
-    size_t ndec   = 0;
-    size_t ndata  = 0;
-    double *ydata = nullptr;
+    size_t ndec     = 0;
+    size_t ndata    = 0;
+    double *ydata   = nullptr;
+    int nfeval      = 0;
 } matlab_data_t;
 
 typedef struct iterfun_data_s
@@ -31,7 +40,7 @@ typedef struct iterfun_data_s
     mxArray *plhs[1];
     mxArray *prhs[4];
     size_t ndec   = 0;
-    bool verbose  = true;
+    int verbose   = 0;
     bool enabled  = false;
 } iterfun_data_t;
 
@@ -78,8 +87,28 @@ void gslSolveNLS(const mxArray *prhs[], int nrhs, mxArray *plhs[], int nlhs)
     
     const gsl_multifit_nlinear_type* T = gsl_multifit_nlinear_trust;
     
+    // Get options if specified
+    double xtol = 1e-7;
+    double gtol = 1e-7;
+    double ftol = 1e-7;
+    int maxiter = 1000;
+    int verbose = 0;
+    int maxfeval = 10000;
+    double maxtime = 1000;
+    mxArray* opts = mxGetField(prhs[0],0,"options");
+    if (opts != nullptr && !mxIsEmpty(opts))
+    {
+        getDoubleOption(opts, "tolafun", &ftol);
+        getIntegerOption(opts, "maxiter", &maxiter);
+        getIntegerOption(opts, "display", &verbose);
+        getIntegerOption(opts, "maxfeval", &maxfeval);
+        getDoubleOption(opts, "maxtime", &maxtime);
+    }
+    
     // Assign optional iteration callback
     iterfun_data_t iterData;
+    iterData.verbose = verbose;
+    iterData.ndec    = ndec;
     
     // Create solver memory
     gsl_multifit_nlinear_workspace* gslWs = gsl_multifit_nlinear_alloc(T, &params, ndata, ndec);
@@ -102,17 +131,18 @@ void gslSolveNLS(const mxArray *prhs[], int nrhs, mxArray *plhs[], int nlhs)
     fdf.params = &mlData;    
     
     // Initialize the solver
-    int retCode = gsl_multifit_nlinear_init (x_gsl, &fdf, gslWs);
-    if (retCode != GSL_SUCCESS)
+    
+    int status = gsl_multifit_nlinear_init (x_gsl, &fdf, gslWs);
+    if (status != GSL_SUCCESS)
     {
         gsl_multifit_nlinear_free(gslWs);
         gsl_vector_free(x_gsl);
-        MEX_ERR("Error initializing GSL solver! Error code: %d\n", retCode);
+        MEX_ERR("Error initializing GSL solver! Error code: %d\n", status);
         return;
     }
     
     //Print Header
-    if(true) 
+    if(verbose > 0) 
     {
         mexPrintf("\n------------------------------------------------------------------\n");        
         mexPrintf(" This is GSL v%s\n",GSL_VERSION);           
@@ -124,13 +154,72 @@ void gslSolveNLS(const mxArray *prhs[], int nrhs, mxArray *plhs[], int nlhs)
     }
     
     // Call GSL Solver
-    int info = 0;
-    retCode = gsl_multifit_nlinear_driver(100, 1e-7, 1e-7, 1e-7, iterFun, &iterData, &info, gslWs);
+    status  = 0;
+    int info    = 0;
+    size_t niter = 0;
+    clock_t startTime = clock();
+    do
+    {
+        // Solver Iteration
+        status = gsl_multifit_nlinear_iterate (gslWs);
+        if (status == GSL_ENOPROG && iter == 0)
+        {
+              status = GSL_NO_SOL;
+              break;
+        }
+
+        // Call the callback function 
+        if ((iterData.verbose > 1) || (iterData.enabled == true))
+        {
+            iterFun(++niter, &iterData, gslWs);
+        }
+        
+        // Test for convergence
+        status = gsl_multifit_nlinear_test(xtol, gtol, ftol, &info, gslWs);
+        
+        // Check for Ctrl-C
+        if (utIsInterruptPending()) 
+        {
+            utSetInterruptPending(false); /* clear Ctrl-C status */
+            mexPrintf("\nCtrl-C Detected. Exiting GSL...\n\n");
+            status = GSL_USER_EXIT;
+            break;
+        }
+
+        // Check for max fevals
+        if (mlData.nfeval > maxfeval)
+        {
+            status = GSL_MAX_FEVAL;
+            break;
+        }
+
+        //Get Execution Time
+        clock_t now = clock();
+        double evaltime = ((double)(now - startTime))/CLOCKS_PER_SEC;
+        // Check for max time
+        if(evaltime > maxtime)
+        {
+            status = GSL_MAX_TIME;
+            break;
+        }
+    }
+    while ((status == GSL_CONTINUE) && (niter < maxiter));
+    
+    // Check return status
+    if (status == GSL_ETOLF || status == GSL_ETOLX || status == GSL_ETOLG)
+    {
+        info = status;
+        status = GSL_SUCCESS;
+    }
+    if ((niter >= maxiter) && (status != GSL_SUCCESS))
+    {
+        status = GSL_EMAXITER;
+    }
     
     // Assign solution
     gsl_vector* x_sol = gsl_multifit_nlinear_position(gslWs);
     memcpy(x, x_sol->data, ndec * sizeof(double));     
-    *exitflag = static_cast<double>(retCode);
+    *exitflag = static_cast<double>(status);
     *iter     = static_cast<double>(gsl_multifit_nlinear_niter(gslWs));
     *nfeval   = static_cast<double>(fdf.nevalf);
     *ngeval   = static_cast<double>(fdf.nevaldf);
@@ -138,7 +227,7 @@ void gslSolveNLS(const mxArray *prhs[], int nrhs, mxArray *plhs[], int nlhs)
     gsl_vector* f = gsl_multifit_nlinear_residual(gslWs);
     gsl_blas_ddot(f, f, fval);
     
-    if (retCode == GSL_SUCCESS)
+    if (status == GSL_SUCCESS)
     {
         // Assign covariance
         gsl_matrix* J = gsl_multifit_nlinear_jac(gslWs);
@@ -150,9 +239,9 @@ void gslSolveNLS(const mxArray *prhs[], int nrhs, mxArray *plhs[], int nlhs)
     }
     
     //Print Footer
-    if(true)
+    if(verbose > 0)
     { 
-        switch(retCode)
+        switch(status)
         {
             case GSL_SUCCESS:
             {
@@ -174,12 +263,28 @@ void gslSolveNLS(const mxArray *prhs[], int nrhs, mxArray *plhs[], int nlhs)
             }
             case GSL_ENOPROG:
             {
-                mexPrintf("\n *** TERMINATION: EARLY EXIT ***\n *** CAUSE: No Further Progress Possible ***\n"); break;
+                mexPrintf("\n *** TERMINATION: EARLY EXIT ***\n *** CAUSE: No Further Progress Possible ***\n");
+                break;
+            }
+            case GSL_MAX_TIME:
+            {
+                mexPrintf("\n *** MAXIMUM SOLVING TIME REACHED ***\n"); 
+                break;
+            }
+            case GSL_MAX_FEVAL:
+            {
+                mexPrintf("\n *** MAXIMUM FUNCTION EVALUATIONS REACHED ***\n"); 
+                break;
+            }
+            case GSL_NO_SOL:
+            {
+                mexPrintf("\n *** TERMINATION: EARLY EXIT ***\n *** CAUSE: No Progress in First Iteration ***\n");
                 break;
             }
             default:
             {
-                mexPrintf("\n *** TERMINATION: ROUTINE ERROR (Code %d) ***\n",(int)*exitflag); break;
+                mexPrintf("\n *** TERMINATION: ROUTINE ERROR (Code %d) ***\n",(int)*exitflag); 
+                break;
             }
         }
         mexPrintf("------------------------------------------------------------------\n\n");
@@ -206,6 +311,7 @@ static int fun(const gsl_vector* x, void* data, gsl_vector* f)
     {
         mexErrMsgTxt("Error calling Objective Function!");
     }
+    mlData->nfeval++;
     
     // Copy Objective
     double *fval = mxGetPr(mlData->plhs[0]);
@@ -232,7 +338,7 @@ static void iterFun(const size_t iter, void* data, const gsl_multifit_nlinear_wo
     double sse  = norm*norm;
 
     // Optional print output
-    if (iterData->verbose)
+    if (iterData->verbose > 1)
     {
         // Computer some statistics
         double rcond  = 0.0;

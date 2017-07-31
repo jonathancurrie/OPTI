@@ -7,6 +7,7 @@
  */
 
 #include "gslmex.h"
+#include "gsl_errno.h"
 #include "opti_util.h"
 #ifdef LINK_MKL
 #include <mkl.h>
@@ -15,6 +16,7 @@
 // Local Function Prototypes
 void printSolverInfo();
 GslProbType readProblemType(const mxArray *prhs[], int nrhs);
+void error_handler(const char * reason, const char * file, int line, int gsl_errno);
 
 // Main Function
 void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
@@ -33,6 +35,9 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
     
     // Get the problem type we are solving
     GslProbType prob = readProblemType(prhs, nrhs);
+    
+    // Set the error handler
+    gsl_set_error_handler(error_handler);
     
     // Solve based on the problem type
     switch (prob)
@@ -97,3 +102,12 @@ void printSolverInfo()
     mexPrintf("\n MEX Interface J.Currie 2017 [BSD3] (www.inverseproblem.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }
+
+// Local Error Handler
+void error_handler(const char * reason, const char * file, int line, int gsl_errno)
+{
+    MEX_ERR("Error in GSL \"%s\", line %d: %s (code %d)", file, line, reason, gsl_errno);
+}
+    
+    
+    
