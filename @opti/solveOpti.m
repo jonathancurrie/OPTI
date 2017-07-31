@@ -413,6 +413,8 @@ switch(opts.solver)
         [x,fval,exitflag,info] = opti_nomad(nl.fun,nl.x0,nl.lb,nl.ub,nl.nlcon,nl.nlrhs,nl.xtype,nl.options);
     case 'nlopt'
         [x,fval,exitflag,info] = opti_nlopt(nl,nl.x0); 
+    case 'gsl'
+        [x,fval,exitflag,info] = opti_gsl(nl, nl.x0); 
     case 'pswarm'
         [x,fval,exitflag,info] = opti_pswarm(nl.fun,nl.lb,nl.ub,nl.x0,nl.A,nl.b,nl.options);
     otherwise
