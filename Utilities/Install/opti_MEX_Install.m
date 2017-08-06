@@ -47,6 +47,9 @@ opti_FILTERSD_Install
 %% GLPK
 opti_GLPK_Install
 
+%% GSL
+opti_GSL_Install
+
 %% IPOPT
 opti_IPOPT_Install
 
