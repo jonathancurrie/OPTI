@@ -12,6 +12,7 @@ current_version = 2.27;
 %2.28 (...)
 % - Added option to installer to allow users to bypass auto download of mex
 % files and specfify location manually
+% - Added emphasis setting options to scip/scipset
 
 %2.27 (10/07/17)
 % - Substantial update to OPTI installer, should be much more user friendly
