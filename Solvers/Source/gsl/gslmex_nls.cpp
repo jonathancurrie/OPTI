@@ -14,6 +14,13 @@
 
 #include <time.h>
 
+// Inputs/Outputs
+#define pPROB   prhs[0]
+#define pXSOL   plhs[0]
+#define pFEVAL  plhs[1]
+#define pEFLAG  plhs[2]
+#define pSTATS  plhs[3]
+
 // Extra return codes
 #define GSL_USER_EXIT   (-5)
 #define GSL_MAX_TIME    (-6)
@@ -55,20 +62,24 @@ void gslSolveNLS(const mxArray *prhs[], int nrhs, mxArray *plhs[], int nlhs)
     // Check the input arguments
     
     // Determine sizes
-    size_t ndec  = mxGetNumberOfElements(mxGetField(prhs[0],0,"x0"));
-    size_t ndata = mxGetNumberOfElements(mxGetField(prhs[0],0,"ydata"));
+    size_t ndec  = Mex::getFieldNumElem(pPROB, "x0"); mxGetNumberOfElements(mxGetField(pPROB,0,"x0"));
+    size_t ndata = Mex::getFieldNumElem(pPROB, "ydata"); mxGetNumberOfElements(mxGetField(pPROB,0,"ydata"));
     
      //Create Outputs
-    plhs[0] = mxCreateDoubleMatrix(ndec,1, mxREAL);
-    plhs[1] = mxCreateDoubleMatrix(1,1, mxREAL);
-    plhs[2] = mxCreateDoubleMatrix(1,1, mxREAL);
-    plhs[3] = mxCreateDoubleMatrix(1,1, mxREAL);
+    pXSOL  = Mex:createDoubleMatrix(ndec, 1); mxCreateDoubleMatrix(ndec,1, mxREAL);
+    pFEVAL = Mex:createDoubleMatrix(1, 1); mxCreateDoubleMatrix(1,1, mxREAL);
+    pEFLAG = Mex:createDoubleMatrix(1, 1); mxCreateDoubleMatrix(1,1, mxREAL);
+    
+    pSTATS = mxCreateStructMatrix(1,1, 5, fieldNames);
+    
+    
+    
     plhs[4] = mxCreateDoubleMatrix(1,1, mxREAL);
     plhs[5] = mxCreateDoubleMatrix(1,1, mxREAL);
     plhs[6] = mxCreateDoubleMatrix(ndec, ndec, mxREAL);
-    double* x = mxGetPr(plhs[0]); 
-    double* fval = mxGetPr(plhs[1]); 
-    double* exitflag = mxGetPr(plhs[2]);    
+    double* x = mxGetPr(pXSOL); 
+    double* fval = mxGetPr(pFEVAL); 
+    double* exitflag = mxGetPr(pEFLAG);    
     double* iter = mxGetPr(plhs[3]);
     double* nfeval = mxGetPr(plhs[4]);
     double* ngeval = mxGetPr(plhs[5]);
