@@ -18,6 +18,7 @@
 #include "scip/scip.h"
 #include "scip/scipdefplugins.h"
 #include "scip/struct_paramset.h"
+#include "scip/paramset.h"
 #include "spxdefines.h"
 #include "scipmex.h"
 #include "config_ipopt_default.h"
@@ -63,9 +64,11 @@ enum {eH, eF, eA, eRL, eRU, eLB, eUB, eXTYPE, eSOS, eQC, eNLCON, eOPTS};
 void printSolverInfo();
 void checkInputs(const mxArray *prhs[], int nrhs);
 void processUserOpts(SCIP *scip, mxArray *opts);
+void processEmphasisOptions(SCIP *scip, mxArray *opts);
+SCIP_PARAMSETTING getEmphasisSetting(char* optsStr);
 void getIntOption(const mxArray *opts, const char *option, int &var);
 void getDblOption(const mxArray *opts, const char *option, double &var);
-void getStrOption(const mxArray *opts, const char *option, char *str);
+int getStrOption(const mxArray *opts, const char *option, char *str);
 
 //Message Handler Callback
 void msginfo(SCIP_MESSAGEHDLR *messagehdlr, FILE *file, const char *msg)
@@ -631,6 +634,10 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
     
     //Process Advanced User Options (if they exist)
     if(nrhs > optsEntry) {
+        // Emphasis Settings
+        processEmphasisOptions(scip, OPTS);
+        
+        // Process specific options (overriding emphasis options)
         if(mxGetField(OPTS,0,"scipopts"))
             processUserOpts(scip,mxGetField(OPTS,0,"scipopts"));
     }
@@ -913,10 +920,18 @@ void getDblOption(const mxArray *opts, const char *option, double &var)
     if(mxGetField(opts,0,option))
         var = *mxGetPr(mxGetField(opts,0,option));
 }
-void getStrOption(const mxArray *opts, const char *option, char *str)
+int getStrOption(const mxArray *opts, const char *option, char *str)
 {
-    if(mxGetField(opts,0,option))
-        mxGetString(mxGetField(opts,0,option),str,BUFSIZE);
+    mxArray* field = mxGetField(opts,0,option);
+    if(field != NULL && !mxIsEmpty(field))
+    {
+        mxGetString(field,str,BUFSIZE);
+        return 0;
+    }
+    else
+    {
+        return -1;
+    }
 }
 
 //(Attempts to) Allow the user to set any available SCIP option
@@ -1059,6 +1074,87 @@ void processUserOpts(SCIP *scip, mxArray *opts)
             //Free string memory
             mxFree(name);
         }
+    }
+}
+
+// Process Emphasis Settings
+void processEmphasisOptions(SCIP *scip, mxArray *opts)
+{
+    char optsStr[BUFSIZE]; optsStr[0]   = NULL;
+    SCIP_SET* set                       = scip->set;
+    SCIP_PARAMSET* paramset             = set->paramset;
+    SCIP_MESSAGEHDLR* messagehdlr       = scip->messagehdlr;
+    
+    // Check for global emphasis (set this first)
+    if (getStrOption(opts, "globalEmphasis", optsStr) == 0)
+    {
+        if ( strcmp(optsStr, "default") == 0 )
+        {
+            SCIP_ERR( SCIPparamsetSetEmphasis(paramset, set, messagehdlr, SCIP_PARAMEMPHASIS_DEFAULT, TRUE), "Error Setting Global Emphasis to default");
+        }
+        else if ( strcmp(optsStr, "counter") == 0 )
+        {
+            SCIP_ERR( SCIPparamsetSetEmphasis(paramset, set, messagehdlr, SCIP_PARAMEMPHASIS_COUNTER, TRUE), "Error Setting Global Emphasis to counter" );
+        }
+        else if ( strcmp(optsStr, "cpsolver") == 0 )
+        {
+            SCIP_ERR( SCIPparamsetSetEmphasis(paramset, set, messagehdlr, SCIP_PARAMEMPHASIS_CPSOLVER, TRUE), "Error Setting Global Emphasis to cpsolver" );
+        }
+        else if ( strcmp(optsStr, "easycip") == 0 )
+        {
+            SCIP_ERR( SCIPparamsetSetEmphasis(paramset, set, messagehdlr, SCIP_PARAMEMPHASIS_EASYCIP, TRUE), "Error Setting Global Emphasis to easycip" );
+        }
+        else if ( strcmp(optsStr, "feasibility") == 0 )
+        {
+            SCIP_ERR( SCIPparamsetSetEmphasis(paramset, set, messagehdlr, SCIP_PARAMEMPHASIS_FEASIBILITY, TRUE), "Error Setting Global Emphasis to feasibility" );
+        }
+        else if ( strcmp(optsStr, "hardlp") == 0 )
+        {
+            SCIP_ERR( SCIPparamsetSetEmphasis(paramset, set, messagehdlr, SCIP_PARAMEMPHASIS_HARDLP, TRUE), "Error Setting Global Emphasis to hardlp" );
+        }
+        else if ( strcmp(optsStr, "optimality") == 0 )
+        {
+            SCIP_ERR( SCIPparamsetSetEmphasis(paramset, set, messagehdlr, SCIP_PARAMEMPHASIS_OPTIMALITY, TRUE), "Error Setting Global Emphasis to optimality" );
+        }
+        else
+        {
+            sprintf(msgbuf,"Error setting SCIP globalEmphasis Option - Unknown Emphasis Type \"%s\".",optsStr);
+            mexErrMsgTxt(msgbuf);
+        }
+    }
+    
+    // Remainder of emphasis options
+    if (getStrOption(opts, "heuristicsEmphasis", optsStr) == 0)
+    {
+        SCIP_PARAMSETTING paramsetting = getEmphasisSetting(optsStr);
+        SCIP_ERR( SCIPparamsetSetHeuristics(paramset, set, messagehdlr, paramsetting, TRUE), "Error Setting Heuristics Emphasis" );
+    }
+    if (getStrOption(opts, "presolvingEmphasis", optsStr) == 0)
+    {
+        SCIP_PARAMSETTING paramsetting = getEmphasisSetting(optsStr);
+        SCIP_ERR( SCIPparamsetSetPresolving(paramset, set, messagehdlr, paramsetting, TRUE), "Error Setting Presolving Emphasis" );
+    }
+    if (getStrOption(opts, "separatingEmphasis", optsStr) == 0)
+    {
+        SCIP_PARAMSETTING paramsetting = getEmphasisSetting(optsStr);
+        SCIP_ERR( SCIPparamsetSetSeparating(paramset, set, messagehdlr, paramsetting, TRUE), "Error Setting Separating Emphasis" );
+    }
+}
+
+SCIP_PARAMSETTING getEmphasisSetting(char* optsStr)
+{
+    if ( strcmp(optsStr, "default") == 0 )
+        return SCIP_PARAMSETTING_DEFAULT;
+    else if ( strcmp(optsStr, "aggressive") == 0 )
+        return SCIP_PARAMSETTING_AGGRESSIVE;
+    else if ( strcmp(optsStr, "fast") == 0 )
+        return SCIP_PARAMSETTING_FAST;
+    else if ( strcmp(optsStr, "off") == 0 )
+        return SCIP_PARAMSETTING_OFF;
+    else
+    {
+        sprintf(msgbuf,"Error Setting Emphasis Option - Unknown Emphasis Type \"%s\".", optsStr);
+        mexErrMsgTxt(msgbuf);
     }
 }
 
