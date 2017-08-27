@@ -122,7 +122,6 @@ lb = [0;0]; ub = [40;inf];
 xtype = 'IC';
 % Options
 sopts = scipset('scipopts',{'propagating/obbt/freq',1;...
-                            'propagating/obbt/maxlookahead',10;
                             'propagating/obbt/itlimitfactor',0;
                             'constraints/quadratic/maxproprounds',10;
                             'separating/maxrounds',20;
@@ -134,3 +133,59 @@ Opt = opti('H',H,'f',f,'ineq',A,b,'qcrow',Q,l,qrl,qru,'bounds',lb,ub,'xtype',xty
 % Plot
 plot(Opt)
 
+%% Global Emphasis
+clc
+fun = @(x) -x(1)*x(2)*x(3);
+nlcon = @(x) -x(1)^2 - 2*x(2)^2 - 4*x(3)^2 + 48;
+cl = 0;
+cu = inf;
+x0 = [1;1;1];
+
+sopts = scipset('globalEmphasis','hardlp'); 
+opts = optiset('solver','scip','display','iter','solverOpts',sopts);
+Opt = opti('fun',fun,'nl',nlcon,cl,cu,'x0',x0,'opts',opts)
+
+[x,f,e,i] = solve(Opt)
+
+%% Presolving Emphasis
+clc
+fun = @(x) -x(1)*x(2)*x(3);
+nlcon = @(x) -x(1)^2 - 2*x(2)^2 - 4*x(3)^2 + 48;
+cl = 0;
+cu = inf;
+x0 = [1;1;1];
+
+sopts = scipset('presolvingEmphasis','fast'); 
+opts = optiset('solver','scip','display','iter','solverOpts',sopts);
+Opt = opti('fun',fun,'nl',nlcon,cl,cu,'x0',x0,'opts',opts)
+
+[x,f,e,i] = solve(Opt)
+
+
+%% Heuristics Emphasis
+clc
+fun = @(x) -x(1)*x(2)*x(3);
+nlcon = @(x) -x(1)^2 - 2*x(2)^2 - 4*x(3)^2 + 48;
+cl = 0;
+cu = inf;
+x0 = [1;1;1];
+
+sopts = scipset('heuristicsEmphasis','aggressive'); 
+opts = optiset('solver','scip','display','iter','solverOpts',sopts);
+Opt = opti('fun',fun,'nl',nlcon,cl,cu,'x0',x0,'opts',opts)
+
+[x,f,e,i] = solve(Opt)
+
+%% Separating Emphasis
+clc
+fun = @(x) -x(1)*x(2)*x(3);
+nlcon = @(x) -x(1)^2 - 2*x(2)^2 - 4*x(3)^2 + 48;
+cl = 0;
+cu = inf;
+x0 = [1;1;1];
+
+sopts = scipset('separatingEmphasis','aggressive'); 
+opts = optiset('solver','scip','display','iter','solverOpts',sopts);
+Opt = opti('fun',fun,'nl',nlcon,cl,cu,'x0',x0,'opts',opts)
+
+[x,f,e,i] = solve(Opt)
