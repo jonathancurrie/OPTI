@@ -85,6 +85,8 @@ if(iscell(src))
 else
     src_str = src;
 end
+% Add OPTI Utils
+src_str = sprintf('%s opti/opti_mex_utils.cpp', src_str);
 
 %Build Include String
 if(iscell(inc))

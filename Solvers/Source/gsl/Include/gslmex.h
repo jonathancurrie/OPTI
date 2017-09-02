@@ -1,4 +1,4 @@
-/* SCIPMEX - A MATLAB MEX Interface to GSL
+/* GSLMEX - A MATLAB MEX Interface to GSL
  * Released Under the BSD 3-Clause License:
  * https://www.inverseproblem.co.nz/OPTI/index.php/DL/License
  *
@@ -8,18 +8,26 @@
 
 #pragma once
 
-#include "mex.h"
-#include "gsl_version.h"
+#include "opti_mex_utils.h"
+
+namespace opti_gsl
+{
+// Common Return Codes
+#define GSL_USER_EXIT   (-5)
+#define GSL_MAX_TIME    (-6)
+#define GSL_MAX_FEVAL   (-7)
+#define GSL_NO_SOL      (-8)
 
 // Problem Type Enum
 enum class GslProbType {UNKNOWN,NLS};
 
-//Argument Enums (in expected order of arguments)
-enum {ePROB, eOPTS};                   
+class GSLMex
+{
+    public:
+        GSLMex(const opti_mex_utils::OptiMexArgs& args);
 
-//PRHS Defines    
-#define pPROB   prhs[ePROB]
-#define pOPTS   prhs[eOPTS]
+    private:
+        GslProbType _readProblemType(const opti_mex_utils::OptiMexArgs& args); 
+};
 
-// Solve a NLS using GSL
-void gslSolveNLS(const mxArray *prhs[], int nrhs, mxArray *plhs[], int nlhs);
+} // namespace opti_gsl

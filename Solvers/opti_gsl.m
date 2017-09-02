@@ -29,15 +29,15 @@ nlprob.x0 = x0;
 
 t = tic;
 % Run GSL
-[x, fval, exitflag, niter, nfeval, ngeval, covar] = gsl(nlprob);
+[x, fval, exitflag, stats] = gsl(nlprob);
 
 %Collect Results
-info.Iterations = niter;
+info.Iterations = stats.niter;
 info.FuncEvals = stats.nfeval;
 info.GradEvals = stats.ngeval;
 info.Time = toc(t);
 % info.Algorithm = ['GSL: ' stats.algorithm];
-% info.Covar = stats.covar;
+info.Covar = stats.covar;
 
 switch(exitflag)
     case 1

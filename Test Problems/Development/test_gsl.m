@@ -37,8 +37,8 @@ plot(Opt)
 %% NLS Example Prob
 clc
 %Get Problem
-prob = nls_prob(6);
-opts = optiset('display','iter','solver','gsl','maxfeval',30);
+prob = nls_prob(2);
+opts = optiset('display','iter','solver','gsl','maxfeval',1e5,'maxiter',1e4);
 %Build OPTI Object
 Opt = opti(prob,opts);
 %Solve
