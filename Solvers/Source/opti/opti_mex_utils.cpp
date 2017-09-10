@@ -38,7 +38,7 @@ mxArray* OPTIMex::createDoubleMatrix(size_t nrow, size_t ncol)
 }
 
 // Create Structure with Specified Fields
-mxArray* OPTIMex::createStruct(const char* fieldNames[], size_t numFields)
+mxArray* OPTIMex::createStruct(const char* fieldNames[], int numFields)
 {
     return mxCreateStructMatrix(1, 1, numFields, fieldNames);
 }
@@ -55,6 +55,7 @@ double* OPTIMex::createFieldScalar(mxArray* data, const char* fieldName, double 
     else
     {
         OPTIMex::error("Cannot create double scalar within structure field '%s'", fieldName);
+        return nullptr;
     }
 }
 
@@ -70,7 +71,25 @@ double* OPTIMex::createFieldMatrix(mxArray* data, const char* fieldName, size_t 
     else
     {
         OPTIMex::error("Cannot create double matrix within structure field '%s'", fieldName);
+        return nullptr;
     }
+}
+
+// Create String in Structure
+mxArray* OPTIMex::createFieldString(mxArray* data, const char* fieldName, const char* str)
+{
+    if (OPTIMex::isValidStruct(data))
+    { 
+        mxArray* field = mxCreateString(str);
+        if (field != nullptr)
+        {
+            mxSetField(data, 0, fieldName, field);
+            return field;
+        }
+    }
+    // Failed by here
+    OPTIMex::error("Cannot create string within structure field '%s'", fieldName);
+    return nullptr;
 }
 
 
@@ -120,6 +139,7 @@ mxArray* OPTIMex::getField(const mxArray* data, const char* fieldName)
     else
     {
         OPTIMex::error("Cannot access field '%s' in structure", fieldName);
+        return nullptr;
     }
 }
 
@@ -134,6 +154,24 @@ double* OPTIMex::getFieldPr(const mxArray* data, const char* fieldName)
     else
     {
         OPTIMex::error("Field '%s' does not contain a double variable", fieldName);
+        return nullptr;
+    }
+}
+
+// Access string in Structure Field
+std::string OPTIMex::getFieldString(const mxArray* data, const char* fieldName)
+{
+    mxArray* field = getField(data, fieldName);
+    if (isString(field))
+    {
+        char strBuf[1024];
+        mxGetString(field, strBuf, 1024);
+        return std::string(strBuf);
+    }
+    else
+    {
+        OPTIMex::error("Field '%s' does not contain a string variable", fieldName);
+        return "";
     }
 }
 
@@ -499,7 +537,7 @@ void OPTIMex::printSolverIter(size_t niter, double execTime, const char *header,
     }        
     
     // Generate Start of detail line
-    int n = snprintf(msgBuf, 1024, "%5d         %9.3g   " , niter, execTime);
+    int n = snprintf(msgBuf, 1024, "%5zd         %9.3g   " , niter, execTime);
 
     // Add rest of the detail
     va_list args;

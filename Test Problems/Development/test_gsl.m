@@ -1,3 +1,32 @@
+%% NLS - MEX Interface
+clc
+%Fitting Data
+xdata = [0.9 1.5 13.8 19.8 24.1 28.2 35.2 60.3 74.6 81.3];
+ydata = [455.2 428.6 124.1 67.3 43.2 28.1 13.1 -0.4 -1.3 -1.5];
+% Fitting function
+fun = @(x) x(1)*exp(x(2)*xdata);
+grad = @(x) [ exp(x(2).*xdata), x(1).*xdata.*exp(x(2).*xdata)];
+x0 = [100; -1]; % Starting guess
+
+% Build gsl problem struct
+prob = [];
+prob.fun        = fun;
+prob.grad       = grad;
+prob.x0         = x0;
+prob.ydata      = ydata;
+prob.probType   = 'nls';
+prob.options    = [];
+prob.options.display = 2;
+prob.options.scalingMethod = 'more';
+prob.options.linearSolver = 'cholesky';
+prob.options.trustRegionSolver = 'dogleg';
+
+[x,f,e,i] = gsl(prob)
+
+
+
+
+
 %% NLS1
 clc
 %Function
@@ -13,7 +42,7 @@ opts = optiset('solver','gsl','display','iter');
 Opt = opti('fun',fun,'grad',grad,'data',xdata,ydata,'ndec',2,'options',opts)
 x0 = [100; -1]; % Starting guess
 
-[x,e,f,i] = solve(Opt,x0)
+[x,f,e,i] = solve(Opt,x0)
 
 
 %% NLS2

@@ -183,9 +183,10 @@ class OPTIMex
         // MATLAB Data Creation
         static mxArray* createDoubleScalar(double val = 0.0);
         static mxArray* createDoubleMatrix(size_t nrow, size_t ncol);
-        static mxArray* createStruct(const char* fieldNames[], size_t numFields);
+        static mxArray* createStruct(const char* fieldNames[], int numFields);
         static double* createFieldScalar(mxArray* data, const char* fieldName, double val = 0.0);
         static double* createFieldMatrix(mxArray* data, const char* fieldName, size_t nrow, size_t ncol);
+        static mxArray* createFieldString(mxArray* data, const char* fieldName, const char* str);
 
         // Data Access
         static size_t getFieldNumElem(const mxArray* data, const char* fieldName);
@@ -194,6 +195,7 @@ class OPTIMex
         static size_t getNumCols(const mxArray* data);
         static mxArray* getField(const mxArray* data, const char* fieldName);
         static double*  getFieldPr(const mxArray* data, const char* fieldName);
+        static std::string getFieldString(const mxArray* data, const char* fieldName);
         
         // Data Validation
         static bool isValidStruct(const mxArray* data);

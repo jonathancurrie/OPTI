@@ -22,6 +22,7 @@ class GSLMexNLS
 
     private:
         static void checkInputArgs(const opti_mex_utils::OptiMexArgs& args);
+        static void setSolverSettings(const mxArray* opts, gsl_multifit_nlinear_parameters& params);
         static void printIter(const gsl_multifit_nlinear_workspace* gslWs, double execTime);
         static void printHeader(const opti_mex_utils::OptiSolverProperties& solverInfo, const gsl_multifit_nlinear_workspace* gslWs);
         static void printFooter(int status, int info, double fval, double niter, double exitflag);

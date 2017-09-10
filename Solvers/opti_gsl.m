@@ -36,20 +36,32 @@ info.Iterations = stats.niter;
 info.FuncEvals = stats.nfeval;
 info.GradEvals = stats.ngeval;
 info.Time = toc(t);
-% info.Algorithm = ['GSL: ' stats.algorithm];
 info.Covar = stats.covar;
+info.Algorithm = stats.algorithm;
 
 switch(exitflag)
-    case 1
-        info.Status = 'Optimal';
     case 0
-        info.Status = 'Exceeded Function Evaluations';
-    case -1
-        info.Status = 'Infeasible / Could not Converge';
-    case -2
-        info.Status = 'GSL Error';
+        info.Status = 'Success';
+        exitflag    = 1;
+    case 27
+        info.Status = 'No Further Progress Could Be Made';
+        exitflag    = -1;
+    case 11
+        info.Status = 'Exceeded Maximum Iterations';
+        exitflag    = 0;
+    case -6
+        info.Status = 'Exceeded Maximum Time';
+        exitflag    = 0;
+    case -7
+        info.Status = 'Exceeded Maximum Function Evaluations';
+        exitflag    = 0;
+    case -8
+        info.Status = 'No Progress in First Iteration';
+        exitflag    = -3;
     case -5
         info.Status = 'User Exited';
+        exitflag    = -5;
     otherwise        
-        info.Status = 'GSL Error';
+        info.Status = sprintf('GSL Error (Code %d)', exitflag);
+        exitflag    = -2;
 end

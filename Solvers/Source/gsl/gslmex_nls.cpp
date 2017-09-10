@@ -41,8 +41,8 @@ void GSLMexNLS::solve(const opti_mex_utils::OptiMexArgs& args)
     pXSOL  = OPTIMex::createDoubleMatrix(ndec, 1); 
     pFEVAL = OPTIMex::createDoubleScalar(0.0); 
     pEFLAG = OPTIMex::createDoubleScalar(0.0);
-    const char* stats[] = {"niter", "nfeval", "ngeval", "covar"};
-    pSTATS = OPTIMex::createStruct(stats, 4);
+    const char* stats[] = {"niter", "nfeval", "ngeval", "covar", "algorithm"};
+    pSTATS = OPTIMex::createStruct(stats, 5);
     
     // Collect Pointers to Outputs
     double* x           = mxGetPr(pXSOL); 
@@ -60,8 +60,7 @@ void GSLMexNLS::solve(const opti_mex_utils::OptiMexArgs& args)
     
     // Assign default solver parameters
     gsl_multifit_nlinear_parameters params = gsl_multifit_nlinear_default_parameters();
-    
-    const gsl_multifit_nlinear_type* T = gsl_multifit_nlinear_trust;
+    params.fdtype = GSL_MULTIFIT_NLINEAR_CTRDIFF; // Always use centred finite difference, if required
     
     // Set Default Options
     double xtol     = OPTI_DEFAULT_TOL;
@@ -84,14 +83,23 @@ void GSLMexNLS::solve(const opti_mex_utils::OptiMexArgs& args)
         {
             OPTIMex::initIterFunCallbackData(iterData, OPTIMex::getField(opts, "iterfun"), ndec);
         }
+
+        // Assign solver specific settings as specified
+        setSolverSettings(opts, params);
     }
     
     // Create solver memory
+    const gsl_multifit_nlinear_type* T = gsl_multifit_nlinear_trust; // this is the only top level method available
     gsl_multifit_nlinear_workspace* gslWs = gsl_multifit_nlinear_alloc(T, &params, ndata, ndec);
     gsl_vector* x_gsl = gsl_vector_alloc(ndec);
     
     try
     {
+        // Allocate Solver Algorithm
+        char algBuf[1024];
+        snprintf(algBuf, 1024, "GSL Multifit Nonlinear: %s using %s", gsl_multifit_nlinear_name(gslWs), gsl_multifit_nlinear_trs_name(gslWs));   
+        OPTIMex::createFieldString(pSTATS, "algorithm", algBuf);
+
         // Copy in x0
         double* x0 = OPTIMex::getFieldPr(pPROB,"x0");
         for (size_t i = 0; i < ndec; i++)
@@ -101,12 +109,12 @@ void GSLMexNLS::solve(const opti_mex_utils::OptiMexArgs& args)
         
         // Create the function definition structure
         gsl_multifit_nlinear_fdf fdf;
+        memset(&fdf, 0x00, sizeof(fdf));
         fdf.f       = fun;
         if (mlData.haveGrad == true)
         {
             fdf.df  = grad;
         }
-        fdf.fvv     = nullptr;
         fdf.n       = ndata;
         fdf.p       = ndec;
         fdf.params  = &mlData;    
@@ -190,7 +198,7 @@ void GSLMexNLS::solve(const opti_mex_utils::OptiMexArgs& args)
         *exitflag = static_cast<double>(status);
         *niter    = static_cast<double>(gsl_multifit_nlinear_niter(gslWs));
         *nfeval   = static_cast<double>(fdf.nevalf);
-        *ngeval   = static_cast<double>(fdf.nevaldf);
+        *ngeval   = static_cast<double>(fdf.nevaldf);        
         
         if (status == GSL_SUCCESS)
         {
@@ -360,10 +368,89 @@ void GSLMexNLS::printFooter(int status, int info, double fval, double niter, dou
     }
     mexPrintf("------------------------------------------------------------------\n\n");
 }
+
+void GSLMexNLS::setSolverSettings(const mxArray* opts, gsl_multifit_nlinear_parameters& params)
+{
+    // Double settings
+    OPTIMex::getDoubleOption(opts, "factorUp", params.factor_up);
+    OPTIMex::getDoubleOption(opts, "factorDown", params.factor_down);
+    OPTIMex::getDoubleOption(opts, "avmax", params.avmax);
+    OPTIMex::getDoubleOption(opts, "h_df", params.h_df);
+    OPTIMex::getDoubleOption(opts, "h_fvv", params.h_fvv);
+    // Solver Settings    
+    if (OPTIMex::isValidField(opts, "trustRegionSolver"))
+    {
+        std::string opt = OPTIMex::getFieldString(opts, "trustRegionSolver");
+        if (opt == "lm")
+        {
+            params.trs = gsl_multifit_nlinear_trs_lm;
+        }
+        else if(opt == "lmaccel")
+        {
+            params.trs = gsl_multifit_nlinear_trs_lmaccel;
+        }
+        else if(opt == "dogleg")
+        {
+            params.trs = gsl_multifit_nlinear_trs_dogleg;
+        }
+        else if(opt == "ddogleg")
+        {
+            params.trs = gsl_multifit_nlinear_trs_ddogleg;
+        }
+        else if(opt == "subspace2D")
+        {
+            params.trs = gsl_multifit_nlinear_trs_subspace2D;
+        }
+        else
+        {
+            OPTIMex::error("Unknown trust region solver method: '%s'", opt.c_str());
+        }
+    }
+    if (OPTIMex::isValidField(opts, "scalingMethod"))
+    {
+        std::string opt = OPTIMex::getFieldString(opts, "scalingMethod");
+        if (opt == "levenberg")
+        {
+            params.scale = gsl_multifit_nlinear_scale_levenberg;
+        }
+        else if(opt == "marquardt")
+        {
+            params.scale = gsl_multifit_nlinear_scale_marquardt;
+        }
+        else if(opt == "more")
+        {
+            params.scale = gsl_multifit_nlinear_scale_more;
+        }
+        else
+        {
+            OPTIMex::error("Unknown scaling method: '%s'", opt.c_str());
+        }
+    }
+    if (OPTIMex::isValidField(opts, "linearSolver"))
+    {
+        std::string opt = OPTIMex::getFieldString(opts, "linearSolver");
+        if (opt == "cholesky")
+        {
+            params.solver = gsl_multifit_nlinear_solver_cholesky;
+        }
+        else if(opt == "qr")
+        {
+            params.solver = gsl_multifit_nlinear_solver_qr;
+        }
+        else if(opt == "svd")
+        {
+            params.solver = gsl_multifit_nlinear_solver_svd;
+        }
+        else
+        {
+            OPTIMex::error("Unknown linear solver: '%s'", opt.c_str());
+        }
+    }
+}
     
 void GSLMexNLS::checkInputArgs(const OptiMexArgs& args)
 {
 
 }
 
- } // namespace opti_gsl_nls
+} // namespace opti_gsl_nls

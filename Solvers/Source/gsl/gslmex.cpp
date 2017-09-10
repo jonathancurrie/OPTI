@@ -100,6 +100,7 @@ GslProbType GSLMex::_readProblemType(const OptiMexArgs& args)
     {
         OPTIMex::error("The problem structure must contain the field 'probType'");
     }
+    return GslProbType::UNKNOWN;
 }
 
 
