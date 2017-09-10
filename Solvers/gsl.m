@@ -1,6 +1,6 @@
 % GSL  Solve a NLS using GSL
 %
-% THIS IS A LOW LEVEL FUNCTION - USE opti_gsl() INSTEAD!
+% THIS IS A LOW LEVEL FUNCTION - USE opti_gsl_xxx() INSTEAD!
 %
 % gsl uses the GNU Scientific Library.
 %

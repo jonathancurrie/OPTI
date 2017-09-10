@@ -244,11 +244,38 @@ bool OPTIMex::isValidField(const mxArray* data, const char* field)
     }
 }
 
+// Check for structure fields which must be present and non-empty
+bool OPTIMex::checkForRequiredFields(const mxArray* data, std::vector<std::string> fields)
+{
+    for (const std::string& str : fields)
+    {
+        if (isValidField(data, str.c_str()) == false)
+        {
+            error("The structure was missing the field '%s', or it was empty", str.c_str());
+            return false;
+        }
+    }
+    // OK by here
+    return true;
+}
+
 bool OPTIMex::isString(const mxArray* data)
 {
     if (data != nullptr)
     {
         return mxIsChar(data) && !mxIsEmpty(data);
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool OPTIMex::isFunction(const mxArray* data)
+{
+    if (data != nullptr)
+    {
+        return (mxGetClassID(data) == mxFUNCTION_CLASS) && !mxIsEmpty(data);
     }
     else
     {
@@ -285,7 +312,7 @@ bool OPTIMex::isDoubleMatrix(const mxArray* data)
 
 bool OPTIMex::isRealDouble(const mxArray* data)
 {
-    if (isEmpty(data) == false)
+    if ((data != nullptr) && (isEmpty(data) == false))
     {
         return (mxIsComplex(data) == false) && (mxGetClassID(data) == mxDOUBLE_CLASS);
     }
@@ -299,12 +326,12 @@ bool OPTIMex::isEmpty(const mxArray* data)
 
 bool OPTIMex::isMatrix(const mxArray* data)
 {
-    return (getNumRows(data) > 0) && (getNumCols(data) > 0);
+    return (getNumRows(data) > 1) && (getNumCols(data) > 1);
 }
 
 bool OPTIMex::isVector(const mxArray* data)
 {
-    return (getNumRows(data) > 0) ^ (getNumCols(data) > 0);
+    return (getNumRows(data) > 1) ^ (getNumCols(data) > 1);
 }
 
 bool OPTIMex::isScalar(const mxArray* data)
@@ -312,6 +339,27 @@ bool OPTIMex::isScalar(const mxArray* data)
     return getNumElem(data) == 1;
 }
 
+bool OPTIMex::containsNaNInf(const mxArray* data)
+{
+    if (isRealDouble(data))
+    {
+        size_t numElem = getNumElem(data);
+        double* ptr    = mxGetPr(data);
+        for (size_t i = 0; i < numElem; i++)
+        {
+            if (std::isnan(ptr[i]) || std::isinf(ptr[i]))
+            {
+                return true;
+            }
+        }
+        return false; // OK by here
+    }
+    else
+    {
+        error("Cannot check if data contains NaN/Inf, a double argument was not supplied");
+        return true;
+    }    
+}
 
 
 //

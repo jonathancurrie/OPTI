@@ -450,7 +450,61 @@ void GSLMexNLS::setSolverSettings(const mxArray* opts, gsl_multifit_nlinear_para
     
 void GSLMexNLS::checkInputArgs(const OptiMexArgs& args)
 {
+    // This function only accepts one input argument - a structure
+    if (args.nrhs != 1)
+    {
+        OPTIMex::error("GSL NLS Solver only accepts one argument (the problem definition structure)");
+    }
+    if (OPTIMex::isValidStruct(pPROB) == false)
+    {
+        OPTIMex::error("The problem definition argument must be a structure");
+    }
 
+    // Check for required fields
+    OPTIMex::checkForRequiredFields(pPROB, {"fun","x0","ydata"});
+
+    // Check fields
+    mxArray* pFun = OPTIMex::getField(pPROB, "fun");
+    if (OPTIMex::isFunction(pFun) == false)
+    {
+        OPTIMex::error("The 'fun' field in the problem structure must be a MATLAB function handle");
+    }
+    if (OPTIMex::isValidField(pPROB, "grad"))
+    {
+        mxArray* grad = OPTIMex::getField(pPROB, "grad");
+        if ((OPTIMex::isEmpty(grad) == false) && (OPTIMex::isFunction(grad) == false))
+        {
+            OPTIMex::error("The 'grad' field in the problem structure, if specified, must be a MATLAB function handle");
+        }
+    }
+    mxArray* pX0 = OPTIMex::getField(pPROB, "x0");
+    if (OPTIMex::isDoubleVector(pX0) == false)
+    {
+        OPTIMex::error("The 'x0' field in the problem structure must be a real double vector");
+    }
+    mxArray* pYdata = OPTIMex::getField(pPROB, "ydata");
+    if (OPTIMex::isDoubleVector(pYdata) == false)
+    {
+        OPTIMex::error("The 'ydata' field in the problem structure must be a real double vector");
+    }
+    if (OPTIMex::isValidField(pPROB, "options"))
+    {
+        mxArray* opts = OPTIMex::getField(pPROB, "options");
+        if ((OPTIMex::isEmpty(opts) == false) && (OPTIMex::isValidStruct(opts) == false))
+        {
+            OPTIMex::error("The 'options' field in the problem structure, if specified, must be a structure");
+        }
+    }
+
+    // Check for NaNs, Infs
+    if (OPTIMex::containsNaNInf(pX0) == true)
+    {
+        OPTIMex::error("The 'x0' field in the problem structure contains NaN/Inf");
+    }
+    if (OPTIMex::containsNaNInf(pYdata) == true)
+    {
+        OPTIMex::error("The 'ydata' field in the problem structure contains NaN/Inf");
+    }
 }
 
 } // namespace opti_gsl_nls

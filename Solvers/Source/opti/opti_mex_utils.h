@@ -10,6 +10,7 @@
 #include "opti_build_utils.h"
 #include <limits>
 #include <string>
+#include <vector>
 #include <Windows.h>
 
 namespace opti_mex_utils
@@ -200,16 +201,20 @@ class OPTIMex
         // Data Validation
         static bool isValidStruct(const mxArray* data);
         static bool isValidField(const mxArray* data, const char* field);
+        static bool checkForRequiredFields(const mxArray* data, std::vector<std::string> fields);
         static bool isDoubleScalar(const mxArray* data);
         static bool isDoubleVector(const mxArray* data);
         static bool isDoubleMatrix(const mxArray* data);
         static bool isString(const mxArray* data);
+        static bool isFunction(const mxArray* data);
 
         static bool isRealDouble(const mxArray* data);
         static bool isScalar(const mxArray* data);
         static bool isVector(const mxArray* data);
         static bool isMatrix(const mxArray* data);        
         static bool isEmpty(const mxArray* data);
+
+        static bool containsNaNInf(const mxArray* data);        
 
         // Options Structure Access
         static int getIntegerOption(const mxArray* opts, const char* optionName, int& option);
