@@ -15,7 +15,8 @@ prob.grad       = grad;
 prob.x0         = x0;
 prob.ydata      = ydata;
 prob.probType   = 'nls';
-prob.options    = [];
+prob.options    = gslset;
+prob.options.factorDown = 2;
 prob.options.display = 2;
 prob.options.scalingMethod = 'more';
 prob.options.linearSolver = 'cholesky';
@@ -23,8 +24,15 @@ prob.options.trustRegionSolver = 'dogleg';
 
 [x,f,e,i] = gsl(prob)
 
+%% OPTI Wrapper
+clc
+opts = optiset('solverOpts',prob.options,'display','iter','tolafun',1e-15);
+[x,f,e,i] = opti_gsl_nls(fun, [], x0, ydata, opts)
 
-
+%% OPTI Wrapper iterfun
+clc
+opts = optiset('solverOpts',prob.options,'display','iter','tolafun',1e-15,'iterfun',@optiplotfval);
+[x,f,e,i] = opti_gsl_nls(fun, [], x0, ydata, opts)
 
 
 %% NLS1

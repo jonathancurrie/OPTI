@@ -215,13 +215,13 @@ switch (lower(prob.type))
         nlprob.grad = prob.f;
 end
 %Setup Options
-nlprob.probType = lower(prob.type);
-nlprob.options.maxiter = opts.maxiter;
+nlprob.options.maxiter  = opts.maxiter;
 nlprob.options.maxfeval = opts.maxfeval;
-nlprob.options.tolafun = opts.tolafun;
-nlprob.options.maxtime = opts.maxtime;
-nlprob.options.display = opts.display;
-nlprob.options.iterfun = opts.iterfun;
+nlprob.options.tolafun  = opts.tolafun;
+nlprob.options.tolrfun  = opts.tolrfun;
+nlprob.options.maxtime  = opts.maxtime;
+nlprob.options.display  = opts.display;
+nlprob.options.iterfun  = opts.iterfun;
 
 % -- HYBRJ -- %
 function nlprob = setupHYBRJ(prob,opts)

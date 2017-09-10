@@ -228,7 +228,15 @@ bool OPTIMex::isValidField(const mxArray* data, const char* field)
 {
     if (OPTIMex::isValidStruct(data) && (field != nullptr))
     {
-        return mxGetField(data, 0, field) != nullptr;
+        mxArray* temp = mxGetField(data, 0, field);
+        if (temp != nullptr)
+        {
+            return !mxIsEmpty(temp);
+        }
+        else
+        {
+            return false;
+        }
     }
     else
     {
@@ -386,7 +394,7 @@ void OPTIMex::initMatlabCallbackData(matlab_cb_data_t& callbackData, const mxArr
         callbackData.prhs_g[1] = createDoubleMatrix(ndec, 1); // x0
     }
 
-    // Assign data fitting values, if present
+    // Assign data fitting values
     if (isValidField(problemData, "ydata"))
     {
         callbackData.ydata = mxGetPr(getField(problemData, "ydata"));
@@ -399,10 +407,15 @@ void OPTIMex::initMatlabCallbackData(matlab_cb_data_t& callbackData, const mxArr
 
 void OPTIMex::initIterFunCallbackData(iterfun_cb_data_t& callbackData, mxArray* iterFunHandle, size_t ndec)
 {
-    callbackData.prhs[0] = iterFunHandle;
-    callbackData.prhs[1] = createDoubleScalar(0.0);     // niter
-    callbackData.prhs[2] = createDoubleScalar(0.0);     // fval
-    callbackData.prhs[3] = createDoubleMatrix(ndec, 1); // x0
+    if (mxIsEmpty(iterFunHandle) == false)
+    {
+        callbackData.prhs[0] = iterFunHandle;
+        callbackData.prhs[1] = createDoubleScalar(0.0);     // niter
+        callbackData.prhs[2] = createDoubleScalar(0.0);     // fval
+        callbackData.prhs[3] = createDoubleMatrix(ndec, 1); // x0
+        callbackData.enabled = true;
+        callbackData.ndec    = ndec;
+    }
 }
 
 
@@ -447,7 +460,8 @@ bool OPTIMex::callMatlabIterFun(iterfun_cb_data_t* iterData, size_t niter, doubl
 {        
     // Assign iteration data
     iterData->plhs[0] = NULL;        
-    memcpy(mxGetData(iterData->prhs[1]), &niter, sizeof(int));
+    double iter = static_cast<double>(niter);
+    memcpy(mxGetData(iterData->prhs[1]), &iter, sizeof(double));
     memcpy(mxGetPr(iterData->prhs[2]), &fval, sizeof(double));
     memcpy(mxGetPr(iterData->prhs[3]), x, iterData->ndec * sizeof(double));
     

@@ -414,7 +414,7 @@ switch(opts.solver)
     case 'nlopt'
         [x,fval,exitflag,info] = opti_nlopt(nl,nl.x0); 
     case 'gsl'
-        [x,fval,exitflag,info] = opti_gsl(nl, nl.x0); 
+        [x,fval,exitflag,info] = opti_gsl_nls(nl.fun,nl.grad,nl.x0,nl.ydata,nl.options); 
     case 'pswarm'
         [x,fval,exitflag,info] = opti_pswarm(nl.fun,nl.lb,nl.ub,nl.x0,nl.A,nl.b,nl.options);
     otherwise
