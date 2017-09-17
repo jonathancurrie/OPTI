@@ -5,7 +5,7 @@
 #include <mex.h>
 #include <mkl.h>
 #include <string.h>
-#include "opti_util.h"
+#include "opti_build_utils.h"
 
 //Matlab Data Structure
 typedef struct {
