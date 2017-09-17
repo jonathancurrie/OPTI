@@ -9,7 +9,7 @@
 #include "mex.h"
 #include "gslmex.h"
 #include "opti_mex_utils.h"
-#include <gsl_multifit_nlinear.h>
+#include <gsl/gsl_multifit_nlinear.h>
 
 namespace opti_gsl_nls
 {

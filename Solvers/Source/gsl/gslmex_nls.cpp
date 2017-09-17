@@ -6,10 +6,10 @@
  * www.inverseproblem.co.nz
  */
 
-#include "Include/gslmex_nls.h"
+#include "gslmex_nls.h"
 #include "opti_mex_utils.h"
-#include <gsl_version.h>
-#include <gsl_blas.h>
+#include <gsl/gsl_version.h>
+#include <gsl/gsl_blas.h>
 
 namespace opti_gsl_nls
 {

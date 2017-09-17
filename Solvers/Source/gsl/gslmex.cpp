@@ -6,11 +6,11 @@
  * www.inverseproblem.co.nz
  */
 
-#include "Include/gslmex.h"
-#include "Include/gslmex_nls.h"
+#include "gslmex.h"
+#include "gslmex_nls.h"
 #include "opti_mex_utils.h"
-#include "gsl_errno.h"
-#include "gsl_version.h"
+#include <gsl/gsl_errno.h>
+#include <gsl/gsl_version.h>
 
 using namespace opti_mex_utils;
 using namespace opti_gsl;

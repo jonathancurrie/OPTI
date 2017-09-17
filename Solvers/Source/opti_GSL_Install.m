@@ -28,7 +28,7 @@ clc
 %MEX Interface Source Files
 src = {'gsl/gslmex.cpp', 'gsl/gslmex_nls.cpp'};
 %Include Directories
-inc = {'Include/gsl','Include','gsl/Include'};
+inc = [];
 %Lib Names [static libraries to link against]
 libs = {'libgsl'};
 %Options
