@@ -175,6 +175,20 @@ std::string OPTIMex::getFieldString(const mxArray* data, const char* fieldName)
     }
 }
 
+// Access double in standard mxArray
+double OPTIMex::getDoubleScalar(const mxArray* data)
+{
+    if (isDoubleScalar(data))
+    {
+        return *mxGetPr(data);
+    }
+    else
+    {
+        OPTIMex::error("Does not contain a double variable");
+        return NAN;
+    }
+}
+
 
 
 //
@@ -451,6 +465,16 @@ void OPTIMex::initMatlabCallbackData(matlab_cb_data_t& callbackData, const mxArr
     // Assign Sizes
     callbackData.ndec    = ndec;
     callbackData.ndata   = ndata;
+}
+
+void OPTIMex::initMatlabCallbackFun(matlab_cb_data_t& callbackData, const mxArray* callbackFun, size_t ndec)
+{
+    // Get the function 
+    callbackData.prhs_f[0] = const_cast<mxArray*>(callbackFun);
+    callbackData.prhs_f[1] = createDoubleMatrix(ndec, 1); // x0
+
+    // Assign Sizes
+    callbackData.ndec      = ndec;
 }
 
 void OPTIMex::initIterFunCallbackData(iterfun_cb_data_t& callbackData, mxArray* iterFunHandle, size_t ndec)

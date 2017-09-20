@@ -103,7 +103,7 @@ class OPTITermSettings
 //
 // Solver Licenses
 //
-enum class OptiSolverLicense {NONE, EPL, GPL, LGPL};
+enum class OptiSolverLicense {NONE, EPL, GPL, LGPL, MKL};
 
 //
 // License Information
@@ -111,6 +111,7 @@ enum class OptiSolverLicense {NONE, EPL, GPL, LGPL};
 #define OPTI_LGPL_LICENSE_LINK ("GNU Lesser General Public License: http://www.gnu.org/copyleft/lesser.html")
 #define OPTI_GPL_LICENSE_LINK  ("GNU General Public License: https://www.gnu.org/copyleft/gpl.html")
 #define OPTI_EPL_LICENSE_LINK  ("Eclipse Public License: http://opensource.org/licenses/eclipse-1.0")
+#define OPTI_MKL_LICENSE_LINK  ("Intel Simplified Software License: https://software.intel.com/en-us/license/intel-simplified-software-license")
 
 //
 // Solver Properties
@@ -130,6 +131,16 @@ class OptiSolverProperties
         { 
             char solverVersionStr[20];
             snprintf(solverVersionStr, 20, "%.2f", solverVersionIn);
+            solverVersion = std::string(solverVersionStr);
+        }
+        OptiSolverProperties(std::string solverNameIn, double majorVersion, double minorVersion, double releaseVersion, std::string solverLinkIn, 
+                            OptiSolverLicense solverLicenseIn) :
+                            solverName(solverNameIn),
+                            solverLink(solverLinkIn),
+                            solverLicense(solverLicenseIn) 
+        { 
+            char solverVersionStr[120]; 
+            snprintf(solverVersionStr, 120, "%g.%g R%g", majorVersion, minorVersion, releaseVersion);
             solverVersion = std::string(solverVersionStr);
         }
         std::string solverName;
@@ -196,6 +207,7 @@ class OPTIMex
         static size_t getNumCols(const mxArray* data);
         static mxArray* getField(const mxArray* data, const char* fieldName);
         static double*  getFieldPr(const mxArray* data, const char* fieldName);
+        static double getDoubleScalar(const mxArray* data);
         static std::string getFieldString(const mxArray* data, const char* fieldName);
         
         // Data Validation
@@ -223,6 +235,7 @@ class OPTIMex
 
         // MATLAB Callback Data Init
         static void initMatlabCallbackData(matlab_cb_data_t& callbackData, const mxArray* problemData, size_t ndec, size_t ndata);
+        static void initMatlabCallbackFun(matlab_cb_data_t& callbackData, const mxArray* callbackFun, size_t ndec);
         static void initIterFunCallbackData(iterfun_cb_data_t& callbackData, mxArray* iterFunHandle, size_t ndec);
 
         // MATLAB Calling
