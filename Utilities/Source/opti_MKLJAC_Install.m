@@ -23,7 +23,7 @@
 % base directory of OPTI!
 
 %MEX Interface Source Files
-src = 'mkljac.c';
+src = 'mklJac.cpp';
 %Options
 opts = [];
 opts.verb = false;
