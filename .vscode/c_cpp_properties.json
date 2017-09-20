@@ -17,7 +17,11 @@
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
-            }
+            },
+            "macFrameworkPath": [
+                "/System/Library/Frameworks",
+                "/Library/Frameworks"
+            ]
         },
         {
             "name": "Linux",
@@ -41,16 +45,16 @@
         {
             "name": "Win32",
             "includePath": [
-                "C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC/Tools/MSVC/14.10.25017/include/*",
+                "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include",
                 "C:/Program Files (x86)/Windows Kits/10/Include/10.0.15063.0/um",
                 "C:/Program Files (x86)/Windows Kits/10/Include/10.0.15063.0/ucrt",
                 "C:/Program Files (x86)/Windows Kits/10/Include/10.0.15063.0/shared",
                 "C:/Program Files (x86)/Windows Kits/10/Include/10.0.15063.0/winrt",
                 "C:/Program Files/MATLAB/R2017a/extern/include",
-                "C:/Users/Jonathan Currie/Dropbox/Code/MATLAB/OPTI/Solvers/Source/Include/gsl",
-                "C:/Users/Jonathan Currie/Dropbox/Code/MATLAB/OPTI/Solvers/Source/Include",
-                "C:/Users/Jonathan Currie/Dropbox/Code/MATLAB/OPTI/Solvers/Source/opti",
-                "${workspaceRoot}"
+                "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl/include",
+                "${workspaceRoot}/Solvers/Source/Include",
+                "${workspaceRoot}/Solvers/Source/opti",
+                "${workspaceRoot}/Solvers/Source/gsl"
             ],
             "defines": [
                 "_DEBUG",
@@ -59,11 +63,7 @@
             "intelliSenseMode": "msvc-x64",
             "browse": {
                 "path": [
-                    "C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC/Tools/MSVC/14.10.25017/include/*",
-                    "C:/Program Files (x86)/Windows Kits/10/Include/10.0.15063.0/um",
-                    "C:/Program Files (x86)/Windows Kits/10/Include/10.0.15063.0/ucrt",
-                    "C:/Program Files (x86)/Windows Kits/10/Include/10.0.15063.0/shared",
-                    "C:/Program Files (x86)/Windows Kits/10/Include/10.0.15063.0/winrt",
+                    "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include/*",
                     "${workspaceRoot}"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
@@ -71,5 +71,5 @@
             }
         }
     ],
-    "version": 2
+    "version": 3
 }
