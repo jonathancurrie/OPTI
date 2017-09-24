@@ -26,8 +26,8 @@ if((nargin == 0) && (nargout == 0))
 end
 
 %Names and Defaults
-Names = {'algorithm','primalTol','dualTol','doPresolve','numPresolvePasses','factorFreq','numberRefinements','primalObjLim','dualObjLim','numThreads','abcState'};
-Defaults = {'automatic',1e-7,1e-7,1,5,[],0,Inf,Inf,1,[]};        
+Names = {'algorithm','primalTol','dualTol','doPresolve','numPresolvePasses','factorFreq','numberRefinements','primalObjLim','dualObjLim'};
+Defaults = {'automatic',1e-7,1e-7,1,5,[],0,Inf,Inf};        
 
 %Enter and check user args
 try
@@ -47,7 +47,7 @@ switch lower(field)
     case {'primaltol','dualtol'}
         err = opticheckval.checkScalarGrtZ(value,field);    
     %Scalar non negative integer
-    case {'numpresolvepasses','factorfreq','numberrefinements','numthreads','abcstate'}
+    case {'numpresolvepasses','factorfreq','numberrefinements'}
         err = opticheckval.checkScalarIntNonNeg(value,field);          
     %Scalar integer with bounds
     case {'doscaling','dopresolve'}
@@ -72,6 +72,6 @@ fprintf('        factorFreq: [ Simplex Factorization Frequency: {[]} (empty uses
 fprintf(' numberRefinements: [ Number of iterative Simplex refinements: {0} ] \n');
 fprintf('      primalObjLim: [ Primal Objective Limit: {Inf} ] \n');
 fprintf('        dualObjLim: [ Dual Objective Limit: {Inf} ] \n');
-fprintf('        numThreads: [ Number of Cilk Worker Threads (LP Only and > 1 only with Aboca CLP Build): {1} ] \n');
-fprintf('          abcState: [ Aboca Partition Size: {[]} (empty uses internal heuristic) ] \n');
+% fprintf('        numThreads: [ Number of Cilk Worker Threads (LP Only and > 1 only with Aboca CLP Build): {1} ] \n');
+% fprintf('          abcState: [ Aboca Partition Size: {[]} (empty uses internal heuristic) ] \n');
 fprintf('\n');
