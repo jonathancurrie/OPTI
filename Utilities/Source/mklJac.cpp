@@ -29,6 +29,7 @@ using namespace opti_mex_utils;
 
 // Local Function Declarations
 static void mklFun(MKL_INT *m, MKL_INT *n, double *x, double *f, void *data);
+static bool checkReturnSize = false;
 
 //
 // Main Function
@@ -72,6 +73,7 @@ void MKLJac::differentiate(const opti_mex_utils::OptiMexArgs& args)
     if (haveSize == true) // length supplied
     {
         lenF = static_cast<MKL_INT>(OPTIMex::getDoubleScalar(pLEN));
+        checkReturnSize = true;
     }
     else  // Dummy call for length
     {
@@ -119,6 +121,15 @@ static void mklFun(MKL_INT *m, MKL_INT *n, double *x, double *f, void *data)
     matlab_cb_data_t* mlData = static_cast<matlab_cb_data_t*>(data);
     // Call MATLAB
     double *fval = OPTIMex::callMatlabObjective(mlData, x);
+    // Optionally check return size on the first call
+    if (checkReturnSize == true)
+    {
+        if (OPTIMex::getNumElem(mlData->plhs[0]) != *m)
+        {
+            OPTIMex::error("OPTIMex:DataError", "The returned vector length (%zu) did not match the specified length (%d)", OPTIMex::getNumElem(mlData->plhs[0]), *m);
+        }
+        checkReturnSize = false;
+    }
     // Copy result
     memcpy(f, fval, *m * sizeof(double));
     // Clean up
@@ -138,38 +149,38 @@ void MKLJac::checkInputArgs(const opti_mex_utils::OptiMexArgs& args, bool& haveS
 
     if (args.nrhs < 2)
     {
-        OPTIMex::error("You must supply at least 2 arguments to mklJac");        
+        OPTIMex::error("OPTIMex:InputError","You must supply at least 2 arguments to mklJac");        
     }
     if (OPTIMex::isFunction(pFUN) == false)
     {
-        OPTIMex::error("The first argument (fun) must be a MATLAB function handle");
+        OPTIMex::error("OPTIMex:InputError","The first argument (fun) must be a MATLAB function handle");
     }
     if ((OPTIMex::isDoubleVector(pX) == false) && (OPTIMex::isDoubleScalar(pX) == false))
     {
-        OPTIMex::error("The second argument (x) must be a real double vector");
+        OPTIMex::error("OPTIMex:InputError","The second argument (x) must be a real double vector");
     }
     if (args.nrhs > 2)
     {
         if (OPTIMex::isDoubleScalar(pLEN) == false)
         {
-            OPTIMex::error("The third argument (numRow), if specified, must be a double scalar");
+            OPTIMex::error("OPTIMex:InputError","The third argument (numRow), if specified, must be a double scalar");
         }
         double x = OPTIMex::getDoubleScalar(pLEN);
         if ((x < 1.0) || (x > 1e8))
         {
-            OPTIMex::error("The third argument (numRow), if specified, must be 1 <= numRow <= 1e8");
+            OPTIMex::error("OPTIMex:InputError","The third argument (numRow), if specified, must be 1 <= numRow <= 1e8");
         }
         haveSize = true;
         if (args.nrhs > 3)
         {
             if (OPTIMex::isDoubleScalar(pTOL) == false)
             {
-                OPTIMex::error("The fourth argument (tol), if specified, must be a double scalar");
+                OPTIMex::error("OPTIMex:InputError","The fourth argument (tol), if specified, must be a double scalar");
             }
             double tol = OPTIMex::getDoubleScalar(pTOL);
             if ((tol < std::numeric_limits<double>::epsilon()) || (tol > 1.0))
             {
-                OPTIMex::error("The fourth argument (tol), if specified, must be eps(1) <= tol <= 1");
+                OPTIMex::error("OPTIMex:InputError","The fourth argument (tol), if specified, must be eps(1) <= tol <= 1");
             }
             haveTol = true;
         }

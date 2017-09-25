@@ -250,6 +250,7 @@ class OPTIMex
         static int checkTermination(OPTITimer& timer, size_t numIter, size_t numFeval, size_t numNodes, const OPTITermSettings& termSettings);
         
         // Error Reporting (throws exception too)
+        static void error(const char* id, const char* format, ...); 
         static void error(const char* format, ...); 
 
         // Printing

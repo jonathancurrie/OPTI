@@ -388,8 +388,21 @@ void OPTIMex::error(const char* format, ...)
     va_end(args);
     
     // Generates Exception
-    mexErrMsgTxt(errBuf);
+    mexErrMsgIdAndTxt("OPTIMex:Error",errBuf);
 }
+
+void OPTIMex::error(const char* id, const char* format, ...)
+{
+    char errBuf[1024];
+    va_list args;
+    va_start(args, format);
+    vsnprintf(errBuf, 1024, format, args);
+    va_end(args);
+    
+    // Generates Exception
+    mexErrMsgIdAndTxt(id,errBuf);
+}
+
 
 //
 // Check if Ctrl-C Has Been Pressed
