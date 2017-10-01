@@ -8,6 +8,9 @@
 
 #include "opti_mex_utils.h"
 
+namespace opti_utility
+{
+
 class MKLJac
 {
     public:  
@@ -15,3 +18,5 @@ class MKLJac
     private:
         static void checkInputArgs(const opti_mex_utils::OptiMexArgs& args, bool& haveSize, bool& haveTol);
 };
+
+} // namespace opti_utility

@@ -23,9 +23,9 @@ classdef mklJac_tests < matlab.unittest.TestCase
             testCase.verifyError(@() mklJac(@(x) sin(x), 1, 1, [1;1]), 'OPTIMex:InputError'); % wrong input type
             testCase.verifyError(@() mklJac(@(x) sin(x), 1, 1, 1e-18), 'OPTIMex:InputError'); % wrong val
             testCase.verifyError(@() mklJac(@(x) sin(x), 1, 1, 1.1), 'OPTIMex:InputError'); % wrong val
-            testCase.verifyError(@() mklJac(@(x) sin(x), [1;1], 1), 'OPTIMex:DataError'); % wrong length
-            testCase.verifyError(@() mklJac(@(x) sin(x), [1;1], 3), 'OPTIMex:DataError'); % wrong length
-            testCase.verifyError(@() mklJac(@(x) sin(x), 1, 2), 'OPTIMex:DataError'); % wrong length
+            testCase.verifyError(@() mklJac(@(x) sin(x), [1;1], 1), 'OPTIMex:InputError'); % wrong length
+            testCase.verifyError(@() mklJac(@(x) sin(x), [1;1], 3), 'OPTIMex:InputError'); % wrong length
+            testCase.verifyError(@() mklJac(@(x) sin(x), 1, 2), 'OPTIMex:InputError'); % wrong length
         end
         
         %-- Valid Operation --%

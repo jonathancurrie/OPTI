@@ -187,6 +187,11 @@ class OptiMexArgs
 
 
 //
+// Enums for Helper Methods
+//
+enum class ScalarExp {NO_EXP, IN1_SCALAR, IN2_SCALAR, IN3_SCALAR, IN12_SCALAR, IN13_SCALAR, IN23_SCALAR};
+
+//
 // OPTI MEX Helper Methods
 //
 class OPTIMex
@@ -208,7 +213,9 @@ class OPTIMex
         static mxArray* getField(const mxArray* data, const char* fieldName);
         static double*  getFieldPr(const mxArray* data, const char* fieldName);
         static double getDoubleScalar(const mxArray* data);
+        static bool getLogicalScalar(const mxArray* data);
         static std::string getFieldString(const mxArray* data, const char* fieldName);
+        static std::string getString(const mxArray* data);
         
         // Data Validation
         static bool isValidStruct(const mxArray* data);
@@ -227,6 +234,17 @@ class OPTIMex
         static bool isEmpty(const mxArray* data);
 
         static bool containsNaNInf(const mxArray* data);        
+
+        // Argument Checking (throws on error)
+        static void checkNumArgsIn(int nrhs, int expectedNrhs, std::string fcnName, std::string callingForm="");        
+        static void checkIsDouble(const mxArray* data, std::string name);
+        static void checkIsDoubleScalar(const mxArray* data, std::string name);
+        static void checkIsDoubleVectorOrScalar(const mxArray* data, std::string name);
+        static void checkIsDoubleScalarInBounds(const mxArray* data, double lb, double ub, std::string name);
+        static void checkIsString(const mxArray* data, std::string name);
+        static void checkIsFunction(const mxArray* data, std::string name);
+        static ScalarExp checkScalarExpansion(const mxArray* in1, const mxArray* in2, size_t& numRows, size_t& numCols);
+        static ScalarExp checkScalarExpansion(const mxArray* in1, const mxArray* in2, const mxArray *in3, size_t& numRows, size_t& numCols);
 
         // Options Structure Access
         static int getIntegerOption(const mxArray* opts, const char* optionName, int& option);

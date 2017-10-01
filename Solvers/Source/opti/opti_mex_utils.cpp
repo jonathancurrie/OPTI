@@ -175,6 +175,22 @@ std::string OPTIMex::getFieldString(const mxArray* data, const char* fieldName)
     }
 }
 
+// Access string in standard mxArray
+std::string OPTIMex::getString(const mxArray* data)
+{
+    if (isString(data))
+    {
+        char strBuf[1024];
+        mxGetString(data, strBuf, 1024);
+        return std::string(strBuf);
+    }
+    else
+    {
+        OPTIMex::error("Variable does not contain a string variable");
+        return "";
+    }
+}
+
 // Access double in standard mxArray
 double OPTIMex::getDoubleScalar(const mxArray* data)
 {
@@ -187,6 +203,38 @@ double OPTIMex::getDoubleScalar(const mxArray* data)
         OPTIMex::error("Does not contain a double variable");
         return NAN;
     }
+}
+
+// Access logical (or double) in standard mxArray
+bool OPTIMex::getLogicalScalar(const mxArray* data)
+{
+    if (isEmpty(data) == false)
+    {
+        if (isScalar(data) == true)
+        {
+            if (isRealDouble(data) == true)
+            {
+                return (getDoubleScalar(data) != 0.0);
+            }
+            else if (mxGetClassID(data) == mxLOGICAL_CLASS)
+            {
+                return mxIsLogicalScalarTrue(data);
+            }
+            else
+            {
+                OPTIMex::error("Variable is not a double or logical!");
+            }
+        }
+        else
+        {
+            OPTIMex::error("Variable is not scalar!");
+        }
+    }
+    else
+    {
+        OPTIMex::error("Variable is empty!");        
+    }
+    return false;
 }
 
 
@@ -328,7 +376,9 @@ bool OPTIMex::isRealDouble(const mxArray* data)
 {
     if ((data != nullptr) && (isEmpty(data) == false))
     {
-        return (mxIsComplex(data) == false) && (mxGetClassID(data) == mxDOUBLE_CLASS);
+        return ((mxIsComplex(data) == false) && 
+                (mxGetClassID(data) == mxDOUBLE_CLASS) &&
+                (mxIsSparse(data) == false));
     }
     return false;
 }
@@ -373,6 +423,215 @@ bool OPTIMex::containsNaNInf(const mxArray* data)
         error("Cannot check if data contains NaN/Inf, a double argument was not supplied");
         return true;
     }    
+}
+
+
+//
+// Argument Checking
+//
+void OPTIMex::checkNumArgsIn(int nrhs, int expectedNrhs, std::string fcnName, std::string callingForm)
+{
+    if (nrhs < expectedNrhs)
+    {
+        if (callingForm.empty() == false)
+        {
+            OPTIMex::error("OPTIMex:InputError","You must supply at least %d arguments to %s, e.g. '%s'", expectedNrhs, fcnName.c_str(), callingForm.c_str());        
+        }
+        else
+        {
+            OPTIMex::error("OPTIMex:InputError","You must supply at least %d arguments to %s", expectedNrhs, fcnName.c_str());        
+        }
+    }
+}
+
+void OPTIMex::checkIsDouble(const mxArray* data, std::string name)
+{
+    if (OPTIMex::isRealDouble(data) == false)
+    {
+        OPTIMex::error("OPTIMex:InputError","%s must be a double-precision, real (non-complex), dense (non-sparse) argument", name.c_str());
+    }
+}
+
+void OPTIMex::checkIsDoubleScalar(const mxArray* data, std::string name)
+{
+    OPTIMex::checkIsDouble(data, name);
+    if (OPTIMex::isScalar(data) == false)
+    {
+        OPTIMex::error("OPTIMex:InputError","%s must be a scalar", name.c_str());
+    }
+}
+
+void OPTIMex::checkIsDoubleVectorOrScalar(const mxArray* data, std::string name)
+{
+    OPTIMex::checkIsDouble(data, name);
+    if ((OPTIMex::isScalar(data) == false) && (OPTIMex::isVector(data) == false))
+    {
+        OPTIMex::error("OPTIMex:InputError","%s must be a vector or scalar", name.c_str());
+    }
+}
+
+void OPTIMex::checkIsDoubleScalarInBounds(const mxArray* data, double lb, double ub, std::string name)
+{
+    checkIsDoubleScalar(data, name);
+    double x = OPTIMex::getDoubleScalar(data);
+    if ((x < lb) || (x > ub))
+    {
+        OPTIMex::error("OPTIMex:InputError","%s must have %g <= value <= %g", name.c_str(), lb, ub);
+    }
+}
+
+void OPTIMex::checkIsFunction(const mxArray* data, std::string name)
+{
+    if (OPTIMex::isFunction(data) == false)
+    {
+        OPTIMex::error("OPTIMex:InputError","%s must be a MATLAB function handle", name.c_str());
+    }
+}
+
+void OPTIMex::checkIsString(const mxArray* data, std::string name)
+{
+    if (OPTIMex::isString(data) == false)
+    {
+        OPTIMex::error("OPTIMex:InputError","%s must be a MATLAB string (char array)", name.c_str());
+    }
+}
+
+ScalarExp OPTIMex::checkScalarExpansion(const mxArray* in1, const mxArray* in2, size_t& numRows, size_t& numCols)
+{
+    // Get sizes
+    size_t m1 = mxGetM(in1);
+    size_t n1 = mxGetN(in1);
+    size_t m2 = mxGetM(in2);
+    size_t n2 = mxGetN(in2);
+
+    bool in1Scalar = OPTIMex::isScalar(in1);
+    bool in2Scalar = OPTIMex::isScalar(in2);
+
+    // OK if both scalar, one scalar, or both vector/matrix of the same size
+    if (in1Scalar == true)
+    {
+        if (in2Scalar == true)
+        {
+            numRows = 1;
+            numCols = 1;
+            return ScalarExp::NO_EXP;       // both scalar no expansion required
+        }
+        else
+        {
+            numRows = m2;
+            numCols = n2;
+            return ScalarExp::IN1_SCALAR;   // in1 is scalar, in2 is vector/mat
+        }
+    }
+    else if (in2Scalar == true)
+    {
+        numRows = m1;
+        numCols = n1;
+        return ScalarExp::IN2_SCALAR;   // in2 is scalar, in1 is vector/mat
+    }
+    else // Neither are scalar, no expansion req, but check sizes
+    {
+        if ((m1 != m2) || (n1 != n2))
+        {
+            OPTIMex::error("OPTIMex:InputError","If both inputs are non-scalar, they must have the same dimensions");
+        }
+        numRows = m1;
+        numCols = n1;
+        return ScalarExp::NO_EXP;
+    }
+}
+
+ScalarExp OPTIMex::checkScalarExpansion(const mxArray* in1, const mxArray* in2, const mxArray* in3, size_t& numRows, size_t& numCols)
+{
+    // Get sizes
+    size_t m1 = mxGetM(in1);
+    size_t n1 = mxGetN(in1);
+    size_t m2 = mxGetM(in2);
+    size_t n2 = mxGetN(in2);
+    size_t m3 = mxGetM(in3);
+    size_t n3 = mxGetN(in3);
+
+    bool in1Scalar = OPTIMex::isScalar(in1);
+    bool in2Scalar = OPTIMex::isScalar(in2);
+    bool in3Scalar = OPTIMex::isScalar(in3);
+
+    // OK if all scalar, one or two scalar, or all vector/matrix of the same size
+    if (in1Scalar == true)
+    {
+        if (in2Scalar == true)
+        {
+            if (in3Scalar == true)
+            {
+                numRows = 1;
+                numCols = 1;
+                return ScalarExp::NO_EXP;       // all scalar no expansion required
+            }
+            else
+            {
+                numRows = m3;
+                numCols = n3;
+                return ScalarExp::IN12_SCALAR;   // in1+2 is scalar, in3 is vector/mat
+            }            
+        }
+        else
+        {
+            if (in3Scalar == true)
+            {
+                numRows = m2;
+                numCols = n2;
+                return ScalarExp::IN13_SCALAR;   // in1+3 is scalar, in2 is vector/mat
+            }
+            else // in 1 is scalar, but 2+3 aren't, ensure the same size
+            {
+                if ((m2 != m3) || (n2 != n3))
+                {
+                    OPTIMex::error("OPTIMex:InputError","Arguments 2+3 must have the same dimensions for scalar expansion");
+                }
+                numRows = m2;
+                numCols = n2;
+                return ScalarExp::IN1_SCALAR; 
+            }            
+        }
+    }
+    else if (in2Scalar == true)
+    {
+        if (in3Scalar == true)
+        {
+            numRows = m1;
+            numCols = n1;
+            return ScalarExp::IN23_SCALAR;   // in2+3 is scalar, in1 is vector/mat
+        }
+        else // in 2 is scalar, but 1+3 aren't, ensure the same size
+        {
+            if ((m1 != m3) || (n1 != n3))
+            {
+                OPTIMex::error("OPTIMex:InputError","Arguments 1+3 must have the same dimensions for scalar expansion");
+            }
+            numRows = m1;
+            numCols = n1;
+            return ScalarExp::IN2_SCALAR; 
+        }
+    }
+    else if (in3Scalar == true)
+    {
+        if ((m1 != m2) || (n1 != n2))
+        {
+            OPTIMex::error("OPTIMex:InputError","Arguments 1+2 must have the same dimensions for scalar expansion");
+        }
+        numRows = m1;
+        numCols = n1;
+        return ScalarExp::IN3_SCALAR;   // in3 is scalar, in1+2 is vector/mat
+    }
+    else // None are scalar, no expansion req, but check sizes
+    {
+        if ((m1 != m2) || (m1 != m3) || (n1 != n2) || (n1 != n3))
+        {
+            OPTIMex::error("OPTIMex:InputError","If all inputs are non-scalar, they must have the same dimensions");
+        }
+        numRows = m1;
+        numCols = n1;
+        return ScalarExp::NO_EXP;
+    }
 }
 
 
@@ -669,7 +928,10 @@ void OPTIMex::printSolverInfo(const OptiSolverProperties& solver)
     }
     mexPrintf("  - Source available from: %s\n\n", solver.solverLink.c_str());
     
-    mexPrintf(" This binary is statically linked to the following software:\n");
+    #ifdef IPOPT_VERSION || CPPAD_PACKAGE_STRING || LINK_MUMPS || LINK_ASL || LINK_MKL
+        mexPrintf(" This binary is statically linked to the following software:\n");
+    #endif
+   
     #ifdef SOPLEX_VERSION
         mexPrintf("  - SoPlex [v%d] (ZIB Academic License)\n",SOPLEX_VERSION);
     #endif

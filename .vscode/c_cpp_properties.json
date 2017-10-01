@@ -54,7 +54,8 @@
                 "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl/include",
                 "${workspaceRoot}/Solvers/Source/Include",
                 "${workspaceRoot}/Solvers/Source/opti",
-                "${workspaceRoot}/Solvers/Source/gsl"
+                "${workspaceRoot}/Solvers/Source/gsl",
+                "${workspaceRoot}/Utilities/Source/Include/Rmathlib"
             ],
             "defines": [
                 "_DEBUG",

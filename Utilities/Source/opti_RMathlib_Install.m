@@ -1,4 +1,4 @@
-%% R-Mathlub Install for OPTI Toolbox
+%% R-Mathlib Install for OPTI Toolbox
 % Copyright (C) 2014 Jonathan Currie (IPL)
 
 % This file will help you compile the R Standalone Mathlib for use 
@@ -75,7 +75,7 @@
 % the base directory of OPTI!
 
 %MEX Interface Source Files
-src = 'rmathlibmex.cpp';
+src = 'rmathlib.cpp';
 %Include Directories
 inc = 'Include\Rmathlib';
 %Lib Names [static libraries to link against]
@@ -83,7 +83,7 @@ libs = 'libRMathlib';
 %Options
 opts = [];
 opts.verb = false;
-opts.pp = 'MATHLIB_STANDALONE';
+opts.pp = {'MATHLIB_STANDALONE','HAVE_HYPOT','HAVE_EXPM1','HAVE_LOG1P'};
 opts.util = true;
 
 %Compile

@@ -10,26 +10,10 @@
 #include "mklJac.h"
 using namespace opti_mex_utils;
 
-// Settings
-#define OPTI_DEFAULT_MKLJAC_TOL (1e-6)
-
-// Inputs/Outputs
-#define pFUN    (args.prhs[0])
-#define pX      (args.prhs[1])
-#define pLEN    (args.prhs[2])
-#define pTOL    (args.prhs[3])
-#define pDX     (args.plhs[0])
-#define pSTATUS (args.plhs[1])
-#define pNFEVAL (args.plhs[2])
-
- // Solver Defines
+// Solver Defines
 #define SOLVER_NAME     ("mklJac: Intel djacobi")
 #define SOLVER_LICENSE  (OptiSolverLicense::MKL)
 #define SOLVER_LINK     ("https://software.intel.com/en-us/mkl")
-
-// Local Function Declarations
-static void mklFun(MKL_INT *m, MKL_INT *n, double *x, double *f, void *data);
-static bool checkReturnSize = false;
 
 //
 // Main Function
@@ -46,9 +30,27 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Perform the differentation & return
-    MKLJac::differentiate(args);
+    opti_utility::MKLJac::differentiate(args);
 }  
 
+
+namespace opti_utility
+{
+// Settings
+#define OPTI_DEFAULT_MKLJAC_TOL (1e-6)
+
+// Inputs/Outputs
+#define pFUN    (args.prhs[0])
+#define pX      (args.prhs[1])
+#define pLEN    (args.prhs[2])
+#define pTOL    (args.prhs[3])
+#define pDX     (args.plhs[0])
+#define pSTATUS (args.plhs[1])
+#define pNFEVAL (args.plhs[2])
+
+// Local Function Declarations
+static void mklFun(MKL_INT *m, MKL_INT *n, double *x, double *f, void *data);
+static bool checkReturnSize = false;
 
 //
 // Main Differentiation Method
@@ -147,42 +149,20 @@ void MKLJac::checkInputArgs(const opti_mex_utils::OptiMexArgs& args, bool& haveS
     haveTol  = false;
     haveSize = false;
 
-    if (args.nrhs < 2)
-    {
-        OPTIMex::error("OPTIMex:InputError","You must supply at least 2 arguments to mklJac");        
-    }
-    if (OPTIMex::isFunction(pFUN) == false)
-    {
-        OPTIMex::error("OPTIMex:InputError","The first argument (fun) must be a MATLAB function handle");
-    }
-    if ((OPTIMex::isDoubleVector(pX) == false) && (OPTIMex::isDoubleScalar(pX) == false))
-    {
-        OPTIMex::error("OPTIMex:InputError","The second argument (x) must be a real double vector");
-    }
+    OPTIMex::checkNumArgsIn(args.nrhs, 2, "mklJac", "mklJac(fcn, x)");
+    OPTIMex::checkIsFunction(pFUN, "Argument 1 (callback function)");
+    OPTIMex::checkIsDoubleVectorOrScalar(pX, "Argument 2 (x)");
+
     if (args.nrhs > 2)
     {
-        if (OPTIMex::isDoubleScalar(pLEN) == false)
-        {
-            OPTIMex::error("OPTIMex:InputError","The third argument (numRow), if specified, must be a double scalar");
-        }
-        double x = OPTIMex::getDoubleScalar(pLEN);
-        if ((x < 1.0) || (x > 1e8))
-        {
-            OPTIMex::error("OPTIMex:InputError","The third argument (numRow), if specified, must be 1 <= numRow <= 1e8");
-        }
+        OPTIMex::checkIsDoubleScalarInBounds(pLEN, 1.0, 1e8, "Argument 3 (numRow), if specified,");
         haveSize = true;
         if (args.nrhs > 3)
         {
-            if (OPTIMex::isDoubleScalar(pTOL) == false)
-            {
-                OPTIMex::error("OPTIMex:InputError","The fourth argument (tol), if specified, must be a double scalar");
-            }
-            double tol = OPTIMex::getDoubleScalar(pTOL);
-            if ((tol < std::numeric_limits<double>::epsilon()) || (tol > 1.0))
-            {
-                OPTIMex::error("OPTIMex:InputError","The fourth argument (tol), if specified, must be eps(1) <= tol <= 1");
-            }
+            OPTIMex::checkIsDoubleScalarInBounds(pTOL, std::numeric_limits<double>::epsilon(), 1.0, "Argument 4 (tol), if specified,");
             haveTol = true;
         }
     }
 }
+
+} // namespace opti_utility
