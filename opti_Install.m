@@ -1,10 +1,31 @@
-function opti_Install
+function opti_Install(openBrowser, savePath, runInstallTest)
 %% Installation File for OPTI
 
+% opti_Install(openBrowser, savePath, runInstallTest)
+% inputs
+%	openBroswer			launch example page after installation (boolean, default = true)
+%	savePath			if not set, you will be asked for save the path changes
+%	runInstallTest		if not set, you will be asked for run post installation tests
+% 
 % In order to run this tool, please run this file to setup the required
 % directories. You MUST be in the current directory of this file!
 
 %   Copyright (C) 2016 Jonathan Currie (IPL)
+
+% check inputs
+if nargin < 1
+	openBrowser = true;
+end
+if nargin < 2
+	askSavePath = true;
+else
+	askSavePath = false;
+end
+if nargin < 3
+	askInstallTest = true;
+else
+	askInstallTest = false;
+end
 
 cpath = cd;
 try
@@ -69,7 +90,15 @@ genp(ind == 1) = [];
 addpath(genp{:});
 rehash
 fprintf('Done\n\n');
-in = input('- Would You Like To Save the Path Changes? (Recommended) (y/n): ','s');
+if askSavePath
+	in = input('- Would You Like To Save the Path Changes? (Recommended) (y/n): ','s');
+else
+	if savePath
+		in = 'y';
+	else
+		in = 'n';
+	end
+end
 if(strcmpi(in,'y'))
     try
         savepath;
@@ -81,13 +110,23 @@ if(strcmpi(in,'y'))
 end
 
 %Post Install Test if requested
-in = input('\n- Would You Like To Run Post Installation Tests? (Recommended) (y/n): ','s');
+if askInstallTest
+	in = input('\n- Would You Like To Run Post Installation Tests? (Recommended) (y/n): ','s');
+else
+	if runInstallTest
+		in = 'y';
+	else
+		in = 'n';
+	end
+end
 if(strcmpi(in,'y'))
     opti_Install_Test(1);
 end
 
 %Launch Examples page
-web('https://inverseproblem.co.nz/OPTI/index.php/Examples/Examples','-browser');
+if openBrowser
+	web('https://inverseproblem.co.nz/OPTI/index.php/Examples/Examples','-browser');
+end
 
 %Finished
 fprintf('\n\nOPTI Toolbox Installation Complete!\n');
