@@ -74,7 +74,7 @@ if(~prob.iscon && ~uncon)
     end    
     if(warn)
         optiwarn('opti_nlopt:uncon','Conv NLOPT - The currently selected NLOPT algorithm (%s) cannot solve unconstrained problems, using %s instead',...
-                upper(nloptSolver(mprob.algorithm)),alg);
+                upper(nloptSolver(mprob.options.algorithm)),alg);
     end
     [~,ineq,eq,~,~,deriv] = nloptSolver(alg); %recheck
     mprob.algorithm = nloptSolver(alg);
@@ -88,7 +88,7 @@ if(~ineq && prob.sizes.nnlineq)
     end
     if(warn)
         optiwarn('opti_nlopt:uncon','Conv NLOPT - The currently selected NLOPT algorithm (%s) cannot solve problems with nonlinear inequality constraints, using %s instead',...
-                upper(nloptSolver(mprob.algorithm)),alg);
+                upper(nloptSolver(mprob.options.algorithm)),alg);
     end
     [~,~,eq,~,~,deriv] = nloptSolver(alg); %recheck
     mprob.algorithm = nloptSolver(alg);
@@ -102,7 +102,7 @@ if(~eq && prob.sizes.nnleq)
     end
     if(warn && isfield(mprob,'algorithm'))
         optiwarn('opti_nlopt:uncon','Conv NLOPT - The currently selected NLOPT algorithm (%s) cannot solve problems with nonlinear equality constraints, using %s instead',...
-                upper(nloptSolver(mprob.algorithm)),alg);
+                upper(nloptSolver(mprob.options.algorithm)),alg);
     end
     mprob.algorithm = nloptSolver(alg);
 end
