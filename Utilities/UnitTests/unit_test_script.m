@@ -12,3 +12,8 @@ res = run(testMklJac)
 clc
 testRmathlib = rmathlib_tests;
 res = run(testRmathlib)
+
+%% CONFIDENCE LIMITS
+clc
+testConfidence = confidence_tests;
+res = run(testConfidence)

@@ -6,18 +6,6 @@ clear all
 %% Run Unit Tests
 clc
 unitTestFolder = matlab.unittest.TestSuite.fromFolder([cd filesep 'Utilities/UnitTests']);
-run(unitTestFolder)
-
-%%
-try
-    a = mklJac(1)
-catch ME
-    if strcmp(ME.identifier,'MATLAB:UndefinedFunction')
-        warning('Function is undefined.  Assigning a value of 0.');
-    else
-        rethrow(ME)
-    end
-end
 
 
 %% Run Old Tests

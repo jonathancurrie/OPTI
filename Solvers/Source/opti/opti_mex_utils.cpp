@@ -446,6 +446,10 @@ void OPTIMex::checkNumArgsIn(int nrhs, int expectedNrhs, std::string fcnName, st
 
 void OPTIMex::checkIsDouble(const mxArray* data, std::string name)
 {
+    if (OPTIMex::isEmpty(data) == true)
+    {
+        OPTIMex::error("OPTIMex:InputError","%s is empty!", name.c_str());
+    }
     if (OPTIMex::isRealDouble(data) == false)
     {
         OPTIMex::error("OPTIMex:InputError","%s must be a double-precision, real (non-complex), dense (non-sparse) argument", name.c_str());
@@ -482,6 +486,10 @@ void OPTIMex::checkIsDoubleScalarInBounds(const mxArray* data, double lb, double
 
 void OPTIMex::checkIsFunction(const mxArray* data, std::string name)
 {
+    if (OPTIMex::isEmpty(data) == true)
+    {
+        OPTIMex::error("OPTIMex:InputError","%s is empty!", name.c_str());
+    }
     if (OPTIMex::isFunction(data) == false)
     {
         OPTIMex::error("OPTIMex:InputError","%s must be a MATLAB function handle", name.c_str());
@@ -490,6 +498,10 @@ void OPTIMex::checkIsFunction(const mxArray* data, std::string name)
 
 void OPTIMex::checkIsString(const mxArray* data, std::string name)
 {
+    if (OPTIMex::isEmpty(data) == true)
+    {
+        OPTIMex::error("OPTIMex:InputError","%s is empty!", name.c_str());
+    }
     if (OPTIMex::isString(data) == false)
     {
         OPTIMex::error("OPTIMex:InputError","%s must be a MATLAB string (char array)", name.c_str());
