@@ -59,10 +59,14 @@ data.AdjRsquare = mdl.Rsquared.Adjusted;
 data.RMSE       = mdl.RMSE;
 data.DFE        = mdl.DFE;
 if (isa(mdl.Coefficients,'table'))
-    data.param      = table2array(mdl.Coefficients);
+    data.param  = table2array(mdl.Coefficients);
+    data.sol    = mdl.Coefficients.Estimate;
 else
-    data.param      = mdl.Coefficients;
+    data.param  = mdl.Coefficients;
+    data.sol    = mdl.Coefficients(:,1);
 end
 data.confInt    = cis(:,2) - mdl.Coefficients.Estimate;
 data.confBnds   = ys;
+data.SSE        = mdl.SSE;
+data.cov        = mdl.CoefficientCovariance;
 

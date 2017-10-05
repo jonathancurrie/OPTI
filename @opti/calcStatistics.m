@@ -1,4 +1,4 @@
-function stats = calcStatistics(optObj,limit)
+function stats = calcStatistics(optObj,limit,smoothBounds)
 %Calculate confidence and variance statistics of an OPTI curve fitting problem
 %
 %   Called By opti fitStats
@@ -16,6 +16,7 @@ function stats = calcStatistics(optObj,limit)
 % Value explanations
 % http://www.ats.ucla.edu/stat/sas/output/reg.htm
 
+if(nargin < 3 || isempty(smoothBounds)), smoothBounds = true; end
 if(nargin < 2 || isempty(limit)), limit = 0.95; end
 
 if(limit <= 0 || limit >= 1)
@@ -155,57 +156,68 @@ if(~isempty(stats.Cov))
     else
         havRep = false;
     end
-    if(~isempty(prob.ode) && ~iscell(prob.misc.xdata_orig) && length(unique(prob.xdata))==length(prob.xdata) && ~havRep)
-        try
-            %Lazy way to convert problem again
-            xd = linspace(min(prob.xdata),max(prob.xdata),max(10*length(prob.xdata),1e2))';
-            prob.ydata = ones(length(prob.ydata)/length(prob.xdata)*length(xd),1); prob.xdata = xd; 
-            prob = DNLS2NLS(prob,optObj.opts);
-            Xb = prob.misc.fitGrad(x);
-            ypred = prob.misc.fitFun(x,xd);
-        catch %no luck
-            xd = prob.xdata;
-            Xb = X;
-            if(nargin(prob.misc.fitFun)==2)
-                ypred = prob.misc.fitFun(x,xd);    
-            else
-                ypred = prob.misc.fitFun(x);
-            end
-        end
-    else %algebraic system or complicated ode problem
-        if(gmode==2)
-            %try evaluate at many intermediate points for a smoother curve
+    % Try generate smooth bounds
+    if (smoothBounds == true)
+        if(~isempty(prob.ode) && ~iscell(prob.misc.xdata_orig) && length(unique(prob.xdata))==length(prob.xdata) && ~havRep)
             try
-                %Assume if xdata is a matrix, or not sorted, don't try smooth
-                if(size(prob.xdata,1) > 1 && size(prob.xdata,2) > 1 || (any(sort(prob.xdata) ~= prob.xdata) && any(sort(prob.xdata,'descend') ~= prob.xdata)))
-                    error('skip');
-                end        
+                %Lazy way to convert problem again
                 xd = linspace(min(prob.xdata),max(prob.xdata),max(10*length(prob.xdata),1e2))';
-                Xb = prob.misc.fitGrad(x,xd);
+                prob.ydata = ones(length(prob.ydata)/length(prob.xdata)*length(xd),1); prob.xdata = xd; 
+                prob = DNLS2NLS(prob,optObj.opts);
+                Xb = prob.misc.fitGrad(x);
                 ypred = prob.misc.fitFun(x,xd);
-            catch
+            catch %no luck
                 xd = prob.xdata;
                 Xb = X;
-                ypred = prob.misc.fitFun(x,prob.xdata);
+                if(nargin(prob.misc.fitFun)==2)
+                    ypred = prob.misc.fitFun(x,xd);    
+                else
+                    ypred = prob.misc.fitFun(x);
+                end
             end
-        else %no luck
-            xd = prob.xdata;
-            Xb = X;
-            if(nargin(prob.misc.fitFun)==2)
-                %if function has two input arguments, try a numerical gradient
+        else %algebraic system or complicated ode problem
+            if(gmode==2)
+                %try evaluate at many intermediate points for a smoother curve
                 try
-                    if(~isempty(strfind(char(prob.misc.fitFun),'odeEstim'))), error('no luck'); end %integrator most likely has set time points it is expecting
+                    %Assume if xdata is a matrix, or not sorted, don't try smooth
+                    if(size(prob.xdata,1) > 1 && size(prob.xdata,2) > 1 || (any(sort(prob.xdata) ~= prob.xdata) && any(sort(prob.xdata,'descend') ~= prob.xdata)))
+                        error('skip');
+                    end        
                     xd = linspace(min(prob.xdata),max(prob.xdata),max(10*length(prob.xdata),1e2))';
-                    Xb = mklJac(@(x) prob.misc.fitFun(x,xd),x);
+                    Xb = prob.misc.fitGrad(x,xd);
                     ypred = prob.misc.fitFun(x,xd);
                 catch
                     xd = prob.xdata;
                     Xb = X;
-                    ypred = prob.misc.fitFun(x,xd);
+                    ypred = prob.misc.fitFun(x,prob.xdata);
                 end
-            else
-                ypred = prob.misc.fitFun(x);
+            else %no luck
+                xd = prob.xdata;
+                Xb = X;
+                if(nargin(prob.misc.fitFun)==2)
+                    %if function has two input arguments, try a numerical gradient
+                    try
+                        if(~isempty(strfind(char(prob.misc.fitFun),'odeEstim'))), error('no luck'); end %integrator most likely has set time points it is expecting
+                        xd = linspace(min(prob.xdata),max(prob.xdata),max(10*length(prob.xdata),1e2))';
+                        Xb = mklJac(@(x) prob.misc.fitFun(x,xd),x);
+                        ypred = prob.misc.fitFun(x,xd);
+                    catch
+                        xd = prob.xdata;
+                        Xb = X;
+                        ypred = prob.misc.fitFun(x,xd);
+                    end
+                else
+                    ypred = prob.misc.fitFun(x);
+                end
             end
+        end
+    else
+        xd = prob.xdata;
+        Xb = X;
+        if(nargin(prob.misc.fitFun)==2)
+            ypred = prob.misc.fitFun(x,xd);    
+        else
+            ypred = prob.misc.fitFun(x);
         end
     end
 
