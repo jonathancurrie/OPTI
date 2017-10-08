@@ -6,6 +6,7 @@ clear all
 %% Run Unit Tests
 clc
 unitTestFolder = matlab.unittest.TestSuite.fromFolder([cd filesep 'Utilities/UnitTests']);
+run(unitTestFolder)
 
 
 %% Run Old Tests
