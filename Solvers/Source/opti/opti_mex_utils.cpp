@@ -19,6 +19,12 @@ extern "C" void utSetInterruptPending(bool);
 #ifdef LINK_MKL
 #include "mkl.h"
 #endif
+#ifdef LINK_MUMPS
+#include "dmumps_c.h"
+#endif
+#ifdef LINK_ASL
+#include "asl_pfgh.h"
+#endif
 
 namespace opti_mex_utils
 {
@@ -940,7 +946,7 @@ void OPTIMex::printSolverInfo(const OptiSolverProperties& solver)
     }
     mexPrintf("  - Source available from: %s\n\n", solver.solverLink.c_str());
     
-    #ifdef IPOPT_VERSION || CPPAD_PACKAGE_STRING || LINK_MUMPS || LINK_ASL || LINK_MKL
+    #if defined(IPOPT_VERSION) || defined(CPPAD_PACKAGE_STRING) || defined(LINK_MUMPS) || defined(LINK_ASL) || defined(LINK_MKL)
         mexPrintf(" This binary is statically linked to the following software:\n");
     #endif
    

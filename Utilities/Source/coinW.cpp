@@ -8,7 +8,7 @@
 #include "CoinLpIO.hpp"
 #include "CoinModel.hpp"
 #include "config_coinutils_default.h"
-#include "opti_util.h"
+#include "opti_build_utils.h"
 
 using namespace std;
 void printUtilityInfo();

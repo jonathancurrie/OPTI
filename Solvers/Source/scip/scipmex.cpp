@@ -23,7 +23,7 @@
 #include "scipmex.h"
 #include "config_ipopt_default.h"
 #include "cppad/configure.hpp"
-#include "opti_util.h"
+#include "opti_build_utils.h"
 #ifdef LINK_MKL
     #include "mkl.h"
 #endif

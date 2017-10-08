@@ -21,7 +21,7 @@
 #include "IpJournalist.hpp"
 #include "IpIpoptApplication.hpp"
 #include "IpSolveStatistics.hpp"
-#include "opti_util.h"
+#include "opti_build_utils.h"
 #if defined(LINK_MKL) || defined(LINK_MKL_PARDISO)
     #include "mkl.h"
 #endif

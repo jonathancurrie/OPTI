@@ -15,7 +15,7 @@
 #include "ClpEventHandler.hpp"
 #include <exception>
 #include <time.h>
-#include "opti_util.h"
+#include "opti_build_utils.h"
 
 #ifdef CLP_HAS_ABC
  #include "AbcSimplex.hpp"

@@ -65,6 +65,7 @@
         "xmemory0": "cpp",
         "xstddef": "cpp",
         "xtr1common": "cpp",
-        "xtree": "cpp"
+        "xtree": "cpp",
+        "opti_build_utils.h": "c"
     }
 }

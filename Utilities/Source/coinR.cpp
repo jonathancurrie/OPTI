@@ -9,7 +9,7 @@
 #include "CoinModel.hpp"
 #include "CoinMessageHandler.hpp"
 #include "glpk.h"
-#include "opti_util.h"
+#include "opti_build_utils.h"
 
 using namespace std;
 

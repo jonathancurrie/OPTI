@@ -28,7 +28,7 @@ THIS SOFTWARE.
 
 #include "mex.h"
 #include "asl_pfgh.h"
-#include "opti_util.h"
+#include "opti_build_utils.h"
 
 //Defines
 #define FLEN 512 /* max length of command */

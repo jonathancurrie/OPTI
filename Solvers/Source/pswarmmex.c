@@ -10,7 +10,7 @@
 #include "mex.h"
 #include "pswarm.h"
 #include <time.h>
-#include "opti_util.h"
+#include "opti_build_utils.h"
 
 #define PSWARM_VERSION "1.5"
 
