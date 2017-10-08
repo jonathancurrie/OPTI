@@ -31,6 +31,38 @@ classdef confidence_tests < matlab.unittest.TestCase
             checkFitStats(testCase,mdl);
         end
         
+        %-- Himmelblau - with lower bound active --%
+        function himmelblauLb(testCase)
+            mdl = testCase.data.himmellb;
+            mdl.fcn = @confidence_tests.himmelblauFcn;
+            % Check fit statistics
+            checkFitStats(testCase,mdl);
+        end
+        
+        %-- Himmelblau - with upper bound active --%
+        function himmelblauUb(testCase)
+            mdl = testCase.data.himmelub;
+            mdl.fcn = @confidence_tests.himmelblauFcn;
+            % Check fit statistics
+            checkFitStats(testCase,mdl);
+        end
+        
+        %-- Himmelblau - with both bounds active --%
+        function himmelblauBothBounds(testCase)
+            mdl = testCase.data.himmelbnd;
+            mdl.fcn = @confidence_tests.himmelblauFcn;
+            % Check fit statistics
+            checkFitStats(testCase,mdl);
+        end
+        
+        %-- Himmelblau - with both bounds and weights --%
+        function himmelblauBothBoundsWeights(testCase)
+            mdl = testCase.data.himmelbndw;
+            mdl.fcn = @confidence_tests.himmelblauFcn;
+            % Check fit statistics
+            checkFitStats(testCase,mdl);
+        end
+        
         %-- SAS - no weights --%
         function sas(testCase)
             mdl = testCase.data.sas;
@@ -51,7 +83,7 @@ classdef confidence_tests < matlab.unittest.TestCase
     methods
        function checkFitStats(testCase, mdl)
             % Build OPTI object
-            optiObj = opti('fun',mdl.fcn, 'data', mdl.xdata, mdl.ydata, 'weights', mdl.wts, 'x0', mdl.sol);
+            optiObj = opti('fun',mdl.fcn, 'data', mdl.xdata, mdl.ydata, 'weights', mdl.wts, 'x0', mdl.sol, 'bounds', mdl.lb, mdl.ub);
             % Manually set the solution
             optiObj.setSolution(mdl.SSE, mdl.sol);
             % Calculate the fit statistics;
@@ -62,12 +94,16 @@ classdef confidence_tests < matlab.unittest.TestCase
             testCase.verifyEqual(mdl.AdjRsquare, stats.AdjRsquare, 'AbsTol', testCase.absTol);
             testCase.verifyEqual(mdl.RMSE, stats.RMSE, 'AbsTol', testCase.absTol);
             testCase.verifyEqual(mdl.DFE, stats.DFE, 'AbsTol');
-            testCase.verifyEqual(mdl.cov, stats.Cov, 'AbsTol', testCase.covAbsTol);
+            if (isfield(mdl, 'cov'))
+                testCase.verifyEqual(mdl.cov, stats.Cov, 'AbsTol', testCase.covAbsTol);
+            end
             testCase.verifyEqual(mdl.confInt, stats.ConfInt, 'AbsTol', testCase.confIntAbsTol);
             testCase.verifyEqual(mdl.confBnds, stats.ConfBnds.bnds, 'RelTol', testCase.confBndsRelTol);
-            testCase.verifyEqual(mdl.param(:,2), stats.Param.StdError, 'RelTol', testCase.stdErrRelTol);
-            testCase.verifyEqual(mdl.param(:,3), stats.Param.tStat, 'RelTol', testCase.tStatRelTol);
-            testCase.verifyEqual(mdl.param(:,4), stats.Param.pValues, 'AbsTol', testCase.pValAbsTol);
+            if (isfield(mdl, 'param'))
+                testCase.verifyEqual(mdl.param(:,2), stats.Param.StdError, 'RelTol', testCase.stdErrRelTol);
+                testCase.verifyEqual(mdl.param(:,3), stats.Param.tStat, 'RelTol', testCase.tStatRelTol);
+                testCase.verifyEqual(mdl.param(:,4), stats.Param.pValues, 'AbsTol', testCase.pValAbsTol);
+            end
         end
     end
     

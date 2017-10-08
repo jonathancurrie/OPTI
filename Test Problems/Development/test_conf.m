@@ -94,13 +94,24 @@ if(~isempty(which('cfit')))
     [fitresult, gof] = fit( xData, yData, ft, opts );
     fitresult
     gof
-    xd = s.ConfBnds.xdata;
+    xd = stats.ConfBnds.xdata;
     y = feval(fitresult,xd);
     ybnds = predint(fitresult,xd,0.95,'Functional','on');
     hold on
     plot(xd,y,':',xd,ybnds,':');
     hold off
 end
+
+%% Check weighted bounds
+clc
+format long g
+yt = predint(fitresult, Opt.prob.xdata, 0.95, 'Functional', 'on')
+s = Opt.calcStatistics(0.95, false);
+yo = s.ConfBnds.bnds;
+[~,ym] = predict(mdl,'Simultaneous','true','Weights',wts)
+
+% yt - yo
+yt - yo
 
 
 %% Himmelblau Example WITH BOUNDS [LB]
@@ -116,7 +127,7 @@ opts = optiset('solver','auto','display','off');
 x0 = [5e-3 2e-2];
 Opt = opti('fun',Rxn_rate,'data',p,r,'x0',x0,'bounds',[0;0],[5e-3,1],'options',opts);
 [x,fval,exitflag,info] = solve(Opt);
-fitStats(Opt,0.95);
+s = fitStats(Opt,0.95);
 %Plot
 plot(Opt)
 
@@ -133,7 +144,7 @@ if(~isempty(which('cfit')))
     opts.TolX = 1e-09;
     opts.Upper = Opt.prob.ub;
     % Fit model to data.
-    [fitresult, gof] = fit( xData, yData, ft, opts );
+    [fitresult, gof, out] = fit( xData, yData, ft, opts );
     fitresult
     gof
     xd = s.ConfBnds.xdata;
@@ -157,7 +168,7 @@ opts = optiset('solver','auto','display','off');
 x0 = [5e-3 2e-2];
 Opt = opti('fun',Rxn_rate,'data',p,r,'x0',x0,'bounds',[0;0.03],[7e-3,1],'options',opts);
 [x,fval,exitflag,info] = solve(Opt);
-fitStats(Opt,0.95);
+s=fitStats(Opt,0.95);
 %Plot
 plot(Opt)
 

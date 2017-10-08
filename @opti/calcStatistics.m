@@ -79,6 +79,7 @@ else
     gmode = 1;
 end
 %If we have weights, weight the Jacobian
+Xnowts = X;
 if(~isempty(weights))
     X = bsxfun(@times, weights, X);
 end
@@ -98,9 +99,11 @@ if(any(bidx))
     end
     X = X(:,~bidx);
     %Correct dfe, rmse
-    nparam = nparam - sum(bidx);
-    dfe = ndata-nparam;
-    rmse = sqrt(sse/dfe);
+    nparam      = nparam - sum(bidx);
+    dfe         = ndata-nparam;
+    rmse        = sqrt(sse/dfe);
+    stats.DFE   = dfe;
+    stats.RMSE  = rmse;
 end
 
 try
@@ -128,7 +131,7 @@ catch
     if(wlevel)
         optiwarn('opti:conf','The X''*X matrix has been found to be singular, and a general inverse will be used to (attempt to) solve the system covariance.\nResults are now suspicious at best...');
     end    
-    stats.Cov = inv(X'*X)*rmse^2; %poor method - any better ideas?    
+    stats.Cov = inv(X'*X)*rmse^2; %#ok<MINV> %poor method - any better ideas?    
 end
 warning(s1);
 warning(s);
@@ -147,6 +150,10 @@ alpha = (1-limit)/2;
 ConfInt = (-rmathlib('qt',alpha,dfe)* sqrt(v'))';
 stats.ConfInt = NaN(length(bidx),1);
 stats.ConfInt(~bidx) = ConfInt;
+
+% Return X to the unweighted version
+% This seems to be the accepted convention for bounds calculation
+X = Xnowts;
 
 %Solve Confidence Bounds for Plotting (note we must have system covariance for this to work!)
 if(~isempty(stats.Cov))
