@@ -5,7 +5,7 @@ function O = GetOPTI(B,opts)
 
 %   Copyright (C) 2012-2013 Jonathan Currie (IPL)
 
-if(nargin < 2), opts = symbset; else opts = symbset(opts); end
+if(nargin < 2 || isempty(opts)), opts = symbset; else, opts = symbset(opts); end
 
 %Check object is built
 if(~IsBuilt(B))
