@@ -953,6 +953,7 @@ classdef SymBuilder < handle
             noeq = B.noCons + B.noObjs;
             B.conlin = zeros(noeq,1);
             B.objlin = zeros(noeq,1);
+            B.objbias = zeros(noeq,1);
             %Determine Linearity (based on existence of symvars)
             for i = 1:noeq %must search all equations
                 %Gather first derivative vars
@@ -971,7 +972,17 @@ classdef SymBuilder < handle
                         B.conlin(i) = 3;
                     end
                 end
-            end            
+            end
+            % Find objective bias terms
+            for i = 1:noeq
+                % If linear, save bias term
+                if(B.objlin(i) == 1 || B.conlin(i) == 1)
+                    eq = B.sobj(i);
+                    v = symvar(eq);
+                    %Find bias term
+                    B.objbias(i) = double(subs(eq,v,{zeros(size(v))}));
+                end 
+            end
         end 
     end
     
