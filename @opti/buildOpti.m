@@ -987,7 +987,7 @@ end
 if(strcmpi(opts.solver,'matlab'))    
     % If the user has specified MATLAB as the solver, ensure it is available
     % for the problem type (optiSolver can't check this before here)
-    if (~any(strcmp(optiSolver(prb),'matlab')))
+    if (~any(strcmpi(optiSolver(prb),'matlab')))
         solver = optiSolver(['best_' prb]);
         if (warn)
             optiwarn('opti:nomatlab','MATLAB''s Optimization Toolbox is not available.\nUsing %s instead.',solver);
