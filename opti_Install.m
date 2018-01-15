@@ -392,7 +392,6 @@ end
 
 function OK = downloadMexFiles(localVer)
 
-OK = true;
 gitData = [];
 % See if we can download directly from GitHub (2014b +)
 if (exist('webread.m','file'))      
@@ -402,14 +401,67 @@ if (exist('webread.m','file'))
     catch
     end
 end
-if (isempty(gitData))
+
+% If we got the download info from Github
+if (~isempty(gitData))
+    % Download the latest files
+    zipNameNoVer = ['optiMEXFiles_' mexext];
+    numAssets = length(gitData.assets);
+    mexFilesFoundOnGit = false;
+    for i = 1:numAssets
+        asset = gitData.assets(i);
+        if (~isempty(asset))
+            if (~isempty(strfind(asset.name, zipNameNoVer)))
+                % Extract ver number from file name
+                [~,fileName] = fileparts(asset.name);
+                parts = regexp(fileName,'_','split');
+                if (length(parts) == 4)
+                    gitVer = str2double(parts{3}) + str2double(parts{4})/100;                                    
+                    fprintf(' Found v%.2f\n', gitVer);
+                    % If the Git version > local version, user needs to update OPTI source
+                    if (gitVer > localVer)
+                        OK = false;
+                        fprintf(2, 'The GitHub MEX Files are for a newer version of OPTI (GitHub %.2f, Local OPTI %.2f)\n', gitVer, localVer);
+                        fprintf(2, 'You will need to update your version of OPTI, please follow the instructions below:\n');
+                        opti_printUpdateInfo();
+                        return;
+                    elseif(gitVer < localVer) % should not happen
+                        fprintf(2, 'Your version of OPTI (%.2f) is newer than the version of MEX files available (%.2f).\n', localVer, gitVer);
+                        fprintf(2, 'This normally occurs if you are working on the develop branch.\n');
+                        fprintf(2, 'OPTI will download the latest release version, but please check GitHub regularly for an updated release.\n\n');
+                    end
+                else
+                    % Should not happen...
+                    fprintf(' Found\n');
+                end
+                % Start downloading
+                fprintf('Downloading ''%s'' (%.2f MB), please wait...',asset.name,asset.size/(1024 * 1e3));
+                tempLoc = [tempdir asset.name];
+                try
+                    websave(tempLoc,asset.browser_download_url);
+                    mexFilesFoundOnGit = true;
+                    fprintf(' Done!\n');
+                catch ME
+                    fprintf(' FAILED!\n');
+                    fprintf(2, 'Failure: %s\n', ME.message);
+                    fprintf(2, '\n\nPlease follow the below instructions to download the MEX files manually.\n');
+                end                                   
+                break;
+            end
+        end
+    end
+end
+
+if (mexFilesFoundOnGit == true)
+    OK = copyMexFiles(tempLoc);
+else
     % Cannot access internet / ML version too old, other error
     fprintf('\nIn order to update the MEX files in your OPTI installation, please visit:\n');
     disp(' <a href="https://github.com/jonathancurrie/OPTI/releases/latest">https://github.com/jonathancurrie/OPTI/releases/latest</a>')
     fprintf('and download "optiMEXFiles_%s_x_xx.zip" where x_xx is the latest release number.\n', mexext);
     input('\nOnce you have downloaded the zipped files, press enter to show OPTI where they are located (press enter to continue):  ', 's'); 
     [FileName,PathName] = uigetfile('*.zip', 'Select the OPTI MEX Files Download');
-    
+
     % Check seems a reasonable folder for opti files
     if (~ischar(FileName))
         error('OPTI cannot continue without knowing where you have downloaded the MEX files to. Please re-run the installer to continue.');
@@ -418,66 +470,8 @@ if (isempty(gitData))
     if (isempty(strfind(FileName,['optiMEXFiles_' mexext])) || ~strcmp(ext, '.zip'))
         error('OPTI did not recognise ''%s'' as a valid OPTI MEX File Download. Please run the installer again to select the correct download.',FileName);
     end
-    
     % Copy them over
     OK = copyMexFiles([PathName FileName]);
-    return;
-end
-
-% Download the latest files
-zipNameNoVer = ['optiMEXFiles_' mexext];
-numAssets = length(gitData.assets);
-mexFilesFoundOnGit = false;
-for i = 1:numAssets
-    asset = gitData.assets(i);
-    if (~isempty(asset))
-        if (~isempty(strfind(asset.name, zipNameNoVer)))
-            % Extract ver number from file name
-            [~,fileName] = fileparts(asset.name);
-            parts = regexp(fileName,'_','split');
-            if (length(parts) == 4)
-                gitVer = str2double(parts{3}) + str2double(parts{4})/100;                                    
-                fprintf(' Found v%.2f\n', gitVer);
-                % If the Git version > local version, user needs to update OPTI source
-                if (gitVer > localVer)
-                    OK = false;
-                    fprintf(2, 'The GitHub MEX Files are for a newer version of OPTI (GitHub %.2f, Local OPTI %.2f)\n', gitVer, localVer);
-                    fprintf(2, 'You will need to update your version of OPTI, please follow the instructions below:\n');
-                    opti_printUpdateInfo();
-                    return;
-                elseif(gitVer < localVer) % should not happen
-                    fprintf(2, 'Your version of OPTI (%.2f) is newer than the version of MEX files available (%.2f).\n', localVer, gitVer);
-                    fprintf(2, 'This normally occurs if you are working on the develop branch.\n');
-                    fprintf(2, 'OPTI will download the latest release version, but please check GitHub regularly for an updated release.\n\n');
-                end
-            else
-                % Should not happen...
-                fprintf(' Found\n');
-            end
-            % Start downloading
-            fprintf('Downloading ''%s'' (%.2f MB), please wait...',asset.name,asset.size/(1024 * 1e3));
-            tempLoc = [tempdir asset.name];
-            try
-                websave(tempLoc,asset.browser_download_url);
-                mexFilesFoundOnGit = true;
-                fprintf(' Done!\n');
-            catch ME
-                fprintf(' FAILED!\n');
-                fprintf(2, 'Failure: %s\n', ME.message);
-                fprintf(2, '\n\nPlease try running the installer again\n');
-                OK = false;
-                return;
-            end                                   
-            break;
-        end
-    end
-end
-
-if (mexFilesFoundOnGit == true)
-    OK = copyMexFiles(tempLoc);
-else
-    fprintf(2,'The OPTI MEX File package was not found in the latest release - please contact support. Sorry!\n');
-    OK = false;
 end
 
 
