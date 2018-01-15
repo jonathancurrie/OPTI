@@ -490,7 +490,7 @@ if (exist(unzipDir, 'dir'))
     rehash;
 end
 
-fprintf('Unzipping MEX Files...');
+fprintf('Unzipping MEX Files (please wait)...');
 unzip(loc, unzipDir);
 rehash;
 rehash;
