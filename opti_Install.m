@@ -13,7 +13,7 @@ function opti_Install(savePath,runTests,openBrowser)
 %
 % You MUST be in the current directory of this file!
 %
-%   Copyright (C) 2017 Jonathan Currie (Inverse Problem Limited)
+%   Copyright (C) 2018 Jonathan Currie (Inverse Problem Limited)
 %   https://inverseproblem.co.nz/OPTI/
 
 % Handle missing input args
