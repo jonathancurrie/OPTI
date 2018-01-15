@@ -351,6 +351,7 @@ if(~isempty(p))
             opts.solverOpts = optimoptions('intlinprog');
         end
         opts.solverOpts = optimoptions(opts.solverOpts,'Display',opts.display,'MaxTime',opts.maxtime,...
+                                'LPMaxIterations',opts.maxiter,'LPOptimalityTolerance',opts.tolrfun,...
                                 'TolInteger',opts.tolint,'MaxNodes',opts.maxnodes);
         %If BILP using intlinprog, we haven't set binary variables yet, set now
         if(strcmpi(prob.type,'bilp'))

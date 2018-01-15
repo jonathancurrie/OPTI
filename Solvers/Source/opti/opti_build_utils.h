@@ -21,6 +21,8 @@
     #define VS_VER "2015"
 #elif (_MSC_VER == 1910)
     #define VS_VER "2017"
+#elif (_MSC_VER == 1911)
+    #define VS_VER "2017"
 #else
     #define VS_VER "?"
 #endif
