@@ -3,7 +3,7 @@ function current_version = optiver
 %  Return OPTI software version. This file also contains version update
 %  information.
 
-%   Copyright (C) 2011-2017 Jonathan Currie (IPL)
+%   Copyright (C) 2011-2018 Jonathan Currie (IPL)
 
 current_version = 2.27;
 

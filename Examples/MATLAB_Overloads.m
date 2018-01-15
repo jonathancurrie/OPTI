@@ -17,7 +17,7 @@
 % As well as setting up OPTI solver options which can be used with the
 % overloaded functions.
 %
-%   Copyright (C) 2017 Jonathan Currie (IPL)
+%   Copyright (C) 2018 Jonathan Currie (IPL)
 
 % There is also a page on the Wiki which supplements this example:
 web('https://www.inverseproblem.co.nz/OPTI/index.php/GetStart/Overloads');
