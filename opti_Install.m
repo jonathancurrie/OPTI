@@ -393,6 +393,7 @@ end
 function OK = downloadMexFiles(localVer)
 
 gitData = [];
+mexFilesFoundOnGit = false;
 % See if we can download directly from GitHub (2014b +)
 if (exist('webread.m','file'))      
     fprintf('\n- Checking for updated MEX files from GitHub...');
@@ -407,7 +408,6 @@ if (~isempty(gitData))
     % Download the latest files
     zipNameNoVer = ['optiMEXFiles_' mexext];
     numAssets = length(gitData.assets);
-    mexFilesFoundOnGit = false;
     for i = 1:numAssets
         asset = gitData.assets(i);
         if (~isempty(asset))
@@ -435,7 +435,7 @@ if (~isempty(gitData))
                     fprintf(' Found\n');
                 end
                 % Start downloading
-                fprintf('Downloading ''%s'' (%.2f MB), please wait...',asset.name,asset.size/(1024 * 1e3));
+                fprintf('Downloading ''%s'' (%.2f MB), this will take a few minutes, please wait...',asset.name,asset.size/(1024 * 1e3));
                 tempLoc = [tempdir asset.name];
                 try
                     websave(tempLoc,asset.browser_download_url);
