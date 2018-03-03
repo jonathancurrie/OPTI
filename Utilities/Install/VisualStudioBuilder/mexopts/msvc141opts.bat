@@ -18,18 +18,18 @@ rem General parameters
 rem ********************************************************************
 
 set MATLAB=%MATLAB%
-set VSINSTALLDIR=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017
+set VSINSTALLDIR=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503
 set VCINSTALLDIR=%VSINSTALLDIR%
 rem In this case, LINKERDIR is being used to specify the location of the SDK
-set LINKERDIR=C:\Program Files (x86)\Windows Kits\10\bin\10.0.15063.0
+set LINKERDIR=C:\Program Files (x86)\Windows Kits\10\bin\10.0.16299.0
 set LINKERBIN=%LINKERDIR%
 rem Split the linker path into folder and version number
 For %%A in ("%LINKERDIR%") do (
     Set LINKERPATH=%%~dpA
     Set LINKERVER="%%~nxA"
 )
-set LINKERINC=C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0
-set LINKERLIB=C:\Program Files (x86)\Windows Kits\10\Lib\10.0.15063.0
+set LINKERINC=C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0
+set LINKERLIB=C:\Program Files (x86)\Windows Kits\10\Lib\10.0.16299.0
 set PATH=%VCINSTALLDIR%\bin\HostX64\x64;%VSINSTALLDIR%\..\..\..\..\Common7\IDE;%VSINSTALLDIR%\..\..\..\..\Common7\Tools;%LINKERBIN%\x64;%MATLAB_BIN%;%PATH%
 set INCLUDE=%VCINSTALLDIR%\INCLUDE;%VCINSTALLDIR%\ATLMFC\INCLUDE;%LINKERINC%\um;%LINKERINC%\shared;%LINKERINC%\winrt;%INCLUDE%
 set LIB=%VCINSTALLDIR%\LIB\x64;%VCINSTALLDIR%\ATLMFC\LIB\x64;%LINKERLIB%\um\x64;%MATLAB%\extern\lib\win64;%LIB%

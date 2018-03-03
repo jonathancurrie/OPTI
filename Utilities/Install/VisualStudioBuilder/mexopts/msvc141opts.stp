@@ -2,7 +2,7 @@
 sub msvc141opts 
 {
     my $input = shift;
-    my $default_location = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017";
+    my $default_location = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community";
     my $sdk_loc = "";
     my $registry_lookup_fcn = $input->{"registry_lookup"};
 	my $sdk_ver_suffix = ".0"; # for some reason the registry doesn't store this version :(
@@ -80,7 +80,7 @@ sub msvc141opts
 				if (-e "$compiler_location\\bin\\HostX64\\x64\\cl.exe" && -e "$candidate_location\\Common7\\IDE\\devenv.exe" ) 
 				{ 	
 					# Check we have the right version
-					if (&correct_version("$compiler_location\\bin\\HostX64\\x64\\cl.exe","19.10"))
+					if (&correct_version("$compiler_location\\bin\\HostX64\\x64\\cl.exe","19.11"))
 					{ 
 						$isvalid = 1;
 					}
