@@ -31,10 +31,10 @@ opts.mumps = true; %link MUMPS (add path below when compiling lib)
 opts.ma27 = ''; %do not link ma27
 
 % %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% path = 'C:\Solvers\Bonmin-1.8.4\Bonmin'; %FULL path to BONMIN
-% ipoptpath = 'C:\Solvers\Ipopt-3.12.7\Ipopt'; %FULL path to IPOPT
-% cbcpath = 'C:\Solvers\Cbc-2.9.8\Cbc'; % FULL path to CBC
-% clppath = 'C:\Solvers\Clp-1.16.10\Clp'; % FULL path to CLP
+% path = 'C:\Solvers\Bonmin-1.8.6\Bonmin'; %FULL path to BONMIN
+% ipoptpath = 'C:\Solvers\Ipopt-3.12.9\Ipopt'; %FULL path to IPOPT
+% cbcpath = 'C:\Solvers\Cbc-2.9.9\Cbc'; % FULL path to CBC
+% clppath = 'C:\Solvers\Clp-1.16.11\Clp'; % FULL path to CLP
 % mumpspath = 'C:\Solvers\MUMPS_4.10.0'; %FULL path to MUMPS (or leave blank to skip linking MUMPS)
 % metispath = 'C:\Solvers\metis-4.0.3'; % FULL path to METIS (leave blank if not linking MUMPS) [max version 4.0.3]
 % opts.expaths = {ipoptpath,cbcpath,clppath,mumpspath,metispath};

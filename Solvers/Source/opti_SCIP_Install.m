@@ -28,9 +28,9 @@
 % %% Visual Studio Builder Commands [LATEST SCIP REQ C++11]
 % %NOTE  - the PaxHeader folders change - update as required
 % clear
-% path = 'C:\Solvers\scipoptsuite-4.0.0\scip-4.0.0'; %e.g. 'C:\Solvers\SCIP'
-% splxpath = 'C:\Solvers\scipoptsuite-4.0.0\soplex-3.0.0'; %e.g. 'C:\Solvers\SOPLEX'
-% ipoptpath = 'C:\Solvers\Ipopt-3.12.7\Ipopt'; %e.g. 'C:\Solvers\IPOPT'
+% path = 'C:\Solvers\scipoptsuite-5.0.1\scip'; %e.g. 'C:\Solvers\SCIP'
+% splxpath = 'C:\Solvers\scipoptsuite-5.0.1\soplex'; %e.g. 'C:\Solvers\SOPLEX'
+% ipoptpath = 'C:\Solvers\Ipopt-3.12.9\Ipopt'; %e.g. 'C:\Solvers\IPOPT'
 % n = 1;
 % % SCIP
 % sdir = [path '\src'];
@@ -40,13 +40,13 @@
 % opts = [];
 % opts.exPP = {'IPOPT_BUILD','_CRT_SECURE_NO_WARNINGS','NO_RAND_R','NO_SIGACTION','NO_STRERROR_R',...
 %              'NO_STRTOK_R','ROUNDING_MS','NPARASCIP','WITH_SCIPDEF','TPI_TNYC','SCIP_BUILDFLAGS="OPTI_BUILD"'};          
-% opts.exclude = {'exprinterpret_none.c','nlpi_ipopt_dummy.c','nlpi_xyz.c','lpi_none.c',...
+% opts.exclude = {'exprinterpret_none.c','nlpi_ipopt_dummy.c','nlpi_filtersqp.c','nlpi_worhp.c','nlpi_xyz.c','lpi_none.c',...
 %                 'lpi_clp.cpp','lpi_cpx.c','lpi_grb.c','lpi_msk.c','lpi_qso.c',...
 %                 'lpi_spx.cpp','lpi_xprs.c','sorttpl.c','cmain.c',... %check whether we want lpi_spx2 or spx...?
 %                 'cppmain.cpp','disp_xyz.c','branch_xyz.c','event_xyz.c','cons_xyz.c',...
 %                 'heur_xyz.c','presol_xyz.c','prop_xyz.c','pricer_xyz.c','nodesel_xyz.c',...
 %                 'relax_xyz.c','reader_xyz.c','sepa_xyz.c','dialog_xyz.c','compr_xyz.c',...
-%                 'tpi_none.c', 'tpi_openmp.c'};           
+%                 'tpi_none.c', 'tpi_openmp.c', 'compute_symmetry_bliss.cpp'};           
 % VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = hdrs; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
 % % SOPLEX
 % sdir = [splxpath '\src'];
@@ -81,6 +81,7 @@
 %       - FIND #include "blockmemshell/ REPLACE #include "../blockmemshell/
 %       - FIND #include <blockmemshell/ REPLACE #include <../blockmemshell/
 %       - FIND #include "scip/          REPLACE #include "../scip/
+%       - FIND #include <scip/          REPLACE #include <../scip/
 %       - FIND #include "nlpi/          REPLACE #include "../nlpi/
 %       - FIND #include "lpi/           REPLACE #include "../lpi/
 %       - FIND #include "tpi/           REPLACE #include "../tpi/
@@ -88,6 +89,8 @@
 %       - FIND #include "xml/           REPLACE #include "../xml/
 %       - FIND #include "tinycthread/   REPLACE #include "../tinycthread/
 %       - FIND #include "dijkstra/      REPLACE #include "../dijkstra/
+%       - FIND #include "symmetry/      REPLACE #include "../symmetry/
+%       - FIND #include <symmetry/      REPLACE #include <../symmetry/
 %       - FIND #include <cppad/         REPLACE #include <../cppad/
 %       - FIND # include <cppad/        REPLACE # include <../cppad/
 %   b) In src/cppad/configure.hpp for 32bit change lines 150 and 164
@@ -99,8 +102,10 @@
 %   c) You MAY need to change line 2789 of nlpi_ipopt.cpp to "#ifdef F77_FUNC"
 %      if you encounter linker errors around "SCIPsolveLinearProb".
 %   d) Comment #include "buildflags.c" from scipbuildflags.c line 24
-%   e) Build a Win32 or x64 Release of each project to compile the code.
-%   f) Copy the generated .lib files to the following folder:
+%   e) Remove structure definition of SCIP_TableData in table_cyz.c if
+%   empty
+%   f) Build a Win32 or x64 Release of each project to compile the code.
+%   g) Copy the generated .lib files to the following folder:
 %
 %   OPTI/Solvers/scip/Source/lib/win32 or win64
 %
@@ -110,6 +115,7 @@
 %       - nlpi
 %       - objscip
 %       - scip
+%       - symmetry
 %       - cppad (just configure.hpp)
 %       - spxdefines.h from SOPLEX
 %   to 

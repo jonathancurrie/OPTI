@@ -35,7 +35,7 @@ libs = {'libgsl'};
 opts = [];
 opts.pp = {};
 opts.blas = 'MKL'; 
-opts.verb = true;
+opts.verb = false;
 
 %Compile
 opti_solverMex('gsl',src,inc,libs,opts);
