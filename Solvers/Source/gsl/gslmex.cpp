@@ -107,7 +107,7 @@ GslProbType GSLMex::_readProblemType(const OptiMexArgs& args)
 // Local Error Handler
 void error_handler(const char * reason, const char * file, int line, int gsl_errno)
 {
-    OPTIMex::error("Error in GSL \"%s\", line %d: %s (code %d)", file, line, reason, gsl_errno);
+    OPTIMex::error("OPTIMex:GSLError","Error in GSL \"%s\", line %d: %s (code %d)", file, line, reason, gsl_errno);
 }
     
     
