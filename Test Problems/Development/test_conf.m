@@ -103,16 +103,17 @@ if(~isempty(which('cfit')))
 end
 
 %% Check weighted bounds
-clc
-format long g
-yt = predint(fitresult, Opt.prob.xdata, 0.95, 'Functional', 'on')
-s = Opt.calcStatistics(0.95, false);
-yo = s.ConfBnds.bnds;
-[~,ym] = predict(mdl,'Simultaneous','true','Weights',wts)
+if(~isempty(which('cfit')))
+    clc
+    format long g
+    yt = predint(fitresult, Opt.prob.xdata, 0.95, 'Functional', 'on')
+    s = Opt.calcStatistics(0.95, false);
+    yo = s.ConfBnds.bnds;
+    [~,ym] = predict(mdl,'Simultaneous','true','Weights',wts)
 
-% yt - yo
-yt - yo
-
+    % yt - yo
+    yt - yo
+end
 
 %% Himmelblau Example WITH BOUNDS [LB]
 clc
