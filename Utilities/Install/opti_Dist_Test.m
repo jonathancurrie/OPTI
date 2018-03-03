@@ -6,7 +6,10 @@ clear all
 %% Run Unit Tests
 clc
 unitTestFolder = matlab.unittest.TestSuite.fromFolder([cd filesep 'Utilities/UnitTests']);
-run(unitTestFolder)
+res = run(unitTestFolder)
+if (sum([res.Failed]) ~= 0)
+    error('One or more unit tests failed!');
+end
 
 
 %% Run Old Tests
