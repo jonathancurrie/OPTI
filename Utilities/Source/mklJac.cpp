@@ -155,12 +155,18 @@ void MKLJac::checkInputArgs(const opti_mex_utils::OptiMexArgs& args, bool& haveS
 
     if (args.nrhs > 2)
     {
-        OPTIMex::checkIsDoubleScalarInBounds(pLEN, 1.0, 1e8, "Argument 3 (numRow), if specified,");
-        haveSize = true;
+        if (OPTIMex::isEmpty(pLEN) == false)
+        {
+            OPTIMex::checkIsDoubleScalarInBounds(pLEN, 1.0, 1e8, "Argument 3 (numRow), if specified,");
+            haveSize = true;
+        }
         if (args.nrhs > 3)
         {
-            OPTIMex::checkIsDoubleScalarInBounds(pTOL, std::numeric_limits<double>::epsilon(), 1.0, "Argument 4 (tol), if specified,");
-            haveTol = true;
+            if (OPTIMex::isEmpty(pTOL) == false)
+            {
+                OPTIMex::checkIsDoubleScalarInBounds(pTOL, std::numeric_limits<double>::epsilon(), 1.0, "Argument 4 (tol), if specified,");
+                haveTol = true;
+            }
         }
     }
 }
