@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include "opti_util.h"
+#include "opti_build_utils.h"
 
 //Function handle structure
 #define FLEN 128 /* max length of user function name */

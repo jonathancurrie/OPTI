@@ -36,7 +36,7 @@ using namespace std;
 
 // From Matlab
 #include "mex.h"
-#include "opti_util.h"
+#include "opti_build_utils.h"
 
 extern "C" {
   #include <glpk.h>

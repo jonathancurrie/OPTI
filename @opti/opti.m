@@ -458,7 +458,22 @@ classdef opti < handle
             retprob = optObj.prob;
             retprob = rmfield(retprob,{'iscon','sizes','numdif','type','ampl','save'});
             retprob.int = retprob.int.str;
-        end          
+        end      
+        
+        %-- Set Solution (unit testing only use) --%
+        function setSolution(optObj, fval, sol)
+            %Check class isn't empty
+            if(isempty(optObj.prob))
+                error('You cannot get the problem from an empty OPTI object!');
+            end
+            optObj.obj = fval;
+            if (numel(sol) ~= optObj.prob.sizes.ndec)
+                error('Solution vector is the wrong size');
+            else
+                optObj.sol = sol(:);
+            end
+            optObj.info = struct('Status','HARDCODED SOLUTION','Algorithm','USER SPECIFIED');
+        end
     end
     
     methods (Static)

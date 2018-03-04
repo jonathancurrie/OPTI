@@ -79,7 +79,7 @@ typedef struct {
     
 //Argument Enums (in expected order of arguments)
 #ifdef OPTI_VERSION
-    #include "opti_util.h"
+    #include "opti_build_utils.h"
     enum {eFUN, eX0, eLB, eUB, eNLCON, eNLRHS, eXTYPE, eOPTS};
 #else //GERAD VERSION
     enum {eFUN, eX0, eLB, eUB, eOPTS};

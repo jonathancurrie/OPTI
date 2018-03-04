@@ -17,7 +17,7 @@ end
 
 i = 1;
 clear fval fmin
-opts = optiset('display','iter');
+opts = optiset('display','iter','maxtime',30);
 
 %% NLP1
 clc

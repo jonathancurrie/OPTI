@@ -52,7 +52,7 @@
 #include <stdio.h>
 #include <signal.h>
 #include <string.h>
-#include "opti_util.h"
+#include "opti_build_utils.h"
 
 #include "lpsolvecaller.h"
 

@@ -37,11 +37,6 @@ cd(cpath);
 % Check ML ver
 matlabVerCheck();
 
-% Perform MEX File check (also checks pre-reqs)
-if (~mexFileCheck(localVer, cpath))
-    return;
-end
-
 %Uninstall previous versions of OPTI
 fprintf('\n- Checking for previous versions of OPTI Toolbox...\n');
 no = opti_Uninstall('opti_Install.m',0);
@@ -49,6 +44,11 @@ if(no < 1)
     fprintf('Could not find a previous installation of OPTI Toolbox\n');
 else
     fprintf('Successfully uninstalled previous version(s) of OPTI Toolbox\n');
+end
+
+% Perform MEX File check (also checks pre-reqs)
+if (~mexFileCheck(localVer, cpath))
+    return;
 end
 
 %Add toolbox path to MATLAB
@@ -293,6 +293,13 @@ end
 
 function OK = mexFileCheck(localVer,cpath)
 
+% Check if a dev version of OPTI
+if (exist([cd '/Solvers/Source/lib/win64/libclp.lib'],'file'))
+    fprintf('\nOPTI Development Version Detected, Skipping MEX File Check\n');
+    OK = true;
+    return;
+end
+
 % Add paths required for checks
 addpath([cd '/Solvers'])
 addpath([cd '/Utilities'])
@@ -395,11 +402,15 @@ function OK = downloadMexFiles(localVer)
 gitData = [];
 mexFilesFoundOnGit = false;
 % See if we can download directly from GitHub (2014b +)
-if (exist('webread.m','file'))      
-    fprintf('\n- Checking for updated MEX files from GitHub...');
-    try
-        gitData = webread('https://api.github.com/repos/jonathancurrie/OPTI/releases/latest');
-    catch
+if (exist('webread.m','file'))  
+    % See if the user wants us to automatically download the mex files
+    in = input('\n- Would You Like OPTI To Attempt to Download the MEX Files Automatically? (Recommended) (y/n): ','s');
+    if (strcmpi(in,'y'))
+        fprintf('\n- Checking for updated MEX files from GitHub...');
+        try
+            gitData = webread('https://api.github.com/repos/jonathancurrie/OPTI/releases/latest');
+        catch
+        end
     end
 end
 

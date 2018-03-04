@@ -85,6 +85,12 @@ if(iscell(src))
 else
     src_str = src;
 end
+% Add OPTI Utils
+if (opts.util)
+    src_str = sprintf('%s ../../Solvers/Source/opti/opti_mex_utils.cpp', src_str);
+else
+    src_str = sprintf('%s opti/opti_mex_utils.cpp', src_str);
+end
 
 %Build Include String
 if(iscell(inc))
@@ -98,10 +104,11 @@ else
     inc_str = '';
 end
 if(opts.util)
-    inc_str = [inc_str ' -I..\..\Solvers\Source\opti '];
+    inc_str = [inc_str ' -I../../Solvers/Source/opti '];
 else
     inc_str = [inc_str ' -Iopti '];
 end
+inc_str = [inc_str ' -IInclude '];
 
 %Build Library String
 lib_str = [' -L' getLibPath];

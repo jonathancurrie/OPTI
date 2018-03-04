@@ -24,7 +24,7 @@
 #include <exception>
 #include <time.h>
 #include <algorithm>
-#include "opti_util.h"
+#include "opti_build_utils.h"
 
 #ifdef LINK_MKL
     #include "mkl.h"

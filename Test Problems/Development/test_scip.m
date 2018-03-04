@@ -986,4 +986,19 @@ plot(Opt)
 
 [x,f,e,i] = baron(fun,[],[],[],lb,ub,nlcon,1,1)
 
+
+
+
+%% Problem SCIP 
+fun = @(x) (x(1)-x(2))^2 + (x(2)-x(3))^3 + (x(3)-x(4))^4 + (x(4)-x(5))^4;
+nlcon = @(x) [x(1) + x(2)^2 + x(3)^3 - 3;
+              x(2) - x(3)^2 + x(4) - 1;
+              x(1)*x(5) - 1];
+cl = [0;0;0];
+cu = [0;0;0];
+x0 = [2;sqrt(2);-1;2*-sqrt(2);0.5];
+opts = []; opts.display = 'iter'; opts.maxtime = 120;
+
+
+[x,fval,ef,info] = opti_scipnl(fun,[],[],[],[],[],nlcon,cl,cu,[],x0,opts)
    

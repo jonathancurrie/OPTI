@@ -14,7 +14,7 @@
 
 #include "nlopt.h"
 #include "config.h"
-#include "opti_util.h"
+#include "opti_build_utils.h"
 
 #define FLEN 256 /* max length of user function name */
 #define MAXRHS 2 /* max nrhs for user function */    

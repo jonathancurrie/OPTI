@@ -19,7 +19,7 @@
 #include "CoinMessageHandler.hpp"
 #include "CbcEventHandler.hpp"
 #include "CbcOrClpParam.hpp"
-#include "opti_util.h"
+#include "opti_build_utils.h"
 
 #include <exception>
 #include <string>

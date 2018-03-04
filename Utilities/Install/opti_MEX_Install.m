@@ -22,7 +22,7 @@ addpath([cd '/Utilities/Source'])
 % opti_CLP_Install
 
 
-%% -- VS2015 Solvers --
+%% -- VS2017 Solvers --
 clc
 fprintf(2,'Please Specify Visual Studio 2017 as your Compiler...\n\n');
 mex -setup
@@ -46,6 +46,9 @@ opti_FILTERSD_Install
 
 %% GLPK
 opti_GLPK_Install
+
+%% GSL
+opti_GSL_Install
 
 %% IPOPT
 opti_IPOPT_Install

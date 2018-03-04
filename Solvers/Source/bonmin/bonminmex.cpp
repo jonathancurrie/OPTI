@@ -13,7 +13,7 @@
 #include "config_clp_default.h"
 #include "config_coinutils_default.h"
 #include "config_osi_default.h"
-#include "opti_util.h"
+#include "opti_build_utils.h"
 #if defined(LINK_MKL) || defined(LINK_MKL_PARDISO)
     #include "mkl.h"
 #endif

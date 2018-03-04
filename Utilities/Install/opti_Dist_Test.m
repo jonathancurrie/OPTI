@@ -3,6 +3,16 @@
 clc
 clear all
 
+%% Run Unit Tests
+clc
+unitTestFolder = matlab.unittest.TestSuite.fromFolder([cd filesep 'Utilities/UnitTests']);
+res = run(unitTestFolder)
+if (sum([res.Failed]) ~= 0)
+    error('One or more unit tests failed!');
+end
+
+
+%% Run Old Tests
 addpath([cd filesep 'Test Problems/Development']);
 try
 
@@ -92,7 +102,6 @@ try
     test_objc;
     test_sym_diff;
     test_sparse_snle;
-    test_rmathlib_formal;
 
     %Plot tests
     test_1dplots;

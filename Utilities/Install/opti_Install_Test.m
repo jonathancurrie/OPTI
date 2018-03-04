@@ -51,6 +51,7 @@ for t = 1:length(tests)
             ind = strcmpi(msolvers,'NOMAD'); msolvers(ind) = [];
             ind = strcmpi(msolvers,'PSWARM'); msolvers(ind) = [];
             ind = strcmpi(msolvers,'NLOPT'); msolvers(ind) = []; 
+            ind = strcmpi(msolvers,'GSL'); msolvers(ind) = []; 
         case 'nlp'
             ind = strcmpi(msolvers,'NLOPT'); msolvers(ind) = [];
             ind = strcmpi(msolvers,'PSWARM'); msolvers(ind) = [];

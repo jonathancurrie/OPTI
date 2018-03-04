@@ -20,7 +20,7 @@ clc
 % required paths on your computer:
 
 %Build VS Solution & Compile Solver Libraries (Win32 + Win64)
-% path = 'C:\Solvers\Clp-1.16.10\Clp'; % FULL path to CLP
+% path = 'C:\Solvers\Clp-1.16.11\Clp'; % FULL path to CLP
 % glpkpath = 'C:\Solvers\glpk-4.48'; % FULL path to GLPK (or leave blank [MAX VER 4.48])
 % opts = []; opts.expath = glpkpath;
 % opti_VSBuild('CLP',path,opts);

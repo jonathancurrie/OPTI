@@ -250,6 +250,20 @@ switch(lower(solver))
         %unique
         info.unq.x0 = SOME;
         
+     case 'gsl'
+        info.der1 = SOME;
+        info.multialg = YES;    
+        info.opt.meval = YES;
+        info.opt.miter = YES;
+        info.opt.mtime = YES;
+        info.opt.disp = YES;
+        info.opt.ctrlc = YES;
+        info.opt.iterf = YES;  
+        info.opt.tola = YES;
+        info.opt.opts = YES;
+        %unique
+        info.unq.x0 = YES;
+        
     case 'hybrj'
         info.der1 = SOME;
         %[miter,meval,mnode,mtime,tolr,tola,tolint,disp,opts,ctrlc,iterf] = fillCFields(no,yes,no,yes,no,no,no,yes,no,yes,yes);

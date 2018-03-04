@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include "opti_util.h"
+#include "opti_build_utils.h"
 
 #define NL2SOL_VERSION "2.3"
 

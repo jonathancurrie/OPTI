@@ -40,6 +40,8 @@ switch(lower(opts.solver))
         [prob,opts] = setupGLPK(prob,opts,warn);
     case 'gmatlab'
         [prob,opts,nlprob] = setupGMATLAB(prob,opts,warn);
+    case 'gsl'
+        nlprob = setupGSL(prob,opts,warn);
     case 'hybrj'
         nlprob = setupHYBRJ(prob,opts);
     case 'ipopt'
@@ -198,6 +200,28 @@ end
 prob = fixLin('gen',prob,warn,'GMATLAB'); %Check & Fix Linear Constraints
 prob = fixNlin('gen',prob,warn,'GMATLAB'); %Check & Fix Nonlinear Constraints
 nlprob = convGMatlab(prob,opts);
+
+% -- GSL -- %
+function nlprob = setupGSL(prob,opts,warn)
+%Error Checks
+checkPType('GSL',prob.type,'NLS');
+checkCon('GSL',prob.sizes,'uncon');
+%Assign Callbacks
+switch (lower(prob.type))
+    case 'nls'
+        [nlprob.fun,nlprob.grad,nlprob.ydata] = setupDataFit(prob,warn);
+    otherwise
+        nlprob.fun = prob.fun;        
+        nlprob.grad = prob.f;
+end
+%Setup Options
+nlprob.options.maxiter  = opts.maxiter;
+nlprob.options.maxfeval = opts.maxfeval;
+nlprob.options.tolafun  = opts.tolafun;
+nlprob.options.tolrfun  = opts.tolrfun;
+nlprob.options.maxtime  = opts.maxtime;
+nlprob.options.display  = opts.display;
+nlprob.options.iterfun  = opts.iterfun;
 
 % -- HYBRJ -- %
 function nlprob = setupHYBRJ(prob,opts)

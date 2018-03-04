@@ -8,7 +8,7 @@
 
 #include "mex.h"
 #include <time.h>
-#include "opti_util.h"
+#include "opti_build_utils.h"
 #ifdef LINK_MKL
     #include "mkl.h"
 #endif
