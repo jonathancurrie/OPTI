@@ -117,7 +117,11 @@ if(~isempty(prob.fun) && isempty(prob.f))
         if(warn > 1), optiwarn('opti:mkljac','OPTI will use MKLJAC (Numerical Difference Algorithm) for the Objective Gradient Function'); end
         %Check for Data fitting problem
         if(~isempty(prob.ydata))
-            prob.f = @(x) mklJac(prob.fun,x,length(prob.ydata));
+            if (nargin(prob.fun) == 2)
+                prob.f = @(x) mklJac(@(x) prob.fun(x,prob.xdata),x); 
+            else
+                prob.f = @(x) mklJac(prob.fun,x,length(prob.ydata));
+            end
         %Normal objective, single row
         else
             prob.f = @(x) mklJac(prob.fun,x,1);
