@@ -2,7 +2,7 @@
 If you are interested in optimization, use MATLAB + Windows and like free stuff, OPTI could be for you. See the [OPTI Wiki](https://inverseproblem.co.nz/OPTI/) for details on solving linear, nonlinear, continuous and discrete optimization problems using MATLAB!
 
 #### Downloading OPTI
-The best way to get OPTI is to clone the master branch from GitHub (this page!) using git. I like [SourceTree](https://www.sourcetreeapp.com/) which makes it easy to use git without the command line. Once you have git/SourceTree/some other git client, simply click **Clone or download** (above, green button) and copy the address of this repository, and clone it to your computer. This way each time I push updates to the master branch, you can simply pull them down without having to redownload the entire OPTI package again! 
+The best way to get OPTI is to clone the master branch from GitHub (this page!) using git. I like [GitKraken](https://www.gitkraken.com/) which makes it easy to use git without the command line. Once you have git/GitKraken/some other git client, simply click **Clone or download** (above, green button) and copy the address of this repository, and clone it to your computer. This way each time I push updates to the master branch, you can simply pull them down without having to redownload the entire OPTI package again! 
 
 If you don't use git, and don't want to learn (remember its easy and you should use it!), simply click **Clone or download** and click **Download ZIP** and save OPTI somewhere you can find it.
 

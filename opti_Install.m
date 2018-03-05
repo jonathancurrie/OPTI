@@ -278,7 +278,7 @@ if(missing)
 %     end
     
     if(~havIF) 
-        fprintf(2,' Intel Fortran XE 2017:\n  - Download from: https://software.intel.com/en-us/articles/redistributables-for-intel-parallel-studio-xe-2017-composer-edition-for-windows\n');
+        fprintf(2,' Intel Fortran XE 2018:\n  - Download from: https://software.intel.com/en-us/articles/redistributable-libraries-for-intel-c-and-fortran-2018-compilers-for-windows\n');
         fprintf(2,'  - The download page will contain multiple links. Download the latest (highest number) update from the ''Intel Fortran Compiler for Windows Table''\n');
         fprintf(2,'  - The download package will contain two files. Install the ''%s'' package.\n\n',icarch);
     end
