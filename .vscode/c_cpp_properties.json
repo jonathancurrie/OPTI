@@ -50,7 +50,7 @@
                 "C:/Program Files (x86)/Windows Kits/10/Include/10.0.15063.0/ucrt",
                 "C:/Program Files (x86)/Windows Kits/10/Include/10.0.15063.0/shared",
                 "C:/Program Files (x86)/Windows Kits/10/Include/10.0.15063.0/winrt",
-                "C:/Program Files/MATLAB/R2017a/extern/include",
+                "C:/Program Files/MATLAB/R2017b/extern/include",
                 "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl/include",
                 "${workspaceRoot}/Solvers/Source/Include",
                 "${workspaceRoot}/Solvers/Source/opti",
