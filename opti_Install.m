@@ -278,7 +278,7 @@ if(missing)
 %     end
     
     if(~havIF) 
-        fprintf(2,' Intel Fortran XE 2017:\n  - Download from: https://software.intel.com/en-us/articles/redistributables-for-intel-parallel-studio-xe-2017-composer-edition-for-windows\n');
+        fprintf(2,' Intel Fortran XE 2018:\n  - Download from: https://software.intel.com/en-us/articles/redistributable-libraries-for-intel-c-and-fortran-2018-compilers-for-windows\n');
         fprintf(2,'  - The download page will contain multiple links. Download the latest (highest number) update from the ''Intel Fortran Compiler for Windows Table''\n');
         fprintf(2,'  - The download package will contain two files. Install the ''%s'' package.\n\n',icarch);
     end
@@ -399,6 +399,7 @@ end
 
 function OK = downloadMexFiles(localVer)
 
+localVer = round(localVer, 3);
 gitData = [];
 mexFilesFoundOnGit = false;
 % See if we can download directly from GitHub (2014b +)
@@ -427,7 +428,7 @@ if (~isempty(gitData))
                 [~,fileName] = fileparts(asset.name);
                 parts = regexp(fileName,'_','split');
                 if (length(parts) == 4)
-                    gitVer = str2double(parts{3}) + str2double(parts{4})/100;                                    
+                    gitVer = round(str2double(parts{3}) + str2double(parts{4})/100, 3);                                    
                     fprintf(' Found v%.2f\n', gitVer);
                     % If the Git version > local version, user needs to update OPTI source
                     if (gitVer > localVer)
