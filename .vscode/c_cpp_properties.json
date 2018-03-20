@@ -59,7 +59,9 @@
             ],
             "defines": [
                 "_DEBUG",
-                "UNICODE"
+                "UNICODE",
+                "ML_VER=R2017b",
+                "OPTI_VER=2.28"
             ],
             "intelliSenseMode": "msvc-x64",
             "browse": {
