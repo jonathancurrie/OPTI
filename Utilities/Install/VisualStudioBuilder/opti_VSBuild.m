@@ -653,6 +653,28 @@ switch(lower(solver))
         projs = {'libfilterSD','libfilterSDsp'};  
         comps = {'if','if'};
         
+    case 'filtersqp'
+        fsqppath = paths{1};
+        n = 1;
+        %FilterSD (dense)
+        sdir = [fsqppath '\src'];
+        name = 'libfilterSQP';
+        opts = [];       
+        opts.cpp = false; opts.ifortver = ifortver;
+        opts.include = {'filter.f','filteraux.f','scaling.f','wdotd.f','QPsolved.f','bqpd.f','auxil.f','denseL.f','denseA.f','util.f'};
+        VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = []; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
+        % FILTERSD (sparse)
+        name = 'libfilterSQPsp';
+        opts = [];       
+        opts.cpp = false; opts.ifortver = ifortver;
+         opts.include = {'filter.f','filteraux.f','scaling.f','wdotd.f','QPsolves.f','bqpd.f','auxil.f','sparseL.f','sparseA.f','util.f'};
+        VSPRJ(n).sdir = sdir; VSPRJ(n).hdrs = []; VSPRJ(n).name=name; VSPRJ(n).opts=opts; n = n + 1;
+        %Write the Solution File
+        solpath = VS_WriteSol(VSPRJ,vsver);
+        %List of projects to compile and move
+        projs = {'libfilterSQP','libfilterSQPsp'};  
+        comps = {'if','if'};
+        
     case 'glpk'
         glpkpath = paths{1};
         %Copy Header Files

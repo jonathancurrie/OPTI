@@ -41,6 +41,8 @@
     int                   nvars;
  };
 #endif       
+ 
+#define FILTERSQP_VERSION "20010817"
 
 using namespace std;
 
@@ -647,8 +649,8 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[])
     {
         SCIP_RETCODE rc = SCIPsolve(scip);
         if(rc != SCIP_OKAY) {
-            //Clean up general SCIP memory
-            SCIP_ERR( SCIPfree(&scip), "Error releasing SCIP problem");
+            //Clean up general SCIP memory (if possible)
+            SCIPfree(&scip);
             //Display Error
             sprintf(msgbuf,"Error Solving SCIP Problem, Error: %s (Code: %d)",scipErrCode(rc),rc); 
             mexErrMsgTxt(msgbuf);
@@ -1168,16 +1170,17 @@ void printSolverInfo()
     mexPrintf("  - Source available from: http://scip.zib.de/\n\n");
     
     mexPrintf(" This binary is statically linked to the following software:\n");
-    mexPrintf("  - SoPlex [v%d] (ZIB Academic License)\n",SOPLEX_VERSION);
-    mexPrintf("  - Ipopt  [v%s] (Eclipse Public License)\n",IPOPT_VERSION);
+    mexPrintf("  - SoPlex    [v%d] (ZIB Academic License)\n",SOPLEX_VERSION);
+    mexPrintf("  - Ipopt     [v%s] (Eclipse Public License)\n",IPOPT_VERSION);
+    mexPrintf("  - filterSQP [v%s] (Copyright University of Dundee)\n",FILTERSQP_VERSION);
     strcpy(msgbuf,&CPPAD_PACKAGE_STRING[6]);
-    mexPrintf("  - CppAD  [v%s] (Eclipse Public License)\n",msgbuf);  
+    mexPrintf("  - CppAD     [v%s] (Eclipse Public License)\n",msgbuf);  
     #ifdef LINK_MUMPS
-        mexPrintf("  - MUMPS  [v%s]\n",MUMPS_VERSION);
-        mexPrintf("  - METIS  [v4.0.3] (Copyright University of Minnesota)\n");
+        mexPrintf("  - MUMPS     [v%s]\n",MUMPS_VERSION);
+        mexPrintf("  - METIS     [v4.0.3] (Copyright University of Minnesota)\n");
     #endif
     #ifdef LINK_ASL
-        mexPrintf("  - ASL    [v%d] (Netlib)\n",ASLdate_ASL);
+        mexPrintf("  - ASL       [v%d] (Netlib)\n",ASLdate_ASL);
     #endif
     #ifdef LINK_NETLIB_BLAS
         mexPrintf("  - NETLIB BLAS: http://www.netlib.org/blas/\n  - NETLIB LAPACK: http://www.netlib.org/lapack/\n");
@@ -1194,7 +1197,7 @@ void printSolverInfo()
     #ifdef LINK_MA57
         mexPrintf("  - HSL MA57 (This Binary MUST NOT BE REDISTRIBUTED)\n");
         #if defined(LINK_METIS) && !defined(LINK_MUMPS)
-            mexPrintf("  - MeTiS [v4.0.3] Copyright University of Minnesota\n");
+            mexPrintf("  - MeTiS    [v4.0.3] Copyright University of Minnesota\n");
         #endif
     #endif
     
