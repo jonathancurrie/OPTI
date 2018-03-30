@@ -18,7 +18,7 @@ rem General parameters
 rem ********************************************************************
 
 set MATLAB=%MATLAB%
-set VSINSTALLDIR=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503
+set VSINSTALLDIR=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.13.26128
 set VCINSTALLDIR=%VSINSTALLDIR%
 rem In this case, LINKERDIR is being used to specify the location of the SDK
 set LINKERDIR=C:\Program Files (x86)\Windows Kits\10\bin\10.0.16299.0
