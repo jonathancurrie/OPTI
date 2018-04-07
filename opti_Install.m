@@ -396,10 +396,26 @@ for i = 1:length(mexFiles)
     end
 end
 
+function r = optiRound(r, n)
+mver = ver('MATLAB');
+vv = regexp(mver.Version,'\.','split');
+needOptiRound = false;
+% MATLAB 2014b  introduced round(r,n), before then approximate it
+if(str2double(vv{1}) < 8)
+    needOptiRound = true;
+elseif (str2double(vv{1}) == 8 && str2double(vv{2}) < 4)
+    needOptiRound = true;
+end
+if (needOptiRound == true)
+    r = round(r*10^n)/(10^n);
+else
+    r = round(r,n);
+end
+
 
 function OK = downloadMexFiles(localVer)
 
-localVer = round(localVer, 3);
+localVer = optiRound(localVer, 3);
 gitData = [];
 mexFilesFoundOnGit = false;
 % See if we can download directly from GitHub (2014b +)
@@ -428,7 +444,7 @@ if (~isempty(gitData))
                 [~,fileName] = fileparts(asset.name);
                 parts = regexp(fileName,'_','split');
                 if (length(parts) == 4)
-                    gitVer = round(str2double(parts{3}) + str2double(parts{4})/100, 3);                                    
+                    gitVer = optiRound(str2double(parts{3}) + str2double(parts{4})/100, 3);                                    
                     fprintf(' Found v%.2f\n', gitVer);
                     % If the Git version > local version, user needs to update OPTI source
                     if (gitVer > localVer)
