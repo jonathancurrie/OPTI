@@ -407,7 +407,7 @@ elseif (str2double(vv{1}) == 8 && str2double(vv{2}) < 4)
     needOptiRound = true;
 end
 if (needOptiRound == true)
-    r = round(r*1e3)/1e3;
+    r = round(r*10^n)/(10^n);
 else
     r = round(r,n);
 end
