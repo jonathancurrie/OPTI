@@ -162,10 +162,14 @@ if(~isempty(prob.nlcon))
 end
 
 function [msg,ok] = checkRowCon(cval,rl,ru,str,tol,msg,ok)
+%Ensure columns
+cval = cval(:);
+rl = rl(:);
+ru = ru(:);
 %Indices
 eq = rl == ru; neq = ~eq;
 ile = isfinite(ru) & neq;
-ige = isfinite(rl) & neq; 
+ige = isfinite(rl) & neq;
 if(any(ile))
     err = (cval - ru);
     chk = err > tol;
