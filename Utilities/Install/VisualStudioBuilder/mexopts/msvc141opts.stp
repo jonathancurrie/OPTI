@@ -41,7 +41,7 @@ sub msvc141opts
 				if (my $toolsVer = <$fh>)
 				{
 					chomp $toolsVer;	
-					my $toolsVerTrim = substr $toolsVer, 0, -1;
+					my $toolsVerTrim = $toolsVer; #substr $toolsVer, 0, -1;
 					my $compilerLoc = "$candidate_location\\VC\\Tools\\MSVC\\$toolsVerTrim";
 					if ($toolsVerTrim ne ""	&&  -e "$compilerLoc\\bin\\HostX64\\x64\\cl.exe") 
 					{ 	
@@ -80,7 +80,7 @@ sub msvc141opts
 				if (-e "$compiler_location\\bin\\HostX64\\x64\\cl.exe" && -e "$candidate_location\\Common7\\IDE\\devenv.exe" ) 
 				{ 	
 					# Check we have the right version
-					if (&correct_version("$compiler_location\\bin\\HostX64\\x64\\cl.exe","19.11"))
+					if (&correct_version("$compiler_location\\bin\\HostX64\\x64\\cl.exe","19.13"))
 					{ 
 						$isvalid = 1;
 					}

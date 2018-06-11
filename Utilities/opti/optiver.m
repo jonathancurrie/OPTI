@@ -9,6 +9,9 @@ current_version = 2.28;
 
 %History
 
+%2.29 (...)
+% - Added filterSQP v2001/08/17 as an NLP solver to SCIP
+
 %2.28 (04/03/18)
 % - Added option to installer to allow users to bypass auto download of mex
 % files and specify location manually
