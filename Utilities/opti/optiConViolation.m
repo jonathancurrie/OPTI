@@ -43,9 +43,9 @@ if(~isempty(nlcon))
     ile = nle == -1;
     ige = nle == 1;
     ieq = nle == 0;
-    vl = n(ile) - nlrhs(ile); vl(vl < 0) = 0;
-    vu = n(ige) - nlrhs(ige); vu(vu > 0) = 0;
-    ve = n(ieq) - nlrhs(ieq);
+    cel = n(ile); vl = cel(:) - nlrhs(ile); vl(vl < 0) = 0;
+    ceu = n(ige); vu = ceu(:) - nlrhs(ige); vu(vu > 0) = 0;
+    cee = n(ieq); ve = cee(:) - nlrhs(ieq);
     v = [v;vl;vu;ve];
     vineq = [vineq;vl;vu];
     veq = [veq;ve];
