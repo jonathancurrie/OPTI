@@ -36,3 +36,18 @@ opts = optiset('solver','pswarm','maxiter',1e6,'maxfeval',1e6,'maxtime',0.02);
 Opt = opti('obj',obj,'bounds',lb,ub,'options',opts)
 x0 = [-3  -1  -3  -1]';
 [x,fval,exitflag,info]= solve(Opt,x0)
+
+%% NLP2 Hock & Schittkowski #38, low tol threshold
+clc
+%Objective & Gradient
+obj = @(x)100*(x(2)-x(1)^2)^2 + (1-x(1))^2 + 90*(x(4)-x(3)^2)^2 + (1-x(3))^2 + ...
+      10.1*(x(2)-1)^2 + 10.1*(x(4)-1)^2 + 19.8*(x(2)-1)*(x(4)-1);                             
+%Constraints
+lb = [-10 -10 -10 -10]';
+ub = [10 10 10 10]';
+%Setup Options
+opts = optiset('solver','pswarm','maxiter',1e6,'maxfeval',1e6, 'tolrfun', 10);
+%Build & Solve
+Opt = opti('obj',obj,'bounds',lb,ub,'options',opts)
+x0 = [-3  -1  -3  -1]';
+[x,fval,exitflag,info]= solve(Opt,x0)

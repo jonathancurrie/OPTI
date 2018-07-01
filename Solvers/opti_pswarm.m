@@ -45,6 +45,9 @@ if(isfield(opts,'solverOpts') && ~isempty(opts.solverOpts))
 else
     popts = opts;
 end
+if(isfield(popts, 'tolrfun') && ~isfield(popts, 'tolfun'))
+    popts.tolfun = popts.tolrfun;
+end
 %Setup display level
 popts.display = dispLevel(opts.display);
 popts.optiver = optiver;
