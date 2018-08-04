@@ -22,6 +22,8 @@
 % the above steps, simply run this file to compile! You MUST BE in the 
 % base directory of OPTI!
 
+clear mklJac
+
 %MEX Interface Source Files
 src = 'mklJac.cpp';
 %Options

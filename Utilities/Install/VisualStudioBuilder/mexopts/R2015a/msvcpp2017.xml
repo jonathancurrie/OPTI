@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config
+    Name="Microsoft Visual C++ 2017"
+    ShortName="MSVCPP150"
+    Manufacturer="Microsoft"
+    Version="15.0"
+    Language="C++"
+    Priority="B7"
+    Location="$VCROOT\" >
+    <Details
+        CompilerExecutable="$COMPILER"
+        CompilerDefines="$COMPDEFINES"
+        CompilerFlags="$COMPFLAGS"
+        OptimizationFlags="$OPTIMFLAGS"
+        DebugFlags="$DEBUGFLAGS"
+        IncludeFlags="$INCLUDE"
+        LinkerExecutable="$LINKER"
+        LinkerFlags="$LINKFLAGS $LINKTYPE"
+        LinkerLibraries="$LINKLIBS"
+        LinkerDebugFlags="$LINKDEBUGFLAGS"
+        LinkerOptimizationFlags="$LINKOPTIMFLAGS"
+        CommandLineShell="$VCVARSALLDIR\VCVARSALL.BAT "
+        CommandLineShellArg="amd64"
+        CompilerDefineFormatter="/D%s"
+        LinkerLibrarySwitchFormatter="lib%s.lib;%s.lib"
+        LinkerPathFormatter="/LIBPATH:%s"
+        LibrarySearchPath="$$LIB;$$LIBPATH;$$PATH;$$INCLUDE;$MATLABROOT\extern\lib\$ARCH\microsoft"
+    />
+    <!-- Switch guide: http://msdn.microsoft.com/en-us/library/fwkeyyhe(v=vs.71).aspx -->
+    <vars
+        CMDLINE100="$COMPILER /c $COMPFLAGS $OPTIM $COMPDEFINES $INCLUDE $SRC /Fo$OBJ"
+        CMDLINE200="$LINKER $LINKFLAGS $LINKTYPE $LINKOPTIM $LINKEXPORTVER $OBJS $LINKLIBS /out:$EXE"
+        CMDLINE250="mt -outputresource:$EXE;2 -manifest $MANIFEST"
+        CMDLINE300="del $EXP $LIB $MANIFEST $ILK"
+
+        COMPILER="cl"
+        COMPFLAGS="/Zp8 /GR /W3 /EHs /nologo /MD"
+        COMPDEFINES="/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE /D_SECURE_SCL=0  $MATLABMEX"
+        MATLABMEX=" /DMATLAB_MEX_FILE"
+        OPTIMFLAGS="/O2 /Oy- /DNDEBUG"
+        INCLUDE="-I&quot;$MATLABROOT\extern\include&quot; -I&quot;$MATLABROOT\simulink\include&quot;"
+        DEBUGFLAGS="/Z7"
+
+        LINKER="link"
+        LINKFLAGS="/nologo /manifest "
+        LINKTYPE="/DLL"
+        LINKEXPORT="/EXPORT:mexFunction"
+        LINKEXPORTVER="/EXPORT:mexFunction"
+        LINKLIBS="/LIBPATH:&quot;$MATLABROOT\extern\lib\$ARCH\microsoft&quot; libmx.lib libmex.lib libmat.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib"
+        LINKDEBUGFLAGS="/debug /PDB:&quot;$TEMPNAME$LDEXT.pdb&quot;"
+        LINKOPTIMFLAGS=""
+
+        OBJEXT=".obj"
+        LDEXT=".mexw64"
+        SETENV="set COMPILER=$COMPILER
+                set COMPFLAGS=/c $COMPFLAGS $COMPDEFINES $MATLABMEX
+                set OPTIMFLAGS=$OPTIMFLAGS
+                set DEBUGFLAGS=$DEBUGFLAGS
+                set LINKER=$LINKER
+                set LINKFLAGS=$LINKFLAGS /export:%ENTRYPOINT% $LINKTYPE $LINKLIBS $LINKEXPORT
+                set LINKDEBUGFLAGS=/debug /PDB:&quot;%OUTDIR%%MEX_NAME%$LDEXT.pdb&quot;
+                set NAME_OUTPUT=/out:&quot;%OUTDIR%%MEX_NAME%%MEX_EXT%&quot;"
+    />
+    <client>
+        <engine
+            LINKLIBS="$LINKLIBS libeng.lib"
+            LINKEXPORT=""
+            LINKEXPORTVER=""
+            LDEXT=".exe"
+            LINKTYPE=""
+            MATLABMEX=""
+        />
+        <mbuild          
+          CMDLINE100="$COMPILER /c $COMPFLAGS $OPTIM $COMPDEFINES $INCLUDE $SRC /Fo$OBJ /UMX_COMPAT_SC"
+          CMDLINE200="$LINKER $LINKFLAGS $LINKTYPE $LINKOPTIM $LINKEXPORT $OBJS $LINKLIBS /out:$EXE"
+          CMDLINE250="mt -outputresource:$EXE;1 -manifest $MANIFEST"
+          CMDLINE300="del $MANIFEST &quot;$TEMPNAME.map&quot;"
+          LINKFLAGS="/nologo /manifest"
+          LINKLIBS="/MACHINE:AMD64 /LIBPATH:&quot;$MATLABROOT\extern\lib\$ARCH\microsoft&quot; mclmcrrt.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib"
+          INCLUDE="-I&quot;$MATLABROOT\extern\include&quot; -I&quot;$MATLABROOT\extern\include\$ARCH&quot;"
+          COMPFLAGS="-MD -Zp8 -GR -W3 -EHsc- -Zc:wchar_t- -nologo"
+          COMPDEFINES="/DMSVC /DIBMPC /D_CRT_SECURE_NO_DEPRECATE"
+          OPTIMFLAGS="-O2 -DNDEBUG"
+          LINKEXPORT=""
+          LINKEXPORTVER=""
+          LDEXT=".exe" 
+		  MATLABMEX=""
+		  LINKTYPE=""
+		  LINKDEBUGFLAGS="/debug /PDB:&quot;$TEMPNAME.pdb&quot;"
+		/>
+		<mbuild_com
+          CMDLINE000="copy &quot;$MATLABROOT\extern\include\$ARCH\mwcomutil.tlb&quot; &quot;$OUTDIR&quot;"
+          CMDLINE001="midl /nologo /$ARCH $COMPINCLUDE /D NDEBUG /out &quot;$OUTDIR&quot; mwcomtypes.idl"
+          CMDLINE002="midl /nologo /$ARCH $COMPINCLUDE /D NDEBUG /out &quot;$OUTDIR&quot; &quot;$COMIDL&quot;"
+          CMDLINE100="$COMPILER $COMPFLAGS $OPTIM $COMPDEFINES $INCLUDE $COMPINCLUDE $SRC /Fo$OBJ"
+          CMDLINE150="rc /fo &quot;$RESFILE&quot; &quot;$RCFILE&quot;"
+          CMDLINE250="mt -outputresource:$EXE;2 -manifest $MANIFEST"
+          CMDLINE275="&quot;$MATLABROOT\runtime\$ARCH\mwregsvr.exe&quot; $EXE"
+          CMDLINE300="del $MANIFEST &quot;$OUTDIR\mwcomutil.tlb&quot; &quot;$RESFILE&quot;"
+          
+		  OUTDIR="."
+          INCLUDE="$INCLUDE -I&quot;$OUTDIR&quot; -I&quot;$MATLABROOT\extern\include\$ARCH&quot;"
+          COMPFLAGS="/c /GR /W3 /EHsc- -Zc:wchar_t /nologo /MT"
+          COMPDEFINES="/DMSVC /DIBMPC /D_CRT_SECURE_NO_DEPRECATE /D_SECURE_SCL=0" 
+          COMPINCLUDE="-I&quot;$MATLABROOT\extern\include&quot; -I&quot;$OUTDIR&quot;"
+
+          LINKEXPORT="/DLL /def:&quot;$DEFFILE&quot;"
+          LINKEXPORTVER="/DLL /def:&quot;$DEFFILE&quot;"
+          LINKLIBS="/MACHINE:AMD64 $LINKLIBS mclmcrrt.lib &quot;$RESFILE&quot;"
+          LDEXT=".dll"
+          USERONLY=""
+		  LINKTYPE=""
+		  MATLABMEX=""
+          />
+    </client>
+    <locationFinder>
+        <VCROOT>
+            <and>
+                <or>
+                    <hklmExists path="SOFTWARE\Microsoft\VisualStudio\SxS\VS7" name="15.0" />
+                    <hkcuExists path="SOFTWARE\Microsoft\VisualStudio\SxS\VS7" name="15.0" />
+                    <hklmExists path="SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7" name="15.0" />
+                    <hkcuExists path="SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7" name="15.0" />
+                </or>
+                <cmdReturns name="set &quot;vcroot=$$&quot;&amp;for /f &quot;delims= &quot; %a in ('type &quot;$$\VC\Auxiliary\Build\Microsoft.VCToolsVersion.default.txt&quot;') do @if exist &quot;$$\VC\Tools\MSVC\%a\bin\HostX64\x64\cl.exe&quot; call echo %vcroot%" />
+            </and>
+        </VCROOT>
+        <SDKROOT>
+            <or>
+                <hklmExists path="SOFTWARE\Microsoft\Microsoft SDKs\Windows\v10.0" name="InstallationFolder" />
+                <hkcuExists path="SOFTWARE\Microsoft\Microsoft SDKs\Windows\v10.0" name="InstallationFolder" />
+                <hklmExists path="SOFTWARE\Wow6432Node\Microsoft\Microsoft SDKs\Windows\v10.0" name="InstallationFolder" />
+                <hkcuExists path="SOFTWARE\Wow6432Node\Microsoft\Microsoft SDKs\Windows\v10.0" name="InstallationFolder" />
+            </or>
+        </SDKROOT>
+        <VSINSTALLDIR>
+            <or>
+                <hklmExists path="SOFTWARE\Microsoft\VisualStudio\SxS\VS7" name="15.0" />
+                <hkcuExists path="SOFTWARE\Microsoft\VisualStudio\SxS\VS7" name="15.0" />
+                <hklmExists path="SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7" name="15.0" />
+                <hkcuExists path="SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7" name="15.0" />
+            </or>
+        </VSINSTALLDIR>
+        <VCINSTALLDIR>
+          <and>
+            <or>
+              <hklmExists path="SOFTWARE\Microsoft\VisualStudio\SxS\VS7" name="15.0" />
+              <hkcuExists path="SOFTWARE\Microsoft\VisualStudio\SxS\VS7" name="15.0" />
+              <hklmExists path="SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7" name="15.0" />
+              <hkcuExists path="SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7" name="15.0" />
+            </or>
+            <cmdReturns name="set &quot;vcroot=$$&quot;&amp;for /f &quot;delims= &quot; %a in ('type &quot;$$\VC\Auxiliary\Build\Microsoft.VCToolsVersion.default.txt&quot;') do @if exist &quot;$$\VC\Tools\MSVC\%a\bin\HostX64\x64\cl.exe&quot; call echo %vcroot%\VC\Tools\MSVC\%a" />
+          </and>
+        </VCINSTALLDIR>
+        <VCVARSALLDIR>
+           <and>
+                <or>
+                    <hklmExists path="SOFTWARE\Microsoft\VisualStudio\SxS\VS7" name="15.0" />
+                    <hkcuExists path="SOFTWARE\Microsoft\VisualStudio\SxS\VS7" name="15.0" />
+                    <hklmExists path="SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7" name="15.0" />
+                    <hkcuExists path="SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7" name="15.0" />
+                </or>
+                <fileExists name="$$\VC\Auxiliary\Build\vcvarsall.bat" />
+                <dirExists name="$$"/>
+            </and>
+        </VCVARSALLDIR>
+        <KITSROOT>
+            <or>
+                <hklmExists path="SOFTWARE\Wow6432Node\Microsoft\Windows Kits\Installed Roots" name="KitsRoot10" />
+                <hkcuExists path="SOFTWARE\Wow6432Node\Microsoft\Windows Kits\Installed Roots" name="KitsRoot10" />
+                <hklmExists path="SOFTWARE\Microsoft\Windows Kits\Installed Roots" name="KitsRoot10" />
+                <hkcuExists path="SOFTWARE\Microsoft\Windows Kits\Installed Roots" name="KitsRoot10" />
+            </or>
+        </KITSROOT>
+        <SDKVERSION>
+            <and>
+                <or>
+                   
+                    <hklmExists path="SOFTWARE\Wow6432Node\Microsoft\Windows Kits\Installed Roots" name="KitsRoot10" />
+                    <hkcuExists path="SOFTWARE\Wow6432Node\Microsoft\Windows Kits\Installed Roots" name="KitsRoot10" />
+                    <hklmExists path="SOFTWARE\Microsoft\Windows Kits\Installed Roots" name="KitsRoot10" />
+                    <hkcuExists path="SOFTWARE\Microsoft\Windows Kits\Installed Roots" name="KitsRoot10" />
+                </or>
+                <!-- For each folder inside '<KITSROOT>\include' check for 'ucrt' and if exists return that folder name -->
+                <cmdReturns name="echo off&amp;set &quot;sdkversion=&quot;&amp;(for /f %a IN ('dir &quot;$$\include\&quot; /b /ad-h /on') do ( @if exist &quot;$$\include\%a\ucrt\&quot; set &quot;sdkversion=%a&quot; ))&amp;call echo %sdkversion%" />
+            </and>
+        </SDKVERSION>
+    </locationFinder>
+    <env
+        PATH="$VCINSTALLDIR\bin\HostX64\x64\;$VCROOT\Common7\IDE\VC\vcpackages;$VCROOT\Common7\IDE;$VCROOT\Common7\Tools;$SDKROOT\Bin\x64;$SDKROOT\Bin\x86;$SDKROOT\Bin\$SDKVERSION\x64;$SDKROOT\Bin\$SDKVERSION\x86;"
+        INCLUDE="$VCINSTALLDIR\include;$VCINSTALLDIR\atlmfc\include;$KITSROOT\include\$SDKVERSION\ucrt;$KITSROOT\include\$SDKVERSION\shared;$KITSROOT\include\$SDKVERSION\um;$KITSROOT\include\$SDKVERSION\winrt;$MATLABROOT\extern\include"
+        LIB="$VCINSTALLDIR\lib\x64;$VCINSTALLDIR\atlmfc\lib\x64;$KITSROOT\Lib\$SDKVERSION\ucrt\x64;$KITSROOT\lib\$SDKVERSION\um\x64;$MATLABROOT\lib\$ARCH"
+        LIBPATH="$VCINSTALLDIR\lib\x64;$VCINSTALLDIR\atlmfc\lib\x64"
+    />
+</config>
