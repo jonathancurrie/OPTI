@@ -862,10 +862,15 @@ if(strcmpi(prb,'NLP') && ~misc.forceSNLE)
         error('OPTI cannot determine whether you are solving a UNO or SNLE. Please supply ndec or x0 to opti/optiprob to continue.');
     end
     try
-        l = length(prob.fun(x0));
+        testObj = prob.fun(x0);
+        l = length(testObj);
     catch ME
         fprintf(2,'OPTI detected an error running a test objective call. Please correct the error below and try again:\n\n');
         rethrow(ME); %so user can see it
+    end
+    % Ensure objective returns a double
+    if (~isa(testObj, 'double'))
+        error('OPTI:NotDouble', 'The objective function does not return a double precision value (%s instead)', class(testObj));
     end
     if(l > 1)
         %Check n = n
@@ -1043,7 +1048,13 @@ if(cnl && ~isempty(prob.nlcon))
             optiwarn('OPTI:nox0','OPTI is testing your nonlinear constraint function(s) but does not have an x0 to use - assuming zeros(n,1).\n Please supply x0 to opti/optiprob to avoid this warning.');
         end
     end    
-    nnlcon = length(prob.nlcon(x0));
+    testNLCon = prob.nlcon(x0);
+    nnlcon = length(testNLCon);
+    % Ensure constraints return a double
+    if (~isa(testNLCon, 'double'))
+        error('OPTI:NotDouble', 'The nonlinear constraint function does not return a double precision value (%s instead)', class(testNLCon));
+    end
+    
     %Determine number of constraint equations from bounds (remember double sided constraints will cause issues otherwise)
     if(~isempty(prob.cl))
         tnnlcon = length(prob.cl);

@@ -44,6 +44,9 @@ if(any(any(isnan(go))) || any(any(isinf(go))) || any(any(isnan(gu))) || any(any(
     derError(name,sprintf('One or more elements in the gradient are NaN or Inf.\n\nPlease correct your initial guess to ensure a valid estimation of derivatives.'));
 end
 
+% Ensure grad returns a double
+checkIsDouble(gu, name);
+
 %Check the same size
 [ro,co] = size(go);
 [ru,cu] = size(gu);
@@ -108,7 +111,16 @@ end
 
 %Display Warning
 if(~isOK && warn), optiwarn('OPTI:IncorrectJac',wstr); end
-if(isOK), optiinfo('OPTI Derivative Checker detected no problems in ''%s''',name); end
+if(isOK && warn), optiinfo('OPTI Derivative Checker detected no problems in ''%s''',name); end
     
 function derError(name,msg)
 throwAsCaller(MException('OPTI:DERCHECK','OPTI Derivative Checker detected a problem in ''%s'':\n\n%s',name,msg));
+
+function checkIsDouble(v, name)
+if (~isa(v, 'double'))
+    if (isempty(name))
+        error('OPTI:NotDouble', 'The %s derivative function does not return a double precision value (%s instead)', name, class(v));
+    else
+        error('OPTI:NotDouble', 'A user supplied derivative function does not return a double precision value (%s instead)', class(v));
+    end
+end

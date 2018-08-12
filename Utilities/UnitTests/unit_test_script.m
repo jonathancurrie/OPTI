@@ -3,6 +3,11 @@
 clc
 clear
 
+%% OPTI Object
+clc
+testOPTI = opti_tests;
+res = run(testOPTI)
+
 %% MKLJAC
 clc
 testMklJac = mklJac_tests;
