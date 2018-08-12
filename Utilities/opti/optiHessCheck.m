@@ -64,6 +64,8 @@ if(any(any(isnan(Huser))) || any(any(isinf(Huser))))
 end
 [rhu,chu] = size(Huser);
 if(rhu~=chu), derError(name,'The user supplied Hessian of the Lagrangian is not square!'); end
+% Ensure hess returns a double
+checkIsDouble(Huser, name);
 
 %Decide we have a tril Hessian
 isTril = false;
@@ -191,3 +193,11 @@ function J = jacEval(x,jac,i)
 Jall = jac(x);
 J = Jall(i,:);
 
+function checkIsDouble(v, name)
+if (~isa(v, 'double'))
+    if (isempty(name))
+        error('OPTI:NotDouble', 'The %s derivative function does not return a double precision value (%s instead)', name, class(v));
+    else
+        error('OPTI:NotDouble', 'A user supplied second derivative function does not return a double precision value (%s instead)', class(v));
+    end
+end
