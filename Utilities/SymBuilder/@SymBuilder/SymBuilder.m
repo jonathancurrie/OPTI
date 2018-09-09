@@ -584,10 +584,10 @@ classdef SymBuilder < handle
             %Compile if C Code
             if(fgen ~= 'M')
                 if(B.verbose), fprintf('Compiling....'); end
-                %If compiling with VS2015 but pre R2015b, need to manually add in UCRT location
+                %If compiling with VS2015 but pre R2015a, need to manually add in UCRT location
                 cc = mex.getCompilerConfigurations(); post = [];
                 for i = 1:length(cc)
-                    if(~isempty(strfind(cc(i).Name,'Microsoft Visual C++')) && str2double(cc(i).Version) >= 14 && verLessThan('matlab','8.6'))
+                    if(~isempty(strfind(cc(i).Name,'Microsoft Visual C++')) && str2double(cc(i).Version) >= 14 && verLessThan('matlab','8.5'))
                         post = opti_FindUCRT();
                         break;
                     end
