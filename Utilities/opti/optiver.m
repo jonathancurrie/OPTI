@@ -12,6 +12,7 @@ current_version = 2.28;
 %2.29 (...)
 % - Added filterSQP v2001/08/17 as an NLP solver to SCIP
 % - Fixed bug in PSwarm tolerance (N.Kazmierczak)
+% - Allowed SymBuilder to re-solve without rebuilding
 
 %2.28 (04/03/18)
 % - Added option to installer to allow users to bypass auto download of mex
