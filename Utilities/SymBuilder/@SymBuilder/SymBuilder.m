@@ -14,6 +14,7 @@ classdef SymBuilder < handle
         hess        %Structure of hessians of each equation
         hesslag     %Symbolic hessian of the lagrangian  
         Opt         %OPTI object
+        lastSolveOpts %Last Options passed when Solve() was called
     end
     
     properties(SetAccess=private)%,GetAccess=private)
@@ -645,8 +646,7 @@ classdef SymBuilder < handle
             end
             if(nargin < 3 || isempty(opts)), opts = symbset; end
             if(nargin < 2), x0 = []; end
-            
-            if(B.verbose), fprintf('\nGenerating OPTI Object....\n'); end
+                        
             %Cusomtize settings based on solver
             switch(lower(opts.solver))
                 %White box solvers
@@ -659,8 +659,14 @@ classdef SymBuilder < handle
                 case {'filtersd','lbfgsb','nlopt'}
                     opts = symbset(opts,'use2ndDerivs','no');
             end
-            B.Opt = GetOPTI(B,opts);
-            if(B.verbose), fprintf('Done\n\n'); end
+            if (isempty(B.Opt) || isempty(B.lastSolveOpts) || ~isequal(B.lastSolveOpts, opts))
+                if(B.verbose), fprintf('\nGenerating OPTI Object....\n'); end
+                B.Opt = GetOPTI(B,opts);
+                B.lastSolveOpts = opts;
+                if(B.verbose), fprintf('Done\n\n'); end
+            else
+                if(B.verbose), fprintf('\nRe-using OPTI Object\n'); end
+            end            
             %Solve
             [x,fval,ef,info] = solve(B.Opt,x0);
         end
