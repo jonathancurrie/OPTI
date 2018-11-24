@@ -190,8 +190,19 @@ else %old ones to remove
 end
 
 function matlabVerCheck()
-mver = ver('MATLAB');
+
 fprintf('\n- Checking MATLAB version and operating system...\n');
+mver = ver('MATLAB');
+% Sometimes we get multiple products here (no idea why), ensure we have MATLAB
+if (length(mver) > 1)
+    for i = 1:length(mver)
+        if (strcmp(mver(i).Name, 'MATLAB'))
+            mver = mver(i);
+            break;
+        end
+    end
+end
+
 vv = regexp(mver.Version,'\.','split');
 if(str2double(vv{1}) < 8)
     if(str2double(vv{2}) < 12)
