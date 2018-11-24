@@ -168,7 +168,12 @@ if(nargin > 1 && ~isempty(sobj))
 %                 fprintf(fp,'%s\n',regexprep(ccode(nzsym(i)),'t0 = ',sprintf('pr[%d] = ',i-1)));
 %             end
             if(length(nzsym) > 1)
-                fprintf(fp,'%s\n',ppc(cmode,regexprep(ccode(nzsym),'nzsym[(\d*)\][0\]','pr[$1\]')));
+                str = regexprep(ccode(nzsym),'nzsym[(\d*)\][0\]','pr[$1\]');
+                if ~isempty(strfind(str, 'nzsym'))
+                    nzsym = nzsym.';
+                    str = regexprep(ccode(nzsym),'nzsym[(\d*)\][0\]','pr[$1\]');
+                end
+                fprintf(fp,'%s\n',ppc(cmode,str));
             else
                 fprintf(fp,'%s\n',regexprep(ccode(nzsym),'t0 = ','pr[0] = '));
             end
