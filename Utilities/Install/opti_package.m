@@ -53,7 +53,7 @@ if(fid)
         fprintf(fid,'%% %s Toolbox\n',upper(name));
         fprintf(fid,'%% Version %.2f %s %s\n',tbxver,mver.Release,datestr(now,1));
         fprintf(fid,'%% Copyright (C) %s-%s Jonathan Currie (Inverse Problem Ltd)\n',stDate,datestr(now,10));
-        fprintf(fid,'%% License: https://inverseproblem.co.nz/OPTI/index.php/DL/License\n');
+        fprintf(fid,'%% License: https://controlengineering.co.nz/Wikis/OPTI/index.php/DL/License\n');
     catch ME
         fclose(fid);
         rethrow(ME);

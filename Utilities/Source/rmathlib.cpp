@@ -1,6 +1,6 @@
 /* RMATHLIBMEX - A MATLAB MEX Interface to the R Math Library
  * Released Under the BSD 3-Clause License:
- * https://www.inverseproblem.co.nz/OPTI/index.php/DL/License
+ * https://www.controlengineering.co.nz/Wikis/OPTI/index.php/DL/License
  *
  * Copyright (C) Jonathan Currie 2012-2017
  * www.inverseproblem.co.nz

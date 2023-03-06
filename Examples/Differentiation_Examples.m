@@ -7,7 +7,7 @@
 %   Copyright (C) 2014 Jonathan Currie (IPL)
 
 %Also see the following webpage for more examples:
-web('https://www.inverseproblem.co.nz/OPTI/index.php/Advanced/Deriv1');
+web('https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Advanced/Deriv1');
 
 %% Gradient vs Jacobian
 % The terms Gradient and Jacobian are associated with differentiation

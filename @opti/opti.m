@@ -32,7 +32,7 @@ classdef opti < handle
 %
 %
 %   For detailed documentation see the Wiki:
-%      https://inverseproblem.co.nz/OPTI
+%      https://controlengineering.co.nz/Wikis/OPTI
 %
 %
 %   See also opti.solve optiset opti.plot 

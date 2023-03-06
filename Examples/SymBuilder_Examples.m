@@ -9,7 +9,7 @@
 clear
 
 % There is also a page on the Wiki which supplements this example:
-web('https://www.inverseproblem.co.nz/OPTI/index.php/Advanced/SymBuilder');
+web('https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Advanced/SymBuilder');
 
 % NOTE - If you get an error similar to "Undefined function 'symb_cb'" when
 % using SymBuilder then try type "rehash" at the MATLAB command line. This 
