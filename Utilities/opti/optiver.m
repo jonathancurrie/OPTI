@@ -3,7 +3,7 @@ function current_version = optiver
 %  Return OPTI software version. This file also contains version update
 %  information.
 
-%   Copyright (C) 2011-2018 Jonathan Currie (Control Engineering)
+%   Copyright (C) 2011-2023 Jonathan Currie (Control Engineering)
 
 current_version = 2.28;
 
@@ -14,6 +14,7 @@ current_version = 2.28;
 % - Allowed SymBuilder to re-solve without rebuilding
 % - Fixed bug in PSwarm tolerance (N.Kazmierczak)
 % - Fixed bug in installer when ver('MATLAB') returned an array of structs
+% - Updated documentation links against controlengineering.co.nz
 
 %2.28 (04/03/18)
 % - Added option to installer to allow users to bypass auto download of mex

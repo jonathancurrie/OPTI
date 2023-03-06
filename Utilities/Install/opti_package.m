@@ -26,10 +26,6 @@ fprintf('Done!\n');
 % Update the contents file
 UpdateContentsFile('OPTI',optiver,'Utilities/opti');
 
-% Copy latest SCIP to download folder
-copyfile(which(['scip.' mexext]), '../../../Inverse Problem/OPTI Academic Solvers');
-
-
 function UpdateContentsFile(name,tbxver,contentsFile)
 %Update contents file description line
 
