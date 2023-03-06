@@ -9,7 +9,7 @@ function varargout = optiBench(varargin)
 %
 %   optiBench(type,no,plot) specifies whether to plot the results as well.
 
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)
 
 if(isempty(varargin)), prob = 'LP'; else prob = varargin{1}; end
 if(nargin > 1), testNo = varargin{2}; else testNo = []; end

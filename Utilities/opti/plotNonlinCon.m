@@ -2,7 +2,7 @@ function plotNonlinCon(prob,data,linear)
 %PLOTNONLINCON Plot Nonlinear Constraints on the current figure
 %   plotNonlinCon(prob)
 
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 
 if(nargin < 3), linear = false; end
 xl = data.xl; yl = data.yl;

@@ -48,6 +48,6 @@
 %       5 - User Exited
 %
 %
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 %
 %   See Also opti_clp

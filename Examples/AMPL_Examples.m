@@ -6,7 +6,7 @@
 %
 % The underlying parser uses Netlib's AMPL Solver Library (ASL) Interface.
 %
-%   Copyright (C) 2014 Jonathan Currie (IPL)
+%   Copyright (C) 2014 Jonathan Currie (Control Engineering)
 
 % There is also a page on the Wiki which supplements this example:
 web('https://www.controlengineering.co.nz/Wikis/OPTI/index.php/File/AMPL');

@@ -1,5 +1,5 @@
 /* BONMINMEX - A MEX Interface to BONMIN MINLP Solver
- * Copyright (C) Jonathan Currie 2011 (IPL)
+ * Copyright (C) Jonathan Currie 2011 (Control Engineering)
  */
 
 /* Based heavily (if not all) on the IPOPT interface by Peter Carbonetto */

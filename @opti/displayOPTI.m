@@ -3,7 +3,7 @@ function displayOPTI(O)
 %
 %   Called By OPTI Class
 
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)
 
 %Distribute Structure Variables;
 prob = O.prob;

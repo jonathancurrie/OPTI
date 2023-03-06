@@ -4,7 +4,7 @@
 % supplied with the OPTI Toolbox. Note you should be familiar with the 
 % operation of OPTI Toolbox by reading the accompanying examples.
 %
-%   Copyright (C) 2014 Jonathan Currie (IPL)
+%   Copyright (C) 2014 Jonathan Currie (Control Engineering)
 
 %Also see the following webpage for more examples:
 web('https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Advanced/Deriv1');

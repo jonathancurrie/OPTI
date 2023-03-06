@@ -3,7 +3,7 @@
  * https://www.controlengineering.co.nz/Wikis/OPTI/index.php/DL/License
  *
  * Copyright (C) Jonathan Currie 2018
- * www.inverseproblem.co.nz
+ * www.controlengineering.co.nz
  */
 
 #ifndef SCIPMEXINC

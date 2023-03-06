@@ -65,4 +65,4 @@
  
 %   Based in parts on the original MEX interface by DSDP authors.
 %
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)

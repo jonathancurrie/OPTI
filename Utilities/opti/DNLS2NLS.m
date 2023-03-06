@@ -2,7 +2,7 @@ function prob = DNLS2NLS(prob,opts)
 %DNLS2NLS  Converts a Dynamic NLS problem into a NLS problem
 % prob= DNLS2NLS(prob,opts)
 
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 
 if(~isfield(prob,'type') || isempty(prob.type))
     error('This function is not for user use, and should only be called from OPTI');

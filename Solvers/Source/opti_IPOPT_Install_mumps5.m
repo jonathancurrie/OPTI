@@ -1,5 +1,5 @@
 %% IPOPT Install for OPTI Toolbox
-% Copyright (C) 2014 Jonathan Currie (IPL)
+% Copyright (C) 2014 Jonathan Currie (Control Engineering)
 
 % This file will help you compile Interior Point OPTimizer (IPOPT) for use 
 % with MATLAB. 

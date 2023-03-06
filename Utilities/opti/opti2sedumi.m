@@ -2,7 +2,7 @@ function [At,b,c,K] = opti2sedumi(prob)
 %OPTI2SEDUMI  Converts an OPTI Problem (f,A,b,sdcone) to SeDuMi Format
 % [At,b,c,K] = opti2sedumi(prob)
 
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 
 %Check not already in sedumi format
 if(isfield(prob,'sdcone') && ~isempty(prob.sdcone) && isstruct(prob.sdcone))

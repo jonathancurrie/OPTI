@@ -4,7 +4,7 @@
 % solve them using the OPTI Toolbox. You should read and complete
 % BasicUsage.m & LinearProgramming.m BEFORE running the below examples.
 %
-%   Copyright (C) 2014 Jonathan Currie (IPL)
+%   Copyright (C) 2014 Jonathan Currie (Control Engineering)
 
 % There is also a page on the Wiki which supplements this example:
 web('https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/NLP');

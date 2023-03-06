@@ -28,4 +28,4 @@
 %       objbias - Objective bias term
 %
 %
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)

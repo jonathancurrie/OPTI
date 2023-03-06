@@ -5,7 +5,7 @@ function f = sym2func(fun,args)
 %   replaces any x1 to x(1), x2 to x(2), etc, and returns it as a function
 %   handle suitable for standard evaluation.
 
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 
 if(nargin < 2), args = 'x'; end
 

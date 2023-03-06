@@ -5,7 +5,7 @@
 %   derivative expressions. It is also a basic modelling language,
 %   extending the functionality of the Symbolic Toolbox (required).
 %
-%   Copyright (C) 2014 Jonathan Currie (IPL)
+%   Copyright (C) 2014 Jonathan Currie (Control Engineering)
 clear
 
 % There is also a page on the Wiki which supplements this example:

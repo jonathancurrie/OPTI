@@ -3,7 +3,7 @@
  * https://www.controlengineering.co.nz/Wikis/OPTI/index.php/DL/License
  *
  * Copyright (C) Jonathan Currie 2018
- * www.inverseproblem.co.nz
+ * www.controlengineering.co.nz
  */
 
 #include "mex.h"
@@ -614,6 +614,6 @@ void printSolverInfo()
     PRINT_BUILD_INFO;
     mexPrintf("  - Released as part of the Intel Math Kernel Library\n  - http://software.intel.com/en-us/intel-mkl\n");
     
-    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.inverseproblem.co.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.controlengineering.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

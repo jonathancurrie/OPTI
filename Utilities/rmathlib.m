@@ -86,4 +86,4 @@
 % - rmathlib('qweibull',p,shape,scale)      - Weibull Inverse CDF (Quantile Function)
 % - rmathlib('rweibull',shape,scale,m,n)    - Weibull Distribution Random Number Array        
 
-%   Copyright (C) 2017 Jonathan Currie (IPL)
+%   Copyright (C) 2017 Jonathan Currie (Control Engineering)

@@ -41,4 +41,4 @@
 %   
 %   Based in parts on the original MEX interface by Dr. Peter Carbonetto.
 %
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)

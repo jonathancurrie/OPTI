@@ -1,5 +1,5 @@
 %% GSL Install for OPTI Toolbox
-% Copyright (C) 2017 Jonathan Currie (IPL)
+% Copyright (C) 2017 Jonathan Currie (Control Engineering)
 clc
 % This file will help you compile GNU Scientific Library for use with 
 % MATLAB. 

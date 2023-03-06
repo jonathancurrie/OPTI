@@ -3,7 +3,7 @@
  * https://www.controlengineering.co.nz/Wikis/OPTI/index.php/DL/License
  *
  * Copyright (C) Jonathan Currie 2018
- * www.inverseproblem.co.nz
+ * www.controlengineering.co.nz
  */
 
 /* NOTE: This interface expects the primal form SDP */
@@ -924,6 +924,6 @@ void printSolverInfo()
         mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
     #endif
 
-    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.inverseproblem.co.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.controlengineering.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

@@ -3,7 +3,7 @@ function [ok,msg] = checkOptiSol(optObj,tol)
 %
 %   Called by OPTI / checkSol
 
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)
 
 ok = 1;
 msg = sprintf('Solver Status:');

@@ -27,5 +27,5 @@
 %       objbias - Objective bias term (optional, negated internally)
 %
 %
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)
 

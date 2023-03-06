@@ -6,7 +6,7 @@ function [x,info] = opti_zmumps(A,b)
 %   THIS IS A WRAPPER FOR ZMUMPS USING THE MEX INTERFACE
 %   See supplied License
 
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 
 t = tic;
 

@@ -5,7 +5,7 @@ classdef SymBuilder < handle
 %
 %   See also SymBuilder.AddObj SymBuilder.AddCon SymBuilder.Build
 %
-%   Copyright (C) 2012 Jonathan Currie (www.inverseproblem.co.nz)
+%   Copyright (C) 2012 Jonathan Currie (www.controlengineering.co.nz)
     
     properties(SetAccess=private)
         vars        %Symbolic array of symbolic variables

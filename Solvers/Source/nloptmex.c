@@ -3,7 +3,7 @@
  * https://www.controlengineering.co.nz/Wikis/OPTI/index.php/DL/License
  *
  * Copyright (C) Jonathan Currie 2018
- * www.inverseproblem.co.nz
+ * www.controlengineering.co.nz
  */
 
 /* Based in parts on nlopt_optimize-mex.c supplied with NLOPT */
@@ -821,6 +821,6 @@ void printSolverInfo()
     mexPrintf("  - Released under the GNU Lesser General Public License: http://www.gnu.org/copyleft/lesser.html\n");
     mexPrintf("  - Source available from: http://ab-initio.mit.edu/wiki/index.php/NLopt\n");
 
-    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.inverseproblem.co.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.controlengineering.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

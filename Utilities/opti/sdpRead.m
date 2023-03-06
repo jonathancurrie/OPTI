@@ -18,7 +18,7 @@ function [prob,p] = sdpRead(filename,type,print)
 % You may specify a full path to the file, or if you specify a filename
 % only, it must exist on the MATLAB path.
 
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 
 %Quick Checks
 if(~exist('type','var') || isempty(type))

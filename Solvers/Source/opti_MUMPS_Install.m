@@ -1,5 +1,5 @@
 %% MUMPS Install for OPTI Toolbox
-% Copyright (C) 2014 Jonathan Currie (IPL)
+% Copyright (C) 2014 Jonathan Currie (Control Engineering)
 
 % This file will help you compile aMUltifrontal Massively Parallel sparse
 % direct Solver (MUMPS) for use with MATLAB. 
@@ -73,6 +73,6 @@ opts.ifort = true;
 opti_solverMex('zmumpsmex',src,inc,libs,opts);
 
 % METIS Reference:
-% “A Fast and Highly Quality Multilevel Scheme for Partitioning Irregular 
-% Graphs”. George Karypis and Vipin Kumar. SIAM Journal on Scientific 
-% Computing, Vol. 20, No. 1, pp. 359—392, 1999.
+% ï¿½A Fast and Highly Quality Multilevel Scheme for Partitioning Irregular 
+% Graphsï¿½. George Karypis and Vipin Kumar. SIAM Journal on Scientific 
+% Computing, Vol. 20, No. 1, pp. 359ï¿½392, 1999.

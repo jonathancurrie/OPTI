@@ -17,7 +17,7 @@ function [x,fval,exitflag,info] = opti_hybrj(fun,grad,x0,opts)
 %   THIS IS A WRAPPER FOR HYBRJ + HYBRD
 %   See supplied License
 
-%   Copyright (C) 2012 Jonathan Currie (IPL)
+%   Copyright (C) 2012 Jonathan Currie (Control Engineering)
 
 if(nargin < 4), opts = optiset; end
 if(nargin < 3), error('HYBRJ requires at least 3 arguments'); end

@@ -23,7 +23,7 @@ THIS SOFTWARE.
 ****************************************************************/
 
 /* Code is largely modified from the original by J.Currie Oct 2011 
-   Copyright (C) 2011-2013 Jonathan Currie (IPL)
+   Copyright (C) 2011-2013 Jonathan Currie (Control Engineering)
  */
 
 #include "mex.h"
@@ -662,6 +662,6 @@ void printUtilityInfo()
     PRINT_BUILD_INFO;
     mexPrintf("  - Source available from: http://www.ampl.com/netlib/ampl/solvers/\n");
 
-    mexPrintf("\n MEX Interface J.Currie 2013 (www.inverseproblem.co.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 (www.controlengineering.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

@@ -1,5 +1,5 @@
 %% CLP Install for OPTI Toolbox
-% Copyright (C) 2014 Jonathan Currie (IPL)
+% Copyright (C) 2014 Jonathan Currie (Control Engineering)
 clc
 % This file will help you compile Coin-Or Linear Programming for use with 
 % MATLAB. 

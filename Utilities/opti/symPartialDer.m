@@ -6,7 +6,7 @@ function symder = symPartialDer(symfun,var,ncol,ind,der2)
 %   function fun. var specifies the variable to differentiate with respect 
 %   to (as a string).
 
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 
 if(nargin < 5), der2 = false; end
 if(nargin < 4), ind = []; end

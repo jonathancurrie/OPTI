@@ -3,7 +3,7 @@
  * https://www.controlengineering.co.nz/Wikis/OPTI/index.php/DL/License
  *
  * Copyright (C) Jonathan Currie 2012-2013
- * www.inverseproblem.co.nz
+ * www.controlengineering.co.nz
  */
 
 #include "mex.h"
@@ -574,7 +574,7 @@ void printSolverInfo()
     mexPrintf(" This binary is statically linked to the following software:\n");
     mexPrintf("  - CoinUtils [v%s] (Eclipse Public License)\n",COINUTILS_VERSION);
 
-    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.inverseproblem.co.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.controlengineering.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }
 

@@ -2,7 +2,7 @@ function [npts,xl,yl] = plotObj(prob,xb,data)
 %PLOTOBJ Plot the objective function contour
 %   plotObj(prob,xb,data)
 
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)
 
 %Contour Colour
 dkg = [0.4 0.4 0.4];

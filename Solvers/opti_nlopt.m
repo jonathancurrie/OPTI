@@ -9,7 +9,7 @@ function [x,fval,exitflag,info] = opti_nlopt(nlprob,x0)
 %   THIS IS A WRAPPER FOR NLOPT
 %   See supplied Lesser GNU Public License
 
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)
 
 t = tic;
 

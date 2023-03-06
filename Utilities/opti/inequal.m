@@ -2,7 +2,7 @@ function [A,b] = inequal(Ain,bin,Aeq,beq,lb,ub)
 %INEQUAL Convert Equality and Bounds to Inequality Constraints
 %   [A,b] = inequal(A,b,Aeq,beq,lb,ub)
 
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)
 
 if(isempty(Ain)), Ain = []; end
 if(isempty(bin)), bin = []; end

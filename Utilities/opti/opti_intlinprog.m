@@ -13,7 +13,7 @@ function [x,fval,exitflag,info,Opt] = opti_intlinprog(f,int,A,b,Aeq,beq,lb,ub,op
 %   [x,...,info,Opt] = opti_intlinprog(f,...) returns the internally built
 %   OPTI object.
 
-%   Copyright (C) 2014 Jonathan Currie (IPL)
+%   Copyright (C) 2014 Jonathan Currie (Control Engineering)
 
 
 % Handle missing arguments

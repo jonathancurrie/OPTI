@@ -2,7 +2,7 @@ function plotIntCon(prob,data)
 %PLOTINTCON Plot Integer Constraints on the current figure
 %   plotIntCon(prob)
 
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)
 
 %Check we have integer variables in this plot
 if(all(prob.int.str(data.idx) == 'C'))

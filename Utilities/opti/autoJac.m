@@ -11,7 +11,7 @@ function jac = autoJac(fun,x0,varargin)
 %   documentation pdf is provided in the Differentiation folder. See the
 %   BSD license below the code.
 
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)
 
 if(~isa(fun,'function_handle'))
     error('Fun should be a function handle!');

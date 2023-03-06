@@ -1,5 +1,5 @@
 /* OPTI Build Utilities Header File
- * (C) Inverse Problem Limited 2017
+ * (C) Control Engineering 2017
  * J. Currie
  */
 

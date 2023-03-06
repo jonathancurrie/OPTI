@@ -10,7 +10,7 @@
 /*                                                                                     */
 /*  funded in part by AFOSR and Exxon Mobil                                            */
 /*                                                                                     */
-/*  MEX Interface Author: Jonathan Currie 2012-2013 (IPL)                              */
+/*  MEX Interface Author: Jonathan Currie 2012-2013 (Control Engineering)                              */
 /*                                                                                     */
 /*                                                                                     */
 /*  This program is free software: you can redistribute it and/or modify it under the  */
@@ -1289,6 +1289,6 @@ void printSolverInfo()
     mexPrintf("  - Released under the GNU Lesser General Public License: http://www.gnu.org/copyleft/lesser.html\n");
     mexPrintf("  - Source available from: http://www.gerad.ca/NOMAD/Project/Home.html\n");
 
-    mexPrintf("\n MEX Interface J.Currie 2013 (www.inverseproblem.co.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 (www.controlengineering.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

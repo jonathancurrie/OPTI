@@ -17,7 +17,7 @@ function p = optiWriteSDPA(filename,f,A,b,lb,ub,sdcone,xtype,dense)
 % *sdcone is a cell array, where each cell is a sparse matrix of the
 % form [C(:) A0(:) A1(:) ... ], containing symmetric matrices.
 
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 
 if(nargin < 7), error('You must supply at least 7 arguments to this function'); end
 if(nargin < 8), dense = 0; end

@@ -15,7 +15,7 @@
 %   - Validating the solution
 %   - Plotting the solution
 %
-%   Copyright (C) 2014 Jonathan Currie (IPL)
+%   Copyright (C) 2014 Jonathan Currie (Control Engineering)
 
 % There is also a page on the Wiki which supplements this example:
 web('https://www.controlengineering.co.nz/Wikis/OPTI/index.php/GetStart/Basics');
