@@ -62,10 +62,15 @@ if(~isempty(ind))
                 break;
             end
         end
-        if(i == length(str))
+        if(i == length(str) && str(i) ~= ']')
             error('Didn''t find the end of the symbolic variable string??');
         end
-        vars = sym(sprintf('[%s]',str(ind(1):i-1)));
+        varstr = sprintf('[%s]',str(ind(1):i-1));
+        if (exist('str2sym','file') == 2)
+            vars = str2sym(varstr);
+        else
+            vars = sym(varstr);
+        end
     end
 else
     vars = [];

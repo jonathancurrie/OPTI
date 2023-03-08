@@ -111,9 +111,7 @@ ivar = buildVarIndex(v,length(svar));
 if(size(svar,1) > 1), svar = svar.'; end
 if(size(ivar,1) > 1), ivar = ivar'; end
 %Subs out individual symbolic variables into our indexed list and converts to normal numbers
-wstate = warning('off','symbolic:sym:sym:DeprecateExpressions');
-eq = vpa(subs(sobj,svar,ivar),16);
-warning(wstate);
+eq = vpa(SymBuilder.symsubs(sobj,svar,ivar),16);
 
 %Get equation size (matrices treated differently)
 [r,c] = size(eq);
@@ -145,7 +143,16 @@ switch(var)
         end
         if(strcmp(str(1),'[')), str = str(2:end); end %remove extra square brackets
         if(strcmp(str(end-1:end),']]')), str = str(1:end-2); end
-        ss = regexp(str,'], ','split');
+        % Check for new format and split accordingly
+        if (length(eq) > 1)
+            if (isempty(strfind(str,'[')))
+                if (strcmp(str(end),']')), str = str(1:end-1); end
+                ss = regexp(str,'; ','split');
+            else
+                ss = regexp(str,'], ','split');
+            end
+        end
+
         fprintf(fp,'\n%% Equations:\n');
         if(tr)
             for i = 1:length(ss)

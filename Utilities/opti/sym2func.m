@@ -16,6 +16,9 @@ cv = cell(size(sv));
 for i = 1:length(sv)
     cv{i} = symVar2MVar(sv(i));
 end
+if (exist('str2sym','file') == 2)
+    cv = str2sym(cv);
+end
 %Substitute our indexed variables into the symbolic expression
 sfun = subs(fun,sv,cv);
 

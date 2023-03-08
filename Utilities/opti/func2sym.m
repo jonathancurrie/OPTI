@@ -25,7 +25,11 @@ for i = 1:length(vars)
 end
 
 %Convert to symbolic string
-f = sym(f);
+if (exist('str2sym','file') == 2)
+    f = str2sym(f);
+else
+    f = sym(f);
+end
 
 %Substitute any constants from original workspace into symbolic expression
 fdata = functions(fun);
