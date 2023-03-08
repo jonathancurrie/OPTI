@@ -5,6 +5,7 @@
 
 #include "opti_mex_utils.h"
 #include <stdarg.h>
+#include <cmath>
 
 //
 // Extern Defines for Ctrl-C Detection (only supported for MSVC compiler)
