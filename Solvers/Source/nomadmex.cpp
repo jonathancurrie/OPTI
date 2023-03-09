@@ -340,7 +340,7 @@ private:
 	int sync() {
 		*pptr() = 0;
 		mexPrintf(pbase());
-        mexEvalString("drawnow;");
+        mexEvalString("pause(1e-8);"); // HACK (but can't find a way to flush in R2022b? Doesn't print often anyway...)       
 		setp(m_buffer, m_buffer + s_size - 2);
 		return 0;
 	} 
@@ -994,7 +994,7 @@ int checkInputs(const mxArray *prhs[], int nrhs, mxArray *plhs[], int nlhs)
 			mexPrintf("User guide: \'%s\'\n",NOMAD::USER_GUIDE_FILE.c_str());
 			mexPrintf("Examples  : \'%s\'\n",NOMAD::EXAMPLES_DIR.c_str());
 			mexPrintf("Tools     : \'%s\'\n\n",NOMAD::TOOLS_DIR.c_str());
-			mexPrintf("Please report NOMAD bugs to nomad@gerad.ca and MEX Interface bugs to jocurrie@aut.ac.nz\n\n");
+			mexPrintf("Please report NOMAD bugs to nomad@gerad.ca and MEX Interface bugs to jonathan.currienz@gmail.com\n\n");
             
             std::cout.rdbuf(cout_sbuf); //Return cout to initial buffer
             return 0;
