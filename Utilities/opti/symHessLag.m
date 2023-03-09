@@ -83,8 +83,15 @@ end
 symhess = sym('sigma')*symPartialDer(symobj,var,nvar,indo,true);
 
 %For each constraint equation, multiply by lambda(i) then add to our hessian
+haveStr2Sym = (exist('str2sym','file') == 2);
 for i = 1:length(symcon)
-    symhess = symhess + sym(sprintf('lambda(%d)',i))*symPartialDer(symcon(i),var,nvar,[],true);
+    lambdastr = sprintf('lambda(%d)',i);
+    if (haveStr2Sym)        
+        lambda = str2sym(lambdastr);
+    else
+        lambda = sym(lambdastr);
+    end
+    symhess = symhess + lambda*symPartialDer(symcon(i),var,nvar,[],true);
 end
 
 %Convert if required to lower triangular
