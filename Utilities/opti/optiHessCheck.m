@@ -144,7 +144,7 @@ end
 
 %Display Warning
 if(~isOK && warn), optiwarn('OPTI:IncorrectHess',wstr); end
-if(isOK), optiinfo('OPTI Derivative Checker detected no problems in ''%s''',name); end
+if(isOK && warn), optiinfo('OPTI Derivative Checker detected no problems in ''%s''',name); end
     
 function derError(name,msg)
 throwAsCaller(MException('OPTI:DERCHECK','OPTI Derivative Checker detected a problem in ''%s'':\n\n%s',name,msg));

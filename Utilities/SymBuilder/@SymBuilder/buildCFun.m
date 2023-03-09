@@ -12,6 +12,18 @@ else
 end
 cb = [];
 
+%See if we can use [] in symbolic var names
+sqOK = true;
+try
+    if (exist('str2sym','file') == 2)
+        str2sym('x[1]');
+    else
+        sym('x[1]');
+    end
+catch
+    sqOK = false;
+end
+
 %Determine callback type
 switch(mode)
     case 'new'
@@ -98,26 +110,54 @@ if(nargin > 1 && ~isempty(sobj))
     %Need to rename all variables to x[0]...x[n]
     xvar = cell(length(svar),1);
     for i = 1:length(xvar)
-        xvar{i} = sprintf('x[%d]',i);
+        if (sqOK)
+            xvar{i} = sprintf('x[%d]',i);
+        else
+            xvar{i} = sprintf('x[%d]',i-1);
+        end
     end     
     %Ensure both columns
     if(size(svar,1) > 1), svar = svar.'; end
     if(size(xvar,1) > 1), xvar = xvar'; end
     %Subs out individual symbolic variables into our indexed list and converts to normal numbers
-    wstate = warning('off','symbolic:sym:sym:DeprecateExpressions');
-    eq = vpa(subs(sobj,svar,xvar),16); %this takes too long - any suggestions?
-    warning(wstate);
+    if (sqOK)
+        eq = vpa(SymBuilder.symsubs(sobj,svar,xvar),16); %this takes too long - any suggestions?
+    else
+        eq = vpa(sobj, 16);
+    end
+
+    % If we can't sub in c style indexed vars, explicit definition here
+    if (~sqOK)
+        fprintf(fp,'  // Allocate C vars to Symbolic named vars\n');
+        for i = 1:length(svar)
+            t = 'double';
+            if(cmode=='A')
+                t = 'Type';
+            end
+            fprintf(fp,'  const %s %s = %s;\n',t,char(svar(i)),xvar{i});
+        end
+        % Do the same if Hessian
+        if (var=='H')
+            for i = 1:ncon
+                fprintf(fp,'  const double lambda%d = lambda[%d];\n',i, i-1);
+            end
+        end
+        fprintf(fp, '\n');
+    end
+
     %Sub out Lambda if Hessian
     if(var=='H')
         l = cell(ncon,1);
         l2 = cell(ncon,1);
         for i = 1:ncon
             l{i} = sprintf('lambda(%d)',i);
-            l2{i} = sprintf('lambda[%d]',i);
+            if (sqOK)
+                l2{i} = sprintf('lambda[%d]',i);
+            else
+                l2{i} = sprintf('lambda%d',i);
+            end
         end
-        wstate = warning('off','symbolic:sym:sym:DeprecateExpressions');
-        eq = subs(eq,l,l2);
-        warning(wstate);
+        eq = SymBuilder.symsubs(eq,l,l2);
     end
 
     %Enter Equations (Var Type Dictates Entry Type)
