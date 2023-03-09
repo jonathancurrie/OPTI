@@ -71,4 +71,4 @@
 %   Command: 'hessstr' [Evaluate Hessian Sparsity Structure]
 %       s = asl('hessstr')
 %
-%   Copyright (C) 2011-2013 Jonathan Currie (IPL)
+%   Copyright (C) 2011-2013 Jonathan Currie (Control Engineering)

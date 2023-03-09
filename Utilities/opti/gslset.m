@@ -15,7 +15,7 @@ function options = gslset(varargin)
 %
 % gslset() prints a list of all possible fields and their function.
 
-%   Copyright (C) 2017 Jonathan Currie (IPL)
+%   Copyright (C) 2017 Jonathan Currie (Control Engineering)
 
 % Print out possible values of properties.
 if((nargin == 0) && (nargout == 0))

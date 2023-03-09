@@ -12,6 +12,11 @@ if (nargin < 2 || isempty(ifortStatic))
 end
 
 %Known MKL path locations (Modify to suit your system by adding to cell arrays, or create a new structure for other versions)
+MKL_oneAPI.compiler = {'C:\Program Files\Intel\oneAPI\compiler\latest\windows\compiler','C:\Program Files (x86)\Intel\oneAPI\compiler\latest\windows\compiler'};
+MKL_oneAPI.ifort = {'C:\Program Files\IntelSWTools\compilers_and_libraries\windows\compiler','C:\Program Files (x86)\IntelSWTools\compilers_and_libraries\windows\compiler'};
+MKL_oneAPI.mkl = {'C:\Program Files\Intel\oneAPI\mkl\latest','C:\Program Files (x86)\Intel\oneAPI\mkl\latest'};
+MKL_oneAPI.ver = 'oneAPI';
+
 MKL11_3.compiler = {'C:\Program Files\IntelSWTools\compilers_and_libraries\windows\compiler','C:\Program Files (x86)\IntelSWTools\compilers_and_libraries\windows\compiler'};
 MKL11_3.mkl = {'C:\Program Files\IntelSWTools\compilers_and_libraries\windows\mkl','C:\Program Files (x86)\IntelSWTools\compilers_and_libraries\windows\mkl'};
 MKL11_3.ver = '11.3';
@@ -37,7 +42,7 @@ MKL10_3.mkl = {'C:\Program Files\Intel\ComposerXE-2011\mkl\','C:\Program Files (
 MKL10_3.ver = '10.3';
 
 %Add any new structures to below
-MKLLIB = {MKL11_3,MKL11_2,MKL11_1,MKL11,MKL10_3_1,MKL10_3};
+MKLLIB = {MKL_oneAPI,MKL11_3,MKL11_2,MKL11_1,MKL11,MKL10_3_1,MKL10_3};
 
 
 %DO NOT MODIFY BELOW HERE
@@ -101,7 +106,15 @@ for i = 1:length(mklstr.compiler)
                 mkl_cmplr = [dir_cmplr '\lib\intel64'];                  
         end
         if(~exist(mkl_cmplr,'dir'))
-            error('Could not find MKL compiler directory. Checked:\n %s\n',mkl_cmplr);
+            switch(computer)
+                case 'PCWIN'
+                    mkl_cmplr = [dir_cmplr '\lib\ia32_win'];
+                case 'PCWIN64'
+                    mkl_cmplr = [dir_cmplr '\lib\intel64_win'];                  
+            end
+            if(~exist(mkl_cmplr,'dir'))
+                error('Could not find MKL compiler directory. Checked:\n %s\n',mkl_cmplr);
+            end
         end  
         %Complete linker string
         mkl_link = [mkl_link ' -L"' mkl_cmplr '" -llibiomp5md ']; %#ok<AGROW>
@@ -112,6 +125,27 @@ for i = 1:length(mklstr.compiler)
             mkl_forstr = ' -lifconsol -llibifcoremd -llibifportmd -llibmmd -llibirc -lsvml_disp -lsvml_dispmd ';
         end
         break;
+    end
+end
+
+% iFort libs may be in a different compiler directory
+if (isfield(mklstr,'ifort'))
+    for i = 1:length(mklstr.ifort)
+        if(exist(mklstr.ifort{i},'dir'))
+            dir_ifcmplr = mklstr.ifort{i};
+            %Get Library Directory
+            switch(computer)
+                case 'PCWIN'
+                    mkl_ifcmplr = [dir_ifcmplr '\lib\ia32'];
+                case 'PCWIN64'
+                    mkl_ifcmplr = [dir_ifcmplr '\lib\intel64'];                  
+            end
+            if(~exist(mkl_ifcmplr,'dir'))
+                error('Could not find MKL iFort compiler directory. Checked:\n %s\n',mkl_ifcmplr);
+            end
+            mkl_forstr = [' -L"' mkl_ifcmplr '"' mkl_forstr]; %#ok<AGROW> 
+            break;
+        end
     end
 end
 

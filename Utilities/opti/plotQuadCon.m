@@ -2,7 +2,7 @@ function plotQuadCon(Q,l,rl,ru,data)
 %PLOTQUADCON Plot Quadratic Constraints on the current figure
 %   plotQuadCon(Q,l,r)
 
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 
 xl = data.xl; yl = data.yl;
 

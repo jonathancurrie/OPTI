@@ -32,12 +32,12 @@ classdef opti < handle
 %
 %
 %   For detailed documentation see the Wiki:
-%      https://inverseproblem.co.nz/OPTI
+%      https://controlengineering.co.nz/Wikis/OPTI
 %
 %
 %   See also opti.solve optiset opti.plot 
 %
-%   Copyright (C) 2011-2018 Jonathan Currie (www.inverseproblem.co.nz)
+%   Copyright (C) 2011-2018 Jonathan Currie (www.controlengineering.co.nz)
     
     properties (SetAccess = private)
         prob        % Problem Structure (optiprob)

@@ -6,7 +6,7 @@ function [x,fval,flag,info] = mosekRes(prob,rcode,res,t)
 %   This function is based in parts on examples from the MOSEK Toolbox, 
 %   Copyright (c) 1998-2011 MOSEK ApS, Denmark.
 
-%   Copyright (C) 2012 Jonathan Currie (IPL)
+%   Copyright (C) 2012 Jonathan Currie (Control Engineering)
 
 hasSol = isfield(res,'sol');
 if(hasSol && isfield(res.sol,'itr'))

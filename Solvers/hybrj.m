@@ -32,4 +32,4 @@
 %      -5 - user exit
 %
 %
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)

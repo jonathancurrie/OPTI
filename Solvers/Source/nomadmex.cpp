@@ -10,7 +10,7 @@
 /*                                                                                     */
 /*  funded in part by AFOSR and Exxon Mobil                                            */
 /*                                                                                     */
-/*  MEX Interface Author: Jonathan Currie 2012-2013 (IPL)                              */
+/*  MEX Interface Author: Jonathan Currie 2012-2013 (Control Engineering)                              */
 /*                                                                                     */
 /*                                                                                     */
 /*  This program is free software: you can redistribute it and/or modify it under the  */
@@ -136,9 +136,10 @@ public:
     {
         char errstr[1024];
         bool stop = false;
-        int i, j, n = x.size(), status;
+        int i, j, n = x.size();
         double *xm, *fvals;
         mxLogical *sur;
+        mxArray *status = nullptr;
         count_eval = true; //mexErrMsgTxt will kill MEX
 
         //Check for Ctrl-C
@@ -162,7 +163,7 @@ public:
         }
         //Call MATLAB Objective
         try {
-            status = mexCallMATLAB(1, fun->plhs, fun->nrhs, fun->prhs, fun->f);   
+            status = mexCallMATLABWithTrap(1, fun->plhs, fun->nrhs, fun->prhs, fun->f);   
         }
         //Note if these errors occur it is due to errors in MATLAB code, no way to recover?
         catch(exception &e) {
@@ -206,7 +207,7 @@ public:
                     xm[i] = x[i].value();
                 //Call MATLAB Constraint
                 try {
-                    status = mexCallMATLAB(1, con->plhs, con->nrhs, con->prhs, con->f);
+                    status = mexCallMATLABWithTrap(1, con->plhs, con->nrhs, con->prhs, con->f);
                 }
                 catch(...)
                 {
@@ -254,7 +255,7 @@ public:
             memcpy(mxGetPr(iterF->prhs[2]), fvals, sizeof(double));
             memcpy(mxGetPr(iterF->prhs[3]), xm, n * sizeof(double));
             try {
-                status = mexCallMATLAB(1, iterF->plhs, 4, iterF->prhs, iterF->f);
+                status = mexCallMATLABWithTrap(1, iterF->plhs, 4, iterF->prhs, iterF->f);
             }
             catch (...)
             {
@@ -339,7 +340,7 @@ private:
 	int sync() {
 		*pptr() = 0;
 		mexPrintf(pbase());
-        mexEvalString("drawnow;");
+        mexEvalString("pause(1e-8);"); // HACK (but can't find a way to flush in R2022b? Doesn't print often anyway...)       
 		setp(m_buffer, m_buffer + s_size - 2);
 		return 0;
 	} 
@@ -668,9 +669,7 @@ void mexFunction (int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         mexPrintf("------------------------------------------------------------------\n");
         mexEvalString("drawnow;"); //flush draw buffer
     }
-    //Let this file sort out errors
-    mexSetTrapFlag(1);
-    
+
     //Reset tags and bbe (C.Tribes 3/14)
     NOMAD::Eval_Point::reset_tags_and_bbes();
     
@@ -771,8 +770,6 @@ void mexFunction (int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     
     //Return cout to initial buffer
     std::cout.rdbuf(cout_sbuf);
-    //Return error control to default
-    mexSetTrapFlag(0);
     
     //Free Memory
     if(mSEval) delete mSEval; mSEval = NULL;
@@ -784,14 +781,15 @@ void mexFunction (int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 //Determine Variable Return Types + # Objectives + #NL Constraints (only OPTI Version)
 vector<NOMAD::bb_output_type> detRetTypes(usrFcn *fun, mxArray *out_types, int *nobj, usrFcn *con, int *ncon, double *x0, size_t n)
 {
-    int i, j, stat;
+    int i, j;
+    mxArray *status = nullptr;
 
     //Test Blackbox / Objective Evaluation
     fun->plhs[0] = NULL;
     memcpy(mxGetPr(fun->prhs[fun->xrhs]), x0, n * sizeof(double));
     //Call MATLAB Objective
-    stat = mexCallMATLAB(1, fun->plhs, fun->nrhs, fun->prhs, fun->f);
-    if(stat)
+    status = mexCallMATLABWithTrap(1, fun->plhs, fun->nrhs, fun->prhs, fun->f);
+    if(status)
         mexErrMsgTxt("Error calling Objective Function!");
     //Ensure we have a real column
     if(mxGetN(fun->plhs[0]) > mxGetM(fun->plhs[0]))
@@ -811,8 +809,8 @@ vector<NOMAD::bb_output_type> detRetTypes(usrFcn *fun, mxArray *out_types, int *
         con->plhs[0] = NULL;
         memcpy(mxGetPr(con->prhs[con->xrhs]), x0, n * sizeof(double));
         //Call MATLAB Objective
-        stat = mexCallMATLAB(1, con->plhs, con->nrhs, con->prhs, con->f);
-        if(stat)
+        status = mexCallMATLABWithTrap(1, con->plhs, con->nrhs, con->prhs, con->f);
+        if(status)
             mexErrMsgTxt("Error calling Constraint Function!");
         //Ensure we have a real column
         if(mxGetN(con->plhs[0]) > mxGetM(con->plhs[0]))
@@ -996,7 +994,7 @@ int checkInputs(const mxArray *prhs[], int nrhs, mxArray *plhs[], int nlhs)
 			mexPrintf("User guide: \'%s\'\n",NOMAD::USER_GUIDE_FILE.c_str());
 			mexPrintf("Examples  : \'%s\'\n",NOMAD::EXAMPLES_DIR.c_str());
 			mexPrintf("Tools     : \'%s\'\n\n",NOMAD::TOOLS_DIR.c_str());
-			mexPrintf("Please report NOMAD bugs to nomad@gerad.ca and MEX Interface bugs to jocurrie@aut.ac.nz\n\n");
+			mexPrintf("Please report NOMAD bugs to nomad@gerad.ca and MEX Interface bugs to jonathan.currienz@gmail.com\n\n");
             
             std::cout.rdbuf(cout_sbuf); //Return cout to initial buffer
             return 0;
@@ -1289,6 +1287,6 @@ void printSolverInfo()
     mexPrintf("  - Released under the GNU Lesser General Public License: http://www.gnu.org/copyleft/lesser.html\n");
     mexPrintf("  - Source available from: http://www.gerad.ca/NOMAD/Project/Home.html\n");
 
-    mexPrintf("\n MEX Interface J.Currie 2013 (www.inverseproblem.co.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 (www.controlengineering.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

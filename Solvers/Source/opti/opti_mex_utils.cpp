@@ -1,10 +1,11 @@
 /* OPTI MEX Utilities Source File
- * (C) Inverse Problem Limited 2017
+ * (C) Control Engineering 2017
  * J. Currie 
  */
 
 #include "opti_mex_utils.h"
 #include <stdarg.h>
+#include <cmath>
 
 //
 // Extern Defines for Ctrl-C Detection (only supported for MSVC compiler)
@@ -1002,7 +1003,7 @@ void OPTIMex::printSolverInfo(const OptiSolverProperties& solver)
         mexPrintf("\n Dynamically Linked to libhsl.dll containing the HSL Numerical Routines (MA27, MA77, etc)\n   (NOTE: This must exist on the MATLAB path)\n");
     #endif
 
-    mexPrintf("\n MEX Interface J.Currie 2012-2017 [BSD3] (www.inverseproblem.co.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2012-2017 [BSD3] (www.controlengineering.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }
 

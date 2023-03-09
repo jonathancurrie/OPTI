@@ -29,7 +29,7 @@ function [x,fval,exitflag,info] = opti_nomad(fun,x0,lb,ub,nlcon,nlrhs,xtype,opts
 %   THIS IS A WRAPPER FOR NOMAD
 %   See supplied Lesser GNU Public License
 
-%   Copyright (C) 2012 Jonathan Currie (IPL)
+%   Copyright (C) 2012 Jonathan Currie (Control Engineering)
 
 if(nargin < 8), opts = optiset; else opts = optiset(opts); end
 if(nargin < 7), xtype = []; end

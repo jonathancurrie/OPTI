@@ -18,4 +18,4 @@
 %   was successful, or 0 if it failed.
 %
 %
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)

@@ -30,7 +30,7 @@ function [x,fval,exitflag,info] = opti_cplex(H,f,A,rl,ru,lb,ub,xint,sos,qc,x0,op
 %   the solution, together with the solver exitflag, and an information
 %   structure.
 
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 
 t = tic;
 

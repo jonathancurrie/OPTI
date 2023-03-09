@@ -15,7 +15,7 @@ function options = nomadset(varargin)
 %
 % nomadset() prints a list of all possible fields and their function.
 
-%   Copyright (C) 2012 Jonathan Currie (IPL)
+%   Copyright (C) 2012 Jonathan Currie (Control Engineering)
 
 %Valid direction types
 global dirtypes

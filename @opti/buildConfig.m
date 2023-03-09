@@ -5,7 +5,7 @@ function [prob,opts,nlprob] = buildConfig(prob,opts)
 %   solving a problem with a specified solver. It is not designed to be
 %   called by the user.
 
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)
 
 %Get Warning Level
 if(strcmpi(opts.warnings,'all'))

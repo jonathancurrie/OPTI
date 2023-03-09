@@ -28,7 +28,7 @@ function [x,fval,exitflag,info] = opti_levmar(fun,grad,x0,ydata,lb,ub,A,b,Aeq,be
 %   THIS IS A WRAPPER FOR LEVMAR
 %   See referenced GNU Public License
 
-%   Copyright (C) 2012 Jonathan Currie (IPL)
+%   Copyright (C) 2012 Jonathan Currie (Control Engineering)
 
 if(nargin < 11), opts = optiset; end
 if(nargin < 10), beq = []; end

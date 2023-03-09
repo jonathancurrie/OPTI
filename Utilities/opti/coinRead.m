@@ -23,7 +23,7 @@ function [prob,p] = coinRead(filename,type,print)
 % The routines underneath use COIN-OR & GLPK utilities for File IO. See 
 % attached EPL License for COIN-OR and GPL for GLPK.
 
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)
 
 %Quick Checks
 if(~exist('type','var') || isempty(type))

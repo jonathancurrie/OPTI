@@ -24,7 +24,7 @@ function [x,fval,exitflag,info] = opti_scipasl(file,opts)
 %   THIS IS A WRAPPER FOR SCIP USING THE MEX INTERFACE
 %   See supplied ZIB Academic License
 
-%   Copyright (C) 2012/2013 Jonathan Currie (IPL)
+%   Copyright (C) 2012/2013 Jonathan Currie (Control Engineering)
 
 t = tic;
 

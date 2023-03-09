@@ -13,8 +13,8 @@ function opti_Install(savePath,runTests,openBrowser)
 %
 % You MUST be in the current directory of this file!
 %
-%   Copyright (C) 2018 Jonathan Currie (Inverse Problem Limited)
-%   https://inverseproblem.co.nz/OPTI/
+%   Copyright (C) 2018 Jonathan Currie (Control Engineering)
+%   https://controlengineering.co.nz/Wikis/OPTI/
 
 % Handle missing input args
 if (nargin < 3), openBrowser = []; end
@@ -111,7 +111,7 @@ end
 
 %Launch Examples page
 if (isempty(openBrowser) || (openBrowser == true))
-    web('https://inverseproblem.co.nz/OPTI/index.php/Examples/Examples','-browser');
+    web('https://controlengineering.co.nz/Wikis/OPTI/index.php/Examples/Examples','-browser');
 end
 
 %Finished

@@ -235,7 +235,7 @@ opts = mosekset('display','iter','mskoption',mopt);
 
 %% SDP1
 % http://docs.mosek.com/7.0/toolbox/A_guided_tour.html#section-node-_A%20guided%20tour_Semidefinite%20optimization
-% https://www.inverseproblem.co.nz/OPTI/index.php/Probs/SDP
+% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/SDP
 clc
 clear prob
 [r, res] = mosekopt('symbcon');

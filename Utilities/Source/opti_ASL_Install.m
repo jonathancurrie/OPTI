@@ -1,7 +1,7 @@
 %% ASL Install for OPTI Toolbox
 % Supplied binaries are built from Netlib's AMPL Solver Library Interface
 
-%   Copyright (C) 2014 Jonathan Currie (IPL)
+%   Copyright (C) 2014 Jonathan Currie (Control Engineering)
 
 % This file will help you compile AMPL Solver Library (ASL) for use with 
 % MATLAB.

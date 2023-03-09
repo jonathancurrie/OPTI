@@ -4,10 +4,10 @@
 % them using the OPTI Toolbox. You should complete BasicUsage.m before
 % completing this file.
 %
-%   Copyright (C) 2014 Jonathan Currie (IPL)
+%   Copyright (C) 2014 Jonathan Currie (Control Engineering)
 
 % There is also a page on the Wiki which supplements this example:
-web('https://www.inverseproblem.co.nz/OPTI/index.php/Probs/LP');
+web('https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/LP');
 
 %% Example 1
 % This is a simple two decision variable LP which will use for the next few

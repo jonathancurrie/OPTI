@@ -4,7 +4,7 @@ function prob = nrow2mix(prob,warn,doJac)
 %
 %   e: -1 for <=, 0 for =, and 1 for >=
 
-%   Copyright (C) 2012 Jonathan Currie (IPL)
+%   Copyright (C) 2012 Jonathan Currie (Control Engineering)
 
 if(nargin < 3), doJac = true; end
 if(nargin < 2), warn = 1; end    

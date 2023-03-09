@@ -5,7 +5,7 @@ classdef SymBuilder < handle
 %
 %   See also SymBuilder.AddObj SymBuilder.AddCon SymBuilder.Build
 %
-%   Copyright (C) 2012 Jonathan Currie (www.inverseproblem.co.nz)
+%   Copyright (C) 2012 Jonathan Currie (www.controlengineering.co.nz)
     
     properties(SetAccess=private)
         vars        %Symbolic array of symbolic variables
@@ -57,10 +57,7 @@ classdef SymBuilder < handle
         
             %Check for string
             if(ischar(str))
-                digits(16);
-                wstate = warning('off','symbolic:sym:sym:DeprecateExpressions');
-                s = sym(str);
-                warning(wstate);
+                s = SymBuilder.str2sym(str);
             elseif(isa(str,'sym'))
                 s = str;
             else
@@ -89,10 +86,7 @@ classdef SymBuilder < handle
             if(ischar(str_in))
                 %Parse constraint string
                 [str,l,u] = SymBuilder.parseConstraint(str_in);
-                digits(16);
-                wstate = warning('off','symbolic:sym:sym:DeprecateExpressions');
-                s = sym(str);
-                warning(wstate);
+                s = SymBuilder.str2sym(str);
             elseif(isa(str_in,'sym'))
                 if(nargin < 4 || ~isnumeric(cl) || ~isnumeric(cu) || length(cl)~=length(cu) || length(cl)~=length(str_in))
                     error('When supplying a symbolic expression to AddCon, you must supply as AddCon(sym_con,cl,cu) with cl, cu as numeric vectors of the same length.');
@@ -721,9 +715,7 @@ classdef SymBuilder < handle
                 %Substitute expressions
                 if(~isempty(B.exprsn))                                           
                     %Now subs into full equation system
-                    wstate = warning('off','symbolic:sym:sym:DeprecateExpressions');
-                    symobj = subs(symobj,B.exprsn(:,1),B.exprsn(:,2));
-                    warning(wstate);
+                    symobj = SymBuilder.symsubs(symobj,B.exprsn(:,1),B.exprsn(:,2));
                     %Have to repeat until all nested expressions are sub'd
                     n = 10;  %max depth
                     no = size(B.exprsn,1);
@@ -732,9 +724,7 @@ classdef SymBuilder < handle
                         v = symvar(symobj); alldone = 1;
                         for i = 1:no
                             if(any(se(i) == v))
-                                wstate = warning('off','symbolic:sym:sym:DeprecateExpressions');
-                                symobj = subs(symobj,B.exprsn(i,1),B.exprsn(i,2));
-                                warning(wstate);
+                                symobj = SymBuilder.symsubs(symobj,B.exprsn(i,1),B.exprsn(i,2));
                                 alldone = 0;
                             else
                                 if(i == no && alldone) %ensure we have checked them all
@@ -759,9 +749,7 @@ classdef SymBuilder < handle
 %                 end
                 %Substitute constants
                 if(~isempty(B.constnt))
-                    wstate = warning('off','symbolic:sym:sym:DeprecateExpressions');
-                    symobj = subs(symobj,B.constnt(:,1),B.constnt(:,2));
-                    warning(wstate);
+                    symobj = SymBuilder.symsubs(symobj,B.constnt(:,1),B.constnt(:,2));
                 end
                 %Save symbolic vector
                 B.sobj = symobj;
@@ -939,12 +927,10 @@ classdef SymBuilder < handle
             index_BH = find(ind);
             ind(B.indobj) = [];
             index_L = find(ind);
-            wstate = warning('off','symbolic:sym:sym:DeprecateExpressions');
             for i = 1:length(index_BH)
-                l = sym(sprintf('lambda(%d)',index_L(i)));
+                l = SymBuilder.str2sym(sprintf('lambda(%d)',index_L(i)));
                 H = H + l*B.hess(index_BH(i)).H;
             end                  
-            warning(wstate);
             %Save resulting Hessian
             B.hesslag = tril(H);
         end
@@ -1011,7 +997,33 @@ classdef SymBuilder < handle
         %Build C Code function file
         cb = buildCFun(mode,sobj,svar,opts,nocon);
         %Convert symbolic expression into matlab function
-        fun = sym2fun(sobj,svar,var,skipSubs);     
+        fun = sym2fun(sobj,svar,var,skipSubs); 
+
+        %Convert string to symbolic expression
+        function s = str2sym(str)
+            %Don't go overboard on precision....
+            digits(16);
+            if (~ischar(str))
+                error('Input was not a string!');
+            elseif (exist('str2sym','file') == 2)
+                s = str2sym(str);
+            else
+                s = sym(str);
+            end
+        end
+
+        %Substitute strings into symbolic expression
+        function s = symsubs(s, a, b)
+            if (exist('str2sym','file') == 2)
+                if (ischar(a) || iscellstr(a)) %#ok<ISCLSTR> 
+                    a = str2sym(a);
+                end
+                if (ischar(b) || iscellstr(b)) %#ok<ISCLSTR> 
+                    b = str2sym(b);
+                end
+            end
+            s = subs(s, a, b);
+        end
         
         %Check we have a compiler suitable for use with Cppad
         function ok = CheckCppADCompile(doerr)

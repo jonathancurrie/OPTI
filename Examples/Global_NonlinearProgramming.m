@@ -4,10 +4,10 @@
 % to solve them using the OPTI Toolbox. You should read and complete
 % BasicUsage.m & NonlinearProgramming.m BEFORE running the below examples.
 %
-%   Copyright (C) 2014 Jonathan Currie (IPL)
+%   Copyright (C) 2014 Jonathan Currie (Control Engineering)
 
 % There is also a page on the Wiki which supplements this example:
-web('https://www.inverseproblem.co.nz/OPTI/index.php/Probs/GNLP');
+web('https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/GNLP');
 
 %% Determing which Solver to Use
 % OPTI Toolbox comes with a number of NLP solvers, thus to determine which
@@ -175,7 +175,7 @@ plot(Opt)
 % algorithm for searching the problem space for a global solution. See the
 % following page for more examples:
 
-web('https://www.inverseproblem.co.nz/OPTI/index.php/Advanced/MultiSolve');
+web('https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Advanced/MultiSolve');
 
 clc
 Opt = opti(Opt,'solver','ipopt');

@@ -4,10 +4,10 @@
 % to be called by the user!
 
 % My build platform:
-% - Windows 7 x64
-% - Visual Studio 2015
+% - Windows 10 x64
+% - Visual Studio 2019
 % - Intel Compiler XE (C++ & FORTRAN)
-% - Intel Math Kernel Library
+% - Intel Math Kernel Library (oneAPI)
 
 % YOU MUST BE IN THE BASE DIRECTORY OF THE OPTI TOOLBOX!
 
@@ -22,10 +22,10 @@ addpath([cd '/Utilities/Source'])
 % opti_CLP_Install
 
 
-%% -- VS2017 Solvers --
+%% -- VS2019 Solvers --
 clc
-fprintf(2,'Please Specify Visual Studio 2017 as your Compiler...\n\n');
-mex -setup
+fprintf(2,'Please Specify Visual Studio 2019 as your Compiler...\n\n');
+mex -setup c++
 %% CLP
 opti_CLP_Install
 
@@ -35,8 +35,16 @@ opti_BONMIN_Install
 %% CBC
 opti_CBC_Install
 
-%% CSDP
+%% CSDP 
+clc
+% NOTE: Doesn't link under VS2019? Used 2015 and OK...
+fprintf(2,'Please Specify Visual Studio 2015/2017 as your Compiler...\n\n');
+mex -setup c++
+%%
 opti_CSDP_Install
+%%
+fprintf(2,'Please Specify Visual Studio 2019 as your Compiler...\n\n');
+mex -setup c++
 
 %% DSDP
 opti_DSDP_Install

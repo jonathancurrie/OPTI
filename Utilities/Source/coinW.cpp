@@ -1,5 +1,5 @@
 /* COINW - A simple Wrapper to Use COIN-OR File Writing Routines
- * Copyright (C) 2011 Jonathan Currie (IPL)
+ * Copyright (C) 2011 Jonathan Currie (Control Engineering)
  */
 
 #include <mex.h>
@@ -253,6 +253,6 @@ void printUtilityInfo()
     mexPrintf("  - Released under the Eclipse Public License: http://opensource.org/licenses/eclipse-1.0\n");
     mexPrintf("  - Source available from: https://projects.coin-or.org/CoinUtils\n");
 
-    mexPrintf("\n MEX Interface J.Currie 2013 (www.inverseproblem.co.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 (www.controlengineering.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

@@ -20,7 +20,7 @@ function [x,fval,exitflag,info] = opti_mkltrnls(fun,grad,x0,ydata,lb,ub,opts)
 %
 %   THIS IS A WRAPPER FOR DTRNLS, DTRNLSBC and DJACOBI
 
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)
 
 if(nargin < 7), opts = optiset; end
 if(nargin < 6), ub = []; end

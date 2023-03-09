@@ -40,4 +40,4 @@
 %   
 %   Based in parts on the original MEX interface by Manolis Lourakis.
 %
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)

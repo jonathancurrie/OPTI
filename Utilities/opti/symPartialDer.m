@@ -6,29 +6,53 @@ function symder = symPartialDer(symfun,var,ncol,ind,der2)
 %   function fun. var specifies the variable to differentiate with respect 
 %   to (as a string).
 
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 
 if(nargin < 5), der2 = false; end
 if(nargin < 4), ind = []; end
 if(nargin < 3), ncol = 0; end
 
+haveStr2Sym = (exist('str2sym','file') == 2);
+
 %Find unique indices
 ind = unique(ind);
 %Check we have enough vars, otherwise manually generate the jacobian/hessian
 if(ncol && (length(ind) ~= ncol))
-    symder = '';
+    if (haveStr2Sym)
+        symder = str2sym('');
+    else
+        symder = '';
+    end
     if(der2)
         %Manually Generate Hessian
         for i = 1:ncol
+            var1str = sprintf('%s%d',var,i);
+            if (haveStr2Sym)
+                var1 = str2sym(var1str);
+            else
+                var1 = sym(var1str);
+            end
             for j = 1:ncol
-                symder = [symder diff(diff(symfun,sym(sprintf('%s%d',var,i))),sym(sprintf('%s%d',var,j)))]; %#ok<AGROW>
+                var2str = sprintf('%s%d',var,j);
+                if (haveStr2Sym)
+                    var2 = str2sym(var2str);
+                else
+                    var2 = sym(var2str);
+                end
+                symder = [symder diff(diff(symfun,var1),var2)]; %#ok<AGROW>
             end
         end    
         symder = reshape(symder,ncol,ncol);
     else
         %Manually Generate Jacobian        
         for i = 1:ncol
-            symder = [symder diff(symfun,sym(sprintf('%s%d',var,i)))]; %#ok<AGROW>
+            var1str = sprintf('%s%d',var,i);
+            if (haveStr2Sym)
+                var1 = str2sym(var1str);
+            else
+                var1 = sym(var1str);
+            end
+            symder = [symder diff(symfun,var1)]; %#ok<AGROW>
         end    
     end
 else
@@ -62,10 +86,15 @@ if(~isempty(ind))
                 break;
             end
         end
-        if(i == length(str))
+        if(i == length(str) && str(i) ~= ']')
             error('Didn''t find the end of the symbolic variable string??');
         end
-        vars = sym(sprintf('[%s]',str(ind(1):i-1)));
+        varstr = sprintf('[%s]',str(ind(1):i-1));
+        if (exist('str2sym','file') == 2)
+            vars = str2sym(varstr);
+        else
+            vars = sym(varstr);
+        end
     end
 else
     vars = [];

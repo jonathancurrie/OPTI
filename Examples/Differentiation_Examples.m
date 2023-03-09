@@ -4,10 +4,10 @@
 % supplied with the OPTI Toolbox. Note you should be familiar with the 
 % operation of OPTI Toolbox by reading the accompanying examples.
 %
-%   Copyright (C) 2014 Jonathan Currie (IPL)
+%   Copyright (C) 2014 Jonathan Currie (Control Engineering)
 
 %Also see the following webpage for more examples:
-web('https://www.inverseproblem.co.nz/OPTI/index.php/Advanced/Deriv1');
+web('https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Advanced/Deriv1');
 
 %% Gradient vs Jacobian
 % The terms Gradient and Jacobian are associated with differentiation

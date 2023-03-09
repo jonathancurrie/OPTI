@@ -8,7 +8,7 @@ function [prob,sol,fmin] = nlp_HS(varargin)
 %
 %   no = nlp_HS() returns the number of problems available for testing
 
-%   (C) 2011 Jonathan Currie (IPL)
+%   (C) 2011 Jonathan Currie (Control Engineering)
 
 % Problem Description Key:
 %

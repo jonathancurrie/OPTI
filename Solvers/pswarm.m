@@ -46,4 +46,4 @@
 %      -3 - population error
 %
 %   
-%   Copyright (C) 2012 Jonathan Currie (IPL)
+%   Copyright (C) 2012 Jonathan Currie (Control Engineering)

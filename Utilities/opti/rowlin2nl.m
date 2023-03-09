@@ -1,7 +1,7 @@
 function prob = rowlin2nl(prob,sparsity,warn)
 %ROWLIN2NL Convert Row Based Linear Constraints to Row Based Nonlinear Constraints
 
-%   Copyright (C) 2012 Jonathan Currie (IPL)
+%   Copyright (C) 2012 Jonathan Currie (Control Engineering)
 
 if(isempty(prob.A))
     return; %nothing to do

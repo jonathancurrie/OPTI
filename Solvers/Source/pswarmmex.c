@@ -1,9 +1,9 @@
 /* PSWARMMEX - A MATLAB MEX Interface to PSWARM
  * Released Under the BSD 3-Clause License:
- * https://www.inverseproblem.co.nz/OPTI/index.php/DL/License
+ * https://www.controlengineering.co.nz/Wikis/OPTI/index.php/DL/License
  *
  * Copyright (C) Jonathan Currie 2012-2013
- * www.inverseproblem.co.nz
+ * www.controlengineering.co.nz
  */
 
 #include "mkl.h"
@@ -497,6 +497,6 @@ void printSolverInfo()
     mexPrintf(" This binary is statically linked to the following software:\n");
     mexPrintf("  - Intel Math Kernel Library [v%d.%d R%d]\n",__INTEL_MKL__,__INTEL_MKL_MINOR__,__INTEL_MKL_UPDATE__);
 
-    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.inverseproblem.co.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.controlengineering.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

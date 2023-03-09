@@ -1,6 +1,6 @@
 %% Miscellaneous Solver/Utility Install for OPTI Toolbox
 
-%   Copyright (C) 2015 Jonathan Currie (IPL)
+%   Copyright (C) 2015 Jonathan Currie (Control Engineering)
 
 % This file will help you compile a few miscellaneous solvers and
 % utilities for use with OPTI.

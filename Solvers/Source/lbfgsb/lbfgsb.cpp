@@ -1,5 +1,5 @@
 /* LBFGSB - A simple MEX Interface to L-BFGS-B NLP Solver
- * Copyright (C) Jonathan Currie 2011 (IPL)                             
+ * Copyright (C) Jonathan Currie 2011 (Control Engineering)                             
  */
 
 // Based largely on parts by Dr. Peter Carbonetto

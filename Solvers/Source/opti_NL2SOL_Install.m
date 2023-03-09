@@ -1,5 +1,5 @@
 %% NL2SOL Install for OPTI Toolbox
-% Copyright (C) 2014 Jonathan Currie (IPL)
+% Copyright (C) 2014 Jonathan Currie (Control Engineering)
 
 % This file will help you compile NL2SOL for use with MATLAB. 
 

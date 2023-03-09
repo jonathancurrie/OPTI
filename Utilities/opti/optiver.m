@@ -3,17 +3,21 @@ function current_version = optiver
 %  Return OPTI software version. This file also contains version update
 %  information.
 
-%   Copyright (C) 2011-2018 Jonathan Currie (IPL)
+%   Copyright (C) 2011-2023 Jonathan Currie (Control Engineering)
 
-current_version = 2.28;
+current_version = 2.29;
 
 %History
 
-%2.29 (...)
+%2.29 (09/03/23)
 % - Added filterSQP v2001/08/17 as an NLP solver to SCIP
 % - Allowed SymBuilder to re-solve without rebuilding
 % - Fixed bug in PSwarm tolerance (N.Kazmierczak)
 % - Fixed bug in installer when ver('MATLAB') returned an array of structs
+% - Updated documentation links against controlengineering.co.nz
+% - Rebuilt all solvers with VS2019 (apart from CSDP, VS2015)
+% - Rebuilt all solvers against MKL v2023.0 R0
+% - Updated Symbolic functions for R2022b
 
 %2.28 (04/03/18)
 % - Added option to installer to allow users to bypass auto download of mex

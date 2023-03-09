@@ -8,7 +8,7 @@ function [f,ind] = func2sym(fun,vars)
 %   [f,ind] = func2sym(fun) returns the indices of the symbolic variable x
 %   used in the equation.
 
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 
 if(nargin < 2), vars = {'x'}; end
 if(~iscell(vars)), vars = {vars}; end
@@ -25,7 +25,11 @@ for i = 1:length(vars)
 end
 
 %Convert to symbolic string
-f = sym(f);
+if (exist('str2sym','file') == 2)
+    f = str2sym(f);
+else
+    f = sym(f);
+end
 
 %Substitute any constants from original workspace into symbolic expression
 fdata = functions(fun);

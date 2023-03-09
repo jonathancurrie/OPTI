@@ -6,7 +6,7 @@ function [cmd,param] = mosekBuild(opts)
 %   This function is based in parts on examples from the MOSEK Toolbox, 
 %   Copyright (c) 1998-2011 MOSEK ApS, Denmark.
 
-%   Copyright (C) 2012 Jonathan Currie (IPL)
+%   Copyright (C) 2012 Jonathan Currie (Control Engineering)
 
 %Check we can find mosek
 if(exist('mosekopt','file') ~= 3)
