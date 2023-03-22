@@ -142,20 +142,20 @@ classdef SymBuilder < handle
         %Identify variable as a constant 
         
             %Concatenate with existing constants
-            B.constnt = [B.constnt; {str val}];   
+            B.constnt = SymUtility.InsertOrReplaceInCellArray(B.constnt, str, val);   
             %If user has passed multiple constants, process all
             if(nargin > 3 && ~isempty(varargin))
                 if(mod(length(varargin),2))
                     error('You must supply a name and value for each constant');
                 else
                     for i = 1:2:length(varargin)
-                        B.constnt = [B.constnt; varargin(i:i+1)];
+                        B.constnt = SymUtility.InsertOrReplaceInCellArray(B.constnt, varargin{i}, varargin{i+1});                           
                     end
                 end
             end
             %Indicate Rebuild Required
             Unbuild(B);
-        end  
+        end
                 
         function B = AddExpression(B,str,grp,ex)
         %Identify variable as an expression
@@ -1023,6 +1023,20 @@ classdef SymBuilder < handle
                 end
             end
             s = subs(s, a, b);
+        end
+        
+        % Insert a value into a 2D cell array, replacing if already  exists by name
+        function C = InsertOrReplaceInCellArray(C, str, val)
+            if (isempty(C))
+                C = {str val};
+            else
+                idx = strcmp(C(:,1),str);
+                if (any(idx))
+                    C{idx,2} = val; % replace
+                else
+                    C = [C; {str val}];
+                end
+            end
         end
         
         %Check we have a compiler suitable for use with Cppad
