@@ -204,21 +204,13 @@ if (length(mver) > 1)
 end
 
 vv = regexp(mver.Version,'\.','split');
-if(str2double(vv{1}) < 8)
-    if(str2double(vv{2}) < 12)
-        if(str2double(vv{2}) < 10)
-            error('MATLAB 2011a or above is required to run OPTI - sorry!');
-        else %2010a/b/sp1
-            fprintf(2,'OPTI is designed for MATLAB 2011a or above.\nIt will install into 2010a, but you may experience reliability problems.\nPlease upgrade to R2011a or later.\n');
-        end
-    end
+if(str2double(vv{1}) < 9) % https://au.mathworks.com/support/requirements/previous-releases.html
+    fprintf(2,'OPTI is designed for MATLAB 2020b or above.\nIt will install into lower versions, but you may experience reliability problems.\nPlease upgrade to R2020b or later.\n');
 end
 
 switch(mexext)
     case 'mexw32'
-        error(['From v2.20 OPTI Toolbox only supports 64bit (Windows x64) platforms. Realistically, you should consider upgrading to 64bit for the best performance with OPTI.\n'...
-               '\nIf however you would like to persist with 32bit, please download the last 32bit maintained version (v2.16) from the OPTI dropbox account:\n'...
-               '%s'],'https://www.dropbox.com/s/ct2wmn1ajvujb3g/OptiToolbox_v2.16.zip?dl=0');
+        error('OPTI Toolbox is compiled only for 64bit systems - sorry!');
     case 'mexw64'
         fprintf('MATLAB %s 64bit (Windows x64) detected\n',mver.Release);
     otherwise
@@ -251,9 +243,9 @@ end
 
 %Print Missing PreReqs
 if(~havVC)
-    fprintf(2,'Cannot find the Microsoft VC++ 2017 %s Redistributable!\n',arch); 
+    fprintf(2,'Cannot find the Microsoft VC++ 2019 %s Redistributable!\n',arch); 
 else
-    fprintf('Found the Microsoft VC++ 2017 %s Redistributable\n',arch); 
+    fprintf('Found the Microsoft VC++ 2019 %s Redistributable\n',arch); 
 end
 % if(~havIC) %[not req from OPTI v >= 2.12]
 %     fprintf(2,'Cannot find the Intel C++ XE 2013 %s Redistributable!\n',arch);
@@ -261,9 +253,9 @@ end
 %     fprintf('Found the Intel C++ XE 2013 %s Redistributable\n',arch); 
 % end
 if(~havIF)
-    fprintf(2,'Cannot find the Intel Fortran XE 2017 %s Redistributable!\n',arch);
+    fprintf(2,'Cannot find the Intel Fortran XE 2019 %s Redistributable!\n',arch);
 else
-    fprintf('Found the Intel Fortran XE 2017 %s Redistributable\n',arch); 
+    fprintf('Found the Intel Fortran XE 2019 %s Redistributable\n',arch); 
 end    
 
 %Install Instructions for each Package
@@ -271,14 +263,14 @@ if(missing)
     fprintf(2,'\nYou are missing one or more pre-requisites. Please read the instructions below carefully to install them:\n\n');
     
     if(~havVC)
-        fprintf(2,' Microsoft VC++ 2017:\n');
+        fprintf(2,' Microsoft VC++ 2019:\n');
         switch(arch)
             case 'x64'
-                fprintf(2,'- Download from: https://go.microsoft.com/fwlink/?LinkId=746572\n');
+                fprintf(2,'- Download from: https://aka.ms/vs/17/release/vc_redist.x64.exe\n');
             case 'x86'
-                fprintf(2,'- Download from: https://go.microsoft.com/fwlink/?LinkId=746571\n');
+                fprintf(2,'- Download from: https://aka.ms/vs/17/release/vc_redist.x86.exe\n');
         end
-        fprintf(2,['NOTE: If you have already downloaded and installed VC++ 2017 (and restarted MATLAB) - it may be that you are missing the Universal C Runtime (Universal CRT).\nThis is automatically installed '...
+        fprintf(2,['NOTE: If you have already downloaded and installed VC++ 2019 (and restarted MATLAB) - it may be that you are missing the Universal C Runtime (Universal CRT).\nThis is automatically installed '...
                     'with Windows Updates - but if you don''t have those turned on, you can download it from here:\nhttps://www.microsoft.com/en-us/download/details.aspx?id=48234\n\n']);
     end
     
@@ -289,7 +281,7 @@ if(missing)
 %     end
     
     if(~havIF) 
-        fprintf(2,' Intel Fortran XE 2018:\n  - Download from: https://software.intel.com/en-us/articles/redistributable-libraries-for-intel-c-and-fortran-2018-compilers-for-windows\n');
+        fprintf(2,' Intel Fortran XE 2019:\n  - Download from: https://software.intel.com/en-us/articles/redistributable-libraries-for-intel-c-and-fortran-2019-compilers-for-windows\n');
         fprintf(2,'  - The download page will contain multiple links. Download the latest (highest number) update from the ''Intel Fortran Compiler for Windows Table''\n');
         fprintf(2,'  - The download package will contain two files. Install the ''%s'' package.\n\n',icarch);
     end
