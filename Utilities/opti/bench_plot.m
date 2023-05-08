@@ -4,7 +4,7 @@ function bench_plot(times,res,solvers,prob)
 % bench_plot(times,res,solvers,prob) not intended to be called by a user -
 % use optiBench.
 
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)
 
 nS = length(solvers);   % Number of Solvers
 nP = length(times{1});  % Number of Test problems

@@ -44,6 +44,6 @@
 %		8 - proven infeasible
 %
 %
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 %
 %   See Also opti_cbc

@@ -8,7 +8,7 @@ function [prob,sol,fmin] = bilp_prob(varargin)
 %
 %   no = bilp_prob() returns the number of problems available for testing.
 
-%   (C) 2011 Jonathan Currie (IPL)
+%   (C) 2011 Jonathan Currie (Control Engineering)
 
 %Check if just returning no problems
 if(nargin < 1)

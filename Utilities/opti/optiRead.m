@@ -24,7 +24,7 @@ function prob = optiRead(filename)
 % AMPL (or the student edition) present on your computer to read .mod files. 
 % For more information see www.ampl.com.
 
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 
 
 if(isempty(strfind(filename,'.')))

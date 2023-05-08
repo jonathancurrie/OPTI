@@ -1,5 +1,5 @@
 /* OPTI Build Utilities Header File
- * (C) Inverse Problem Limited 2017
+ * (C) Control Engineering 2017
  * J. Currie
  */
 
@@ -19,8 +19,10 @@
     #define VS_VER "2013"
 #elif (_MSC_VER == 1900)
     #define VS_VER "2015"
-#elif (_MSC_VER >= 1910 && _MSC_VER <= 1914)
+#elif (_MSC_VER >= 1910 && _MSC_VER <= 1916)
     #define VS_VER "2017"
+#elif (_MSC_VER >= 1920 && _MSC_VER <= 1929)
+    #define VS_VER "2019"
 #else
     #define VS_VER "?"
 #endif

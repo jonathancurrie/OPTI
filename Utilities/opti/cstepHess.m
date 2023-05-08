@@ -15,7 +15,7 @@ function hess = cstepHess(fun,x,isTril,h)
 %   hess = cstepHess(fun,x,isTril,h) specifies the step-size. This defaults to
 %   1e-3.
 
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 %
 %   This code follows ideas from "New Complex-Step Derivative Approximations
 %   with Application to Second-Order Kalman Filtering", by Kok-Lam Lai, John

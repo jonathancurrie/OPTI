@@ -27,8 +27,7 @@ fprintf('Done!\n');
 UpdateContentsFile('OPTI',optiver,'Utilities/opti');
 
 % Copy latest SCIP to download folder
-copyfile(which(['scip.' mexext]), '../../../Inverse Problem/OPTI Academic Solvers');
-
+copyfile(which(['scip.' mexext]), '../../../OPTI Academic Solvers');
 
 function UpdateContentsFile(name,tbxver,contentsFile)
 %Update contents file description line
@@ -52,8 +51,8 @@ if(fid)
     try
         fprintf(fid,'%% %s Toolbox\n',upper(name));
         fprintf(fid,'%% Version %.2f %s %s\n',tbxver,mver.Release,datestr(now,1));
-        fprintf(fid,'%% Copyright (C) %s-%s Jonathan Currie (Inverse Problem Ltd)\n',stDate,datestr(now,10));
-        fprintf(fid,'%% License: https://inverseproblem.co.nz/OPTI/index.php/DL/License\n');
+        fprintf(fid,'%% Copyright (C) %s-%s Jonathan Currie (Control Engineering)\n',stDate,datestr(now,10));
+        fprintf(fid,'%% License: https://controlengineering.co.nz/Wikis/OPTI/index.php/DL/License\n');
     catch ME
         fclose(fid);
         rethrow(ME);

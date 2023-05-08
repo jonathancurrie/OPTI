@@ -3,7 +3,7 @@ function [prob,opts] = buildOpti(varargin)
 %
 %   Called By OPTI Constructor
 
-%   Copyright (C) 2011-2012 Jonathan Currie (IPL)
+%   Copyright (C) 2011-2012 Jonathan Currie (Control Engineering)
 
 % Build Settings
 settings.QUAD_EIG_MAX_SIZE = 1e8;    %Maximum size (rows*cols) for a quadratic matrix before skipping eig() for non-convex check

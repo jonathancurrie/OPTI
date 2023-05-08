@@ -1,5 +1,5 @@
 /* COINR - A simple Wrapper to Use COIN-OR File Reading Routines
- * Copyright (C) 2011 Jonathan Currie (IPL)                              
+ * Copyright (C) 2011 Jonathan Currie (Control Engineering)                              
  */
 
 #include <mex.h>
@@ -397,6 +397,6 @@ void printUtilityInfo()
     mexPrintf(" This binary is statically linked to the following software:\n");
     mexPrintf("  - GLPK [v%s] (GPL)\n",glp_version());
     
-    mexPrintf("\n MEX Interface J.Currie 2013 (www.inverseproblem.co.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 (www.controlengineering.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

@@ -13,7 +13,7 @@ function p = sdpWrite(prob,filename,type)
 % You may specify a full path to the file, or if you specify a filename
 % only, it will be written to the current directory.
 
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 
 %Quick Checks
 if(~exist('type','var') || isempty(type))

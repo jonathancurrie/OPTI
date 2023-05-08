@@ -27,7 +27,7 @@ function [x,fval,exitflag,info] = opti_clp(H,f,A,rl,ru,lb,ub,opts)
 %   THIS IS A WRAPPER FOR CLP USING THE MEX INTERFACE
 %   See supplied Eclipse Public License
 
-%   Copyright (C) 2012 Jonathan Currie (IPL)
+%   Copyright (C) 2012 Jonathan Currie (Control Engineering)
 
 t = tic;
 

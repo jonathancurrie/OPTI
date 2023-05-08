@@ -42,4 +42,4 @@
 %      -5 - user exited
 %   
 %
-%   Copyright (C) 2017 Jonathan Currie (IPL)
+%   Copyright (C) 2017 Jonathan Currie (Control Engineering)

@@ -2,7 +2,7 @@ function [A,rl,ru,Aeq,beq] = rowe2gene(A,rl,ru,Aeq,beq)
 %ROWE2GENE Move Linear Equalities in A with Row Bounds to Linear Equality Constraints
 %   [A,rl,ru,Aeq,beq] = rowe2gene(A,rl,ru,Aeq,beq)
 
-%   Copyright (C) 2012 Jonathan Currie (IPL)
+%   Copyright (C) 2012 Jonathan Currie (Control Engineering)
 
 if(isempty(A))
     return;

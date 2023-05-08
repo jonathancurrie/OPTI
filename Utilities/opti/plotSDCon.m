@@ -2,7 +2,7 @@ function plotSDCon(sdcone,data)
 %PLOTSDCON Plot Semidefinite Constraints on the current figure
 %   plotSDCon(sdcone)
 
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 
 xl = data.xl; yl = data.yl;
 hold on;

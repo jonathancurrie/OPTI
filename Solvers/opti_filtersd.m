@@ -30,7 +30,7 @@ function [x,fval,exitflag,info] = opti_filtersd(fun,grad,x0,lb,ub,nlcon,nljac,nl
 %   THIS IS A WRAPPER FOR FILTERSD
 %   See supplied Eclipse Public License
 
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 
 if(nargin < 11), opts = optiset; else opts = optiset(opts); end
 if(nargin < 10), cu = []; end

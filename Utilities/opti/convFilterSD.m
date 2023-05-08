@@ -3,7 +3,7 @@ function mprob = convFilterSD(prob,opts)
 %
 %   mprob = convFilterSD(prob,opts)
 
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 
 %Ensure all args passed
 if(nargin < 2)

@@ -25,7 +25,7 @@ function [x,fval,exitflag,info] = moseksdp(f,A,rl,ru,lb,ub,sdcone,x0,opts)
 %   This function is based in parts on examples from the MOSEK Toolbox, 
 %   Copyright (c) 1998-2011 MOSEK ApS, Denmark.
 
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 
 t = tic;
 

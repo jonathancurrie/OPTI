@@ -66,7 +66,7 @@ classdef optifit
 %
 %   See also opti opti.solve
 %
-%   Copyright (C) 2011-2014 Jonathan Currie (www.inverseproblem.co.nz)
+%   Copyright (C) 2011-2014 Jonathan Currie (www.controlengineering.co.nz)
     
     
     properties (SetAccess = private)

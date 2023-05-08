@@ -3,7 +3,7 @@
 % Local
 % 1) Update optiver version, release notes and date
 % 2) Rebuild MEX files with the latest optiver version
-% 3) Run opti_Dist_Test (2013a + latest MATLAB) - will automatically package the MEX files and update contents
+% 3) Run opti_Dist_Test (2018b + latest MATLAB) - will automatically package the MEX files and update contents
 
 % Git
 % 1) Commit the latest changes with the new version

@@ -17,7 +17,7 @@ function [x,fval,exitflag,info] = opti_gsl_nls(fun,grad,x0,ydata,opts)
 %
 %   THIS IS A WRAPPER FOR gsl_multifit_nlinear
 
-%   Copyright (C) 2017 Jonathan Currie (IPL)
+%   Copyright (C) 2017 Jonathan Currie (Control Engineering)
 
 if(nargin < 5), opts = optiset; end
 if(nargin < 4), error('OPTI_GSL_NLS requires at least 4 arguments'); end

@@ -2,7 +2,7 @@ function [prob,opts] = QCQP2NLP(prob,opts)
 %QCQP2NLP  Converts a LP / BILP / MILP / QCQP / MIQP / MIQCQP to NLP / MINLP
 % [prob,opts] = QCQP2NLP(prob,opts)
 
-%   Copyright (C) 2012 Jonathan Currie (IPL)
+%   Copyright (C) 2012 Jonathan Currie (Control Engineering)
 
 if(~isfield(prob,'type') || isempty(prob.type))
     error('This function is not for user use, and should only be called from OPTI');

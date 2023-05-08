@@ -1,9 +1,9 @@
 /* M1QN3MEX - A MATLAB MEX Interface to M1QN3
  * Released Under the BSD 3-Clause License:
- * https://www.inverseproblem.co.nz/OPTI/index.php/DL/License
+ * https://www.controlengineering.co.nz/Wikis/OPTI/index.php/DL/License
  *
  * Copyright (C) Jonathan Currie 2018
- * www.inverseproblem.co.nz
+ * www.controlengineering.co.nz
  */
 
 #include "mex.h"
@@ -414,6 +414,6 @@ void printSolverInfo()
         mexPrintf("  - NETLIB BLAS: http://www.netlib.org/blas/\n  - NETLIB LAPACK: http://www.netlib.org/lapack/\n");
     #endif
 
-    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.inverseproblem.co.nz)\n");
+    mexPrintf("\n MEX Interface J.Currie 2013 [BSD3] (www.controlengineering.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }

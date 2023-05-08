@@ -1,6 +1,6 @@
 %% MKL Numerical Jacobian Install for OPTI Toolbox
 
-%   Copyright (C) 2014 Jonathan Currie (IPL)
+%   Copyright (C) 2014 Jonathan Currie (Control Engineering)
 
 % This file will help you compile the Intel Math Kernel Library (MKL) 
 % djacobi function for use with MATLAB. NOTE you must NOT link the threaded

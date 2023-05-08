@@ -8,7 +8,7 @@ function [e,ineq,eq,uncon,glob,deriv,subprob] = nloptSolver(varargin)
 %   nloptSolver() prints a list of all enabled NLOPT Solvers and their
 %   functionality.
 
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)
 
 global solvers
 

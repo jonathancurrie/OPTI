@@ -16,7 +16,7 @@ function [x,fval,exitflag,info,lambda,Opt] = opti_quadprog(H,f,A,b,Aeq,beq,lb,ub
 %   [x,...,lambda,Opt] = opti_quadprog(H,...) returns the internally built
 %   OPTI object.
 
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)
 
 
 % Handle missing arguments

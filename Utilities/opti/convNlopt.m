@@ -3,7 +3,7 @@ function mprob = convNlopt(prob,opts)
 %
 %   mprob = convNlopt(prob,opts)
 
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)
 
 %Ensure all args passed
 if(nargin < 2)

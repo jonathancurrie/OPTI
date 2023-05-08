@@ -4,7 +4,7 @@ function prob = nmix2row(prob)
 %
 %   Use -1 for <=, 0 for =, and 1 for >= in vector e
 
-%   Copyright (C) 2012 Jonathan Currie (IPL)
+%   Copyright (C) 2012 Jonathan Currie (Control Engineering)
 
 %Assign common vars
 rhs = prob.nlrhs;

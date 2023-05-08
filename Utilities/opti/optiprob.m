@@ -15,7 +15,7 @@ function prob = optiprob(varargin)
 %
 % optiprob() prints a list of all possible fields and their function.
 
-%   Copyright (C) 2011-2013 Jonathan Currie (IPL)
+%   Copyright (C) 2011-2013 Jonathan Currie (Control Engineering)
 
 %If empty print all possible arguments
 if (nargin == 0) && (nargout == 0)

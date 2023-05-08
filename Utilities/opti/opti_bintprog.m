@@ -13,7 +13,7 @@ function [x,fval,exitflag,info,Opt] = opti_bintprog(f,A,b,Aeq,beq,x0,opts)
 %   [x,...,info,Opt] = opti_bintprog(f,...) returns the internally built
 %   OPTI object.
 
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)
 
 
 % Handle missing arguments

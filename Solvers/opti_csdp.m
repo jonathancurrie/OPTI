@@ -27,7 +27,7 @@ function [x,fval,exitflag,info] = opti_csdp(f,A,b,lb,ub,sdcone,x0,opts)
 %   THIS IS A WRAPPER FOR CSDP USING THE MEX INTERFACE
 %   See supplied Eclipse Public License
 
-%   Copyright (C) 2013 Jonathan Currie (IPL)
+%   Copyright (C) 2013 Jonathan Currie (Control Engineering)
 
 t = tic;
 

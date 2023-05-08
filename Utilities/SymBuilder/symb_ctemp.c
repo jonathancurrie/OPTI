@@ -1,5 +1,5 @@
 /* SYMB_CTEMP - Template for generating SymBuilder C Code Callbacks
- * Copyright (C) 2014 Jonathan Currie (IPL)                              
+ * Copyright (C) 2014 Jonathan Currie (Control Engineering)                              
  */
 
 #include <mex.h>
@@ -134,7 +134,7 @@ void printInfo()
     mexPrintf(" SYMBUILDER C CODE CALLBACK [Built %s]\n",__DATE__);
 	mexPrintf("\n Call - symb_ccb(mode,x)\n");
     mexPrintf("\n Modes: 'obj', 'grad', 'con', 'jac' or 'hess'\n");
-    mexPrintf("\n J.Currie 2014 (www.inverseproblem.co.nz)\n");
+    mexPrintf("\n J.Currie 2014 (www.controlengineering.co.nz)\n");
     mexPrintf("-----------------------------------------------------------\n");
 }
 

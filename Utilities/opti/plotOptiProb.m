@@ -5,7 +5,7 @@ function plotOptiProb(prob,opts,xb,confStats,scale,dolog,npts,mode)
 %   surface where prob is an optiprob structure. xb is the solution vector, 
 %   and scale zooms the plot.
 
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)
 
 %Defaults
 if(nargin < 8 || isempty(mode)), mode = 'normal'; end

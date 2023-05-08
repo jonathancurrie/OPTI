@@ -3,7 +3,7 @@ function mprob = convBonmin(prob,opts,warn)
 %
 %   mprob = convBonmin(prob,opts)
 
-%   Copyright (C) 2011 Jonathan Currie (IPL)
+%   Copyright (C) 2011 Jonathan Currie (Control Engineering)
 
 %COMPATIBLE CPLEX VERSION
 CPLEXVER = '12.5.1.0';
