@@ -5,9 +5,10 @@ const DOWNLOAD_URL =
   'https://www.dropbox.com/sh/7vtp9ifeuwt1h91/AACPsSpuJV8LBUhIImZu8pfCa?dl=0';
 const PUBLIC_RECAPTCHA_SITE_KEY = '6Lfww10tAAAAAOBPqtuZWOmJlnwnD113ROgNIQhg';
 const RECAPTCHA_ACTION = 'ACADEMIC_DOWNLOAD';
+const RECAPTCHA_ONLOAD_CALLBACK = 'onOptiAcademicRecaptchaLoad';
 const RECAPTCHA_SCRIPT_ID = 'opti-academic-recaptcha-enterprise';
 const RECAPTCHA_SCRIPT_URL =
-  'https://www.google.com/recaptcha/enterprise.js?render=explicit';
+  `https://www.google.com/recaptcha/enterprise.js?onload=${RECAPTCHA_ONLOAD_CALLBACK}&render=explicit`;
 
 export default function AcademicDownloadAccess() {
   const [academicUseConfirmed, setAcademicUseConfirmed] = useState(false);
@@ -30,6 +31,7 @@ export default function AcademicDownloadAccess() {
       }
 
       if (!captcha?.render) {
+        console.error('reCAPTCHA Enterprise loaded without its rendering API.');
         setCaptchaState('error');
         return;
       }
@@ -67,7 +69,9 @@ export default function AcademicDownloadAccess() {
           captchaContainer.current.dataset.rendered = 'true';
         } catch (error) {
           console.error('Unable to render reCAPTCHA Enterprise.', error);
-          setCaptchaState('error');
+          if (!cancelled) {
+            setCaptchaState('error');
+          }
         }
       });
     };
@@ -78,11 +82,12 @@ export default function AcademicDownloadAccess() {
       }
     };
 
+    window[RECAPTCHA_ONLOAD_CALLBACK] = renderCaptcha;
+
     let script = document.getElementById(RECAPTCHA_SCRIPT_ID);
     if (window.grecaptcha?.enterprise?.render) {
       renderCaptcha();
     } else if (script) {
-      script.addEventListener('load', renderCaptcha);
       script.addEventListener('error', handleScriptError);
     } else {
       script = document.createElement('script');
@@ -90,15 +95,16 @@ export default function AcademicDownloadAccess() {
       script.src = RECAPTCHA_SCRIPT_URL;
       script.async = true;
       script.defer = true;
-      script.addEventListener('load', renderCaptcha);
       script.addEventListener('error', handleScriptError);
       document.head.appendChild(script);
     }
 
     return () => {
       cancelled = true;
-      script?.removeEventListener('load', renderCaptcha);
       script?.removeEventListener('error', handleScriptError);
+      if (window[RECAPTCHA_ONLOAD_CALLBACK] === renderCaptcha) {
+        delete window[RECAPTCHA_ONLOAD_CALLBACK];
+      }
       if (widgetId !== undefined && window.grecaptcha?.enterprise?.reset) {
         window.grecaptcha.enterprise.reset(widgetId);
       }
