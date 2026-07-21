@@ -1,0 +1,560 @@
+{
+  "format": 1,
+  "source": "OPTI",
+  "site_slug": "opti",
+  "source_timezone": "Pacific/Auckland",
+  "pages": [
+    {
+      "source": "Advanced.AdvOpt",
+      "title": "Advanced Options",
+      "file": "guides/advanced/adv-opt.md",
+      "route": "/guides/advanced/adv-opt/"
+    },
+    {
+      "source": "Advanced.Cons",
+      "title": "Two Ways to Define Constraints",
+      "file": "guides/advanced/cons.md",
+      "route": "/guides/advanced/cons/"
+    },
+    {
+      "source": "Advanced.Deriv1",
+      "title": "Supplying 1st Derivatives",
+      "file": "guides/advanced/deriv1.md",
+      "route": "/guides/advanced/deriv1/"
+    },
+    {
+      "source": "Advanced.Deriv2",
+      "title": "Supplying 2nd Derivatives",
+      "file": "guides/advanced/deriv2.md",
+      "route": "/guides/advanced/deriv2/"
+    },
+    {
+      "source": "Advanced.LargeScale",
+      "title": "Large-Scale Nonlinear Optimization",
+      "file": "guides/advanced/large-scale.md",
+      "route": "/guides/advanced/large-scale/"
+    },
+    {
+      "source": "Advanced.LowLevel",
+      "title": "Low Level Solver Interfaces",
+      "file": "guides/advanced/low-level.md",
+      "route": "/guides/advanced/low-level/"
+    },
+    {
+      "source": "Advanced.MultiSolve",
+      "title": "OPTI Multi-Start Solver (multisolve)",
+      "file": "guides/advanced/multi-solve.md",
+      "route": "/guides/advanced/multi-solve/"
+    },
+    {
+      "source": "Advanced.Opts",
+      "title": "Optimization Settings",
+      "file": "guides/advanced/opts.md",
+      "route": "/guides/advanced/opts/"
+    },
+    {
+      "source": "Advanced.Plots",
+      "title": "Plotting OPTI Models",
+      "file": "guides/advanced/plots.md",
+      "route": "/guides/advanced/plots/"
+    },
+    {
+      "source": "Advanced.SymBuilder",
+      "title": "SymBuilder",
+      "file": "guides/advanced/sym-builder.md",
+      "route": "/guides/advanced/sym-builder/"
+    },
+    {
+      "source": "Advanced.WhiteBox",
+      "title": "White Box Optimization",
+      "file": "guides/advanced/white-box.md",
+      "route": "/guides/advanced/white-box/"
+    },
+    {
+      "source": "DL.Academic",
+      "title": "Download OPTI Toolbox Academic Extension",
+      "file": "project/academic-extension.mdx",
+      "route": "/project/academic-extension/"
+    },
+    {
+      "source": "DL.DownloadOPTI",
+      "title": "Download OPTI Toolbox",
+      "file": "project/download.md",
+      "route": "/project/download/"
+    },
+    {
+      "source": "DL.License",
+      "title": "OPTI Toolbox License (BSD Simplified)",
+      "file": "project/license.md",
+      "route": "/project/license/"
+    },
+    {
+      "source": "Dynamic.DNLS",
+      "title": "Dynamic System Parameter Estimation",
+      "file": "examples/dynamic-optimization/dnls.md",
+      "route": "/examples/dynamic-optimization/dnls/"
+    },
+    {
+      "source": "Dynamic.DynamicParameterEstimation",
+      "title": "Dynamic System Parameter Estimation",
+      "file": "examples/dynamic-optimization/dynamic-parameter-estimation.md",
+      "route": "/examples/dynamic-optimization/dynamic-parameter-estimation/"
+    },
+    {
+      "source": "Dynamic.DynamicSystemParameterEstimation",
+      "title": "Dynamic System Parameter Estimation",
+      "file": "examples/dynamic-optimization/dynamic-system-parameter-estimation.md",
+      "route": "/examples/dynamic-optimization/dynamic-system-parameter-estimation/"
+    },
+    {
+      "source": "Dynamic.Opts",
+      "title": "Dynamic Optimization Settings",
+      "file": "examples/dynamic-optimization/opts.md",
+      "route": "/examples/dynamic-optimization/opts/"
+    },
+    {
+      "source": "Examples.Examples",
+      "title": "Examples",
+      "file": "examples/index.md",
+      "route": "/examples/"
+    },
+    {
+      "source": "File.AMPL",
+      "title": "AMPL .NL Models",
+      "file": "examples/file-formats/ampl.md",
+      "route": "/examples/file-formats/ampl/"
+    },
+    {
+      "source": "File.GAMS",
+      "title": "GAMS .GMS Models",
+      "file": "examples/file-formats/gams.md",
+      "route": "/examples/file-formats/gams/"
+    },
+    {
+      "source": "File.MPS",
+      "title": "MPS and LP Models",
+      "file": "examples/file-formats/mps.md",
+      "route": "/examples/file-formats/mps/"
+    },
+    {
+      "source": "File.SDPA",
+      "title": "SDPA and SeDuMi Models",
+      "file": "examples/file-formats/sdpa.md",
+      "route": "/examples/file-formats/sdpa/"
+    },
+    {
+      "source": "GetStart.Basics",
+      "title": "Basic OPTI Usage",
+      "file": "getting-started/basics.md",
+      "route": "/getting-started/basics/"
+    },
+    {
+      "source": "GetStart.Overloads",
+      "title": "MATLAB Optimization Toolbox Overloads",
+      "file": "getting-started/overloads.md",
+      "route": "/getting-started/overloads/"
+    },
+    {
+      "source": "Help.Cite",
+      "title": "Citing OPTI Toolbox",
+      "file": "project/citation.md",
+      "route": "/project/citation/"
+    },
+    {
+      "source": "Help.FAQ",
+      "title": "FAQ",
+      "file": "project/faq.md",
+      "route": "/project/faq/"
+    },
+    {
+      "source": "Integer.SOS",
+      "title": "Using Special Ordered Sets (SOS)",
+      "file": "guides/integer-programming/sos.md",
+      "route": "/guides/integer-programming/sos/"
+    },
+    {
+      "source": "Integer.Tricks",
+      "title": "Simple Integer Programming Tricks",
+      "file": "guides/integer-programming/tricks.md",
+      "route": "/guides/integer-programming/tricks/"
+    },
+    {
+      "source": "Linear.MILP",
+      "title": "Mixed Integer Linear Programming",
+      "file": "examples/linear/milp.md",
+      "route": "/examples/linear/milp/"
+    },
+    {
+      "source": "Main.HomePage",
+      "title": "OPTI Toolbox Documentation",
+      "file": "index.md",
+      "route": "/"
+    },
+    {
+      "source": "Main.WhatIsOPTI",
+      "title": "What Is OPTI?",
+      "file": "overview.md",
+      "route": "/overview/"
+    },
+    {
+      "source": "Options.Optidynset",
+      "title": "Dynamic Optimization Settings",
+      "file": "reference/options/optidynset.md",
+      "route": "/reference/options/optidynset/"
+    },
+    {
+      "source": "Options.Optiset",
+      "title": "Optimization Settings",
+      "file": "reference/options/optiset.md",
+      "route": "/reference/options/optiset/"
+    },
+    {
+      "source": "Probs.GNLP",
+      "title": "Global Nonlinear Program (GNLP)",
+      "file": "examples/problem-types/gnlp.md",
+      "route": "/examples/problem-types/gnlp/"
+    },
+    {
+      "source": "Probs.LP",
+      "title": "Linear Program (LP)",
+      "file": "examples/problem-types/lp.md",
+      "route": "/examples/problem-types/lp/"
+    },
+    {
+      "source": "Probs.MILP",
+      "title": "Mixed Integer Linear Program (MILP)",
+      "file": "examples/problem-types/milp.md",
+      "route": "/examples/problem-types/milp/"
+    },
+    {
+      "source": "Probs.MINLP",
+      "title": "Mixed Integer Nonlinear Program (MINLP)",
+      "file": "examples/problem-types/minlp.md",
+      "route": "/examples/problem-types/minlp/"
+    },
+    {
+      "source": "Probs.MIQCQP",
+      "title": "Mixed Integer Quadratically Constrained Quadratic Program (MIQCQP)",
+      "file": "examples/problem-types/miqcqp.md",
+      "route": "/examples/problem-types/miqcqp/"
+    },
+    {
+      "source": "Probs.MIQP",
+      "title": "Mixed Integer Quadratic Program (MIQP)",
+      "file": "examples/problem-types/miqp.md",
+      "route": "/examples/problem-types/miqp/"
+    },
+    {
+      "source": "Probs.ModelFit",
+      "title": "Model Fitting and Parameter Estimation",
+      "file": "examples/problem-types/model-fit.md",
+      "route": "/examples/problem-types/model-fit/"
+    },
+    {
+      "source": "Probs.NLP",
+      "title": "Nonlinear Program (NLP)",
+      "file": "examples/problem-types/nlp.md",
+      "route": "/examples/problem-types/nlp/"
+    },
+    {
+      "source": "Probs.NLS",
+      "title": "Nonlinear Least Squares (NLS)",
+      "file": "examples/problem-types/nls.md",
+      "route": "/examples/problem-types/nls/"
+    },
+    {
+      "source": "Probs.QCQP",
+      "title": "Quadratically Constrained Quadratic Program (QCQP)",
+      "file": "examples/problem-types/qcqp.md",
+      "route": "/examples/problem-types/qcqp/"
+    },
+    {
+      "source": "Probs.QP",
+      "title": "Quadratic Program (QP)",
+      "file": "examples/problem-types/qp.md",
+      "route": "/examples/problem-types/qp/"
+    },
+    {
+      "source": "Probs.SCNLE",
+      "title": "System of Constrained Nonlinear Equations (SCNLE)",
+      "file": "examples/problem-types/scnle.md",
+      "route": "/examples/problem-types/scnle/"
+    },
+    {
+      "source": "Probs.SDP",
+      "title": "Semidefinite Program (SDP)",
+      "file": "examples/problem-types/sdp.md",
+      "route": "/examples/problem-types/sdp/"
+    },
+    {
+      "source": "Probs.SNLE",
+      "title": "System of Nonlinear Equations (SNLE)",
+      "file": "examples/problem-types/snle.md",
+      "route": "/examples/problem-types/snle/"
+    },
+    {
+      "source": "Solvers.BARON",
+      "title": "BARON",
+      "file": "solvers/baron.md",
+      "route": "/solvers/baron/"
+    },
+    {
+      "source": "Solvers.BONMIN",
+      "title": "BONMIN",
+      "file": "solvers/bonmin.md",
+      "route": "/solvers/bonmin/"
+    },
+    {
+      "source": "Solvers.CBC",
+      "title": "CBC",
+      "file": "solvers/cbc.md",
+      "route": "/solvers/cbc/"
+    },
+    {
+      "source": "Solvers.CLP",
+      "title": "CLP",
+      "file": "solvers/clp.md",
+      "route": "/solvers/clp/"
+    },
+    {
+      "source": "Solvers.CPLEX",
+      "title": "CPLEX",
+      "file": "solvers/cplex.md",
+      "route": "/solvers/cplex/"
+    },
+    {
+      "source": "Solvers.CSDP",
+      "title": "CSDP",
+      "file": "solvers/csdp.md",
+      "route": "/solvers/csdp/"
+    },
+    {
+      "source": "Solvers.DSDP",
+      "title": "DSDP",
+      "file": "solvers/dsdp.md",
+      "route": "/solvers/dsdp/"
+    },
+    {
+      "source": "Solvers.FILTERSD",
+      "title": "FILTERSD",
+      "file": "solvers/filtersd.md",
+      "route": "/solvers/filtersd/"
+    },
+    {
+      "source": "Solvers.GLPK",
+      "title": "GLPK",
+      "file": "solvers/glpk.md",
+      "route": "/solvers/glpk/"
+    },
+    {
+      "source": "Solvers.GMATLAB",
+      "title": "GMATLAB",
+      "file": "solvers/gmatlab.md",
+      "route": "/solvers/gmatlab/"
+    },
+    {
+      "source": "Solvers.HYBRJ",
+      "title": "HYBRJ",
+      "file": "solvers/hybrj.md",
+      "route": "/solvers/hybrj/"
+    },
+    {
+      "source": "Solvers.IPOPT",
+      "title": "IPOPT",
+      "file": "solvers/ipopt.md",
+      "route": "/solvers/ipopt/"
+    },
+    {
+      "source": "Solvers.L-BFGS-B",
+      "title": "L BFGS B",
+      "file": "solvers/l-bfgs-b.md",
+      "route": "/solvers/l-bfgs-b/"
+    },
+    {
+      "source": "Solvers.LEVMAR",
+      "title": "LEVMAR",
+      "file": "solvers/levmar.md",
+      "route": "/solvers/levmar/"
+    },
+    {
+      "source": "Solvers.LIPSOL",
+      "title": "LIPSOL",
+      "file": "solvers/lipsol.md",
+      "route": "/solvers/lipsol/"
+    },
+    {
+      "source": "Solvers.LMDER",
+      "title": "LMDER",
+      "file": "solvers/lmder.md",
+      "route": "/solvers/lmder/"
+    },
+    {
+      "source": "Solvers.LPSOLVE",
+      "title": "LPSOLVE",
+      "file": "solvers/lpsolve.md",
+      "route": "/solvers/lpsolve/"
+    },
+    {
+      "source": "Solvers.M1QN3",
+      "title": "M1 QN3",
+      "file": "solvers/m1-qn3.md",
+      "route": "/solvers/m1-qn3/"
+    },
+    {
+      "source": "Solvers.MATLAB",
+      "title": "MATLAB",
+      "file": "solvers/matlab.md",
+      "route": "/solvers/matlab/"
+    },
+    {
+      "source": "Solvers.MKLTRNLS",
+      "title": "MKLTRNLS",
+      "file": "solvers/mkltrnls.md",
+      "route": "/solvers/mkltrnls/"
+    },
+    {
+      "source": "Solvers.MOSEK",
+      "title": "MOSEK",
+      "file": "solvers/mosek.md",
+      "route": "/solvers/mosek/"
+    },
+    {
+      "source": "Solvers.MUMPS",
+      "title": "MUMPS",
+      "file": "solvers/mumps.md",
+      "route": "/solvers/mumps/"
+    },
+    {
+      "source": "Solvers.NL2SOL",
+      "title": "NL2 SOL",
+      "file": "solvers/nl2-sol.md",
+      "route": "/solvers/nl2-sol/"
+    },
+    {
+      "source": "Solvers.NLOPT",
+      "title": "NLOPT",
+      "file": "solvers/nlopt.md",
+      "route": "/solvers/nlopt/"
+    },
+    {
+      "source": "Solvers.NOMAD",
+      "title": "NOMAD",
+      "file": "solvers/nomad.md",
+      "route": "/solvers/nomad/"
+    },
+    {
+      "source": "Solvers.OOQP",
+      "title": "OOQP",
+      "file": "solvers/ooqp.md",
+      "route": "/solvers/ooqp/"
+    },
+    {
+      "source": "Solvers.PSWARM",
+      "title": "PSWARM",
+      "file": "solvers/pswarm.md",
+      "route": "/solvers/pswarm/"
+    },
+    {
+      "source": "Solvers.QSOPT",
+      "title": "QSOPT",
+      "file": "solvers/qsopt.md",
+      "route": "/solvers/qsopt/"
+    },
+    {
+      "source": "Solvers.SCIP",
+      "title": "SCIP",
+      "file": "solvers/scip.md",
+      "route": "/solvers/scip/"
+    },
+    {
+      "source": "Solvers.SEDUMI",
+      "title": "SeDuMi",
+      "file": "solvers/sedumi.md",
+      "route": "/solvers/sedumi/"
+    },
+    {
+      "source": "Solvers.Solvers",
+      "title": "Solvers",
+      "file": "solvers/index.md",
+      "route": "/solvers/"
+    },
+    {
+      "source": "Utilities.ADIFF",
+      "title": "ADIFF",
+      "file": "reference/utilities/adiff.md",
+      "route": "/reference/utilities/adiff/"
+    },
+    {
+      "source": "Utilities.ASL",
+      "title": "ASL",
+      "file": "reference/utilities/asl.md",
+      "route": "/reference/utilities/asl/"
+    },
+    {
+      "source": "Utilities.CoinUtils",
+      "title": "Coin Utils",
+      "file": "reference/utilities/coin-utils.md",
+      "route": "/reference/utilities/coin-utils/"
+    },
+    {
+      "source": "Utilities.CppAD",
+      "title": "Cpp AD",
+      "file": "reference/utilities/cpp-ad.md",
+      "route": "/reference/utilities/cpp-ad/"
+    },
+    {
+      "source": "Utilities.DJACOBI",
+      "title": "DJACOBI",
+      "file": "reference/utilities/djacobi.md",
+      "route": "/reference/utilities/djacobi/"
+    },
+    {
+      "source": "Utilities.RMathLib",
+      "title": "R Math Lib",
+      "file": "reference/utilities/r-math-lib.md",
+      "route": "/reference/utilities/r-math-lib/"
+    },
+    {
+      "source": "Utilities.Utilities",
+      "title": "Utilities",
+      "file": "reference/utilities/index.md",
+      "route": "/reference/utilities/"
+    }
+  ],
+  "counts": {
+    "pages": 86,
+    "groups": {
+      "Advanced": 11,
+      "DL": 3,
+      "Dynamic": 4,
+      "Examples": 1,
+      "File": 4,
+      "GetStart": 2,
+      "Help": 2,
+      "Integer": 2,
+      "Linear": 1,
+      "Main": 2,
+      "Options": 2,
+      "Probs": 14,
+      "Solvers": 31,
+      "Utilities": 7
+    },
+    "source_blocks": 305,
+    "inline_code_spans": 539,
+    "links": 424,
+    "image_references": 154,
+    "copied_images": 127,
+    "table_blocks": 41
+  },
+  "warnings": {
+    "unresolved_links": [],
+    "missing_images": [],
+    "unused_images": [
+      "plot_ex1nls.png"
+    ],
+    "residual_markup": []
+  },
+  "exceptions": {
+    "unpublished_link_targets": []
+  }
+}

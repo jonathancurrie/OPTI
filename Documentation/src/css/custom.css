@@ -1,0 +1,168 @@
+:root {
+  --ifm-color-primary: #0870c9;
+  --ifm-color-primary-dark: #0765b5;
+  --ifm-color-primary-darker: #0760ab;
+  --ifm-color-primary-darkest: #054f8d;
+  --ifm-color-primary-light: #197dce;
+  --ifm-color-primary-lighter: #2183d2;
+  --ifm-color-primary-lightest: #4598df;
+  --ifm-code-font-size: 92%;
+  --ifm-heading-font-weight: 650;
+  --ifm-navbar-background-color: #1c1c1c;
+  --ifm-navbar-link-color: #bababa;
+  --ifm-navbar-link-hover-color: #ffffff;
+  --ifm-navbar-shadow: 0 1px 0 rgba(0, 0, 0, 0.45);
+  --docusaurus-highlighted-code-line-bg: rgba(8, 112, 201, 0.12);
+  --opti-blue-soft: rgba(8, 112, 201, 0.09);
+  --opti-blue-soft-strong: rgba(8, 112, 201, 0.15);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #66b6f2;
+  --ifm-color-primary-dark: #45a5ee;
+  --ifm-color-primary-darker: #35a0ec;
+  --ifm-color-primary-darkest: #1384d8;
+  --ifm-color-primary-light: #87c7f5;
+  --ifm-color-primary-lighter: #97cef6;
+  --ifm-color-primary-lightest: #d8edfc;
+  --ifm-navbar-background-color: #151515;
+  --docusaurus-highlighted-code-line-bg: rgba(102, 182, 242, 0.18);
+  --opti-blue-soft: rgba(102, 182, 242, 0.1);
+  --opti-blue-soft-strong: rgba(102, 182, 242, 0.17);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.navbar__title {
+  color: #ffffff;
+  letter-spacing: 0.01em;
+}
+
+.navbar {
+  border-bottom: 3px solid #0870c9;
+}
+
+.navbar__brand:hover .navbar__title,
+.navbar__link:hover,
+.navbar__link--active {
+  color: #ffffff;
+}
+
+.navbar__link {
+  border-radius: 0.25rem;
+}
+
+.navbar__link:hover,
+.navbar__link--active {
+  background: rgba(8, 112, 201, 0.3);
+  text-decoration: none;
+}
+
+.navbar .clean-btn {
+  color: #eaeaea;
+}
+
+.navbar-sidebar {
+  background: var(--ifm-background-color);
+}
+
+.navbar-sidebar__brand {
+  background: #1c1c1c;
+  border-bottom: 3px solid #0870c9;
+}
+
+.navbar-sidebar__brand .navbar__title {
+  color: #ffffff;
+}
+
+.menu__link:hover {
+  background: var(--opti-blue-soft);
+  color: var(--ifm-color-primary-dark);
+}
+
+.menu__link--active:not(.menu__link--sublist) {
+  background: var(--opti-blue-soft-strong);
+  box-shadow: inset 3px 0 0 var(--ifm-color-primary);
+  color: var(--ifm-color-primary-dark);
+  font-weight: 700;
+}
+
+[data-theme='dark'] .menu__link:hover,
+[data-theme='dark'] .menu__link--active:not(.menu__link--sublist) {
+  color: var(--ifm-color-primary);
+}
+
+.theme-doc-markdown {
+  max-width: 980px;
+}
+
+.theme-doc-markdown > h2 {
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+  color: var(--ifm-color-primary-dark);
+  padding-bottom: 0.35rem;
+}
+
+[data-theme='dark'] .theme-doc-markdown > h2 {
+  color: var(--ifm-color-primary);
+}
+
+.theme-doc-markdown img {
+  border-radius: 0.35rem;
+  height: auto;
+  max-width: 100%;
+}
+
+.theme-doc-markdown table {
+  display: table;
+  width: 100%;
+}
+
+.theme-doc-markdown table thead {
+  background: var(--ifm-color-primary-darkest);
+  color: #ffffff;
+}
+
+.theme-doc-markdown table thead a {
+  color: #ffffff;
+}
+
+.theme-doc-markdown table tbody tr:nth-child(even) {
+  background: var(--opti-blue-soft);
+}
+
+/* GFM requires a header row, while many PmWiki tables are headerless. */
+.theme-doc-markdown table thead:not(:has(th:not(:empty))) {
+  display: none;
+}
+
+.theme-code-block {
+  box-shadow: 0 1px 3px rgba(8, 112, 201, 0.16);
+}
+
+.pagination-nav__link:hover {
+  border-color: var(--ifm-color-primary);
+  background: var(--opti-blue-soft);
+}
+
+.footer--dark {
+  --ifm-footer-background-color: #272727;
+  border-top: 3px solid #0870c9;
+}
+
+.footer--dark .footer__title {
+  color: #8cc8f5;
+}
+
+.footer--dark .footer__link-item:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 700px) {
+  .theme-doc-markdown table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "groups": {
+    "Advanced": "guides/advanced",
+    "DL": "project",
+    "Dynamic": "examples/dynamic-optimization",
+    "Examples": "examples",
+    "File": "examples/file-formats",
+    "GetStart": "getting-started",
+    "Help": "project",
+    "Integer": "guides/integer-programming",
+    "Linear": "examples/linear",
+    "Options": "reference/options",
+    "Probs": "examples/problem-types",
+    "Solvers": "solvers",
+    "Utilities": "reference/utilities"
+  },
+  "pages": {
+    "DL.Academic": "project/academic-extension.mdx",
+    "DL.DownloadOPTI": "project/download.md",
+    "DL.License": "project/license.md",
+    "Examples.Examples": "examples/index.md",
+    "Help.Cite": "project/citation.md",
+    "Help.FAQ": "project/faq.md",
+    "Main.HomePage": "index.md",
+    "Main.WhatIsOPTI": "overview.md",
+    "Solvers.Solvers": "solvers/index.md",
+    "Utilities.Utilities": "reference/utilities/index.md"
+  },
+  "title_overrides": {
+    "Main.HomePage": "OPTI Toolbox Documentation"
+  },
+  "markdown_replacements": {
+    "Main.HomePage": [
+      {
+        "old": "## News\n\n",
+        "new": "## News\n\n- **19th July 2026**\n\n  The OPTI site has been migrated to this new documentation, with improved navigation, search, and mobile support.\n\n"
+      }
+    ],
+    "DL.DownloadOPTI": [
+      {
+        "old": "[here](./academic-extension.mdx)",
+        "new": "[here](../academic-extension/)"
+      }
+    ],
+    "Advanced.LargeScale": [
+      {
+        "old": "This Wiki contains a page",
+        "new": "This documentation contains a page"
+      },
+      {
+        "old": "[SymBuilder](./sym-builder.md) Wiki page",
+        "new": "[SymBuilder documentation page](./sym-builder.md)"
+      },
+      {
+        "old": "YALMIP Wiki",
+        "new": "YALMIP documentation"
+      }
+    ],
+    "Advanced.WhiteBox": [
+      {
+        "old": "examples in the Wiki",
+        "new": "examples in this documentation"
+      }
+    ]
+  },
+  "content_override_files": {
+    "DL.Academic": "overrides/academic-extension.mdx"
+  },
+  "exclude_groups": [
+    "Blog",
+    "Comments"
+  ],
+  "exclude_pages": [
+    "Advanced.Integer",
+    "Advanced.SOS",
+    "Main.MyNewPage",
+    "Main.WikiSandbox"
+  ],
+  "allow_unresolved_links": {}
+}

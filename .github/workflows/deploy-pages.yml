@@ -1,0 +1,60 @@
+name: Deploy documentation to GitHub Pages
+
+on:
+  push:
+    branches: [master, main]
+    paths:
+      - '.github/workflows/deploy-pages.yml'
+      - 'Documentation/docs/**'
+      - 'Documentation/migration/**'
+      - 'Documentation/src/**'
+      - 'Documentation/static/**'
+      - 'Documentation/docusaurus.config.js'
+      - 'Documentation/sidebars.js'
+      - 'Documentation/package.json'
+      - 'Documentation/pnpm-lock.yaml'
+      - 'Documentation/pnpm-workspace.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Documentation
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.9.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: Documentation/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: Documentation/build
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
