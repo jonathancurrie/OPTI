@@ -4,7 +4,10 @@ import styles from './styles.module.css';
 const DOWNLOAD_URL =
   'https://www.dropbox.com/sh/7vtp9ifeuwt1h91/AACPsSpuJV8LBUhIImZu8pfCa?dl=0';
 const PUBLIC_RECAPTCHA_SITE_KEY = '6Lfww10tAAAAAOBPqtuZWOmJlnwnD113ROgNIQhg';
-const RECAPTCHA_SCRIPT_ID = 'opti-academic-recaptcha';
+const RECAPTCHA_ACTION = 'ACADEMIC_DOWNLOAD';
+const RECAPTCHA_SCRIPT_ID = 'opti-academic-recaptcha-enterprise';
+const RECAPTCHA_SCRIPT_URL =
+  'https://www.google.com/recaptcha/enterprise.js?render=explicit';
 
 export default function AcademicDownloadAccess() {
   const [academicUseConfirmed, setAcademicUseConfirmed] = useState(false);
@@ -17,56 +20,87 @@ export default function AcademicDownloadAccess() {
     let widgetId;
 
     const renderCaptcha = () => {
+      const captcha = window.grecaptcha?.enterprise;
       if (
         cancelled ||
         !captchaContainer.current ||
-        captchaContainer.current.dataset.rendered === 'true' ||
-        !window.grecaptcha?.render
+        captchaContainer.current.dataset.rendered === 'true'
       ) {
         return;
       }
 
-      window.grecaptcha.ready(() => {
+      if (!captcha?.render) {
+        setCaptchaState('error');
+        return;
+      }
+
+      captcha.ready(() => {
         if (cancelled || !captchaContainer.current) {
           return;
         }
-        widgetId = window.grecaptcha.render(captchaContainer.current, {
-          sitekey: PUBLIC_RECAPTCHA_SITE_KEY,
-          theme: document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light',
-          callback: () => setCaptchaState('verified'),
-          'expired-callback': () => setCaptchaState('ready'),
-          'error-callback': () => setCaptchaState('error'),
-        });
-        captchaContainer.current.dataset.rendered = 'true';
-        setCaptchaState('ready');
-      });
-    };
 
-    let script = document.getElementById(RECAPTCHA_SCRIPT_ID);
-    if (window.grecaptcha?.render) {
-      renderCaptcha();
-    } else if (script) {
-      script.addEventListener('load', renderCaptcha);
-    } else {
-      script = document.createElement('script');
-      script.id = RECAPTCHA_SCRIPT_ID;
-      script.src = 'https://www.google.com/recaptcha/api.js?render=explicit';
-      script.async = true;
-      script.defer = true;
-      script.addEventListener('load', renderCaptcha);
-      script.addEventListener('error', () => {
-        if (!cancelled) {
+        try {
+          setCaptchaState('ready');
+          widgetId = captcha.render(captchaContainer.current, {
+            sitekey: PUBLIC_RECAPTCHA_SITE_KEY,
+            action: RECAPTCHA_ACTION,
+            theme:
+              document.documentElement.dataset.theme === 'dark'
+                ? 'dark'
+                : 'light',
+            callback: () => {
+              if (!cancelled) {
+                setCaptchaState('verified');
+              }
+            },
+            'expired-callback': () => {
+              if (!cancelled) {
+                setCaptchaState('ready');
+              }
+            },
+            'error-callback': () => {
+              if (!cancelled) {
+                setCaptchaState('error');
+              }
+            },
+          });
+          captchaContainer.current.dataset.rendered = 'true';
+        } catch (error) {
+          console.error('Unable to render reCAPTCHA Enterprise.', error);
           setCaptchaState('error');
         }
       });
+    };
+
+    const handleScriptError = () => {
+      if (!cancelled) {
+        setCaptchaState('error');
+      }
+    };
+
+    let script = document.getElementById(RECAPTCHA_SCRIPT_ID);
+    if (window.grecaptcha?.enterprise?.render) {
+      renderCaptcha();
+    } else if (script) {
+      script.addEventListener('load', renderCaptcha);
+      script.addEventListener('error', handleScriptError);
+    } else {
+      script = document.createElement('script');
+      script.id = RECAPTCHA_SCRIPT_ID;
+      script.src = RECAPTCHA_SCRIPT_URL;
+      script.async = true;
+      script.defer = true;
+      script.addEventListener('load', renderCaptcha);
+      script.addEventListener('error', handleScriptError);
       document.head.appendChild(script);
     }
 
     return () => {
       cancelled = true;
       script?.removeEventListener('load', renderCaptcha);
-      if (widgetId !== undefined && window.grecaptcha?.reset) {
-        window.grecaptcha.reset(widgetId);
+      script?.removeEventListener('error', handleScriptError);
+      if (widgetId !== undefined && window.grecaptcha?.enterprise?.reset) {
+        window.grecaptcha.enterprise.reset(widgetId);
       }
     };
   }, []);
