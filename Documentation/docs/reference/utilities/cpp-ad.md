@@ -10,8 +10,8 @@ CppAD (C++ Automatic Differentiation) is the de-facto open-source standard in ov
 |  |  |
 | --- | --- |
 | Category | Open Source |
-| Manager | [Dr. Bradley Bell](http://www.seanet.com/~bradbell/home.htm) |
-| License | [Eclipse Public License](http://www.opensource.org/licenses/eclipse-1.0) |
+| Manager | Dr. Bradley Bell |
+| License | [Eclipse Public License](https://opensource.org/license/EPL-1.0) |
 | Home Page | [CppAD Home Page](https://projects.coin-or.org/CppAD/wiki/) |
 | Download Page | [CppAD Download Page](http://www.coin-or.org/download/source/CppAD/) |
 | MEX Interface | OPTI Version Supplied |

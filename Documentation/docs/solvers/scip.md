@@ -12,12 +12,12 @@ Starting from OPTI v1.73 SCIP also solves a subset of NLPs and MINLPs to global 
 |  |  |
 | --- | --- |
 | Category | Open Source |
-| Manager | [Dr. Thorsten Koch](http://www.zib.de/koch/) |
-| License | [ZIB Academic License'^1^'](http://scip.zib.de/academic.txt) |
-| Home Page | [SCIP Home Page](http://scip.zib.de/) |
-| Download Page | [SCIP Download Page](http://scip.zib.de/download.shtml) |
+| Manager | [Dr. Thorsten Koch](https://www.zib.de/members/koch) |
+| License | [ZIB Academic License'^1^'](https://www.scipopt.org/index.php/download) |
+| Home Page | [SCIP Home Page](https://www.scipopt.org/) |
+| Download Page | [SCIP Download Page](https://www.scipopt.org/index.php/download) |
 | MEX Interface | OPTI Version Supplied |
-| Pre-Requisites | [CppAD](http://www.coin-or.org/CppAD/),  [SoPlex](http://soplex.zib.de/), [IPOPT](./ipopt.md) |
+| Pre-Requisites | [CppAD](http://www.coin-or.org/CppAD/),  [SoPlex](https://github.com/scipopt/soplex), [IPOPT](./ipopt.md) |
 | Version Supplied | v4.0.0 |
 
 '^1^'SCIP is only included the Academic version of OPTI.  

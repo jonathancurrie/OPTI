@@ -10,8 +10,8 @@ FilterSD solves smooth, twice differentiable, nonlinear programs. In addition, i
 |  |  |
 | --- | --- |
 | Category | Open Source |
-| Author | [Prof. Roger Fletcher](http://www.maths.dundee.ac.uk/fletcher/) |
-| License | [Eclipse Public License](http://www.opensource.org/licenses/eclipse-1.0) |
+| Author | [Prof. Roger Fletcher](https://royalsociety.org/people/roger-fletcher-11447/) |
+| License | [Eclipse Public License](https://opensource.org/license/EPL-1.0) |
 | Home Page | [FilterSD Home Page](https://projects.coin-or.org/filterSD) |
 | Download Page | [FilterSD Tarball Directory](http://www.coin-or.org/download/source/filterSD/) |
 | MEX Interface | OPTI Version Supplied |

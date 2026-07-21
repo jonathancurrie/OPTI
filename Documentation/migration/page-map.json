@@ -42,6 +42,12 @@
         "new": "[here](../academic-extension/)"
       }
     ],
+    "Advanced.Deriv2": [
+      {
+        "old": "http://www.sc.informatik.tu-darmstadt.de/res/adimat/general/index.en.jsp",
+        "new": "https://adimat.de/"
+      }
+    ],
     "Advanced.LargeScale": [
       {
         "old": "This Wiki contains a page",
@@ -54,12 +60,300 @@
       {
         "old": "YALMIP Wiki",
         "new": "YALMIP documentation"
+      },
+      {
+        "old": "http://users.isy.liu.se/johanl/yalmip/pmwiki.php?n=Main.HomePage",
+        "new": "https://yalmip.github.io/"
+      },
+      {
+        "old": "http://www.mpc.berkeley.edu/software/blom",
+        "new": "https://sites.google.com/berkeley.edu/mpc-lab/software/blom"
+      },
+      {
+        "old": "http://www.gams.de/",
+        "new": "https://www.gams.com/"
+      },
+      {
+        "old": "http://tomopt.com/tomlab/",
+        "new": "https://tomopt.com/tomlab/"
       }
     ],
     "Advanced.WhiteBox": [
       {
         "old": "examples in the Wiki",
         "new": "examples in this documentation"
+      },
+      {
+        "old": "http://scip.zib.de/doc/html/PARAMETERS.php",
+        "new": "https://www.scipopt.org/doc/html/PARAMETERS.php"
+      }
+    ],
+    "File.GAMS": [
+      {
+        "old": "http://www.gams.com/dd/docs/solvers/convert.pdf",
+        "new": "https://www.gams.com/latest/docs/S_CONVERT.html"
+      }
+    ],
+    "Probs.NLS": [
+      {
+        "old": "http://www.ats.ucla.edu/stat/sas/output/reg.htm",
+        "new": "https://stats.oarc.ucla.edu/sas/output/regression-analysis/"
+      }
+    ],
+    "Probs.SDP": [
+      {
+        "old": "http://users.isy.liu.se/johanl/yalmip/",
+        "new": "https://yalmip.github.io/"
+      }
+    ],
+    "Solvers.BARON": [
+      {
+        "old": "http://archimedes.cheme.cmu.edu/?q=nick",
+        "new": "https://engineering.cmu.edu/directory/bios/sahinidis-nikolaos.html"
+      }
+    ],
+    "Solvers.BONMIN": [
+      {
+        "old": "http://pageperso.lif.univ-mrs.fr/~pierre.bonami/index.html",
+        "new": "https://www.gurobi.com/microsite/gurobi-summit-emea-2025/speakers/"
+      },
+      {
+        "old": "http://www.opensource.org/licenses/eclipse-1.0",
+        "new": "https://opensource.org/license/EPL-1.0"
+      },
+      {
+        "old": "http://www.cs.ubc.ca/~pcarbo/",
+        "new": "https://profiles.uchicago.edu/profiles/display/37244"
+      }
+    ],
+    "Solvers.CBC": [
+      {
+        "old": "http://www.maths.ed.ac.uk/people/show?person=47",
+        "new": "https://coral.ise.lehigh.edu/~ted/about/"
+      },
+      {
+        "old": "http://www.opensource.org/licenses/eclipse-1.0",
+        "new": "https://opensource.org/license/EPL-1.0"
+      }
+    ],
+    "Solvers.CLP": [
+      {
+        "old": "http://www.maths.ed.ac.uk/people/show?person=47",
+        "new": "https://www.research.ed.ac.uk/en/persons/julian-hall"
+      },
+      {
+        "old": "http://www.opensource.org/licenses/eclipse-1.0",
+        "new": "https://opensource.org/license/EPL-1.0"
+      }
+    ],
+    "Solvers.CPLEX": [
+      {
+        "old": "http://www.ibm.com/developerworks/university/software/get_software.html",
+        "new": "https://www.ibm.com/support/pages/node/138207"
+      },
+      {
+        "old": "https://www14.software.ibm.com/webapp/iwm/web/reg/signup.do?source=scholars",
+        "new": "https://www.ibm.com/support/pages/node/138207"
+      }
+    ],
+    "Solvers.CSDP": [
+      {
+        "old": "http://infohost.nmt.edu/~borchers/",
+        "new": "https://www.nmt.edu/academics/math/faculty/bborchers.php"
+      },
+      {
+        "old": "http://www.opensource.org/licenses/eclipse-1.0",
+        "new": "https://opensource.org/license/EPL-1.0"
+      }
+    ],
+    "Solvers.FILTERSD": [
+      {
+        "old": "http://www.maths.dundee.ac.uk/fletcher/",
+        "new": "https://royalsociety.org/people/roger-fletcher-11447/"
+      },
+      {
+        "old": "http://www.opensource.org/licenses/eclipse-1.0",
+        "new": "https://opensource.org/license/EPL-1.0"
+      }
+    ],
+    "Solvers.GLPK": [
+      {
+        "old": "http://www.gnu.org/licenses/gpl.html",
+        "new": "https://www.gnu.org/licenses/gpl-3.0.html"
+      },
+      {
+        "old": "http://www.gnu.org/software/glpk/",
+        "new": "https://www.gnu.org/software/glpk/"
+      }
+    ],
+    "Solvers.IPOPT": [
+      {
+        "old": "https://researcher.ibm.com/researcher/view.php?person=us-andreasw",
+        "new": "https://www.mccormick.northwestern.edu/research-faculty/directory/affiliated/waechter-andreas.html"
+      },
+      {
+        "old": "http://www.opensource.org/licenses/eclipse-1.0",
+        "new": "https://opensource.org/license/EPL-1.0"
+      },
+      {
+        "old": "http://www.cs.ubc.ca/~pcarbo/",
+        "new": "https://profiles.uchicago.edu/profiles/display/37244"
+      },
+      {
+        "old": "http://www.hsl.rl.ac.uk/catalogue/ma57.xml",
+        "new": "https://www.hsl.rl.ac.uk/catalogue/ma57.html"
+      }
+    ],
+    "Solvers.L-BFGS-B": [
+      {
+        "old": "http://www.cs.ubc.ca/~pcarbo/lbfgsb-for-matlab.html",
+        "new": "https://www.mathworks.com/matlabcentral/fileexchange/15061-matlab-interface-for-l-bfgs-b"
+      },
+      {
+        "old": "http://www.cs.ubc.ca/~pcarbo/",
+        "new": "https://profiles.uchicago.edu/profiles/display/37244"
+      }
+    ],
+    "Solvers.LEVMAR": [
+      {
+        "old": "http://www.gnu.org/copyleft/gpl.html",
+        "new": "https://www.gnu.org/licenses/gpl-3.0.html"
+      }
+    ],
+    "Solvers.M1QN3": [
+      {
+        "old": "http://www.gnu.org/copyleft/gpl.html",
+        "new": "https://www.gnu.org/licenses/gpl-3.0.html"
+      }
+    ],
+    "Solvers.MOSEK": [
+      {
+        "old": "http://license.mosek.com/license2/academic/",
+        "new": "https://www.mosek.com/products/academic-licenses/"
+      },
+      {
+        "old": "http://mosek.com/resources/download/",
+        "new": "https://www.mosek.com/downloads/"
+      }
+    ],
+    "Solvers.MUMPS": [
+      {
+        "old": "[Prof. Patrick Amestoy](http://amestoy.perso.enseeiht.fr/)",
+        "new": "Prof. Patrick Amestoy"
+      },
+      {
+        "old": "http://graal.ens-lyon.fr/MUMPS/index.php?page=home",
+        "new": "https://mumps-solver.org/index.php?page=home"
+      },
+      {
+        "old": "http://graal.ens-lyon.fr/MUMPS/index.php?page=dwnld",
+        "new": "https://mumps-solver.org/index.php?page=dwnld"
+      },
+      {
+        "old": "http://glaros.dtc.umn.edu/gkhome/metis/metis/download",
+        "new": "https://github.com/KarypisLab/METIS"
+      }
+    ],
+    "Solvers.NL2SOL": [
+      {
+        "old": "http://people.sc.fsu.edu/~jburkardt/f_src/nl2sol/nl2sol.html",
+        "new": "https://people.math.sc.edu/Burkardt/f77_src/nl2sol/nl2sol.html"
+      }
+    ],
+    "Solvers.NLOPT": [
+      {
+        "old": "http://ab-initio.mit.edu/wiki/index.php/NLopt",
+        "new": "https://nlopt.readthedocs.io/"
+      },
+      {
+        "old": "http://ab-initio.mit.edu/nlo",
+        "new": "https://nlopt.readthedocs.io/"
+      }
+    ],
+    "Solvers.NOMAD": [
+      {
+        "old": "http://www.gnu.org/copyleft/lesser.html",
+        "new": "https://www.gnu.org/licenses/lgpl-3.0.html"
+      },
+      {
+        "old": "https://www.gerad.ca/nomad/Project/Home.html",
+        "new": "https://www.gerad.ca/en/software/nomad/"
+      },
+      {
+        "old": "https://www.gerad.ca/nomad/PHP_Forms/Download.php",
+        "new": "https://www.gerad.ca/en/software/nomad/"
+      }
+    ],
+    "Solvers.PSWARM": [
+      {
+        "old": "[PSWARM Home Page](http://www.norg.uminho.pt/aivaz/pswarm/)",
+        "new": "PSWARM Home Page"
+      },
+      {
+        "old": "[PSWARM Download Page](http://www.norg.uminho.pt/aivaz/pswarm/)",
+        "new": "PSWARM Download Page"
+      },
+      {
+        "old": "http://www.norg.uminho.pt/aivaz/",
+        "new": "https://algoritmi.uminho.pt/user/antonio-ismael-freitas-vaz/"
+      }
+    ],
+    "Solvers.SCIP": [
+      {
+        "old": "http://www.zib.de/koch/",
+        "new": "https://www.zib.de/members/koch"
+      },
+      {
+        "old": "http://scip.zib.de/academic.txt",
+        "new": "https://www.scipopt.org/index.php/download"
+      },
+      {
+        "old": "http://scip.zib.de/download.shtml",
+        "new": "https://www.scipopt.org/index.php/download"
+      },
+      {
+        "old": "http://scip.zib.de/",
+        "new": "https://www.scipopt.org/"
+      },
+      {
+        "old": "http://soplex.zib.de/",
+        "new": "https://github.com/scipopt/soplex"
+      }
+    ],
+    "Solvers.SEDUMI": [
+      {
+        "old": "http://imre.polik.net/",
+        "new": "https://optimization-online.org/author/imre-polik/"
+      },
+      {
+        "old": "http://users.isy.liu.se/en/rt/johanl/",
+        "new": "https://liu.se/en/employee/johlo46"
+      },
+      {
+        "old": "http://www.gnu.org/licenses/gpl.html",
+        "new": "https://www.gnu.org/licenses/gpl-3.0.html"
+      }
+    ],
+    "Utilities.ADIFF": [
+      {
+        "old": "http://www.mathworks.com/matlabcentral/fileexchange/authors/87312",
+        "new": "https://www.mathworks.com/matlabcentral/fileexchange/26807-automatic-differentiation-with-matlab-objects"
+      }
+    ],
+    "Utilities.CoinUtils": [
+      {
+        "old": "http://www.opensource.org/licenses/eclipse-1.0",
+        "new": "https://opensource.org/license/EPL-1.0"
+      }
+    ],
+    "Utilities.CppAD": [
+      {
+        "old": "[Dr. Bradley Bell](http://www.seanet.com/~bradbell/home.htm)",
+        "new": "Dr. Bradley Bell"
+      },
+      {
+        "old": "http://www.opensource.org/licenses/eclipse-1.0",
+        "new": "https://opensource.org/license/EPL-1.0"
       }
     ]
   },

@@ -53,6 +53,9 @@ async function createConfig() {
           theme: {
             customCss: require.resolve('./src/css/custom.css'),
           },
+          gtag: {
+            trackingID: 'G-9GBVJ653GH',
+          },
           sitemap: {
             changefreq: 'monthly',
             priority: 0.5,
@@ -172,4 +175,3 @@ async function createConfig() {
 }
 
 module.exports = createConfig;
-

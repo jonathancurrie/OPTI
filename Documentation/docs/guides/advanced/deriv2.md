@@ -37,7 +37,7 @@ If the methods above do not work alternative options for obtaining 2nd derivativ
 - Obtain analytical derivatives manually using the Symbolic Toolbox
 - A little calculus and enter them manually
 - Use [SymBuilder](./sym-builder.md) (under development)
-- Consider a 3rd party tool such as  [ADiMat](http://www.sc.informatik.tu-darmstadt.de/res/adimat/general/index.en.jsp).
+- Consider a 3rd party tool such as  [ADiMat](https://adimat.de/).
 
 However do not fret, IPOPT, BONMIN, and other solvers which use second derivative information are all equipped with a  [Quasi-Newton](http://en.wikipedia.org/wiki/Quasi-Newton_methods) algorithm for approximating the Hessian of the Lagrangian. OPTI enables this functionality automatically if second derivatives are not supplied.
 

@@ -11,7 +11,7 @@ LEVMAR solves NLS using an implementation of the Levenberg Marquardt algorithm. 
 | --- | --- |
 | Category | Open Source |
 | Author | [Manolis Lourakis](http://www.ics.forth.gr/~lourakis/) |
-| License | [GNU General Public License](http://www.gnu.org/copyleft/gpl.html) |
+| License | [GNU General Public License](https://www.gnu.org/licenses/gpl-3.0.html) |
 | Home Page | [LEVMAR Home Page](http://www.ics.forth.gr/~lourakis/levmar/) |
 | Download Page | [LEVMAR Download Page](http://www.ics.forth.gr/~lourakis/levmar/) |
 | MEX Interface | OPTI Version Supplied |

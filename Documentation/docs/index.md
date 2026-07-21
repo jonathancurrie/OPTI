@@ -11,9 +11,9 @@ To get right into it, jump to the [downloads](./project/download.md) page!
 
 ## News
 
-- **20th July 2026**
+- **19th July 2026**
 
-  The OPTI Wiki has been migrated to GitHub Pages, with improved navigation, search, and mobile support.
+  The OPTI site has been migrated to this new documentation, with improved navigation, search, and mobile support.
 
 - **9th March 2023**
 

@@ -159,6 +159,6 @@ Opt = opti('sedumi',At,b,c,K,'options',opts)
 Note if you have SeDuMi installed on your PC the OPTI will automatically use it to solve problems in SeDuMi format. This way you save the conversion between SeDuMi format and OPTI format for storing SDP problems. You are of course able to solve a SeDuMi problem using any other SDP solver as well!
 
 ## Summary
-The above examples show how to create semidefinite problems that OPTI can understand. However constructing semidefinite constraints in MATLAB can be tedious using the methods above! Therefore you may prefer to use  [YALMIP](http://users.isy.liu.se/johanl/yalmip/), another open-source MATLAB toolbox which provides a powerful and easy to use modelling language for semidefinite problems (and many other optimization problems).
+The above examples show how to create semidefinite problems that OPTI can understand. However constructing semidefinite constraints in MATLAB can be tedious using the methods above! Therefore you may prefer to use  [YALMIP](https://yalmip.github.io/), another open-source MATLAB toolbox which provides a powerful and easy to use modelling language for semidefinite problems (and many other optimization problems).
 
 If you have problems in SDPA files see the [SDPA Reading](../file-formats/sdpa.md) example for how to load these into OPTI.

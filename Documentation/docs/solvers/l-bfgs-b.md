@@ -14,7 +14,7 @@ L-BFGS-B solves smooth, twice differentiable bounded nonlinear programs using a 
 | License | BSD License |
 | Home Page | [L-BFGS-B Home Page](http://users.eecs.northwestern.edu/~nocedal/lbfgsb.html) |
 | Download Page | [L-BFGS-B Download Page](http://users.eecs.northwestern.edu/~nocedal/lbfgsb.html) |
-| MEX Interface | OPTI Modified Version of  [Dr. Peter Carbonetto's](http://www.cs.ubc.ca/~pcarbo/)  [Interface](http://www.cs.ubc.ca/~pcarbo/lbfgsb-for-matlab.html) |
+| MEX Interface | OPTI Modified Version of  [Dr. Peter Carbonetto's](https://profiles.uchicago.edu/profiles/display/37244)  [Interface](https://www.mathworks.com/matlabcentral/fileexchange/15061-matlab-interface-for-l-bfgs-b) |
 | Pre-Requisites | [MKL](http://software.intel.com/en-us/articles/intel-mkl/) |
 | Version Supplied | 3.0 |
 

@@ -11,7 +11,7 @@ CoinUtils is a Coin-OR project which provides provides methods for reading and w
 | --- | --- |
 | Category | Open Source |
 | Manager | Laszlo Ladanyi |
-| License | [Eclipse Public License](http://www.opensource.org/licenses/eclipse-1.0) |
+| License | [Eclipse Public License](https://opensource.org/license/EPL-1.0) |
 | Home Page | [CoinUtils Home Page](https://projects.coin-or.org/CoinUtils) |
 | Download Page | [CoinUtils Tarball Directory](http://www.coin-or.org/download/source/CoinUtils/) |
 | MEX Interface | OPTI Version Supplied |

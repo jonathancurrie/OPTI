@@ -10,8 +10,8 @@ CLP solves LPs using a Primal Simplex method, and QPs using a Dual Simplex metho
 |  |  |
 | --- | --- |
 | Category | Open Source |
-| Manager | [Dr. Julian Hall](http://www.maths.ed.ac.uk/people/show?person=47) |
-| License | [Eclipse Public License](http://www.opensource.org/licenses/eclipse-1.0) |
+| Manager | [Dr. Julian Hall](https://www.research.ed.ac.uk/en/persons/julian-hall) |
+| License | [Eclipse Public License](https://opensource.org/license/EPL-1.0) |
 | Home Page | [CLP Home Page](https://projects.coin-or.org/Clp) |
 | Download Page | [CLP Tarball Directory](http://www.coin-or.org/download/source/Clp/) |
 | MEX Interface | OPTI Version Supplied |

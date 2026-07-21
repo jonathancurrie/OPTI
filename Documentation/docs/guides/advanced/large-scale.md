@@ -174,12 +174,12 @@ Other than OPTI there are a number of alternative packages which aim to automate
 #### YALMIP [Free]
 YALMIP is written and maintained by Johan Löfberg and allows high level model generation within MATLAB. Some of the solvers interfaced from YALMIP are supplied via OPTI, thus the packages work well together.
 
-See the  [YALMIP documentation](http://users.isy.liu.se/johanl/yalmip/pmwiki.php?n=Main.HomePage)  for more information.
+See the  [YALMIP documentation](https://yalmip.github.io/)  for more information.
 
 #### BLOM [Free]
 BLOM is a clever package which allows dynamic optimization within Simulink using IPOPT and other nonlinear solvers. 
 
-See the  [BLOM Homepage](http://www.mpc.berkeley.edu/software/blom)  for more information.
+See the  [BLOM Homepage](https://sites.google.com/berkeley.edu/mpc-lab/software/blom)  for more information.
 
 #### AMPL [Commercial]
 AMPL is a modelling language and presolver engine for a huge range of optimization problems. The resulting models can be solved either standalone from AMPL, or read using [amplRead](../../examples/file-formats/ampl.md) into MATLAB and solved using one of OPTI's solvers. When read using the AMPL interface into MATLAB, both first and second derivatives are also automatically added.
@@ -189,12 +189,12 @@ See the  [AMPL Homepage](http://www.ampl.com/)  for more information.
 #### GAMS [Commercial]
 GAMS is another modelling language and presolver engine for a huge range of optimization problems. GAMS includes a MATLAB interface but I have not had an opportunity to test it.
 
-See the  [GAMS Homepage](http://www.gams.de/)  for more information.
+See the  [GAMS Homepage](https://www.gams.com/)  for more information.
 
 #### TOMLAB [Commercial]
 TOMLAB is a commercial package built on top of MATLAB, which links to many commercial solvers, in the much the same way OPTI links to open source solvers. However TOMLAB also includes an advanced automatic differentiation tool (MAD) which can provide exact first and second derivatives, including sparsity and structures.
 
-See the  [TOMLAB Homepage](http://tomopt.com/tomlab/)  for more information.
+See the  [TOMLAB Homepage](https://tomopt.com/tomlab/)  for more information.
 
 ### Use a Derivative-Free Solver
 While some derivative free solvers work well for large scale problems, using a derivative-free solver simply because you can't be bothered entering the derivatives will typically always result in sub-optimal performance. If your problem is twice differentiable and convex, use IPOPT or BONMIN. As a rough rule of thumb only if your problem is not differentiable or non-convex should you consider a global / derivative-free solver.

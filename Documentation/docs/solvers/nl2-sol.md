@@ -14,7 +14,7 @@ Note NL2SOL only solves unconstrained and bounded problems.
 | Category | Open Source |
 | Authors | John Dennis, David Gay, Roy Welsch |
 | License | None |
-| Home Page | [NL2SOL Home Page](http://people.sc.fsu.edu/~jburkardt/f_src/nl2sol/nl2sol.html) |
+| Home Page | [NL2SOL Home Page](https://people.math.sc.edu/Burkardt/f77_src/nl2sol/nl2sol.html) |
 | Download Page | [Netlib PORT Library](http://www.netlib.org/port/) |
 | MEX Interface | OPTI Version Supplied |
 | Pre-Requisites | None |

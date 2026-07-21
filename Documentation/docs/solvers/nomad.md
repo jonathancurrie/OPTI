@@ -11,9 +11,9 @@ NOMAD uses a Mesh Adaptive Direct Search algorithm to solve non-differentiable a
 | --- | --- |
 | Category | Open Source |
 | Manager | [Dr. Sebastien Le Digabel](http://www.gerad.ca/Sebastien.Le.Digabel/) |
-| License | [GNU Lesser General Public License v3.0](http://www.gnu.org/copyleft/lesser.html) |
-| Home Page | [NOMAD Home Page](https://www.gerad.ca/nomad/Project/Home.html) |
-| Download Page | [NOMAD Request Form](https://www.gerad.ca/nomad/PHP_Forms/Download.php) |
+| License | [GNU Lesser General Public License v3.0](https://www.gnu.org/licenses/lgpl-3.0.html) |
+| Home Page | [NOMAD Home Page](https://www.gerad.ca/en/software/nomad/) |
+| Download Page | [NOMAD Request Form](https://www.gerad.ca/en/software/nomad/) |
 | MEX Interface | OPTI Version Supplied |
 | Pre-Requisites | None |
 | Version Supplied | 3.8.1 |

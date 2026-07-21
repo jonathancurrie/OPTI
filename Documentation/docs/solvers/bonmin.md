@@ -10,13 +10,13 @@ BONMIN solves smooth, twice differentiable, mixed integer nonlinear programs. BO
 |  |  |
 | --- | --- |
 | Category | Open Source |
-| Manager | [Dr. Pierre Bonami](http://pageperso.lif.univ-mrs.fr/~pierre.bonami/index.html) |
-| License | [Eclipse Public License](http://www.opensource.org/licenses/eclipse-1.0) |
+| Manager | [Dr. Pierre Bonami](https://www.gurobi.com/microsite/gurobi-summit-emea-2025/speakers/) |
+| License | [Eclipse Public License](https://opensource.org/license/EPL-1.0) |
 | Home Page | [BONMIN Home Page](https://projects.coin-or.org/Bonmin) |
 | Download Page | [BONMIN Tarball Directory](http://www.coin-or.org/download/source/Bonmin/) |
 | MEX Interface | OPTI Version Supplied |
 
-(Modified IPOPT Version by  [Dr. Peter Carbonetto](http://www.cs.ubc.ca/~pcarbo/)) ||
+(Modified IPOPT Version by  [Dr. Peter Carbonetto](https://profiles.uchicago.edu/profiles/display/37244)) ||
 
 |  |  |
 | --- | --- |

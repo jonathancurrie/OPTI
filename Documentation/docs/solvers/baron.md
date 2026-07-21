@@ -10,7 +10,7 @@ BARON is a commercial global optimization solver for linear and quadratic and no
 |  |  |
 | --- | --- |
 | Category | Commercial |
-| Manager | [Prof. Nick Sahinidis](http://archimedes.cheme.cmu.edu/?q=nick) |
+| Manager | [Prof. Nick Sahinidis](https://engineering.cmu.edu/directory/bios/sahinidis-nikolaos.html) |
 | License | Free for Problems Up to 10 Variables |
 | Home Page | [The Optimization Firm](http://www.minlp.com/) |
 | Download Page | [BARON Download Page](http://www.minlp.com/download) |

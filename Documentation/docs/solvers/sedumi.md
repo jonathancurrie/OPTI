@@ -10,8 +10,8 @@ SeDuMi is the defacto standard for SDP solvers, and includes functionality for s
 |  |  |
 | --- | --- |
 | Category | Open Source |
-| Managers | [Dr. Imre Polik](http://imre.polik.net/) and  [Prof. Johan Löfberg](http://users.isy.liu.se/en/rt/johanl/) |
-| License | [GNU General Public License v3](http://www.gnu.org/licenses/gpl.html) |
+| Managers | [Dr. Imre Polik](https://optimization-online.org/author/imre-polik/) and  [Prof. Johan Löfberg](https://liu.se/en/employee/johlo46) |
+| License | [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.html) |
 | Home Page | [SeDuMi Home Page](http://sedumi.ie.lehigh.edu/) |
 | Download Page | [SeDuMi Download Page](http://sedumi.ie.lehigh.edu/index.php?option=com_docman&task=cat_view&gid=69&Itemid=76) |
 | MEX Interface | Supplied with SeDuMi |

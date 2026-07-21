@@ -158,7 +158,7 @@ x0 = [2;2] %Initial Guess
 
 In the above example `scipset` has been used to customize the options for SCIP, which are then passed to `optiset` and then to `opti`, as per normal OPTI usage. SCIP stops once the first feasible local solution is found, and returns the associated decision variable vector.
 
-For a full list of SCIP options, consult the  [SCIP options list](http://scip.zib.de/doc/html/PARAMETERS.php), noting they are entered a little differently from most other solvers.
+For a full list of SCIP options, consult the  [SCIP options list](https://www.scipopt.org/doc/html/PARAMETERS.php), noting they are entered a little differently from most other solvers.
 
 ### SCIP Example 3
 Note SCIP has no problem if you want to add integer constraints as well:

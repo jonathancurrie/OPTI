@@ -13,7 +13,7 @@ MOSEK is a commercial solver for convex linear and quadratic programs, including
 | Manager | [MOSEK](http://www.mosek.com/) |
 | License | Free Academic License (1 year no limits) |
 | Home Page | [MOSEK](http://www.mosek.com/) |
-| Download Page | [MOSEK Downloads Page](http://mosek.com/resources/download/) |
+| Download Page | [MOSEK Downloads Page](https://www.mosek.com/downloads/) |
 | MEX Interface | Supplied with MOSEK |
 | Pre-Requisites | None |
 | Version Interfaced | 7 |
@@ -24,9 +24,9 @@ MOSEK is available free for 1 year for academics and includes a powerful SDP sol
 
 To get MOSEK, complete the following steps:
 
-1. Visit the [MOSEK Academic License Request page](http://license.mosek.com/license2/academic/) and fill in your details. Your license will be emailed to you.
+1. Visit the [MOSEK Academic License Request page](https://www.mosek.com/products/academic-licenses/) and fill in your details. Your license will be emailed to you.
 
-1. Visit the [MOSEK Download page](http://mosek.com/resources/download/) and download the executable for your system (e.g. Windows 64 bit x86).
+1. Visit the [MOSEK Download page](https://www.mosek.com/downloads/) and download the executable for your system (e.g. Windows 64 bit x86).
 
 1. Once the download has completed, start the MOSEK installer. I install using the default settings. Once installed, you must restart your computer.
 

@@ -10,12 +10,12 @@ IPOPT solves smooth, twice differentiable, nonlinear programs. While the objecti
 |  |  |
 | --- | --- |
 | Category | Open Source |
-| Manager | [Dr. Andreas Wächter](https://researcher.ibm.com/researcher/view.php?person=us-andreasw) |
-| License | [Eclipse Public License](http://www.opensource.org/licenses/eclipse-1.0) |
+| Manager | [Dr. Andreas Wächter](https://www.mccormick.northwestern.edu/research-faculty/directory/affiliated/waechter-andreas.html) |
+| License | [Eclipse Public License](https://opensource.org/license/EPL-1.0) |
 | Home Page | [IPOPT Home Page](https://projects.coin-or.org/Ipopt) |
 | Download Page | [IPOPT Tarball Directory](http://www.coin-or.org/download/source/Ipopt/) |
-| MEX Interface | Supplied with IPOPT (by  [Dr. Peter Carbonetto](http://www.cs.ubc.ca/~pcarbo/)) |
-| Pre-Requisites | [MA57'^1^'](http://www.hsl.rl.ac.uk/catalogue/ma57.xml), [MUMPS'^1^'](./mumps.md),  [MKL'^2^'](http://software.intel.com/en-us/articles/intel-mkl/) |
+| MEX Interface | Supplied with IPOPT (by  [Dr. Peter Carbonetto](https://profiles.uchicago.edu/profiles/display/37244)) |
+| Pre-Requisites | [MA57'^1^'](https://www.hsl.rl.ac.uk/catalogue/ma57.html), [MUMPS'^1^'](./mumps.md),  [MKL'^2^'](http://software.intel.com/en-us/articles/intel-mkl/) |
 | Version Supplied | 3.12.7 |
 
 ### Sparse Linear Solver

@@ -10,8 +10,8 @@ CSDP is a robust semidefinite programming solver, which is also parallelized usi
 |  |  |
 | --- | --- |
 | Category | Open Source |
-| Authors | [Prof. Brian Borchers](http://infohost.nmt.edu/~borchers/) |
-| License | [Eclipse Public License](http://www.opensource.org/licenses/eclipse-1.0) |
+| Authors | [Prof. Brian Borchers](https://www.nmt.edu/academics/math/faculty/bborchers.php) |
+| License | [Eclipse Public License](https://opensource.org/license/EPL-1.0) |
 | Home Page | [CSDP Home Page](https://projects.coin-or.org/Csdp/) |
 | Download Page | [CSDP Download Page](https://projects.coin-or.org/Csdp/) |
 | MEX Interface | OPTI Version |

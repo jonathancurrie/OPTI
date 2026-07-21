@@ -13,7 +13,7 @@ CPLEX is a commercial solver for linear and quadratic programs, including discre
 | Manager | [IBM ILOG](http://www-01.ibm.com/software/websphere/products/optimization/) |
 | License | Free Academic License |
 | Home Page | [CPLEX](http://www-01.ibm.com/software/integration/optimization/cplex-optimizer/) |
-| Download Page | [IBM Academic Initiative](http://www.ibm.com/developerworks/university/software/get_software.html) |
+| Download Page | [IBM Academic Initiative](https://www.ibm.com/support/pages/node/138207) |
 | MEX Interface | Supplied with CPLEX |
 | Pre-Requisites | None |
 | Version Interfaced | 12.6 |
@@ -28,7 +28,7 @@ To get CPLEX, complete the following steps:
 
 1. Visit the [IBM ILOG Academic Initiative page](http://www-03.ibm.com/ibm/university/academic/pub/page/mem_join) and register for the IBM Academic Initiative.
 
-1. Visit [IBM Software Catalog page](https://www14.software.ibm.com/webapp/iwm/web/reg/signup.do?source=scholars), where you will need to log in to your IBM account.
+1. Visit [IBM Software Catalog page](https://www.ibm.com/support/pages/node/138207), where you will need to log in to your IBM account.
 
 1. Enter "cplex" in the "Find by search text" textbox. Expand the node next to the latest version of IBM ILOG CPLEX Optimization Studio and select the tickbox next to "... for Windows x86-64 Multilingual". Alternatively select the x86-32 box if you want the 32 bit version.
 

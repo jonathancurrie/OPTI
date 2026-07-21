@@ -11,8 +11,8 @@ GLPK solves LPs and MILPs. Quite fast on small to modest problems, can take a bi
 | --- | --- |
 | Category | Open Source |
 | Manager | Andrew Makhorin |
-| License | [GNU General Public License v3](http://www.gnu.org/licenses/gpl.html) |
-| Home Page | [GLPK Home Page](http://www.gnu.org/software/glpk/) |
+| License | [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.html) |
+| Home Page | [GLPK Home Page](https://www.gnu.org/software/glpk/) |
 | Download Page | [GLPK Tarball Directory](http://ftp.gnu.org/gnu/glpk/) |
 | MEX Interface | OPTI Modified Version of  [GLPKMEX](http://glpkmex.sourceforge.net/) |
 | Pre-Requisites | None |

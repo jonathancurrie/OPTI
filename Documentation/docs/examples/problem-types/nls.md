@@ -266,7 +266,7 @@ which presents the following information:
 
 ![fitstats](/img/opti/fitstats.png)
 
-If you are unsure what any of these terms mean, consult  [this page](http://www.ats.ucla.edu/stat/sas/output/reg.htm) from UCLA. If you are familiar with packages such as SAS, SPSS, or the Statistics Toolbox, then the above should be familiar. 
+If you are unsure what any of these terms mean, consult  [this page](https://stats.oarc.ucla.edu/sas/output/regression-analysis/) from UCLA. If you are familiar with packages such as SAS, SPSS, or the Statistics Toolbox, then the above should be familiar. 
 
 <a id="confbnd"></a>Note `fitStats` allows the user to specify a customizable confidence interval between 0 and 1 as the second argument, and can return a structure of the printed information for post-analysis. In addition, once `fitStats` has been called, the confidence interval information is saved in the OPTI object, allowing `plot` to estimate confidence bounds (functional, simultaneous) of the fit:
 

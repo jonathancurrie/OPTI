@@ -10,8 +10,8 @@ CBC solves MILPs using CLP as the relaxed solver, and CGL to generate cuts. It i
 |  |  |
 | --- | --- |
 | Category | Open Source |
-| Manager | [Prof. Ted Ralphs](http://www.maths.ed.ac.uk/people/show?person=47) |
-| License | [Eclipse Public License](http://www.opensource.org/licenses/eclipse-1.0) |
+| Manager | [Prof. Ted Ralphs](https://coral.ise.lehigh.edu/~ted/about/) |
+| License | [Eclipse Public License](https://opensource.org/license/EPL-1.0) |
 | Home Page | [CBC Home Page](https://projects.coin-or.org/Cbc) |
 | Download Page | [CBC Tarball Directory](http://www.coin-or.org/download/source/Cbc/) |
 | MEX Interface | OPTI Version Supplied |

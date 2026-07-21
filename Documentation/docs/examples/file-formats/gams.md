@@ -92,6 +92,6 @@ write(Opt,'minlp.gms')
 ```
 
 ## Reading GAMS Models
-The next obvious question is - can I read GAMS models into MATLAB? The answer is sort-of. GAMS can be called directly from MATLAB (using the [gams](http://www.gams.com/dd/docs/solvers/convert.pdf) command), however I have not tried it. You can also convert a GAMS model to an AMPL model using the [GAMS Convert Utility](http://www.gams.com/dd/docs/solvers/convert.pdf), then read it into MATLAB using the [AMPL reading commands](./ampl.md) supplied with OPTI.
+The next obvious question is - can I read GAMS models into MATLAB? The answer is sort-of. GAMS can be called directly from MATLAB (using the [gams](https://www.gams.com/latest/docs/S_CONVERT.html) command), however I have not tried it. You can also convert a GAMS model to an AMPL model using the [GAMS Convert Utility](https://www.gams.com/latest/docs/S_CONVERT.html), then read it into MATLAB using the [AMPL reading commands](./ampl.md) supplied with OPTI.
 
 Basically it is difficult, and don't think many people would have a use for this feature. If you really want to be able to read GAMS models into MATLAB I can look at automating the above, simply send me an email.

@@ -11,7 +11,7 @@ M1QN3 is an unconstrained nonlinear solver, suitable for large-scale problems. I
 | --- | --- |
 | Category | Open Source |
 | Manager | [Prof. Jean-Charles Gilbert](https://who.rocq.inria.fr/Jean-Charles.Gilbert/mypage.html) |
-| License | [GNU General Public License v3](http://www.gnu.org/copyleft/gpl.html) |
+| License | [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.html) |
 | Home Page | [M1QN3 Home Page](https://who.rocq.inria.fr/Jean-Charles.Gilbert/modulopt/optimization-routines/m1qn3/m1qn3.html) |
 | Download Page | [M1QN3 Download Page](https://who.rocq.inria.fr/Jean-Charles.Gilbert/modulopt/optimization-routines/m1qn3/m1qn3.html) |
 | MEX Interface | OPTI Version |
