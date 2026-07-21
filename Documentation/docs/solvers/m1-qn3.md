@@ -5,7 +5,7 @@ slug: "/solvers/m1-qn3/"
 
 ## M1QN3 [Supplied]
 <small></small>
-M1QN3 is an unconstrained nonlinear solver, suitable for large-scale problems. In fact it is reportedly used on problems with up to 10'^8^' variables, and is used daily for weather forecasting in France! It uses a limited memory BFGS Hessian update, together with a globalization line search.
+M1QN3 is an unconstrained nonlinear solver, suitable for large-scale problems. In fact it is reportedly used on problems with up to 10<sup>8</sup> variables, and is used daily for weather forecasting in France! It uses a limited memory BFGS Hessian update, together with a globalization line search.
 
 |  |  |
 | --- | --- |

@@ -163,7 +163,7 @@ async function createConfig() {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Control Engineering.`,
+        copyright: `Copyright © ${new Date().getFullYear()} <a href="https://www.controlengineering.co.nz/">Control Engineering</a>.`,
       },
       prism: {
         theme: lightCodeTheme,

@@ -13,14 +13,14 @@ Starting from OPTI v1.73 SCIP also solves a subset of NLPs and MINLPs to global 
 | --- | --- |
 | Category | Open Source |
 | Manager | [Dr. Thorsten Koch](https://www.zib.de/members/koch) |
-| License | [ZIB Academic License'^1^'](https://www.scipopt.org/index.php/download) |
+| License | [ZIB Academic License<sup>1</sup>](https://www.scipopt.org/index.php/download) |
 | Home Page | [SCIP Home Page](https://www.scipopt.org/) |
 | Download Page | [SCIP Download Page](https://www.scipopt.org/index.php/download) |
 | MEX Interface | OPTI Version Supplied |
 | Pre-Requisites | [CppAD](http://www.coin-or.org/CppAD/),  [SoPlex](https://github.com/scipopt/soplex), [IPOPT](./ipopt.md) |
 | Version Supplied | v4.0.0 |
 
-'^1^'SCIP is only included the Academic version of OPTI.  
+<sup>1</sup>SCIP is only included the Academic version of OPTI.  
 
 ### Citation
 T. Achterberg, "SCIP: Solving constraint integer programs," *Mathematical Programming Computation* 1(1), pp. 1-41, 2009

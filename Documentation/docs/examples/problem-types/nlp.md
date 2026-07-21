@@ -273,7 +273,7 @@ Consider the following two dimensional function below (from  [Wolfram](http://ma
 
 ![plot ex2nlpb](/img/opti/plot_ex2nlpb.png)
 
-In reality, this problem has multiple *global* optima which is unusual, however there are also multiple local minima. The global optimum is fval = 0. This problem has been converted from a Nonlinear Least Squares (NLS) problem to a NLP by taking the norm of the vector of fitting functions (yes it should be the norm'^2^'), as follows:
+In reality, this problem has multiple *global* optima which is unusual, however there are also multiple local minima. The global optimum is fval = 0. This problem has been converted from a Nonlinear Least Squares (NLS) problem to a NLP by taking the norm of the vector of fitting functions (yes it should be the norm<sup>2</sup>), as follows:
 
 ```matlab
 % Fitting Functions

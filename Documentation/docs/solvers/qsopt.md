@@ -11,15 +11,15 @@ QSOPT solves LPs. Fastest LP solver in the OPTI collection for small LPs.
 | --- | --- |
 | Category | Closed Source |
 | Manager | [Prof. William Cook](http://www2.isye.gatech.edu/~wcook/) |
-| License | Free Academic License'^1^' |
+| License | Free Academic License<sup>1</sup> |
 | Home Page | [QSOPT Home Page](http://www2.isye.gatech.edu/~wcook/qsopt/) |
-| Download Page | [QSOPT Download Page](http://www2.isye.gatech.edu/~wcook/qsopt/downloads/downloads.htm)'^2^' |
+| Download Page | [QSOPT Download Page](http://www2.isye.gatech.edu/~wcook/qsopt/downloads/downloads.htm)<sup>2</sup> |
 | MEX Interface | OPTI Version Supplied |
 | Pre-Requisites | None |
 | Version Supplied | 080725 |
 
-'^1^'QSOPT is only included the Academic version of OPTI.  
-'^2^'The version supplied has been compiled from source kindly provided by the authors. You may not, therefore, be able to download QSOPT for your platform.
+<sup>1</sup>QSOPT is only included the Academic version of OPTI.  
+<sup>2</sup>The version supplied has been compiled from source kindly provided by the authors. You may not, therefore, be able to download QSOPT for your platform.
 
 ### Obtaining a Commercial QSOPT License
 If you would like to use QSOPT via MATLAB for commercial applications then you can contact the QSOPT license manager at the following address:
