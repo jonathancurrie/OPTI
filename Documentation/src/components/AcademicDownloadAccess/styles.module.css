@@ -1,0 +1,103 @@
+.panel {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 0.75rem;
+  box-shadow: 0 0.25rem 1rem color-mix(in srgb, var(--ifm-color-primary) 12%, transparent);
+  margin-top: 2rem;
+  overflow: hidden;
+}
+
+.header {
+  background: color-mix(
+    in srgb,
+    var(--ifm-color-primary) 9%,
+    var(--ifm-background-color)
+  );
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+  border-top: 4px solid var(--ifm-color-primary);
+  padding: 1.5rem 1.75rem 1.25rem;
+}
+
+.header h2 {
+  margin-bottom: 0.5rem;
+}
+
+.header p:last-child {
+  margin-bottom: 0;
+}
+
+.eyebrow {
+  color: var(--ifm-color-primary-dark);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+}
+
+.accessControl {
+  padding: 1.75rem;
+}
+
+.certification {
+  align-items: flex-start;
+  background: var(--ifm-color-emphasis-100);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 1rem;
+}
+
+.certification input {
+  flex: 0 0 auto;
+  height: 1.1rem;
+  margin-top: 0.15rem;
+  width: 1.1rem;
+}
+
+.linkRow {
+  margin-top: 1.5rem;
+}
+
+.captchaRegion {
+  margin-top: 1.5rem;
+  min-height: 78px;
+}
+
+.status,
+.error {
+  font-size: 0.9rem;
+  margin: 0.5rem 0 0;
+}
+
+.status {
+  color: var(--ifm-color-emphasis-700);
+}
+
+.error {
+  color: var(--ifm-color-danger-dark);
+}
+
+.disabledLink {
+  cursor: not-allowed;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+@media (max-width: 700px) {
+  .header,
+  .accessControl {
+    padding: 1.25rem;
+  }
+
+  .linkRow :global(.button) {
+    white-space: normal;
+    width: 100%;
+  }
+
+  .captchaRegion {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}

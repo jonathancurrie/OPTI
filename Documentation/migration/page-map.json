@@ -40,6 +40,10 @@
       {
         "old": "[here](./academic-extension.mdx)",
         "new": "[here](../academic-extension/)"
+      },
+      {
+        "old": "please complete the academic registration form [here](../academic-extension/).",
+        "new": "please confirm academic-only use [here](../academic-extension/)."
       }
     ],
     "Advanced.Deriv2": [

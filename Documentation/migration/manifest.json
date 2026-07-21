@@ -3,6 +3,11 @@
   "source": "OPTI",
   "site_slug": "opti",
   "source_timezone": "Pacific/Auckland",
+  "analytics": {
+    "google_tag_ids": [
+      "G-9GBVJ653GH"
+    ]
+  },
   "pages": [
     {
       "source": "Advanced.AdvOpt",

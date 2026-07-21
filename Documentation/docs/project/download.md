@@ -10,7 +10,7 @@ or simply download a copy of the latest master branch from the below link:
 https://github.com/jonathancurrie/OPTI/archive/master.zip 
 
 ## Academic Version
-**Note:** Both methods above will download the Open Source version of OPTI - which *does not* include the extra Academic only solver [SCIP](../solvers/scip.md). If you wish to access SCIP, please complete the academic registration form [here](../academic-extension/).
+**Note:** Both methods above will download the Open Source version of OPTI - which *does not* include the extra Academic only solver [SCIP](../solvers/scip.md). If you wish to access SCIP, please confirm academic-only use [here](../academic-extension/).
 
 ## Disclaimer
 By downloading this software you agree to the following disclaimer:
