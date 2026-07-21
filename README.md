@@ -12,7 +12,7 @@ If you don't use git, and don't want to learn (remember its easy and you should 
 Once you have cloned or downloaded OPTI to your PC, simply open MATLAB and navigate in MATLAB to the directory where you have placed OPTI (hopefully somewhere permanent). Right click on `opti_Install.m` and click Run. Follow the prompts (Yes 'Y' is the normal response to every question) to install OPTI - easy!
 
 #### Using OPTI
-The best way to start using OPTI is to have a look at the [Examples](https://jonathancurrie.github.io/OPTI/examples/) on the OPTI Wiki. There are lots of problem and code examples (which all work) as well as helpful definitions. The [Basic Usage](https://jonathancurrie.github.io/OPTI/getting-started/basics/s) page is a good place to start for all new users.
+The best way to start using OPTI is to have a look at the [Examples](https://jonathancurrie.github.io/OPTI/examples/) on the OPTI Wiki. There are lots of problem and code examples (which all work) as well as helpful definitions. The [Basic Usage](https://jonathancurrie.github.io/OPTI/getting-started/basics/) page is a good place to start for all new users.
 
 #### Troubleshooting + New Release Information
 ~~The OPTI [Q&A Forum](https://groups.google.com/forum/#!forum/opti-toolbox-forum) is where all OPTI related questions can be posted and someone will normally get back to you within a day or two! In addition, I announce new release of OPTI here, so subscribe if you want to be kept up to date.~~
