@@ -1,11 +1,12 @@
-function opti_Install(savePath,runTests,openBrowser)
+function opti_Install(savePath,runTests,openBrowser,downloadMex)
 % OPTI Toolbox Installation File
 %
-%  opti_Install(savePath, runTests, openBrowser)
+%  opti_Install(savePath, runTests, openBrowser,downloadMex)
 %
 %   savePath: Save the paths added by OPTI to the MATLAB path 
 %   runTests: Run the post-installation tests 
 %   openBrowser: Whether to open the OPTI Toolbox Website after installation 
+%   downloadMex: whether to download mex-files (if available)
 %
 % All arguments are optional and if not supplied, the user will be prompted
 % to enter their selection in the MATLAB Command Window. True is the
@@ -17,6 +18,7 @@ function opti_Install(savePath,runTests,openBrowser)
 %   https://controlengineering.co.nz/Wikis/OPTI/
 
 % Handle missing input args
+if (nargin < 4), downloadMex = []; end
 if (nargin < 3), openBrowser = []; end
 if (nargin < 2), runTests = []; end
 if (nargin < 1), savePath = []; end
@@ -47,7 +49,7 @@ else
 end
 
 % Perform MEX File check (also checks pre-reqs)
-if (~mexFileCheck(localVer, cpath))
+if (~mexFileCheck(localVer, cpath, downloadMex))
     return;
 end
 
@@ -223,7 +225,7 @@ function OK = preReqChecks(cpath)
 % Note we no longer search the registry, simply check if we can load a mex
 % file which requires each runtime
 
-if(~isempty(strfind(computer,'64')))
+if contains(computer,'64')
     arch = 'x64';
     icarch = 'Intel 64';
 else
@@ -294,7 +296,7 @@ else
 end
 
 
-function OK = mexFileCheck(localVer,cpath)
+function OK = mexFileCheck(localVer,cpath,downloadMex)
 
 % Check if a dev version of OPTI
 if (exist([cd '/Solvers/Source/lib/win64/libclp.lib'],'file'))
@@ -314,7 +316,7 @@ try
         fprintf('\n- New OPTI Installation Detected.\n');
 
         % We need to download the mex files / get the user to download them
-        OK = downloadMexFiles(localVer);
+        OK = downloadMexFiles(localVer,downloadMex);
         if (OK == false)
             return;
         end
@@ -337,7 +339,7 @@ try
             fprintf(2,'One or more MEX files are not compatible with this version of OPTI (MEX v%.2f vs OPTI v%.2f)\n', mexBuildVer, localVer);
         end
         % See if the user wants to download them
-        OK = downloadMexFiles(localVer);
+        OK = downloadMexFiles(localVer, downloadMex);
     else
         % All up to date, nothing to check
         fprintf('MEX Files match OPTI Release.\n');
@@ -416,7 +418,7 @@ else
 end
 
 
-function OK = downloadMexFiles(localVer)
+function OK = downloadMexFiles(localVer, downloadMex)
 
 localVer = optiRound(localVer, 3);
 gitData = [];
@@ -424,7 +426,12 @@ mexFilesFoundOnGit = false;
 % See if we can download directly from GitHub (2014b +)
 if (exist('webread.m','file'))  
     % See if the user wants us to automatically download the mex files
-    in = input('\n- Would You Like OPTI To Attempt to Download the MEX Files Automatically? (Recommended) (y/n): ','s');
+    
+    if isempty(downloadMex)
+        in = input('\n- Would You Like OPTI To Attempt to Download the MEX Files Automatically? (Recommended) (y/n): ','s');
+    else
+        in = bool2yn(downloadMex);
+    end
     if (strcmpi(in,'y'))
         fprintf('\n- Checking for updated MEX files from GitHub...');
         try
