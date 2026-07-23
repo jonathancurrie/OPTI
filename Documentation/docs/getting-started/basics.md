@@ -28,7 +28,9 @@ which will list and describe all fields and groups availables.
 
 ## Example 1: Small LP
 
-![ex1 lp](/img/opti/ex1_lp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & -6x_1-5x_2 \\ \text{subject to:} \quad & x_1+4x_2 \leq 16 \\ & 6x_1+4x_2 \leq 28 \\ & 2x_1-5x_2 \leq 6 \\ & 0 \leq \mathbf{x} \leq 10 \end{aligned}
+$$
 
 The above problem is an example of a small linear program, a common starting point when learning optimization! The problem can be entered into OPTI as follows:
 
@@ -133,7 +135,9 @@ Three common options I use are `display` set to `iter` to display iteration by i
 ## Example 2: Rosenbrock NLP {#rosenex2}
 The Rosenbrock 'banana' function is a classic nonlinear optimization test problem:
 
-![ex2 nlp](/img/opti/ex2_nlp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & 100(x_2-x_1^2)^2+(1-x_1)^2 \\ \text{subject to:} \quad & -5 \leq \mathbf{x} \leq 5 \end{aligned}
+$$
 
 Note the original Rosenbrock function is unconstrained, and I have artificially added bounds to the problem. This is generally a good idea as it will help the solver scale the problem, as well as reduce the search space.
 

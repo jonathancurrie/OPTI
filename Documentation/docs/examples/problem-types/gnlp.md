@@ -6,7 +6,9 @@ slug: "/examples/problem-types/gnlp/"
 ## Problem Definition
 An GNLP has the following form:
 
-![def nlp](/img/opti/def_nlp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & f(\mathbf{x}) \\ \text{subject to:} \quad & \mathbf{A}\mathbf{x} \leq \mathbf{b} \\ & \mathbf{A}_{\mathrm{eq}}\mathbf{x} = \mathbf{b}_{\mathrm{eq}} \\ & \mathbf{l}_{\mathrm{b}} \leq \mathbf{x} \leq \mathbf{u}_{\mathrm{b}} \\ & \mathbf{c}(\mathbf{x}) \leq \mathbf{d} \\ & \mathbf{c}_{\mathrm{eq}}(\mathbf{x}) = \mathbf{d}_{\mathrm{eq}} \end{aligned}
+$$
 
 Where *f* is a scalar function containing the nonlinear objective function, which is subject to the following constraints: 
 

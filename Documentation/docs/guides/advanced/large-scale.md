@@ -74,7 +74,9 @@ A common problem people face is to how to create their nonlinear constraints, es
 
 Consider the following series of quadratic equalities where *x* is the decision variable vector, and *r* is a constant vector:
 
-![many nlcon](/img/opti/many_nlcon.png)
+$$
+\begin{bmatrix} x_{(1)}x_{(2N+1)}-r_{(1)}x_{(1)}x_{(N+1)}+(1-r_{(1)})x_{(N+1)}x_{(2N+1)} \\ x_{(2)}x_{(2N+2)}-r_{(2)}x_{(2)}x_{(N+2)}+(1-r_{(2)})x_{(N+2)}x_{(2N+2)} \\ \vdots \\ x_{(N)}x_{(2N+N)}-r_{(N)}x_{(N)}x_{(N+N)}+(1-r_{(N)})x_{(N+N)}x_{(2N+N)} \end{bmatrix} = \begin{bmatrix} q_1 \\ q_2 \\ \vdots \\ q_N \end{bmatrix}
+$$
 
 while it is possible to define this problem using matrix-vector notation, let's assume we don't want to. Obviously in the above problem, as N changes, the number of constraints change, as do the problem indices. Therefore one method to define this problem is to create a MATLAB function as follows
 

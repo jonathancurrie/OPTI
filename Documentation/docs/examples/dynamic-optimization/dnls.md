@@ -10,7 +10,9 @@ A dynamic parameter estimation problem aims to solve for the unknown parameters 
 
 The standard dynamic model form is shown below:
 
-![def dnls](/img/opti/def_dnls.png)
+$$
+\dot{\mathbf{z}}(t) = \mathbf{f}\!\left(t, \mathbf{z}(t), \mathbf{p}\right), \qquad \mathbf{z}(t_0) = \mathbf{z}_0
+$$
 
 `t`     - time  
 `t0`    - initial time  
@@ -20,7 +22,9 @@ The standard dynamic model form is shown below:
 
 Optionally, the problem can be posed to also (or alternatively) solve for unknown initial conditions. Therefore the solution vector (theta) is defined as follows:
 
-![def dnls theta](/img/opti/def_dnls_theta.png)
+$$
+\htmlClass{vector-symbol}{\mathbf{\theta}} := \begin{bmatrix} \mathbf{p} \\ \mathbf{z}_0 \end{bmatrix}
+$$
 
 The complication with DNLS problems is obtaining accurate gradients of the model with respect to the parameters, as the objective function also includes the ODE integrator. OPTI solves this problem by including the sensitivity differential equations as part of the solution process, which provide the gradient together with the objective.
 
@@ -36,7 +40,9 @@ The following examples demonstrate this beta functionality of OPTI, and are requ
 ## Example 1: Solving for Dynamic Model Parameters
 Consider the following three state model with two unknown parameters:
 
-![ex1 dnls](/img/opti/ex1_dnls.png)
+$$
+\begin{aligned} \dot{z}_1 &= -p_1z_1+4 \\ \dot{z}_2 &= 2z_1-p_1z_2+5 \\ \dot{z}_3 &= -4z_1-2z_2z_3-p_2 \end{aligned}
+$$
 
 To begin with, we will solve this model using 'known' parameters, to generate some fitting data:
 
@@ -386,11 +392,15 @@ Using a numerical approximation of the ODE partial derivatives provides a good s
 
 The sensitivity differential equation used by OPTI takes the following form:
 
-![def dnls S](/img/opti/def_dnls_S.png)
+$$
+\dot{\mathbf{S}} = \mathbf{J}\mathbf{S} + \begin{bmatrix} \mathbf{J}_{\mathbf{p}} & \mathbf{0} \end{bmatrix}
+$$
 
 where
 
-![def dnls J](/img/opti/def_dnls_J.png)
+$$
+\begin{aligned} \mathbf{J} = \frac{\partial \mathbf{f}}{\partial \mathbf{z}} &= \begin{bmatrix} \frac{\partial f_1}{\partial z_1} & \frac{\partial f_1}{\partial z_2} & \cdots & \frac{\partial f_1}{\partial z_n} \\ \frac{\partial f_2}{\partial z_1} & \frac{\partial f_2}{\partial z_2} & \cdots & \frac{\partial f_2}{\partial z_n} \\ \vdots & \vdots & \ddots & \vdots \\ \frac{\partial f_n}{\partial z_1} & \frac{\partial f_n}{\partial z_2} & \cdots & \frac{\partial f_n}{\partial z_n} \end{bmatrix} \\[1em] \mathbf{J}_{\mathbf{p}} = \frac{\partial \mathbf{f}}{\partial \mathbf{p}} &= \begin{bmatrix} \frac{\partial f_1}{\partial p_1} & \frac{\partial f_1}{\partial p_2} & \cdots & \frac{\partial f_1}{\partial p_m} \\ \frac{\partial f_2}{\partial p_1} & \frac{\partial f_2}{\partial p_2} & \cdots & \frac{\partial f_2}{\partial p_m} \\ \vdots & \vdots & \ddots & \vdots \\ \frac{\partial f_n}{\partial p_1} & \frac{\partial f_n}{\partial p_2} & \cdots & \frac{\partial f_n}{\partial p_m} \end{bmatrix} \end{aligned}
+$$
 
 As you can see we require derivatives of the ODE with respect to both state variables and parameters. For small problems (such as Example 1), these can be solved easily using the MATLAB Symbolic Toolbox:
 
@@ -453,7 +463,9 @@ On my computer I obtain a 3x speedup using the analytical derivative functions. 
 ## Example 10: Stiff Problems
 So far our example problem is quite well behaved, and we haven't needed to use a special purpose integrator. Let's now look at the ODE equation for a flame, with an added parameter:
 
-![ex9 dnls](/img/opti/ex9_dnls.png)
+$$
+\dot{z}_1 = p_1z_1^2-z_1^3
+$$
 
 As with the first example, we define our ODE and generate some measurement data:
 

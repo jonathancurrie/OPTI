@@ -6,7 +6,9 @@ slug: "/examples/problem-types/snle/"
 ## Problem Definition
 An SNLE has the following form:
 
-![def snle](/img/opti/def_snle.png)
+$$
+\mathbf{F}(\mathbf{x}) = \mathbf{0}
+$$
 
 Where **F** is a vector function containing the nonlinear equations.
 
@@ -17,7 +19,9 @@ Note a SNLE is created in a similar way as a NLS problem. It is recommened you c
 ## Example 1: 2x2 System
 OPTI contains one SNLE solver, HYBRJ from MINPACK. It can be used to solve square systems, where the number of equations equals the number of unknowns, such as in the following system:
 
-![ex1 snle](/img/opti/ex1_snle.png)
+$$
+\begin{aligned} 2x_1-x_2-e^{-x_1} &= 0 \\ -x_1+2x_2-e^{-x_2} &= 0 \end{aligned}
+$$
 
 To setup this problem, it can be entered as follows (note the API has changed from OPTI v2.05):
 
@@ -51,7 +55,9 @@ As in other examples, you are free to change the solver to override OPTI's choic
 ## Example 2: Supplying Sparse Derivatives {#sparse-derivs}
 Consider the following 4x4 system of nonlinear equations (modified version of the Wood function):
 
-![ex2 snle](/img/opti/ex2_snle.png)
+$$
+\begin{aligned} 10(x_2-x_1^2) &= 0 \\ \sqrt{90}(x_4-x_3^2) &= 0 \\ \sqrt{10}(x_2+x_4-2) &= 0 \\ \frac{1}{\sqrt{10}}(x_2-x_4) &= 0 \end{aligned}
+$$
 
 While we could supply this to OPTI to solve directly, there may be times where using dense first derivatives of our equations can be very memory intensive (i.e. large problems). In these cases it is possible to setup the problem as an NLP in order to leverage sparse derivatives. The below example shows that the problem is entered near identically as above, but when sparse derivatives are supplied, OPTI will automatically convert the problem to an NLP to leverage sparsity.
 

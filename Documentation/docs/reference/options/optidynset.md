@@ -9,7 +9,7 @@ This section will detail each of the options available via `optidynset`. These a
 >> optidynset
 ```
 
-Note all options are covered by relevant examples on the [DNLS Examples page](../../examples/dynamic-optimization/dynamic-system-parameter-estimation.md).
+Note all options are covered by relevant examples on the [DNLS Examples page](../../examples/dynamic-optimization/dnls.md).
 
 ## integrator
 The ODE integrator choice can make a HUGE difference when solving these problems, so ensure you know which integrator works best before trying to optimize the problem! `optidynset` allows the use of any of the MATLAB integrators, simply supply the name as a string (e.g. `'ode45'`, `'ode15s'`, etc). 

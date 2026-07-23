@@ -10,13 +10,17 @@ The following tricks are primarily based on the excellent AIMMS modelling guide:
 ## Constraining a Variable Within a Set
 Let's say you have a problem where the variable *x* is an integer (or continuous, it doesn't matter) variable, however *x* may only be certain integer variables within a predefined set. For example:
 
-![int set](/img/opti/int_set.png)
+$$
+x \in \{3,5,8,20\}
+$$
 
 To solve this problem we are going to introduce a binary variable for each valid value within the set. These are known as indicator variables, and when equal to one, indicate the corresponding value in the set is optimal. We will also need a couple of equality constraints to limit the possible values within the set, as well as ensure only one indicator variable is active at the solution.
 
 To illustrate, consider the following simple MILP:
 
-![int set ex](/img/opti/int_set_ex.png)
+$$
+\begin{aligned} \min_x \quad & x \\ \text{subject to:} \quad & l \leq x \leq 20 \\ & x \in \{3,5,8,20\} \end{aligned}
+$$
 
 where we are using the variable *l* as a testing constraint to check the valid values of *x*
 

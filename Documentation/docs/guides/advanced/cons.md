@@ -10,7 +10,9 @@ As the format varies between the linear and nonlinear case, we will address each
 ## Linear Constraints
 Linear constraints can be entered in *one* of two forms: 
 
-![lin con](/img/opti/lin_con.png)
+$$
+\begin{aligned} \mathbf{A}\mathbf{x} &\leq \mathbf{b} \\ \mathbf{A}_{\mathrm{eq}}\mathbf{x} &= \mathbf{b}_{\mathrm{eq}} \end{aligned} \qquad \text{OR} \qquad \mathbf{r}_{\mathrm{l}} \leq \mathbf{A}\mathbf{x} \leq \mathbf{r}_{\mathrm{u}}
+$$
 
 The general MATLAB format is specifying individual matrices and vectors for inequalities and equalities. An example definition is shown below:
 
@@ -29,7 +31,9 @@ To specify an equality constraint using the above row method, simply specify the
 ### Example 1: Linear Constraints with an LP
 Consider the following problem from the LP examples section:
 
-![ex2 lp](/img/opti/ex2_lp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & -x_1-2x_2-3x_3 \\ \text{subject to:} \quad & -x_1+x_2+x_3 \leq 20 \\ & x_1-3x_2+x_3 \leq 30 \\ & x_1+x_2+x_3=40 \\ & 0 \leq x_1 \leq 40 \\ & 0 \leq x_2 \\ & 0 \leq x_3 \end{aligned}
+$$
 
 To begin, we will enter it in MATLAB format (separate inequalities and equalities):
 
@@ -86,7 +90,9 @@ Implemented correctly both methods will return the same result. Depending on the
 ## Nonlinear Constraints {#nlcon}
 Nonlinear constraints can also be entered in *one* of two forms: 
 
-![nlin con](/img/opti/nlin_con.png)
+$$
+\mathbf{nlcon}(\mathbf{x})\,\underbrace{[\leq\ \mathit{or}\ \geq\ \mathit{or}\ =]}_{\mathbf{nle}}\,\mathbf{nlrhs} \qquad \text{OR} \qquad \mathbf{c}_{\mathrm{l}} \leq \mathbf{nlcon}(\mathbf{x}) \leq \mathbf{c}_{\mathrm{u}}
+$$
 
 The general form, which I refer to as *mixed*, is to supply three arguments, a nonlinear constraint function handle, **nlcon**, a vector of the Right Hand Sides (RHS), **nlrhs** and a vector describing each type of constraint **nle**. Each element in **nle** corresponds to a constraint type of -1 for <=, 0 for == and 1 for >=.  
 
@@ -107,7 +113,9 @@ As with linear constraints, equalities are specified by setting both c<sub>l</su
 ### Example 2: Nonlinear Constraints with an NLP
 Consider the following problem from the NLP examples section:
 
-![ex nlp hs71](/img/opti/ex_nlp_hs71.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & x_1x_4(x_1+x_2+x_3)+x_3 \\ \text{subject to:} \quad & x_1x_2x_3x_4 \geq 25 \\ & x_1^2+x_2^2+x_3^2+x_4^2=40 \\ & 1 \leq \mathbf{x} \leq 5 \end{aligned}
+$$
 
 To begin, we will enter it in mixed format:
 

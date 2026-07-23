@@ -45,8 +45,6 @@ const sidebars = {
           collapsed: true,
           items: [
             'examples/dynamic-optimization/dnls',
-            'examples/dynamic-optimization/dynamic-parameter-estimation',
-            'examples/dynamic-optimization/dynamic-system-parameter-estimation',
             'examples/dynamic-optimization/opts',
           ],
         },
@@ -61,7 +59,6 @@ const sidebars = {
             'examples/file-formats/gams',
           ],
         },
-        'examples/linear/milp',
       ],
     },
     {

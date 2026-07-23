@@ -6,7 +6,9 @@ slug: "/examples/problem-types/qcqp/"
 ## Problem Definition
 A QCQP has the following form:
 
-![def qcqp](/img/opti/def_qcqp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & \tfrac{1}{2}\mathbf{x}^{T}\mathbf{H}\mathbf{x} + \mathbf{f}^{T}\mathbf{x} \\ \text{subject to:} \quad & \mathbf{A}\mathbf{x} \leq \mathbf{b} \\ & \mathbf{A}_{\mathrm{eq}}\mathbf{x} = \mathbf{b}_{\mathrm{eq}} \\ & \mathbf{l}_{\mathrm{b}} \leq \mathbf{x} \leq \mathbf{u}_{\mathrm{b}} \\ & \mathbf{x}^{T}\mathbf{Q}\mathbf{x} + \mathbf{l}^{T}\mathbf{x} \leq r \end{aligned}
+$$
 
 Where **H** is a *n* x *n* sparse matrix (quadratic and bilinear terms) and **f** is a *n* x 1 vector (linear terms) containing the quadratic objective function, which is subject to the following constraints: 
 
@@ -31,7 +33,9 @@ Note a QCQP is created in a similar way as a QP, so it is recommened you complet
 ## Example 1: Small Dense QCQP
 Consider the following small QCQP:
 
-![ex1 qcqp](/img/opti/ex1_qcqp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & 0.5x_1^2+0.5x_2^2-2x_1-2x_2 \\ \text{subject to:} \quad & -x_1+x_2 \leq 2 \\ & x_1+3x_2 \leq 5 \\ & x_1^2+x_2^2-2x_2 \leq 1 \\ & 0 \leq \mathbf{x} \end{aligned}
+$$
 
 Using the native matrix & vector notation of MATLAB this can be entered as so:
 
@@ -82,7 +86,9 @@ Supplying multiple quadratic constraints requires the user to stack the individu
 
 To illustrate, consider the following example:
 
-![ex2 qcqp](/img/opti/ex2_qcqp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & 0.5x_1^2+0.5x_2^2-2x_1-2x_2 \\ \text{subject to:} \quad & -x_1+x_2 \leq 2 \\ & x_1+3x_2 \leq 5 \\ & x_1^2+x_2^2-2x_2 \leq 1 \\ & x_1^2+x_2^2-x_1+2x_2 \leq 1.2 \\ & 0 \leq \mathbf{x} \end{aligned}
+$$
 
 ```matlab
 % Objective
@@ -190,7 +196,9 @@ Note solving Positive SemiDefinite (PSD) QPs or QCQPs does not require you to us
 ## Example 5: Quadratic Row Constraints {#qcqp-row}
 Starting from OPTI v1.81 you can now supply quadratic constraints in row format, using the following definition:
 
-![def qc row](/img/opti/def_qc_row.png)
+$$
+\mathbf{q}_{\mathrm{rl}} \leq \mathbf{x}^{T}\mathbf{Q}\mathbf{x} + \mathbf{l}^{T}\mathbf{x} \leq \mathbf{q}_{\mathrm{ru}}
+$$
 
 Note the above format adds extra reasons why the constraint may not be convex. This could be due to:
 

@@ -48,21 +48,27 @@ The default is 10000 nodes.
 ## tolrfun {#tolrfun}
 The desired relative convergence tolerance of the solver. This is defined as:
 
-![def tolr](/img/opti/def_tolr.png)
+$$
+\frac{\left| f_i - f_{i-1} \right|}{\left| f_i \right|} \leq \mathit{tol}_{\mathit{rel}}
+$$
 
 Where *f<sub>i</sub>* is the current objective value, and *f<sub>i-1</sub>* is the previous iteration's objective value. The default is 1e-7.
 
 ## tolafun
 The desired absolute convergence tolerance of the solver. This is defined as:
 
-![def tola](/img/opti/def_tola.png)
+$$
+\left| f_i - f_{i-1} \right| \leq \mathit{tol}_{\mathit{abs}}
+$$
 
 Where *f<sub>i</sub>* is the current objective value, and *f<sub>i-1</sub>* is the previous iteration's objective value. The default is 1e-7.
 
 ## tolint
 The absolute tolerance used to define whether a solution is an integer value. This is defined as:
 
-![def toli](/img/opti/def_toli.png)
+$$
+\left| x_r - x_z \right| \leq \mathit{tol}_{\mathit{int}}
+$$
 
 Where *x<sub>r</sub>* is the real valued solution, and *x<sub>z</sub>* is the integer value. The default is 1e-5.
 

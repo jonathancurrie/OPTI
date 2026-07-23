@@ -85,7 +85,9 @@ Unfortunately IPOPT, NLOPT and BONMIN all require too many arguments to make a s
 
 Consider the following NLP to solve with IPOPT:
 
-![ex2 ll nlp](/img/opti/ex2_ll_nlp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & \log(1+x_1^2)-x_2 \\ \text{subject to:} \quad & (1+x_1^2)^2+x_2^2-4=0 \end{aligned}
+$$
 
 ```matlab
 % Objective & Gradient

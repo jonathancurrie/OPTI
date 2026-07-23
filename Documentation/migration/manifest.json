@@ -8,6 +8,11 @@
       "G-9GBVJ653GH"
     ]
   },
+  "link_aliases": {
+    "Dynamic.DynamicParameterEstimation": "Dynamic.DNLS",
+    "Dynamic.DynamicSystemParameterEstimation": "Dynamic.DNLS",
+    "Linear.MILP": "Probs.MILP"
+  },
   "pages": [
     {
       "source": "Advanced.AdvOpt",
@@ -100,18 +105,6 @@
       "route": "/examples/dynamic-optimization/dnls/"
     },
     {
-      "source": "Dynamic.DynamicParameterEstimation",
-      "title": "Dynamic System Parameter Estimation",
-      "file": "examples/dynamic-optimization/dynamic-parameter-estimation.md",
-      "route": "/examples/dynamic-optimization/dynamic-parameter-estimation/"
-    },
-    {
-      "source": "Dynamic.DynamicSystemParameterEstimation",
-      "title": "Dynamic System Parameter Estimation",
-      "file": "examples/dynamic-optimization/dynamic-system-parameter-estimation.md",
-      "route": "/examples/dynamic-optimization/dynamic-system-parameter-estimation/"
-    },
-    {
       "source": "Dynamic.Opts",
       "title": "Dynamic Optimization Settings",
       "file": "examples/dynamic-optimization/opts.md",
@@ -182,12 +175,6 @@
       "title": "Simple Integer Programming Tricks",
       "file": "guides/integer-programming/tricks.md",
       "route": "/guides/integer-programming/tricks/"
-    },
-    {
-      "source": "Linear.MILP",
-      "title": "Mixed Integer Linear Programming",
-      "file": "examples/linear/milp.md",
-      "route": "/examples/linear/milp/"
     },
     {
       "source": "Main.HomePage",
@@ -527,28 +514,28 @@
     }
   ],
   "counts": {
-    "pages": 86,
+    "pages": 83,
     "groups": {
       "Advanced": 11,
       "DL": 3,
-      "Dynamic": 4,
+      "Dynamic": 2,
       "Examples": 1,
       "File": 4,
       "GetStart": 2,
       "Help": 2,
       "Integer": 2,
-      "Linear": 1,
       "Main": 2,
       "Options": 2,
       "Probs": 14,
       "Solvers": 31,
       "Utilities": 7
     },
-    "source_blocks": 305,
-    "inline_code_spans": 539,
+    "source_blocks": 283,
+    "inline_code_spans": 505,
     "links": 424,
-    "image_references": 154,
-    "copied_images": 127,
+    "image_references": 60,
+    "math_image_replacements": 80,
+    "copied_images": 59,
     "table_blocks": 41
   },
   "warnings": {

@@ -74,7 +74,9 @@ This instruction list is then passed as an array to the SCIP MEX function, which
 ### SCIP Example 1
 The following problem is number 20 in the Hock-Schittkowski collection, and is the only problem IPOPT currently gets wrong in the OPTI NLP benchmark:
 
-![ex1 scip](/img/opti/ex1_scip.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & 100(x_2-x_1^2)^2+(1-x_1)^2 \\ \text{subject to:} \quad & x_1+x_2^2 \geq 0 \\ & x_1^2+x_2 \geq 0 \\ & x_1^2+x_2^2-1 \geq 0 \\ & -0.5 \leq x_1 \leq 0.5 \end{aligned}
+$$
 
 ```matlab
 % Objective
@@ -133,7 +135,9 @@ fun = @(x) 10*(x(2)-x(1)^2)^2 + 0.1*(1-x(1))^2;
 ### SCIP Example 2 {#scipopts}
 Rather than use SCIP to find the global solution, it may be advantageous to leverage the automatic differentiation within SCIP to simply find a valid local solution, and therefore avoid the typically long solve times of the full global solution, and the complexity of entering derivatives for other solvers.
 
-![ex1 nlp](/img/opti/ex1_nlp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & \log(1+x_1^2)-x_2 \\ \text{subject to:} \quad & (1+x_1^2)^2+x_2^2=4 \end{aligned}
+$$
 
 ```matlab
 % Objective
@@ -163,7 +167,9 @@ For a full list of SCIP options, consult the  [SCIP options list](https://www.sc
 ### SCIP Example 3
 Note SCIP has no problem if you want to add integer constraints as well:
 
-![ex3 scip](/img/opti/ex3_scip.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & 100(x_2-x_1^2)^2+(1-x_1)^2 \\ \text{subject to:} \quad & -x_1+x_2 \leq 1 \\ & x_1+x_2=5 \\ & 0 \leq \mathbf{x} \leq 4 \\ & x_1 \in \mathbb{Z} \end{aligned}
+$$
 
 ```matlab
 % Objective

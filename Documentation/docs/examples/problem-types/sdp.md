@@ -8,7 +8,9 @@ From OPTI v1.80 you can now pose and solve semidefinite problems in OPTI.
 ## Problem Definition
 A SDP has the following form (noting OPTI uses the SDPA Standard Primal Form):
 
-![def sdp](/img/opti/def_sdp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & \mathbf{f}^{T}\mathbf{x} \\ \text{subject to:} \quad & \mathbf{A}\mathbf{x} \leq \mathbf{b} \\ & \mathbf{l}_{\mathrm{b}} \leq \mathbf{x} \leq \mathbf{u}_{\mathrm{b}} \\ & \mathbf{X} = \sum_{i=1}^{n} x_i\mathbf{F}_i - \mathbf{F}_0 \\ & \mathbf{X} \succeq 0 \quad [\text{Positive Semidefinite}] \end{aligned}
+$$
 
 Where **f** is a *n* x 1 vector containing the linear objective function, which is subject to the following constraints: 
 
@@ -28,13 +30,17 @@ Note a SDP is created in a similar way as a LP, so it is recommended you complet
 ## Example 1: Single Variable SDP
 Consider the following small SDP:
 
-![ex1 sdp](/img/opti/ex1_sdp.png)
+$$
+\begin{aligned} \min_x \quad & x \\ \text{subject to:} \quad & \begin{bmatrix} x & \sqrt{2} \\ \sqrt{2} & x \end{bmatrix} \succeq 0 \end{aligned}
+$$
 
 The optimization problem is to find the smallest value of *x* such that the matrix remains positive semidefinite (all eigenvalues are >= 0). This is known as a Linear Matrix Inequality (LMI). Note that each <small>**F**</small> is a 2x2 matrix, however there is only one decision variable. In Semidefinite Problems there is no restriction on the size of the LMI matrices, however there must be a matrix for each decision variable + one for the constant term.
 
 To aid showing how this is entered into MATLAB, consider the expanded equation below:
 
-![ex1a sdp](/img/opti/ex1a_sdp.png)
+$$
+x\underbrace{\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}}_{\mathbf{F}_1} - \underbrace{\begin{bmatrix} 0 & -\sqrt{2} \\ -\sqrt{2} & 0 \end{bmatrix}}_{\mathbf{F}_0} \succeq 0
+$$
 
 where with reference to the problem definition at the top, we can see how we derive each matrix to create the constraint expression. Also observe each scalar decision variable is element-wise multiplied with each matrix. Given this, the problem can be entered into MATLAB as follows:
 
@@ -61,11 +67,15 @@ Opt = opti('f',f,'sdcone',sdcone)
 ## Example 2: Two Variable SDP
 Consider another following small SDP, this time with two variables:
 
-![ex2 sdp](/img/opti/ex2_sdp.png)
+$$
+\begin{bmatrix} x_1 & 2 \\ 2 & x_2 \end{bmatrix} \succeq 0
+$$
 
 This problem has two variables, thus we need an extra <small>**F**</small> matrix for x<sub>2</sub>. However this time we are going to use an alternative nomenclature where <small>**C**</small> = <small>**F<sub>0</sub>**</small>, and <small>**A<sub>1:n</sub>**</small> = <small>**F<sub>1:n</sub>**</small>, as detailed in the following equation:
 
-![ex2a sdp](/img/opti/ex2a_sdp.png)
+$$
+x_1\underbrace{\begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix}}_{\mathbf{A}_1} + x_2\underbrace{\begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}}_{\mathbf{A}_2} - \underbrace{\begin{bmatrix} 0 & -2 \\ -2 & 0 \end{bmatrix}}_{\mathbf{C}} \succeq 0
+$$
 
 This is entered into MATLAB as follows:
 
@@ -104,7 +114,9 @@ the feasible region is in the upper right of the plot. The red hatched line indi
 ## Example 3: Multiple Semidefinite Constraints
 Consider another following small SDP, this time with multiple semidefinite constraints:
 
-![ex3 sdp](/img/opti/ex3_sdp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & x_1 \\ \text{subject to:} \quad & \begin{bmatrix} x_2 & x_3 \\ x_3 & x_4 \end{bmatrix} \preceq \begin{bmatrix} x_1 & 0 \\ 0 & x_1 \end{bmatrix} \\ & \begin{bmatrix} x_2 & x_3 \\ x_3 & x_4 \end{bmatrix} \succeq \begin{bmatrix} 1 & 0.2 \\ 0.2 & 1 \end{bmatrix} \end{aligned}
+$$
 
 Each semidefinite constraint (i.e. [F0 F1 F2 ..]) is entered as a cell, as follows:
 

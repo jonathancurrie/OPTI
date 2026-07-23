@@ -6,7 +6,9 @@ slug: "/examples/problem-types/scnle/"
 ## Problem Definition
 A SCNLE has the following form:
 
-![def scnle](/img/opti/def_scnle.png)
+$$
+\begin{aligned} & \mathbf{F}(\mathbf{x}) = \mathbf{0} \\ \text{subject to:} \quad & \mathbf{A}\mathbf{x} \leq \mathbf{b} \\ & \mathbf{A}_{\mathrm{eq}}\mathbf{x} = \mathbf{b}_{\mathrm{eq}} \\ & \mathbf{l}_{\mathrm{b}} \leq \mathbf{x} \leq \mathbf{u}_{\mathrm{b}} \end{aligned}
+$$
 
 Where **F** is a vector function containing the nonlinear equations.
 
@@ -25,7 +27,9 @@ Note a SCNLE is created in a similar way as a SNLE problem. It is recommened you
 
 ## Example 1: Bounded SNLE
 
-![ex1 scnle](/img/opti/ex1_scnle.png)
+$$
+\begin{aligned} 2x_1-x_2-e^{-x_1} &= 0 \\ -x_1+2x_2-e^{-x_2} &= 0 \\ \text{subject to:} \quad 0.6 \leq x_1 &\leq 1 \\ 0 \leq x_2 &\leq 1 \end{aligned}
+$$
 
 To setup this problem, it can be entered as follows:
 

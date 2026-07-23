@@ -6,7 +6,9 @@ slug: "/examples/problem-types/lp/"
 ## Problem Definition
 An LP has the following form:
 
-![def lp](/img/opti/def_lp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & \mathbf{f}^{T}\mathbf{x} \\ \text{subject to:} \quad & \mathbf{A}\mathbf{x} \leq \mathbf{b} \\ & \mathbf{A}_{\mathrm{eq}}\mathbf{x} = \mathbf{b}_{\mathrm{eq}} \\ & \mathbf{l}_{\mathrm{b}} \leq \mathbf{x} \leq \mathbf{u}_{\mathrm{b}} \end{aligned}
+$$
 
 Where **f** is a *n* x 1 vector containing the linear objective function, which is subject to the following constraints: 
 
@@ -26,7 +28,9 @@ The goal is to minimize the objective function by selecting a value of **x** tha
 ## Example 1: Small Dense LP
 Consider the following LP from the basics section:
 
-![ex1 lp](/img/opti/ex1_lp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & -6x_1-5x_2 \\ \text{subject to:} \quad & x_1+4x_2 \leq 16 \\ & 6x_1+4x_2 \leq 28 \\ & 2x_1-5x_2 \leq 6 \\ & 0 \leq \mathbf{x} \leq 10 \end{aligned}
+$$
 
 Note two important characteristics of this problem which make it an LP:
 
@@ -35,7 +39,9 @@ Note two important characteristics of this problem which make it an LP:
 
 Because of this linear property, we can rewrite this problem in matrix-vector form:
 
-![def lp1](/img/opti/def_lp1.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & \begin{bmatrix} -6 \\ -5 \end{bmatrix}^{T}\mathbf{x} \\ \text{subject to:} \quad & \begin{bmatrix} 1 & 4 \\ 6 & 4 \\ 2 & -5 \end{bmatrix}\mathbf{x} \leq \begin{bmatrix} 16 \\ 28 \\ 6 \end{bmatrix} \\ & 0 \leq \mathbf{x} \leq 10 \end{aligned}
+$$
 
 And supply the entire problem to the solver as a collection of matrices and vectors. This not only avoids costly callbacks to MATLAB, but the solver also knows the full structure of the model which it can use when solving.
 
@@ -93,7 +99,9 @@ In fact the preferred format for LPs with OPTI is to use the MATLAB sparse data 
 
 The next important point with the loaded model is the representation of constraints. So far I have shown constraints where the inequality and equality constraints are stored and supplied separately. While this is the MATLAB default, a more efficient method is to store in what I call 'row format', as follows:
 
-![row lincon](/img/opti/row_lincon.png)
+$$
+\mathbf{r}_{\mathrm{l}} \leq \mathbf{A}\mathbf{x} \leq \mathbf{r}_{\mathrm{u}}
+$$
 
 This format places bounds on each row of the constraint matrix **A**. See the [constraint information](../../guides/advanced/cons.md) page for more information on this format.
 
@@ -116,7 +124,9 @@ Opt = opti(prob)
 ## Example 3: LP in Row Format
 Consider the following toy LP problem:
 
-![ex2 lp](/img/opti/ex2_lp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & -x_1-2x_2-3x_3 \\ \text{subject to:} \quad & -x_1+x_2+x_3 \leq 20 \\ & x_1-3x_2+x_3 \leq 30 \\ & x_1+x_2+x_3=40 \\ & 0 \leq x_1 \leq 40 \\ & 0 \leq x_2 \\ & 0 \leq x_3 \end{aligned}
+$$
 
 For this problem we are going to enter it to OPTI in row format. You are free to choose the format, however you cannot mix the two in one problem. You will be presented with a warning if the selected solver requires a different format (warning level dependent).
 
@@ -176,7 +186,9 @@ Opt = opti('f',f,'mix',A,b,e,'bounds',lb,ub,'options',opts)
 ## Example 5: Adding a Constant Objective Bias {#objbias}
 Consider the following alternative objective definition for an LP:
 
-![def lp2](/img/opti/def_lp2.png)
+$$
+\min_{\mathbf{x}} \; \mathbf{f}^{T}\mathbf{x} + \mathit{objbias}
+$$
 
 Sometimes I get asked how to enter an LP (or MILP or QP) with a constant objective term. In fact it actually makes no difference to the solution vector **x** when solving these problems! The only difference is the returned fval will not be offset by this bias. However from OPTI v2.00 you can now enter this bias as part of the problem description:
 

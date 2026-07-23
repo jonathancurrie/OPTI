@@ -11,7 +11,9 @@ This section will detail how to obtain exact second derivatives using OPTI and M
 ### Scalar Function
 The second derivatives of a scalar, multivariable function `f` (such as that used in a NLP objective) is defined as:
 
-![def deriv2](/img/opti/def_deriv2.png)
+$$
+\nabla^2 f = \frac{\partial^2 f}{\partial \mathbf{x}^2} = {\def\arraystretch{1.3}\begin{bmatrix} \frac{\partial^2 f}{\partial x_1^2}\; & \;\frac{\partial^2 f}{\partial x_1 \partial x_2}\; & \;\cdots\; & \;\frac{\partial^2 f}{\partial x_1 \partial x_n} \\ \frac{\partial^2 f}{\partial x_2 \partial x_1}\; & \;\frac{\partial^2 f}{\partial x_2^2}\; & \;\cdots\; & \;\frac{\partial^2 f}{\partial x_2 \partial x_n} \\ \vdots\; & \;\vdots\; & \;\ddots\; & \;\vdots \\ \frac{\partial^2 f}{\partial x_n \partial x_1}\; & \;\frac{\partial^2 f}{\partial x_n \partial x_2}\; & \;\cdots\; & \;\frac{\partial^2 f}{\partial x_n^2} \end{bmatrix}}
+$$
 
 Noting the result is a *matrix*, with dimensions *n* x *n*.
 
@@ -21,7 +23,9 @@ The second derivatives of a vector, multivariable function `F` (such as a vector
 ### Hessian of the Lagrangian
 In practice only one matrix containing second derivative information is passed to a solver. This matrix is called the Hessian of the Lagrangian, and contains second derivatives of *both* the objective *and* constraints:
 
-![def deriv2l](/img/opti/def_deriv2l.png)
+$$
+\nabla^2 L = \sigma \nabla^2 f + \sum_i \lambda_i \nabla^2 c_i
+$$
 
 Noting the result has dimensions *n* x *n*.
 
@@ -46,7 +50,9 @@ Also note for a particularly dense Hessian, a limited memory  [L-BFGS](http://en
 ## Example 1: Hessian Callback Function
 Let's revisit Hock & Schittkowski problem #71:
 
-![ex nlp hs71](/img/opti/ex_nlp_hs71.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & x_1x_4(x_1+x_2+x_3)+x_3 \\ \text{subject to:} \quad & x_1x_2x_3x_4 \geq 25 \\ & x_1^2+x_2^2+x_3^2+x_4^2=40 \\ & 1 \leq \mathbf{x} \leq 5 \end{aligned}
+$$
 
 Assuming we have calculated the Hessian of Lagrangian, it can be entered into an m-file function as follows:
 

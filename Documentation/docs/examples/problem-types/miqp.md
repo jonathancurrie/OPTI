@@ -6,7 +6,9 @@ slug: "/examples/problem-types/miqp/"
 ## Problem Definition
 An MIQP has the following form:
 
-![def miqp](/img/opti/def_miqp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & \tfrac{1}{2}\mathbf{x}^{T}\mathbf{H}\mathbf{x} + \mathbf{f}^{T}\mathbf{x} \\ \text{subject to:} \quad & \mathbf{A}\mathbf{x} \leq \mathbf{b} \\ & \mathbf{A}_{\mathrm{eq}}\mathbf{x} = \mathbf{b}_{\mathrm{eq}} \\ & \mathbf{l}_{\mathrm{b}} \leq \mathbf{x} \leq \mathbf{u}_{\mathrm{b}} \\ & x_i \in \mathbb{Z} \\ & x_j \in \{0,1\} \end{aligned}
+$$
 
 Where **H** is a *n* x *n* sparse matrix (quadratic and bilinear terms) and **f** is a *n* x 1 vector (linear terms) containing the quadratic objective function, which is subject to the following constraints: 
 
@@ -34,7 +36,9 @@ Note a MIQP is created in a very similar way as a QP, so it is recommened you co
 ## Example 1: Small MIQP
 Consider the following small MIQP modified from the problem in the QP section:
 
-![ex1 miqp](/img/opti/ex1_miqp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & 0.5x_1^2+x_2^2-x_1x_2-2x_1-6x_2 \\ \text{subject to:} \quad & x_1+x_2 \leq 2 \\ & -x_1+2x_2 \leq 2 \\ & 2x_1+x_2 \leq 3 \\ & 0 \leq \mathbf{x} \\ & x_1 \in \mathbb{Z} \end{aligned}
+$$
 
 Using the native matrix & vector notation of MATLAB this can be entered as so:
 

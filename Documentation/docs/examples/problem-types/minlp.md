@@ -6,7 +6,9 @@ slug: "/examples/problem-types/minlp/"
 ## Problem Definition
 An MINLP has the following form:
 
-![def minlp](/img/opti/def_minlp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & f(\mathbf{x}) \\ \text{subject to:} \quad & \mathbf{A}\mathbf{x} \leq \mathbf{b} \\ & \mathbf{A}_{\mathrm{eq}}\mathbf{x} = \mathbf{b}_{\mathrm{eq}} \\ & \mathbf{l}_{\mathrm{b}} \leq \mathbf{x} \leq \mathbf{u}_{\mathrm{b}} \\ & \mathbf{c}(\mathbf{x}) \leq \mathbf{d} \\ & \mathbf{c}_{\mathrm{eq}}(\mathbf{x}) = \mathbf{d}_{\mathrm{eq}} \\ & x_i \in \mathbb{Z} \\ & x_j \in \{0,1\} \end{aligned}
+$$
 
 Where *f* is a scalar function containing the nonlinear objective function, which is subject to the following constraints: 
 
@@ -42,7 +44,9 @@ Before you read any further, have another think about the term "Convex MINLP". B
 
 Anyway, consider the following MINLP:
 
-![ex1 minlp](/img/opti/ex1_minlp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & -x_1-x_2-x_3 \\ \text{subject to:} \quad & (x_2-0.5)^2+(x_3-0.5)^2 \leq 0.25 \\ & x_1-x_2 \leq 0 \\ & x_1+x_3+x_4 \leq 2 \\ & x_1 \leq 1 \\ & x_4 \leq 5 \\ & x_1 \in \{0,1\} \\ & x_4 \in \mathbb{Z} \end{aligned}
+$$
 
 This problem contains a linear objective, one quadratic constraint and two linear constraints. While it could be formulated as a MIQCQP, we will keep it as a MINLP for this example.
 
@@ -94,7 +98,9 @@ Like IPOPT, BONMIN will only find local solutions to non-convex problems, thus f
 
 To make it more interesting, we are going to constrain x<sub>1</sub> to be an integer variable, within a curved region of the function:
 
-![ex2 minlp](/img/opti/ex2_minlp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & 20+x_1^2+x_2^2-10\!\left(\cos(2\pi x_1)+\cos(2\pi x_2)\right) \\ \text{subject to:} \quad & 5\pi \leq x_1 \leq 20\pi \\ & -20\pi \leq x_2 \leq -4\pi \\ & x_1 \in \mathbb{Z} \end{aligned}
+$$
 
 This can be entered into MATLAB as follows:
 

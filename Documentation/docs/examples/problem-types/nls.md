@@ -8,7 +8,9 @@ Note from OPTI v2.10 a new API exists via [optifit](./model-fit.md) which simpli
 ## Problem Definition
 An NLS has the following form:
 
-![def nls](/img/opti/def_nls.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & \left\lVert \mathbf{F}(\mathbf{x}) - \mathbf{ydata} \right\rVert_2^2 \\ \text{subject to:} \quad & \mathbf{A}\mathbf{x} \leq \mathbf{b} \\ & \mathbf{A}_{\mathrm{eq}}\mathbf{x} = \mathbf{b}_{\mathrm{eq}} \\ & \mathbf{l}_{\mathrm{b}} \leq \mathbf{x} \leq \mathbf{u}_{\mathrm{b}} \end{aligned}
+$$
 
 Where **F** is a vector function containing the nonlinear fitting function, and <small>**ydata**</small> is the fitting data, which is subject to the following constraints: 
 
@@ -23,12 +25,16 @@ Where **F** is a vector function containing the nonlinear fitting function, and 
 
 The goal is to minimize the objective function by selecting a value of **x** that also satisfies all constraints. Note this problem can also be written as a curve fitting problem using the following, functionally equivalent, objective function:
 
-![def nls2](/img/opti/def_nls2.png)
+$$
+\min_{\mathbf{x}} \; \sum_i \left(F_i(\mathbf{x}, \mathbf{xdata}) - ydata_i\right)^2
+$$
 
 ## Example 1: Unconstrained NLS
 Most NLS solvers supplied with OPTI are for solving unconstrained NLS problems only. The default solver, NL2SOL, is especially effective at solving these problems. To start, let's revisit the Rosenbrock banana function, which was originally an NLS problem:
 
-![ex1 nls](/img/opti/ex1_nls.png)
+$$
+\min_{\mathbf{x}} \; \left\lVert \begin{bmatrix} 100(x_2-x_1^2) \\ 1-x_1 \end{bmatrix} \right\rVert_2^2
+$$
 
 Note an important characteristic of this problem which makes it an NLS:
 
@@ -62,7 +68,9 @@ Opt = opti('fun',fun,'ydata',ydata,'x0',x0)
 ## Example 2: Constrained NLS
 For bounded NLS problems OPTI supplies a couple of solvers, which will automatically be selected based on the constraints supplied. For bounded problems, Intel's MKL Trust Region NLS solver (`mkltrnls`) will be automatically used. Consider the above example, reposed with upper and lower bounds:
 
-![ex2 nls](/img/opti/ex2_nls.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & \left\lVert \begin{bmatrix} 100(x_2-x_1^2) \\ 1-x_1 \end{bmatrix} \right\rVert_2^2 \\ \text{subject to:} \quad & -2 \leq \mathbf{x} \leq 0.5 \end{aligned}
+$$
 
 ```matlab
 % Objective (Fitting) Function
@@ -90,7 +98,9 @@ I have noticed that most NLS solvers do not like infinite bounds. They can cause
 ## Example 3: NLS with `xdata`
 Often when curve fitting your fitting function will be a function of parameters, `x`, and static data, `xdata`. To aid formulating this type of problem, OPTI also accepts NLS problems with `xdata` and `ydata`, as follows:
 
-![ex3 nls](/img/opti/ex3_nls.png)
+$$
+\mathbf{F}(\mathbf{x},\mathbf{xdata}) = x_1 e^{x_2\mathbf{xdata}}
+$$
 
 This can be solved using OPTI as follows:
 

@@ -3,7 +3,7 @@ import styles from './styles.module.css';
 
 const DOWNLOAD_URL =
   'https://www.dropbox.com/sh/7vtp9ifeuwt1h91/AACPsSpuJV8LBUhIImZu8pfCa?dl=0';
-const PUBLIC_RECAPTCHA_SITE_KEY = '6Lfww10tAAAAAOBPqtuZWOmJlnwnD113ROgNIQhg';
+const PUBLIC_RECAPTCHA_SITE_KEY = '6Lfww10tAAAAAOBPqtuZWOmJlnD113ROgNIQhg';
 const RECAPTCHA_ACTION = 'ACADEMIC_DOWNLOAD';
 const RECAPTCHA_ONLOAD_CALLBACK = 'onOptiAcademicRecaptchaLoad';
 const RECAPTCHA_SCRIPT_ID = 'opti-academic-recaptcha-enterprise';

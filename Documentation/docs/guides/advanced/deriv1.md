@@ -11,14 +11,18 @@ This section will detail how to obtain exact first derivatives using OPTI and MA
 ### Scalar Function
 The first derivatives of a scalar, multivariable function `f` (such as that used in a NLP objective) is defined as:
 
-![def deriv1s](/img/opti/def_deriv1s.png)
+$$
+\nabla f = \frac{\partial f}{\partial \mathbf{x}} = {\def\arraystretch{1.3}\begin{bmatrix} \frac{\partial f}{\partial x_1}\; & \;\frac{\partial f}{\partial x_2}\; & \;\cdots\; & \;\frac{\partial f}{\partial x_n} \end{bmatrix}}
+$$
 
 Noting the result is a *row vector*, with dimensions 1 x *n*.
 
 ### Vector Function
 The first derivatives of a vector, multivariable function `F` (such as that used in a NLS objective, or vector of nonlinear constraints) is defined as:
 
-![def deriv1v](/img/opti/def_deriv1v.png)
+$$
+\nabla \mathbf{F} = \frac{\partial \mathbf{F}}{\partial \mathbf{x}} = {\def\arraystretch{1.3}\begin{bmatrix} \frac{\partial f_1}{\partial x_1}\; & \;\frac{\partial f_1}{\partial x_2}\; & \;\cdots\; & \;\frac{\partial f_1}{\partial x_n} \\ \frac{\partial f_2}{\partial x_1}\; & \;\frac{\partial f_2}{\partial x_2}\; & \;\cdots\; & \;\frac{\partial f_2}{\partial x_n} \\ \vdots\; & \;\vdots\; & \;\ddots\; & \;\vdots \\ \frac{\partial f_m}{\partial x_1}\; & \;\frac{\partial f_m}{\partial x_2}\; & \;\cdots\; & \;\frac{\partial f_m}{\partial x_n} \end{bmatrix}}
+$$
 
 Noting the result is a *matrix*, with dimensions *m* x *n*.
 
@@ -36,7 +40,9 @@ Strictly speaking a gradient should be a vector, while the Jacobian should be a 
 ## Example 1: Numerical Differentiation
 As a baseline, let's consider the following scalar, multivariable nonlinear objective function from Hock & Schittkowski problem #71:
 
-![ex1 d1s](/img/opti/ex1_d1s.png)
+$$
+f(\mathbf{x}) = x_1x_4(x_1+x_2+x_3)+x_3
+$$
 
 This can be created in MATLAB as follows: 
 ```matlab
@@ -100,7 +106,9 @@ Note the function `symJac` is a simple demonstration function for toy problems o
 ## Example 5: Application to a NLP {#ex5}
 Now we have some tools for generating first derivatives, lets apply it to the full HS#71 NLP:
 
-![ex nlp hs71](/img/opti/ex_nlp_hs71.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & x_1x_4(x_1+x_2+x_3)+x_3 \\ \text{subject to:} \quad & x_1x_2x_3x_4 \geq 25 \\ & x_1^2+x_2^2+x_3^2+x_4^2=40 \\ & 1 \leq \mathbf{x} \leq 5 \end{aligned}
+$$
 
 As done in previous examples, let's code it up in MATLAB:
 

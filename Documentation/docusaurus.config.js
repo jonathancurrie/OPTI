@@ -16,9 +16,39 @@ const legacyPageByRoute = new Map(
   ]),
 );
 
+const additionalRedirectsByRoute = new Map([
+  [
+    '/examples/dynamic-optimization/dnls/',
+    [
+      '/examples/dynamic-optimization/dynamic-parameter-estimation/',
+      '/examples/dynamic-optimization/dynamic-system-parameter-estimation/',
+      '/pmwiki.php/Dynamic/DynamicParameterEstimation',
+      '/index.php/Dynamic/DynamicParameterEstimation',
+      '/pmwiki.php/Dynamic/DynamicSystemParameterEstimation',
+      '/index.php/Dynamic/DynamicSystemParameterEstimation',
+    ],
+  ],
+  [
+    '/examples/problem-types/milp/',
+    [
+      '/examples/linear/milp/',
+      '/pmwiki.php/Linear/MILP',
+      '/index.php/Linear/MILP',
+    ],
+  ],
+]);
+
 async function createConfig() {
   const remarkMath = (await import('remark-math')).default;
   const rehypeKatex = (await import('rehype-katex')).default;
+  const katexOptions = {
+    strict(errorCode) {
+      return errorCode === 'htmlExtension' ? 'ignore' : 'error';
+    },
+    trust(context) {
+      return context.command === '\\htmlClass';
+    },
+  };
 
   return {
     title: 'OPTI Toolbox',
@@ -46,7 +76,7 @@ async function createConfig() {
             sidebarPath: require.resolve('./sidebars.js'),
             breadcrumbs: true,
             remarkPlugins: [remarkMath],
-            rehypePlugins: [rehypeKatex],
+            rehypePlugins: [[rehypeKatex, katexOptions]],
           },
           blog: false,
           pages: false,
@@ -69,13 +99,16 @@ async function createConfig() {
         '@docusaurus/plugin-client-redirects',
         {
           createRedirects(existingPath) {
-            const legacyPage = legacyPageByRoute.get(normalizeRoute(existingPath));
-            return legacyPage
-              ? [
-                  `/pmwiki.php/${legacyPage}`,
-                  `/index.php/${legacyPage}`,
-                ]
-              : undefined;
+            const route = normalizeRoute(existingPath);
+            const legacyPage = legacyPageByRoute.get(route);
+            const redirects = [...(additionalRedirectsByRoute.get(route) || [])];
+            if (legacyPage) {
+              redirects.push(
+                `/pmwiki.php/${legacyPage}`,
+                `/index.php/${legacyPage}`,
+              );
+            }
+            return redirects.length > 0 ? redirects : undefined;
           },
         },
       ],

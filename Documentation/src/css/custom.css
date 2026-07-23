@@ -1,3 +1,5 @@
+@import 'katex/dist/katex.min.css';
+
 :root {
   --ifm-color-primary: #0870c9;
   --ifm-color-primary-dark: #0765b5;
@@ -112,6 +114,18 @@ html {
   border-radius: 0.35rem;
   height: auto;
   max-width: 100%;
+}
+
+.theme-doc-markdown .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 0.25rem;
+}
+
+.theme-doc-markdown .katex .vector-symbol .mathnormal {
+  font-family: KaTeX_Main, 'Times New Roman', serif;
+  font-style: normal;
+  font-weight: 700;
 }
 
 .theme-doc-markdown table {

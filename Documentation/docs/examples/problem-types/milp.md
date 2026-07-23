@@ -6,7 +6,9 @@ slug: "/examples/problem-types/milp/"
 ## Problem Definition
 An MILP has the following form:
 
-![def milp](/img/opti/def_milp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & \mathbf{f}^{T}\mathbf{x} \\ \text{subject to:} \quad & \mathbf{A}\mathbf{x} \leq \mathbf{b} \\ & \mathbf{A}_{\mathrm{eq}}\mathbf{x} = \mathbf{b}_{\mathrm{eq}} \\ & \mathbf{l}_{\mathrm{b}} \leq \mathbf{x} \leq \mathbf{u}_{\mathrm{b}} \\ & x_i \in \mathbb{Z} \\ & x_j \in \{0,1\} \end{aligned}
+$$
 
 Where **f** is a *n* x 1 vector containing the linear objective function, which is subject to the following constraints: 
 
@@ -34,7 +36,9 @@ Note an MILP is created in the same way as an LP, except some variables are defi
 ## Example 1: Small Dense MILP
 Consider the following LP from the basics section, modified as an MILP:
 
-![ex1 milp](/img/opti/ex1_milp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & -6x_1-5x_2 \\ \text{subject to:} \quad & x_1+4x_2 \leq 16 \\ & 6x_1+4x_2 \leq 28 \\ & 2x_1-5x_2 \leq 6 \\ & 0 \leq \mathbf{x} \leq 10 \\ & \mathbf{x} \in \mathbb{Z} \end{aligned}
+$$
 
 Using the native matrix & vector notation of MATLAB this can be entered as so:
 
@@ -119,7 +123,9 @@ Opt = opti(prob)
 ## Example 4: MILP with Special Ordered Set (SOS) {#milp-sos}
 Consider the following MILP problem:
 
-![ex2 milp](/img/opti/ex2_milp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & -x_1-x_2-3x_3-2x_4-2x_5 \\ \text{subject to:} \quad & -x_1-x_2+x_3+x_4 \leq 30 \\ & x_1+x_3-3x_4 \leq 30 \\ & 0 \leq x_1 \leq 40 \\ & 0 \leq x_2 \leq 1 \\ & 0 \leq x_3 \\ & 0 \leq x_4 \\ & 0 \leq x_5 \leq 1 \end{aligned}
+$$
 
 Initially this problem looks like an LP, however we are going to add one more constraint. We are going to specify that only one variable from *x<sub>1</sub>* to *x<sub>5</sub>* can take on a nonzero value. This type of constraint could be used when choosing one option from a selection.
 

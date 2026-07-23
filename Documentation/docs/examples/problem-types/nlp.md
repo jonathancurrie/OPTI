@@ -6,7 +6,9 @@ slug: "/examples/problem-types/nlp/"
 ## Problem Definition
 An NLP has the following form:
 
-![def nlp](/img/opti/def_nlp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & f(\mathbf{x}) \\ \text{subject to:} \quad & \mathbf{A}\mathbf{x} \leq \mathbf{b} \\ & \mathbf{A}_{\mathrm{eq}}\mathbf{x} = \mathbf{b}_{\mathrm{eq}} \\ & \mathbf{l}_{\mathrm{b}} \leq \mathbf{x} \leq \mathbf{u}_{\mathrm{b}} \\ & \mathbf{c}(\mathbf{x}) \leq \mathbf{d} \\ & \mathbf{c}_{\mathrm{eq}}(\mathbf{x}) = \mathbf{d}_{\mathrm{eq}} \end{aligned}
+$$
 
 Where *f* is a scalar function containing the nonlinear objective function, which is subject to the following constraints: 
 
@@ -32,7 +34,9 @@ The goal is to minimize the objective function by selecting a value of **x** tha
 ## Example 1: Small NLP
 Consider the following NLP:
 
-![ex1 nlp](/img/opti/ex1_nlp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & \log(1+x_1^2)-x_2 \\ \text{subject to:} \quad & (1+x_1^2)^2+x_2^2=4 \end{aligned}
+$$
 
 Note two important characteristics of this problem which make it an NLP:
 
@@ -79,7 +83,9 @@ Note the argument 'ndec' supplied to `opti` is only required when OPTI cannot de
 ## Example 2: Multiple Nonlinear Constraints {#multiplecon}
 When solving NLPs it is common that you will have more than one nonlinear constraint. A common test problem is the Hock & Schittkowski #71, described below:
 
-![ex nlp hs71](/img/opti/ex_nlp_hs71.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & x_1x_4(x_1+x_2+x_3)+x_3 \\ \text{subject to:} \quad & x_1x_2x_3x_4 \geq 25 \\ & x_1^2+x_2^2+x_3^2+x_4^2=40 \\ & 1 \leq \mathbf{x} \leq 5 \end{aligned}
+$$
 
 To enter this problem into OPTI, all constraints must supplied as a single vector function, as follows:
 
@@ -119,7 +125,9 @@ Apart from the MATLAB Optimization Toolbox solvers, the remaining OPTI NLP solve
 
 In saying that, IPOPT does have an option to indicate *all* inequality or equality constraints are linear. Consider the following NLP with linear constraints:
 
-![ex2a nlp](/img/opti/ex2a_nlp.png)
+$$
+\begin{aligned} \min_{\mathbf{x}} \quad & (x_1-x_2)^2+(x_2-x_3-2)^2+(x_4-1)^2+(x_5-1)^2 \\ \text{subject to:} \quad & x_1+3x_3=4 \\ & x_3+x_4-2x_5=0 \\ & x_2-x_5=0 \end{aligned}
+$$
 
 This can be solved using IPOPT as follows:
 
@@ -155,7 +163,9 @@ An alternative to an NLP is an Unconstrained Nonlinear Optimization (UNO) proble
 
 An example is the classic Rosenbrock function:
 
-![ex3 nlp](/img/opti/ex3_nlp.png)
+$$
+\min_{\mathbf{x}} \; 100(x_2-x_1^2)^2+(1-x_1)^2
+$$
 
 This can be solved using OPTI as follows:
 
