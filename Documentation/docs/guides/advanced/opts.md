@@ -124,3 +124,24 @@ This field allows you to supply settings specific to dynamic optimization via st
 When supplying derivative functions to an optimizer it is essential they are correct. From v2.00 OPTI can now automatically verify your derivatives are correct by comparing the supplied function(s) (and sparsity patterns, if supplied) to an internal numerical approximation. OPTI will check both first and second derivatives, if supplied. If there are errors, OPTI will report which element it considers to have an error in the command window.
 
 This option is enabled by setting it to `'on'`. By default it is `'off'`.
+
+## Overriding OPTI's Problem Identification {#probtype}
+For 1D problems OPTI may not recognise the type of problem you have posed correctly. If this is the case, you can override OPTI's problem identification by specifying an extra parameter to `opti` or `optiprob`, `'probtype'`.
+
+An example of when OPTI will get it wrong is when finding the root of a single variable function (SNLE). OPTI will incorrectly identify this as an Unconstrained Nonlinear Optimization (UNO) problem:
+
+```matlab
+% Equation to solve for zero
+fun = @(x) x.^3-2*x-5
+
+% Starting Guess
+x0 = 2;
+
+% Build OPTI Object, specifying problem type
+Opt = opti('fun',fun,'x0',x0,'probtype','SNLE')
+
+% Solve SNLE problem
+[x,fval,exitflag,info] = solve(Opt)
+```
+
+This problem occurs because OPTI expects a SNLE to contain more than one equation. While the above problem is fine, it contains no distinguishing features from a UNO, thus you must manually specify the problem type in these instances.

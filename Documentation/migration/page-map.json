@@ -30,6 +30,7 @@
     "Main.HomePage": "OPTI Toolbox Documentation"
   },
   "link_aliases": {
+    "Advanced.AdvOpt": "Advanced.Opts",
     "Dynamic.DynamicParameterEstimation": "Dynamic.DNLS",
     "Dynamic.DynamicSystemParameterEstimation": "Dynamic.DNLS",
     "Linear.MILP": "Probs.MILP"
@@ -105,6 +106,12 @@
     "row_lincon.png": "\\mathbf{r}_{\\mathrm{l}} \\leq \\mathbf{A}\\mathbf{x} \\leq \\mathbf{r}_{\\mathrm{u}}"
   },
   "markdown_replacements": {
+    "Advanced.Opts": [
+      {
+        "old": "This option is enabled by setting it to `'on'`. By default it is `'off'`.",
+        "new": "This option is enabled by setting it to `'on'`. By default it is `'off'`.\n\n## Overriding OPTI's Problem Identification {#probtype}\nFor 1D problems OPTI may not recognise the type of problem you have posed correctly. If this is the case, you can override OPTI's problem identification by specifying an extra parameter to `opti` or `optiprob`, `'probtype'`.\n\nAn example of when OPTI will get it wrong is when finding the root of a single variable function (SNLE). OPTI will incorrectly identify this as an Unconstrained Nonlinear Optimization (UNO) problem:\n\n```matlab\n% Equation to solve for zero\nfun = @(x) x.^3-2*x-5\n\n% Starting Guess\nx0 = 2;\n\n% Build OPTI Object, specifying problem type\nOpt = opti('fun',fun,'x0',x0,'probtype','SNLE')\n\n% Solve SNLE problem\n[x,fval,exitflag,info] = solve(Opt)\n```\n\nThis problem occurs because OPTI expects a SNLE to contain more than one equation. While the above problem is fine, it contains no distinguishing features from a UNO, thus you must manually specify the problem type in these instances."
+      }
+    ],
     "Main.HomePage": [
       {
         "old": "## News\n\n",
@@ -444,6 +451,7 @@
     "Comments"
   ],
   "exclude_pages": [
+    "Advanced.AdvOpt",
     "Advanced.Integer",
     "Advanced.SOS",
     "Dynamic.DynamicParameterEstimation",

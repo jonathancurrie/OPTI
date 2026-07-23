@@ -72,7 +72,6 @@ const sidebars = {
           collapsed: true,
           items: [
             'guides/advanced/opts',
-            'guides/advanced/adv-opt',
             'guides/advanced/plots',
             'guides/advanced/multi-solve',
             'guides/advanced/sym-builder',

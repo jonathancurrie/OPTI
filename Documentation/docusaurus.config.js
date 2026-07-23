@@ -36,6 +36,14 @@ const additionalRedirectsByRoute = new Map([
       '/index.php/Linear/MILP',
     ],
   ],
+  [
+    '/guides/advanced/opts/',
+    [
+      '/guides/advanced/adv-opt/',
+      '/pmwiki.php/Advanced/AdvOpt',
+      '/index.php/Advanced/AdvOpt',
+    ],
+  ],
 ]);
 
 async function createConfig() {

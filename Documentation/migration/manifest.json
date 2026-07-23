@@ -9,17 +9,12 @@
     ]
   },
   "link_aliases": {
+    "Advanced.AdvOpt": "Advanced.Opts",
     "Dynamic.DynamicParameterEstimation": "Dynamic.DNLS",
     "Dynamic.DynamicSystemParameterEstimation": "Dynamic.DNLS",
     "Linear.MILP": "Probs.MILP"
   },
   "pages": [
-    {
-      "source": "Advanced.AdvOpt",
-      "title": "Advanced Options",
-      "file": "guides/advanced/adv-opt.md",
-      "route": "/guides/advanced/adv-opt/"
-    },
     {
       "source": "Advanced.Cons",
       "title": "Two Ways to Define Constraints",
@@ -514,9 +509,9 @@
     }
   ],
   "counts": {
-    "pages": 83,
+    "pages": 82,
     "groups": {
-      "Advanced": 11,
+      "Advanced": 10,
       "DL": 3,
       "Dynamic": 2,
       "Examples": 1,
@@ -530,11 +525,11 @@
       "Solvers": 31,
       "Utilities": 7
     },
-    "source_blocks": 283,
-    "inline_code_spans": 505,
+    "source_blocks": 277,
+    "inline_code_spans": 479,
     "links": 424,
     "image_references": 60,
-    "math_image_replacements": 80,
+    "math_image_replacements": 77,
     "copied_images": 59,
     "table_blocks": 41
   },
