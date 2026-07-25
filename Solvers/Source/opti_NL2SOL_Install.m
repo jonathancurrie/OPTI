@@ -14,7 +14,7 @@
 % 1) Get NL2SOL
 % NL2SOL is available in multiple variants, however the most recent is 
 % included in the PORT library, available from:
-% http://netlib.sandia.gov/cgi-bin/netlib/netlibfiles.tar?filename=netlib/port
+% http://www.netlib.org/port/
 % The library contains functions for a range of mathematical functions,
 % however we will just be using the NL2SOL variants.
 

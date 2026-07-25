@@ -11,7 +11,7 @@ clc
 % To recompile you will need to get / do the following:
 
 % 1) Get CLP
-% CLP is available from http://www.coin-or.org/projects/Clp.xml. Download 
+% CLP is available from http://www.coin-or.org/download/source/Clp/. Download
 % the source. Unzip to a suitable temporary location.
 
 % 2) Compile CLP & COIN Utils

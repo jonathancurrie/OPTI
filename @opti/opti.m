@@ -31,8 +31,8 @@ classdef opti < handle
 %   optObj = opti('obj',obj,'options',optiset('solver','nomad'))
 %
 %
-%   For detailed documentation see the Wiki:
-%      https://controlengineering.co.nz/Wikis/OPTI
+%   For detailed documentation, see:
+%      https://jonathancurrie.github.io/OPTI/
 %
 %
 %   See also opti.solve optiset opti.plot 
