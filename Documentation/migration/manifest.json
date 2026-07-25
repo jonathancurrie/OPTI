@@ -12,6 +12,7 @@
     "Advanced.AdvOpt": "Advanced.Opts",
     "Dynamic.DynamicParameterEstimation": "Dynamic.DNLS",
     "Dynamic.DynamicSystemParameterEstimation": "Dynamic.DNLS",
+    "Dynamic.Opts": "Options.Optidynset",
     "Linear.MILP": "Probs.MILP",
     "Options.Optiset": "Advanced.Opts"
   },
@@ -99,12 +100,6 @@
       "title": "Dynamic System Parameter Estimation",
       "file": "examples/dynamic-optimization/dnls.md",
       "route": "/examples/dynamic-optimization/dnls/"
-    },
-    {
-      "source": "Dynamic.Opts",
-      "title": "Dynamic Optimization Settings",
-      "file": "examples/dynamic-optimization/opts.md",
-      "route": "/examples/dynamic-optimization/opts/"
     },
     {
       "source": "Examples.Examples",
@@ -504,11 +499,11 @@
     }
   ],
   "counts": {
-    "pages": 81,
+    "pages": 80,
     "groups": {
       "Advanced": 10,
       "DL": 3,
-      "Dynamic": 2,
+      "Dynamic": 1,
       "Examples": 1,
       "File": 4,
       "GetStart": 2,
@@ -520,9 +515,9 @@
       "Solvers": 31,
       "Utilities": 7
     },
-    "source_blocks": 271,
-    "inline_code_spans": 449,
-    "links": 423,
+    "source_blocks": 270,
+    "inline_code_spans": 437,
+    "links": 422,
     "image_references": 60,
     "math_image_replacements": 74,
     "copied_images": 59,

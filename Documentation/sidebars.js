@@ -45,7 +45,6 @@ const sidebars = {
           collapsed: true,
           items: [
             'examples/dynamic-optimization/dnls',
-            'examples/dynamic-optimization/opts',
           ],
         },
         {
@@ -94,10 +93,19 @@ const sidebars = {
         },
         {
           type: 'category',
-          label: 'Option reference',
+          label: 'Options reference',
           collapsed: true,
           items: [
-            'reference/options/optidynset',
+            {
+              type: 'ref',
+              id: 'guides/advanced/opts',
+              label: 'optiset — General optimization settings',
+            },
+            {
+              type: 'doc',
+              id: 'reference/options/optidynset',
+              label: 'optidynset — Dynamic optimization settings',
+            },
           ],
         },
       ],

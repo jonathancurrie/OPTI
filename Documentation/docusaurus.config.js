@@ -47,6 +47,14 @@ const additionalRedirectsByRoute = new Map([
       '/index.php/Options/Optiset',
     ],
   ],
+  [
+    '/reference/options/optidynset/',
+    [
+      '/examples/dynamic-optimization/opts/',
+      '/pmwiki.php/Dynamic/Opts',
+      '/index.php/Dynamic/Opts',
+    ],
+  ],
 ]);
 
 async function createConfig() {

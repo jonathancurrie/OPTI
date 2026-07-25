@@ -197,7 +197,7 @@ plot(Opt)
 ## Example 5: Fitting Selected States
 Once again we will use the model and fitting data from Example 1, but this time we are only going to fit states 2 and 3. This is an example of when the system of differential equations contains one or more intermediate states, but we are actually only interested in fitting to output states where we have measured data. 
 
-This examples introduces a new function, `optidynset`, which functions in a similar fashion to `optiset`. The difference is the `'dyn'`, indicating it is for setting dynamic optimization settings. `optidynset` allows the user to customize the integrator and derivatives among other settings. See the [`optidynset`](./opts.md) page for more information.
+This examples introduces a new function, `optidynset`, which functions in a similar fashion to `optiset`. The difference is the `'dyn'`, indicating it is for setting dynamic optimization settings. `optidynset` allows the user to customize the integrator and derivatives among other settings. See the [`optidynset`](../../reference/options/optidynset.md) page for more information.
 
 ```matlab
 % Set Dynamic Options (specifying states of interest)

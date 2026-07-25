@@ -61,7 +61,7 @@ Topics which require a basic understanding of OPTI and optimization.
 ### Dynamic Optimization
 <small></small>
 - [Dynamic System Parameter Estimation (DNLS)](./dynamic-optimization/dnls.md)
-- [Dynamic Optimization Options](./dynamic-optimization/opts.md)
+- [Dynamic Optimization Options](../reference/options/optidynset.md)
 
 ### File Input / Output
 <small></small>

@@ -33,6 +33,7 @@
     "Advanced.AdvOpt": "Advanced.Opts",
     "Dynamic.DynamicParameterEstimation": "Dynamic.DNLS",
     "Dynamic.DynamicSystemParameterEstimation": "Dynamic.DNLS",
+    "Dynamic.Opts": "Options.Optidynset",
     "Linear.MILP": "Probs.MILP",
     "Options.Optiset": "Advanced.Opts"
   },
@@ -457,6 +458,7 @@
     "Advanced.SOS",
     "Dynamic.DynamicParameterEstimation",
     "Dynamic.DynamicSystemParameterEstimation",
+    "Dynamic.Opts",
     "Linear.MILP",
     "Main.MyNewPage",
     "Main.WikiSandbox",
