@@ -33,7 +33,8 @@
     "Advanced.AdvOpt": "Advanced.Opts",
     "Dynamic.DynamicParameterEstimation": "Dynamic.DNLS",
     "Dynamic.DynamicSystemParameterEstimation": "Dynamic.DNLS",
-    "Linear.MILP": "Probs.MILP"
+    "Linear.MILP": "Probs.MILP",
+    "Options.Optiset": "Advanced.Opts"
   },
   "math_image_replacements": {
     "def_deriv1s.png": "\\nabla f = \\frac{\\partial f}{\\partial \\mathbf{x}} = {\\def\\arraystretch{1.3}\\begin{bmatrix} \\frac{\\partial f}{\\partial x_1}\\; & \\;\\frac{\\partial f}{\\partial x_2}\\; & \\;\\cdots\\; & \\;\\frac{\\partial f}{\\partial x_n} \\end{bmatrix}}",
@@ -458,7 +459,8 @@
     "Dynamic.DynamicSystemParameterEstimation",
     "Linear.MILP",
     "Main.MyNewPage",
-    "Main.WikiSandbox"
+    "Main.WikiSandbox",
+    "Options.Optiset"
   ],
   "allow_unresolved_links": {}
 }

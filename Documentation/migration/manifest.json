@@ -12,7 +12,8 @@
     "Advanced.AdvOpt": "Advanced.Opts",
     "Dynamic.DynamicParameterEstimation": "Dynamic.DNLS",
     "Dynamic.DynamicSystemParameterEstimation": "Dynamic.DNLS",
-    "Linear.MILP": "Probs.MILP"
+    "Linear.MILP": "Probs.MILP",
+    "Options.Optiset": "Advanced.Opts"
   },
   "pages": [
     {
@@ -188,12 +189,6 @@
       "title": "Dynamic Optimization Settings",
       "file": "reference/options/optidynset.md",
       "route": "/reference/options/optidynset/"
-    },
-    {
-      "source": "Options.Optiset",
-      "title": "Optimization Settings",
-      "file": "reference/options/optiset.md",
-      "route": "/reference/options/optiset/"
     },
     {
       "source": "Probs.GNLP",
@@ -509,7 +504,7 @@
     }
   ],
   "counts": {
-    "pages": 82,
+    "pages": 81,
     "groups": {
       "Advanced": 10,
       "DL": 3,
@@ -520,16 +515,16 @@
       "Help": 2,
       "Integer": 2,
       "Main": 2,
-      "Options": 2,
+      "Options": 1,
       "Probs": 14,
       "Solvers": 31,
       "Utilities": 7
     },
-    "source_blocks": 277,
-    "inline_code_spans": 479,
-    "links": 424,
+    "source_blocks": 271,
+    "inline_code_spans": 449,
+    "links": 423,
     "image_references": 60,
-    "math_image_replacements": 77,
+    "math_image_replacements": 74,
     "copied_images": 59,
     "table_blocks": 41
   },

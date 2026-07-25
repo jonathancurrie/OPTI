@@ -40,8 +40,11 @@ const additionalRedirectsByRoute = new Map([
     '/guides/advanced/opts/',
     [
       '/guides/advanced/adv-opt/',
+      '/reference/options/optiset/',
       '/pmwiki.php/Advanced/AdvOpt',
       '/index.php/Advanced/AdvOpt',
+      '/pmwiki.php/Options/Optiset',
+      '/index.php/Options/Optiset',
     ],
   ],
 ]);

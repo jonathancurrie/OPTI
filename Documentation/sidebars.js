@@ -97,7 +97,6 @@ const sidebars = {
           label: 'Option reference',
           collapsed: true,
           items: [
-            'reference/options/optiset',
             'reference/options/optidynset',
           ],
         },
