@@ -8,8 +8,8 @@
 %
 %   Copyright (C) 2014 Jonathan Currie (Control Engineering)
 
-% There is also a page on the Wiki which supplements this example:
-web('https://www.controlengineering.co.nz/Wikis/OPTI/index.php/File/AMPL');
+% There is also a documentation page which supplements this example:
+web('https://jonathancurrie.github.io/OPTI/examples/file-formats/ampl/');
 
 %% Loading an AMPL Problem
 % OPTI Toolbox is supplied with a number of example AMPL problems ranging

@@ -17,8 +17,8 @@
 %
 %   Copyright (C) 2014 Jonathan Currie (Control Engineering)
 
-% There is also a page on the Wiki which supplements this example:
-web('https://www.controlengineering.co.nz/Wikis/OPTI/index.php/GetStart/Basics');
+% There is also a documentation page which supplements this example:
+web('https://jonathancurrie.github.io/OPTI/getting-started/basics/');
 
 %% Checking solvers available with your OPTI distribution
 % Not all solvers are supplied with the OPTI Toolbox, so to check which are
@@ -65,7 +65,7 @@ opti;
 clc
 optiset
 
-web('https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Advanced/Opts','-new');
+web('https://jonathancurrie.github.io/OPTI/guides/advanced/opts/','-new');
 
 %% Example 1
 % This is a simple two decision variable Linear Program (LP) which we will

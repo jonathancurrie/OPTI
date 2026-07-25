@@ -6,8 +6,8 @@
 %
 %   Copyright (C) 2014 Jonathan Currie (Control Engineering)
 
-% There is also a page on the Wiki which supplements this example:
-web('https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/QP');
+% There is also a documentation page which supplements this example:
+web('https://jonathancurrie.github.io/OPTI/examples/problem-types/qp/');
 
 %% Determing which Solver to Use
 % OPTI Toolbox comes with a number of QP solvers, thus to determine which

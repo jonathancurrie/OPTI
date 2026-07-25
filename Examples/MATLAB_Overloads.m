@@ -19,8 +19,8 @@
 %
 %   Copyright (C) 2018 Jonathan Currie (Control Engineering)
 
-% There is also a page on the Wiki which supplements this example:
-web('https://www.controlengineering.co.nz/Wikis/OPTI/index.php/GetStart/Overloads');
+% There is also a documentation page which supplements this example:
+web('https://jonathancurrie.github.io/OPTI/getting-started/overloads/');
 
 %% Example 1 - opti_linprog()
 % Solved using an OPTI LP solver. Note the function prototype is identical

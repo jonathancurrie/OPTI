@@ -6,8 +6,8 @@
 %
 %   Copyright (C) 2014 Jonathan Currie (Control Engineering)
 
-% There is also a page on the Wiki which supplements this example:
-web('https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/LP');
+% There is also a documentation page which supplements this example:
+web('https://jonathancurrie.github.io/OPTI/examples/problem-types/lp/');
 
 %% Example 1
 % This is a simple two decision variable LP which will use for the next few

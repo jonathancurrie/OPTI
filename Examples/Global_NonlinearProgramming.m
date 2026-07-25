@@ -6,8 +6,8 @@
 %
 %   Copyright (C) 2014 Jonathan Currie (Control Engineering)
 
-% There is also a page on the Wiki which supplements this example:
-web('https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/GNLP');
+% There is also a documentation page which supplements this example:
+web('https://jonathancurrie.github.io/OPTI/examples/problem-types/gnlp/');
 
 %% Determing which Solver to Use
 % OPTI Toolbox comes with a number of NLP solvers, thus to determine which
@@ -175,7 +175,7 @@ plot(Opt)
 % algorithm for searching the problem space for a global solution. See the
 % following page for more examples:
 
-web('https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Advanced/MultiSolve');
+web('https://jonathancurrie.github.io/OPTI/guides/advanced/multi-solve/');
 
 clc
 Opt = opti(Opt,'solver','ipopt');
