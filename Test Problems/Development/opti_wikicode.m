@@ -2221,7 +2221,7 @@ dfa = autoJac(fun,x0)
 dfc = cstepJac(fun,x0)
 
 % Symbolic Differentiation
-if (exist('syms.m','file'))
+if (license('test', 'symbolic_toolbox'))
     grad = symJac(fun)
 
     % Evaluate
