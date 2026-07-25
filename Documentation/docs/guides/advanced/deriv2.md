@@ -12,7 +12,7 @@ This section will detail how to obtain exact second derivatives using OPTI and M
 The second derivatives of a scalar, multivariable function `f` (such as that used in a NLP objective) is defined as:
 
 $$
-\nabla^2 f = \frac{\partial^2 f}{\partial \mathbf{x}^2} = {\def\arraystretch{1.3}\begin{bmatrix} \frac{\partial^2 f}{\partial x_1^2}\; & \;\frac{\partial^2 f}{\partial x_1 \partial x_2}\; & \;\cdots\; & \;\frac{\partial^2 f}{\partial x_1 \partial x_n} \\ \frac{\partial^2 f}{\partial x_2 \partial x_1}\; & \;\frac{\partial^2 f}{\partial x_2^2}\; & \;\cdots\; & \;\frac{\partial^2 f}{\partial x_2 \partial x_n} \\ \vdots\; & \;\vdots\; & \;\ddots\; & \;\vdots \\ \frac{\partial^2 f}{\partial x_n \partial x_1}\; & \;\frac{\partial^2 f}{\partial x_n \partial x_2}\; & \;\cdots\; & \;\frac{\partial^2 f}{\partial x_n^2} \end{bmatrix}}
+\nabla^2 f = \frac{\partial^2 f}{\partial \mathbf{x}^2} = {\def\arraystretch{1.75}\begin{bmatrix} \frac{\partial^2 f}{\partial x_1^2}\; & \;\frac{\partial^2 f}{\partial x_1 \partial x_2}\; & \;\cdots\; & \;\frac{\partial^2 f}{\partial x_1 \partial x_n} \\ \frac{\partial^2 f}{\partial x_2 \partial x_1}\; & \;\frac{\partial^2 f}{\partial x_2^2}\; & \;\cdots\; & \;\frac{\partial^2 f}{\partial x_2 \partial x_n} \\ \vdots\; & \;\vdots\; & \;\ddots\; & \;\vdots \\ \frac{\partial^2 f}{\partial x_n \partial x_1}\; & \;\frac{\partial^2 f}{\partial x_n \partial x_2}\; & \;\cdots\; & \;\frac{\partial^2 f}{\partial x_n^2} \end{bmatrix}}
 $$
 
 Noting the result is a *matrix*, with dimensions *n* x *n*.

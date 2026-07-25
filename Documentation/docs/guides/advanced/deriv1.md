@@ -12,7 +12,7 @@ This section will detail how to obtain exact first derivatives using OPTI and MA
 The first derivatives of a scalar, multivariable function `f` (such as that used in a NLP objective) is defined as:
 
 $$
-\nabla f = \frac{\partial f}{\partial \mathbf{x}} = {\def\arraystretch{1.3}\begin{bmatrix} \frac{\partial f}{\partial x_1}\; & \;\frac{\partial f}{\partial x_2}\; & \;\cdots\; & \;\frac{\partial f}{\partial x_n} \end{bmatrix}}
+\nabla f = \frac{\partial f}{\partial \mathbf{x}} = {\def\arraystretch{1.75}\begin{bmatrix} \frac{\partial f}{\partial x_1}\; & \;\frac{\partial f}{\partial x_2}\; & \;\cdots\; & \;\frac{\partial f}{\partial x_n} \end{bmatrix}}
 $$
 
 Noting the result is a *row vector*, with dimensions 1 x *n*.
@@ -21,7 +21,7 @@ Noting the result is a *row vector*, with dimensions 1 x *n*.
 The first derivatives of a vector, multivariable function `F` (such as that used in a NLS objective, or vector of nonlinear constraints) is defined as:
 
 $$
-\nabla \mathbf{F} = \frac{\partial \mathbf{F}}{\partial \mathbf{x}} = {\def\arraystretch{1.3}\begin{bmatrix} \frac{\partial f_1}{\partial x_1}\; & \;\frac{\partial f_1}{\partial x_2}\; & \;\cdots\; & \;\frac{\partial f_1}{\partial x_n} \\ \frac{\partial f_2}{\partial x_1}\; & \;\frac{\partial f_2}{\partial x_2}\; & \;\cdots\; & \;\frac{\partial f_2}{\partial x_n} \\ \vdots\; & \;\vdots\; & \;\ddots\; & \;\vdots \\ \frac{\partial f_m}{\partial x_1}\; & \;\frac{\partial f_m}{\partial x_2}\; & \;\cdots\; & \;\frac{\partial f_m}{\partial x_n} \end{bmatrix}}
+\nabla \mathbf{F} = \frac{\partial \mathbf{F}}{\partial \mathbf{x}} = {\def\arraystretch{1.75}\begin{bmatrix} \frac{\partial f_1}{\partial x_1}\; & \;\frac{\partial f_1}{\partial x_2}\; & \;\cdots\; & \;\frac{\partial f_1}{\partial x_n} \\ \frac{\partial f_2}{\partial x_1}\; & \;\frac{\partial f_2}{\partial x_2}\; & \;\cdots\; & \;\frac{\partial f_2}{\partial x_n} \\ \vdots\; & \;\vdots\; & \;\ddots\; & \;\vdots \\ \frac{\partial f_m}{\partial x_1}\; & \;\frac{\partial f_m}{\partial x_2}\; & \;\cdots\; & \;\frac{\partial f_m}{\partial x_n} \end{bmatrix}}
 $$
 
 Noting the result is a *matrix*, with dimensions *m* x *n*.
