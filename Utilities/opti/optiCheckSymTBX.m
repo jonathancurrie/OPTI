@@ -1,6 +1,5 @@
 function havSym = optiCheckSymTBX()
-c = which('mupadmex');
-if(isempty(c))
+if(~license('test', 'symbolic_toolbox'))
     optiwarn('OPTI:NoSym','This Function Requires the MATLAB Symbolic Toolbox');
     havSym = false;
 else

@@ -1,0 +1,468 @@
+{
+  "groups": {
+    "Advanced": "guides/advanced",
+    "DL": "project",
+    "Dynamic": "examples/dynamic-optimization",
+    "Examples": "examples",
+    "File": "examples/file-formats",
+    "GetStart": "getting-started",
+    "Help": "project",
+    "Integer": "guides/integer-programming",
+    "Linear": "examples/linear",
+    "Options": "reference/options",
+    "Probs": "examples/problem-types",
+    "Solvers": "solvers",
+    "Utilities": "reference/utilities"
+  },
+  "pages": {
+    "DL.Academic": "project/academic-extension.mdx",
+    "DL.DownloadOPTI": "project/download.md",
+    "DL.License": "project/license.md",
+    "Examples.Examples": "examples/index.md",
+    "Help.Cite": "project/citation.md",
+    "Help.FAQ": "project/faq.md",
+    "Main.HomePage": "index.md",
+    "Main.WhatIsOPTI": "overview.md",
+    "Solvers.Solvers": "solvers/index.md",
+    "Utilities.Utilities": "reference/utilities/index.md"
+  },
+  "title_overrides": {
+    "Main.HomePage": "OPTI Toolbox Documentation"
+  },
+  "link_aliases": {
+    "Advanced.AdvOpt": "Advanced.Opts",
+    "Dynamic.DynamicParameterEstimation": "Dynamic.DNLS",
+    "Dynamic.DynamicSystemParameterEstimation": "Dynamic.DNLS",
+    "Dynamic.Opts": "Options.Optidynset",
+    "Linear.MILP": "Probs.MILP",
+    "Options.Optiset": "Advanced.Opts"
+  },
+  "math_image_replacements": {
+    "def_deriv1s.png": "\\nabla f = \\frac{\\partial f}{\\partial \\mathbf{x}} = {\\def\\arraystretch{1.75}\\begin{bmatrix} \\frac{\\partial f}{\\partial x_1}\\; & \\;\\frac{\\partial f}{\\partial x_2}\\; & \\;\\cdots\\; & \\;\\frac{\\partial f}{\\partial x_n} \\end{bmatrix}}",
+    "def_deriv1v.png": "\\nabla \\mathbf{F} = \\frac{\\partial \\mathbf{F}}{\\partial \\mathbf{x}} = {\\def\\arraystretch{1.75}\\begin{bmatrix} \\frac{\\partial f_1}{\\partial x_1}\\; & \\;\\frac{\\partial f_1}{\\partial x_2}\\; & \\;\\cdots\\; & \\;\\frac{\\partial f_1}{\\partial x_n} \\\\ \\frac{\\partial f_2}{\\partial x_1}\\; & \\;\\frac{\\partial f_2}{\\partial x_2}\\; & \\;\\cdots\\; & \\;\\frac{\\partial f_2}{\\partial x_n} \\\\ \\vdots\\; & \\;\\vdots\\; & \\;\\ddots\\; & \\;\\vdots \\\\ \\frac{\\partial f_m}{\\partial x_1}\\; & \\;\\frac{\\partial f_m}{\\partial x_2}\\; & \\;\\cdots\\; & \\;\\frac{\\partial f_m}{\\partial x_n} \\end{bmatrix}}",
+    "def_deriv2.png": "\\nabla^2 f = \\frac{\\partial^2 f}{\\partial \\mathbf{x}^2} = {\\def\\arraystretch{1.75}\\begin{bmatrix} \\frac{\\partial^2 f}{\\partial x_1^2}\\; & \\;\\frac{\\partial^2 f}{\\partial x_1 \\partial x_2}\\; & \\;\\cdots\\; & \\;\\frac{\\partial^2 f}{\\partial x_1 \\partial x_n} \\\\ \\frac{\\partial^2 f}{\\partial x_2 \\partial x_1}\\; & \\;\\frac{\\partial^2 f}{\\partial x_2^2}\\; & \\;\\cdots\\; & \\;\\frac{\\partial^2 f}{\\partial x_2 \\partial x_n} \\\\ \\vdots\\; & \\;\\vdots\\; & \\;\\ddots\\; & \\;\\vdots \\\\ \\frac{\\partial^2 f}{\\partial x_n \\partial x_1}\\; & \\;\\frac{\\partial^2 f}{\\partial x_n \\partial x_2}\\; & \\;\\cdots\\; & \\;\\frac{\\partial^2 f}{\\partial x_n^2} \\end{bmatrix}}",
+    "def_deriv2l.png": "\\nabla^2 L = \\sigma \\nabla^2 f + \\sum_i \\lambda_i \\nabla^2 c_i",
+    "def_dnls.png": "\\dot{\\mathbf{z}}(t) = \\mathbf{f}\\!\\left(t, \\mathbf{z}(t), \\mathbf{p}\\right), \\qquad \\mathbf{z}(t_0) = \\mathbf{z}_0",
+    "def_dnls_J.png": "\\begin{aligned} \\mathbf{J} = \\frac{\\partial \\mathbf{f}}{\\partial \\mathbf{z}} &= \\begin{bmatrix} \\frac{\\partial f_1}{\\partial z_1} & \\frac{\\partial f_1}{\\partial z_2} & \\cdots & \\frac{\\partial f_1}{\\partial z_n} \\\\ \\frac{\\partial f_2}{\\partial z_1} & \\frac{\\partial f_2}{\\partial z_2} & \\cdots & \\frac{\\partial f_2}{\\partial z_n} \\\\ \\vdots & \\vdots & \\ddots & \\vdots \\\\ \\frac{\\partial f_n}{\\partial z_1} & \\frac{\\partial f_n}{\\partial z_2} & \\cdots & \\frac{\\partial f_n}{\\partial z_n} \\end{bmatrix} \\\\[1em] \\mathbf{J}_{\\mathbf{p}} = \\frac{\\partial \\mathbf{f}}{\\partial \\mathbf{p}} &= \\begin{bmatrix} \\frac{\\partial f_1}{\\partial p_1} & \\frac{\\partial f_1}{\\partial p_2} & \\cdots & \\frac{\\partial f_1}{\\partial p_m} \\\\ \\frac{\\partial f_2}{\\partial p_1} & \\frac{\\partial f_2}{\\partial p_2} & \\cdots & \\frac{\\partial f_2}{\\partial p_m} \\\\ \\vdots & \\vdots & \\ddots & \\vdots \\\\ \\frac{\\partial f_n}{\\partial p_1} & \\frac{\\partial f_n}{\\partial p_2} & \\cdots & \\frac{\\partial f_n}{\\partial p_m} \\end{bmatrix} \\end{aligned}",
+    "def_dnls_S.png": "\\dot{\\mathbf{S}} = \\mathbf{J}\\mathbf{S} + \\begin{bmatrix} \\mathbf{J}_{\\mathbf{p}} & \\mathbf{0} \\end{bmatrix}",
+    "def_dnls_theta.png": "\\htmlClass{vector-symbol}{\\mathbf{\\theta}} := \\begin{bmatrix} \\mathbf{p} \\\\ \\mathbf{z}_0 \\end{bmatrix}",
+    "def_lp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & \\mathbf{f}^{T}\\mathbf{x} \\\\ \\text{subject to:} \\quad & \\mathbf{A}\\mathbf{x} \\leq \\mathbf{b} \\\\ & \\mathbf{A}_{\\mathrm{eq}}\\mathbf{x} = \\mathbf{b}_{\\mathrm{eq}} \\\\ & \\mathbf{l}_{\\mathrm{b}} \\leq \\mathbf{x} \\leq \\mathbf{u}_{\\mathrm{b}} \\end{aligned}",
+    "def_lp1.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & \\begin{bmatrix} -6 \\\\ -5 \\end{bmatrix}^{T}\\mathbf{x} \\\\ \\text{subject to:} \\quad & \\begin{bmatrix} 1 & 4 \\\\ 6 & 4 \\\\ 2 & -5 \\end{bmatrix}\\mathbf{x} \\leq \\begin{bmatrix} 16 \\\\ 28 \\\\ 6 \\end{bmatrix} \\\\ & 0 \\leq \\mathbf{x} \\leq 10 \\end{aligned}",
+    "def_lp2.png": "\\min_{\\mathbf{x}} \\; \\mathbf{f}^{T}\\mathbf{x} + \\mathit{objbias}",
+    "def_milp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & \\mathbf{f}^{T}\\mathbf{x} \\\\ \\text{subject to:} \\quad & \\mathbf{A}\\mathbf{x} \\leq \\mathbf{b} \\\\ & \\mathbf{A}_{\\mathrm{eq}}\\mathbf{x} = \\mathbf{b}_{\\mathrm{eq}} \\\\ & \\mathbf{l}_{\\mathrm{b}} \\leq \\mathbf{x} \\leq \\mathbf{u}_{\\mathrm{b}} \\\\ & x_i \\in \\mathbb{Z} \\\\ & x_j \\in \\{0,1\\} \\end{aligned}",
+    "def_minlp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & f(\\mathbf{x}) \\\\ \\text{subject to:} \\quad & \\mathbf{A}\\mathbf{x} \\leq \\mathbf{b} \\\\ & \\mathbf{A}_{\\mathrm{eq}}\\mathbf{x} = \\mathbf{b}_{\\mathrm{eq}} \\\\ & \\mathbf{l}_{\\mathrm{b}} \\leq \\mathbf{x} \\leq \\mathbf{u}_{\\mathrm{b}} \\\\ & \\mathbf{c}(\\mathbf{x}) \\leq \\mathbf{d} \\\\ & \\mathbf{c}_{\\mathrm{eq}}(\\mathbf{x}) = \\mathbf{d}_{\\mathrm{eq}} \\\\ & x_i \\in \\mathbb{Z} \\\\ & x_j \\in \\{0,1\\} \\end{aligned}",
+    "def_miqcqp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & \\tfrac{1}{2}\\mathbf{x}^{T}\\mathbf{H}\\mathbf{x} + \\mathbf{f}^{T}\\mathbf{x} \\\\ \\text{subject to:} \\quad & \\mathbf{A}\\mathbf{x} \\leq \\mathbf{b} \\\\ & \\mathbf{A}_{\\mathrm{eq}}\\mathbf{x} = \\mathbf{b}_{\\mathrm{eq}} \\\\ & \\mathbf{l}_{\\mathrm{b}} \\leq \\mathbf{x} \\leq \\mathbf{u}_{\\mathrm{b}} \\\\ & \\mathbf{x}^{T}\\mathbf{Q}\\mathbf{x} + \\mathbf{l}^{T}\\mathbf{x} \\leq r \\\\ & x_i \\in \\mathbb{Z} \\\\ & x_j \\in \\{0,1\\} \\end{aligned}",
+    "def_miqp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & \\tfrac{1}{2}\\mathbf{x}^{T}\\mathbf{H}\\mathbf{x} + \\mathbf{f}^{T}\\mathbf{x} \\\\ \\text{subject to:} \\quad & \\mathbf{A}\\mathbf{x} \\leq \\mathbf{b} \\\\ & \\mathbf{A}_{\\mathrm{eq}}\\mathbf{x} = \\mathbf{b}_{\\mathrm{eq}} \\\\ & \\mathbf{l}_{\\mathrm{b}} \\leq \\mathbf{x} \\leq \\mathbf{u}_{\\mathrm{b}} \\\\ & x_i \\in \\mathbb{Z} \\\\ & x_j \\in \\{0,1\\} \\end{aligned}",
+    "def_nlp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & f(\\mathbf{x}) \\\\ \\text{subject to:} \\quad & \\mathbf{A}\\mathbf{x} \\leq \\mathbf{b} \\\\ & \\mathbf{A}_{\\mathrm{eq}}\\mathbf{x} = \\mathbf{b}_{\\mathrm{eq}} \\\\ & \\mathbf{l}_{\\mathrm{b}} \\leq \\mathbf{x} \\leq \\mathbf{u}_{\\mathrm{b}} \\\\ & \\mathbf{c}(\\mathbf{x}) \\leq \\mathbf{d} \\\\ & \\mathbf{c}_{\\mathrm{eq}}(\\mathbf{x}) = \\mathbf{d}_{\\mathrm{eq}} \\end{aligned}",
+    "def_nls.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & \\left\\lVert \\mathbf{F}(\\mathbf{x}) - \\mathbf{ydata} \\right\\rVert_2^2 \\\\ \\text{subject to:} \\quad & \\mathbf{A}\\mathbf{x} \\leq \\mathbf{b} \\\\ & \\mathbf{A}_{\\mathrm{eq}}\\mathbf{x} = \\mathbf{b}_{\\mathrm{eq}} \\\\ & \\mathbf{l}_{\\mathrm{b}} \\leq \\mathbf{x} \\leq \\mathbf{u}_{\\mathrm{b}} \\end{aligned}",
+    "def_nls2.png": "\\min_{\\mathbf{x}} \\; \\sum_i \\left(F_i(\\mathbf{x}, \\mathbf{xdata}) - ydata_i\\right)^2",
+    "def_qc_row.png": "\\mathbf{q}_{\\mathrm{rl}} \\leq \\mathbf{x}^{T}\\mathbf{Q}\\mathbf{x} + \\mathbf{l}^{T}\\mathbf{x} \\leq \\mathbf{q}_{\\mathrm{ru}}",
+    "def_qcqp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & \\tfrac{1}{2}\\mathbf{x}^{T}\\mathbf{H}\\mathbf{x} + \\mathbf{f}^{T}\\mathbf{x} \\\\ \\text{subject to:} \\quad & \\mathbf{A}\\mathbf{x} \\leq \\mathbf{b} \\\\ & \\mathbf{A}_{\\mathrm{eq}}\\mathbf{x} = \\mathbf{b}_{\\mathrm{eq}} \\\\ & \\mathbf{l}_{\\mathrm{b}} \\leq \\mathbf{x} \\leq \\mathbf{u}_{\\mathrm{b}} \\\\ & \\mathbf{x}^{T}\\mathbf{Q}\\mathbf{x} + \\mathbf{l}^{T}\\mathbf{x} \\leq r \\end{aligned}",
+    "def_qp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & \\tfrac{1}{2}\\mathbf{x}^{T}\\mathbf{H}\\mathbf{x} + \\mathbf{f}^{T}\\mathbf{x} \\\\ \\text{subject to:} \\quad & \\mathbf{A}\\mathbf{x} \\leq \\mathbf{b} \\\\ & \\mathbf{A}_{\\mathrm{eq}}\\mathbf{x} = \\mathbf{b}_{\\mathrm{eq}} \\\\ & \\mathbf{l}_{\\mathrm{b}} \\leq \\mathbf{x} \\leq \\mathbf{u}_{\\mathrm{b}} \\end{aligned}",
+    "def_scnle.png": "\\begin{aligned} & \\mathbf{F}(\\mathbf{x}) = \\mathbf{0} \\\\ \\text{subject to:} \\quad & \\mathbf{A}\\mathbf{x} \\leq \\mathbf{b} \\\\ & \\mathbf{A}_{\\mathrm{eq}}\\mathbf{x} = \\mathbf{b}_{\\mathrm{eq}} \\\\ & \\mathbf{l}_{\\mathrm{b}} \\leq \\mathbf{x} \\leq \\mathbf{u}_{\\mathrm{b}} \\end{aligned}",
+    "def_sdp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & \\mathbf{f}^{T}\\mathbf{x} \\\\ \\text{subject to:} \\quad & \\mathbf{A}\\mathbf{x} \\leq \\mathbf{b} \\\\ & \\mathbf{l}_{\\mathrm{b}} \\leq \\mathbf{x} \\leq \\mathbf{u}_{\\mathrm{b}} \\\\ & \\mathbf{X} = \\sum_{i=1}^{n} x_i\\mathbf{F}_i - \\mathbf{F}_0 \\\\ & \\mathbf{X} \\succeq 0 \\quad [\\text{Positive Semidefinite}] \\end{aligned}",
+    "def_snle.png": "\\mathbf{F}(\\mathbf{x}) = \\mathbf{0}",
+    "def_tola.png": "\\left| f_i - f_{i-1} \\right| \\leq \\mathit{tol}_{\\mathit{abs}}",
+    "def_toli.png": "\\left| x_r - x_z \\right| \\leq \\mathit{tol}_{\\mathit{int}}",
+    "def_tolr.png": "\\frac{\\left| f_i - f_{i-1} \\right|}{\\left| f_i \\right|} \\leq \\mathit{tol}_{\\mathit{rel}}",
+    "eq_MILP.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & \\mathbf{f}^{T}\\mathbf{x} \\\\ \\text{subject to:} \\quad & \\mathbf{A}\\mathbf{x} \\leq \\mathbf{b} \\\\ & \\mathbf{A}_{\\mathrm{eq}}\\mathbf{x} = \\mathbf{b}_{\\mathrm{eq}} \\\\ & \\mathbf{l}_{\\mathrm{b}} \\leq \\mathbf{x} \\leq \\mathbf{u}_{\\mathrm{b}} \\\\ & x_i \\in \\mathbb{Z} \\\\ & x_j \\in \\{0,1\\} \\end{aligned}",
+    "ex_nlp_hs71.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & x_1x_4(x_1+x_2+x_3)+x_3 \\\\ \\text{subject to:} \\quad & x_1x_2x_3x_4 \\geq 25 \\\\ & x_1^2+x_2^2+x_3^2+x_4^2=40 \\\\ & 1 \\leq \\mathbf{x} \\leq 5 \\end{aligned}",
+    "ex1_d1s.png": "f(\\mathbf{x}) = x_1x_4(x_1+x_2+x_3)+x_3",
+    "ex1_dnls.png": "\\begin{aligned} \\dot{z}_1 &= -p_1z_1+4 \\\\ \\dot{z}_2 &= 2z_1-p_1z_2+5 \\\\ \\dot{z}_3 &= -4z_1-2z_2z_3-p_2 \\end{aligned}",
+    "ex1_lp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & -6x_1-5x_2 \\\\ \\text{subject to:} \\quad & x_1+4x_2 \\leq 16 \\\\ & 6x_1+4x_2 \\leq 28 \\\\ & 2x_1-5x_2 \\leq 6 \\\\ & 0 \\leq \\mathbf{x} \\leq 10 \\end{aligned}",
+    "ex1_milp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & -6x_1-5x_2 \\\\ \\text{subject to:} \\quad & x_1+4x_2 \\leq 16 \\\\ & 6x_1+4x_2 \\leq 28 \\\\ & 2x_1-5x_2 \\leq 6 \\\\ & 0 \\leq \\mathbf{x} \\leq 10 \\\\ & \\mathbf{x} \\in \\mathbb{Z} \\end{aligned}",
+    "ex1_minlp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & -x_1-x_2-x_3 \\\\ \\text{subject to:} \\quad & (x_2-0.5)^2+(x_3-0.5)^2 \\leq 0.25 \\\\ & x_1-x_2 \\leq 0 \\\\ & x_1+x_3+x_4 \\leq 2 \\\\ & x_1 \\leq 1 \\\\ & x_4 \\leq 5 \\\\ & x_1 \\in \\{0,1\\} \\\\ & x_4 \\in \\mathbb{Z} \\end{aligned}",
+    "ex1_miqcqp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & 0.5x_1^2+0.5x_2^2-2x_1-2x_2 \\\\ \\text{subject to:} \\quad & -x_1+x_2 \\leq 2 \\\\ & x_1+3x_2 \\leq 5 \\\\ & x_1^2+x_2^2-2x_2 \\leq 1 \\\\ & 0 \\leq \\mathbf{x} \\\\ & x_1 \\in \\mathbb{Z} \\end{aligned}",
+    "ex1_miqp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & 0.5x_1^2+x_2^2-x_1x_2-2x_1-6x_2 \\\\ \\text{subject to:} \\quad & x_1+x_2 \\leq 2 \\\\ & -x_1+2x_2 \\leq 2 \\\\ & 2x_1+x_2 \\leq 3 \\\\ & 0 \\leq \\mathbf{x} \\\\ & x_1 \\in \\mathbb{Z} \\end{aligned}",
+    "ex1_nlp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & \\log(1+x_1^2)-x_2 \\\\ \\text{subject to:} \\quad & (1+x_1^2)^2+x_2^2=4 \\end{aligned}",
+    "ex1_nls.png": "\\min_{\\mathbf{x}} \\; \\left\\lVert \\begin{bmatrix} 100(x_2-x_1^2) \\\\ 1-x_1 \\end{bmatrix} \\right\\rVert_2^2",
+    "ex1_qcqp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & 0.5x_1^2+0.5x_2^2-2x_1-2x_2 \\\\ \\text{subject to:} \\quad & -x_1+x_2 \\leq 2 \\\\ & x_1+3x_2 \\leq 5 \\\\ & x_1^2+x_2^2-2x_2 \\leq 1 \\\\ & 0 \\leq \\mathbf{x} \\end{aligned}",
+    "ex1_qp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & 0.5x_1^2+x_2^2-x_1x_2-2x_1-6x_2 \\\\ \\text{subject to:} \\quad & x_1+x_2 \\leq 2 \\\\ & -x_1+2x_2 \\leq 2 \\\\ & 2x_1+x_2 \\leq 3 \\\\ & 0 \\leq \\mathbf{x} \\end{aligned}",
+    "ex1_scip.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & 100(x_2-x_1^2)^2+(1-x_1)^2 \\\\ \\text{subject to:} \\quad & x_1+x_2^2 \\geq 0 \\\\ & x_1^2+x_2 \\geq 0 \\\\ & x_1^2+x_2^2-1 \\geq 0 \\\\ & -0.5 \\leq x_1 \\leq 0.5 \\end{aligned}",
+    "ex1_scnle.png": "\\begin{aligned} 2x_1-x_2-e^{-x_1} &= 0 \\\\ -x_1+2x_2-e^{-x_2} &= 0 \\\\ \\text{subject to:} \\quad 0.6 \\leq x_1 &\\leq 1 \\\\ 0 \\leq x_2 &\\leq 1 \\end{aligned}",
+    "ex1_sdp.png": "\\begin{aligned} \\min_x \\quad & x \\\\ \\text{subject to:} \\quad & \\begin{bmatrix} x & \\sqrt{2} \\\\ \\sqrt{2} & x \\end{bmatrix} \\succeq 0 \\end{aligned}",
+    "ex1_snle.png": "\\begin{aligned} 2x_1-x_2-e^{-x_1} &= 0 \\\\ -x_1+2x_2-e^{-x_2} &= 0 \\end{aligned}",
+    "ex1a_sdp.png": "x\\underbrace{\\begin{bmatrix} 1 & 0 \\\\ 0 & 1 \\end{bmatrix}}_{\\mathbf{F}_1} - \\underbrace{\\begin{bmatrix} 0 & -\\sqrt{2} \\\\ -\\sqrt{2} & 0 \\end{bmatrix}}_{\\mathbf{F}_0} \\succeq 0",
+    "ex2_ll_nlp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & \\log(1+x_1^2)-x_2 \\\\ \\text{subject to:} \\quad & (1+x_1^2)^2+x_2^2-4=0 \\end{aligned}",
+    "ex2_lp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & -x_1-2x_2-3x_3 \\\\ \\text{subject to:} \\quad & -x_1+x_2+x_3 \\leq 20 \\\\ & x_1-3x_2+x_3 \\leq 30 \\\\ & x_1+x_2+x_3=40 \\\\ & 0 \\leq x_1 \\leq 40 \\\\ & 0 \\leq x_2 \\\\ & 0 \\leq x_3 \\end{aligned}",
+    "ex2_milp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & -x_1-x_2-3x_3-2x_4-2x_5 \\\\ \\text{subject to:} \\quad & -x_1-x_2+x_3+x_4 \\leq 30 \\\\ & x_1+x_3-3x_4 \\leq 30 \\\\ & 0 \\leq x_1 \\leq 40 \\\\ & 0 \\leq x_2 \\leq 1 \\\\ & 0 \\leq x_3 \\\\ & 0 \\leq x_4 \\\\ & 0 \\leq x_5 \\leq 1 \\end{aligned}",
+    "ex2_minlp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & 20+x_1^2+x_2^2-10\\!\\left(\\cos(2\\pi x_1)+\\cos(2\\pi x_2)\\right) \\\\ \\text{subject to:} \\quad & 5\\pi \\leq x_1 \\leq 20\\pi \\\\ & -20\\pi \\leq x_2 \\leq -4\\pi \\\\ & x_1 \\in \\mathbb{Z} \\end{aligned}",
+    "ex2_nlp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & 100(x_2-x_1^2)^2+(1-x_1)^2 \\\\ \\text{subject to:} \\quad & -5 \\leq \\mathbf{x} \\leq 5 \\end{aligned}",
+    "ex2_nls.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & \\left\\lVert \\begin{bmatrix} 100(x_2-x_1^2) \\\\ 1-x_1 \\end{bmatrix} \\right\\rVert_2^2 \\\\ \\text{subject to:} \\quad & -2 \\leq \\mathbf{x} \\leq 0.5 \\end{aligned}",
+    "ex2_qcqp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & 0.5x_1^2+0.5x_2^2-2x_1-2x_2 \\\\ \\text{subject to:} \\quad & -x_1+x_2 \\leq 2 \\\\ & x_1+3x_2 \\leq 5 \\\\ & x_1^2+x_2^2-2x_2 \\leq 1 \\\\ & x_1^2+x_2^2-x_1+2x_2 \\leq 1.2 \\\\ & 0 \\leq \\mathbf{x} \\end{aligned}",
+    "ex2_qp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & -2x_1x_2 \\\\ \\text{subject to:} \\quad & -0.5 \\leq \\mathbf{x} \\leq 1 \\end{aligned}",
+    "ex2_sdp.png": "\\begin{bmatrix} x_1 & 2 \\\\ 2 & x_2 \\end{bmatrix} \\succeq 0",
+    "ex2_snle.png": "\\begin{aligned} 10(x_2-x_1^2) &= 0 \\\\ \\sqrt{90}(x_4-x_3^2) &= 0 \\\\ \\sqrt{10}(x_2+x_4-2) &= 0 \\\\ \\frac{1}{\\sqrt{10}}(x_2-x_4) &= 0 \\end{aligned}",
+    "ex2a_nlp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & (x_1-x_2)^2+(x_2-x_3-2)^2+(x_4-1)^2+(x_5-1)^2 \\\\ \\text{subject to:} \\quad & x_1+3x_3=4 \\\\ & x_3+x_4-2x_5=0 \\\\ & x_2-x_5=0 \\end{aligned}",
+    "ex2a_sdp.png": "x_1\\underbrace{\\begin{bmatrix} 1 & 0 \\\\ 0 & 0 \\end{bmatrix}}_{\\mathbf{A}_1} + x_2\\underbrace{\\begin{bmatrix} 0 & 0 \\\\ 0 & 1 \\end{bmatrix}}_{\\mathbf{A}_2} - \\underbrace{\\begin{bmatrix} 0 & -2 \\\\ -2 & 0 \\end{bmatrix}}_{\\mathbf{C}} \\succeq 0",
+    "ex3_nlp.png": "\\min_{\\mathbf{x}} \\; 100(x_2-x_1^2)^2+(1-x_1)^2",
+    "ex3_nls.png": "\\mathbf{F}(\\mathbf{x},\\mathbf{xdata}) = x_1 e^{x_2\\mathbf{xdata}}",
+    "ex3_scip.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & 100(x_2-x_1^2)^2+(1-x_1)^2 \\\\ \\text{subject to:} \\quad & -x_1+x_2 \\leq 1 \\\\ & x_1+x_2=5 \\\\ & 0 \\leq \\mathbf{x} \\leq 4 \\\\ & x_1 \\in \\mathbb{Z} \\end{aligned}",
+    "ex3_sdp.png": "\\begin{aligned} \\min_{\\mathbf{x}} \\quad & x_1 \\\\ \\text{subject to:} \\quad & \\begin{bmatrix} x_2 & x_3 \\\\ x_3 & x_4 \\end{bmatrix} \\preceq \\begin{bmatrix} x_1 & 0 \\\\ 0 & x_1 \\end{bmatrix} \\\\ & \\begin{bmatrix} x_2 & x_3 \\\\ x_3 & x_4 \\end{bmatrix} \\succeq \\begin{bmatrix} 1 & 0.2 \\\\ 0.2 & 1 \\end{bmatrix} \\end{aligned}",
+    "ex9_dnls.png": "\\dot{z}_1 = p_1z_1^2-z_1^3",
+    "int_set.png": "x \\in \\{3,5,8,20\\}",
+    "int_set_ex.png": "\\begin{aligned} \\min_x \\quad & x \\\\ \\text{subject to:} \\quad & l \\leq x \\leq 20 \\\\ & x \\in \\{3,5,8,20\\} \\end{aligned}",
+    "lin_con.png": "\\begin{aligned} \\mathbf{A}\\mathbf{x} &\\leq \\mathbf{b} \\\\ \\mathbf{A}_{\\mathrm{eq}}\\mathbf{x} &= \\mathbf{b}_{\\mathrm{eq}} \\end{aligned} \\qquad \\text{OR} \\qquad \\mathbf{r}_{\\mathrm{l}} \\leq \\mathbf{A}\\mathbf{x} \\leq \\mathbf{r}_{\\mathrm{u}}",
+    "many_nlcon.png": "\\begin{bmatrix} x_{(1)}x_{(2N+1)}-r_{(1)}x_{(1)}x_{(N+1)}+(1-r_{(1)})x_{(N+1)}x_{(2N+1)} \\\\ x_{(2)}x_{(2N+2)}-r_{(2)}x_{(2)}x_{(N+2)}+(1-r_{(2)})x_{(N+2)}x_{(2N+2)} \\\\ \\vdots \\\\ x_{(N)}x_{(2N+N)}-r_{(N)}x_{(N)}x_{(N+N)}+(1-r_{(N)})x_{(N+N)}x_{(2N+N)} \\end{bmatrix} = \\begin{bmatrix} q_1 \\\\ q_2 \\\\ \\vdots \\\\ q_N \\end{bmatrix}",
+    "nlin_con.png": "\\mathbf{nlcon}(\\mathbf{x})\\,\\underbrace{[\\leq\\ \\mathit{or}\\ \\geq\\ \\mathit{or}\\ =]}_{\\mathbf{nle}}\\,\\mathbf{nlrhs} \\qquad \\text{OR} \\qquad \\mathbf{c}_{\\mathrm{l}} \\leq \\mathbf{nlcon}(\\mathbf{x}) \\leq \\mathbf{c}_{\\mathrm{u}}",
+    "row_lincon.png": "\\mathbf{r}_{\\mathrm{l}} \\leq \\mathbf{A}\\mathbf{x} \\leq \\mathbf{r}_{\\mathrm{u}}"
+  },
+  "markdown_replacements": {
+    "Advanced.Opts": [
+      {
+        "old": "This option is enabled by setting it to `'on'`. By default it is `'off'`.",
+        "new": "This option is enabled by setting it to `'on'`. By default it is `'off'`.\n\n## Overriding OPTI's Problem Identification {#probtype}\nFor 1D problems OPTI may not recognise the type of problem you have posed correctly. If this is the case, you can override OPTI's problem identification by specifying an extra parameter to `opti` or `optiprob`, `'probtype'`.\n\nAn example of when OPTI will get it wrong is when finding the root of a single variable function (SNLE). OPTI will incorrectly identify this as an Unconstrained Nonlinear Optimization (UNO) problem:\n\n```matlab\n% Equation to solve for zero\nfun = @(x) x.^3-2*x-5\n\n% Starting Guess\nx0 = 2;\n\n% Build OPTI Object, specifying problem type\nOpt = opti('fun',fun,'x0',x0,'probtype','SNLE')\n\n% Solve SNLE problem\n[x,fval,exitflag,info] = solve(Opt)\n```\n\nThis problem occurs because OPTI expects a SNLE to contain more than one equation. While the above problem is fine, it contains no distinguishing features from a UNO, thus you must manually specify the problem type in these instances."
+      }
+    ],
+    "Main.HomePage": [
+      {
+        "old": "## News\n\n",
+        "new": "## News\n\n- **19th July 2026**\n\n  The OPTI site has been migrated to this new documentation, with improved navigation, search, and mobile support.\n\n"
+      }
+    ],
+    "DL.DownloadOPTI": [
+      {
+        "old": "[here](./academic-extension.mdx)",
+        "new": "[here](../academic-extension/)"
+      },
+      {
+        "old": "please complete the academic registration form [here](../academic-extension/).",
+        "new": "please confirm academic-only use [here](../academic-extension/)."
+      }
+    ],
+    "Advanced.Deriv2": [
+      {
+        "old": "http://www.sc.informatik.tu-darmstadt.de/res/adimat/general/index.en.jsp",
+        "new": "https://adimat.de/"
+      }
+    ],
+    "Advanced.LargeScale": [
+      {
+        "old": "This Wiki contains a page",
+        "new": "This documentation contains a page"
+      },
+      {
+        "old": "[SymBuilder](./sym-builder.md) Wiki page",
+        "new": "[SymBuilder documentation page](./sym-builder.md)"
+      },
+      {
+        "old": "YALMIP Wiki",
+        "new": "YALMIP documentation"
+      },
+      {
+        "old": "http://users.isy.liu.se/johanl/yalmip/pmwiki.php?n=Main.HomePage",
+        "new": "https://yalmip.github.io/"
+      },
+      {
+        "old": "http://www.mpc.berkeley.edu/software/blom",
+        "new": "https://sites.google.com/berkeley.edu/mpc-lab/software/blom"
+      },
+      {
+        "old": "http://www.gams.de/",
+        "new": "https://www.gams.com/"
+      },
+      {
+        "old": "http://tomopt.com/tomlab/",
+        "new": "https://tomopt.com/tomlab/"
+      }
+    ],
+    "Advanced.WhiteBox": [
+      {
+        "old": "examples in the Wiki",
+        "new": "examples in this documentation"
+      },
+      {
+        "old": "http://scip.zib.de/doc/html/PARAMETERS.php",
+        "new": "https://www.scipopt.org/doc/html/PARAMETERS.php"
+      }
+    ],
+    "File.GAMS": [
+      {
+        "old": "http://www.gams.com/dd/docs/solvers/convert.pdf",
+        "new": "https://www.gams.com/latest/docs/S_CONVERT.html"
+      }
+    ],
+    "Probs.NLS": [
+      {
+        "old": "http://www.ats.ucla.edu/stat/sas/output/reg.htm",
+        "new": "https://stats.oarc.ucla.edu/sas/output/regression-analysis/"
+      }
+    ],
+    "Probs.SDP": [
+      {
+        "old": "http://users.isy.liu.se/johanl/yalmip/",
+        "new": "https://yalmip.github.io/"
+      }
+    ],
+    "Solvers.BARON": [
+      {
+        "old": "http://archimedes.cheme.cmu.edu/?q=nick",
+        "new": "https://engineering.cmu.edu/directory/bios/sahinidis-nikolaos.html"
+      }
+    ],
+    "Solvers.BONMIN": [
+      {
+        "old": "http://pageperso.lif.univ-mrs.fr/~pierre.bonami/index.html",
+        "new": "https://www.gurobi.com/microsite/gurobi-summit-emea-2025/speakers/"
+      },
+      {
+        "old": "http://www.opensource.org/licenses/eclipse-1.0",
+        "new": "https://opensource.org/license/EPL-1.0"
+      },
+      {
+        "old": "http://www.cs.ubc.ca/~pcarbo/",
+        "new": "https://profiles.uchicago.edu/profiles/display/37244"
+      }
+    ],
+    "Solvers.CBC": [
+      {
+        "old": "http://www.maths.ed.ac.uk/people/show?person=47",
+        "new": "https://coral.ise.lehigh.edu/~ted/about/"
+      },
+      {
+        "old": "http://www.opensource.org/licenses/eclipse-1.0",
+        "new": "https://opensource.org/license/EPL-1.0"
+      }
+    ],
+    "Solvers.CLP": [
+      {
+        "old": "http://www.maths.ed.ac.uk/people/show?person=47",
+        "new": "https://www.research.ed.ac.uk/en/persons/julian-hall"
+      },
+      {
+        "old": "http://www.opensource.org/licenses/eclipse-1.0",
+        "new": "https://opensource.org/license/EPL-1.0"
+      }
+    ],
+    "Solvers.CPLEX": [
+      {
+        "old": "http://www.ibm.com/developerworks/university/software/get_software.html",
+        "new": "https://www.ibm.com/support/pages/node/138207"
+      },
+      {
+        "old": "https://www14.software.ibm.com/webapp/iwm/web/reg/signup.do?source=scholars",
+        "new": "https://www.ibm.com/support/pages/node/138207"
+      }
+    ],
+    "Solvers.CSDP": [
+      {
+        "old": "http://infohost.nmt.edu/~borchers/",
+        "new": "https://www.nmt.edu/academics/math/faculty/bborchers.php"
+      },
+      {
+        "old": "http://www.opensource.org/licenses/eclipse-1.0",
+        "new": "https://opensource.org/license/EPL-1.0"
+      }
+    ],
+    "Solvers.FILTERSD": [
+      {
+        "old": "http://www.maths.dundee.ac.uk/fletcher/",
+        "new": "https://royalsociety.org/people/roger-fletcher-11447/"
+      },
+      {
+        "old": "http://www.opensource.org/licenses/eclipse-1.0",
+        "new": "https://opensource.org/license/EPL-1.0"
+      }
+    ],
+    "Solvers.GLPK": [
+      {
+        "old": "http://www.gnu.org/licenses/gpl.html",
+        "new": "https://www.gnu.org/licenses/gpl-3.0.html"
+      },
+      {
+        "old": "http://www.gnu.org/software/glpk/",
+        "new": "https://www.gnu.org/software/glpk/"
+      }
+    ],
+    "Solvers.IPOPT": [
+      {
+        "old": "https://researcher.ibm.com/researcher/view.php?person=us-andreasw",
+        "new": "https://www.mccormick.northwestern.edu/research-faculty/directory/affiliated/waechter-andreas.html"
+      },
+      {
+        "old": "http://www.opensource.org/licenses/eclipse-1.0",
+        "new": "https://opensource.org/license/EPL-1.0"
+      },
+      {
+        "old": "http://www.cs.ubc.ca/~pcarbo/",
+        "new": "https://profiles.uchicago.edu/profiles/display/37244"
+      },
+      {
+        "old": "http://www.hsl.rl.ac.uk/catalogue/ma57.xml",
+        "new": "https://www.hsl.rl.ac.uk/catalogue/ma57.html"
+      }
+    ],
+    "Solvers.L-BFGS-B": [
+      {
+        "old": "http://www.cs.ubc.ca/~pcarbo/lbfgsb-for-matlab.html",
+        "new": "https://www.mathworks.com/matlabcentral/fileexchange/15061-matlab-interface-for-l-bfgs-b"
+      },
+      {
+        "old": "http://www.cs.ubc.ca/~pcarbo/",
+        "new": "https://profiles.uchicago.edu/profiles/display/37244"
+      }
+    ],
+    "Solvers.LEVMAR": [
+      {
+        "old": "http://www.gnu.org/copyleft/gpl.html",
+        "new": "https://www.gnu.org/licenses/gpl-3.0.html"
+      }
+    ],
+    "Solvers.M1QN3": [
+      {
+        "old": "http://www.gnu.org/copyleft/gpl.html",
+        "new": "https://www.gnu.org/licenses/gpl-3.0.html"
+      }
+    ],
+    "Solvers.MOSEK": [
+      {
+        "old": "http://license.mosek.com/license2/academic/",
+        "new": "https://www.mosek.com/products/academic-licenses/"
+      },
+      {
+        "old": "http://mosek.com/resources/download/",
+        "new": "https://www.mosek.com/downloads/"
+      }
+    ],
+    "Solvers.MUMPS": [
+      {
+        "old": "[Prof. Patrick Amestoy](http://amestoy.perso.enseeiht.fr/)",
+        "new": "Prof. Patrick Amestoy"
+      },
+      {
+        "old": "http://graal.ens-lyon.fr/MUMPS/index.php?page=home",
+        "new": "https://mumps-solver.org/index.php?page=home"
+      },
+      {
+        "old": "http://graal.ens-lyon.fr/MUMPS/index.php?page=dwnld",
+        "new": "https://mumps-solver.org/index.php?page=dwnld"
+      },
+      {
+        "old": "http://glaros.dtc.umn.edu/gkhome/metis/metis/download",
+        "new": "https://github.com/KarypisLab/METIS"
+      }
+    ],
+    "Solvers.NL2SOL": [
+      {
+        "old": "http://people.sc.fsu.edu/~jburkardt/f_src/nl2sol/nl2sol.html",
+        "new": "https://people.math.sc.edu/Burkardt/f77_src/nl2sol/nl2sol.html"
+      }
+    ],
+    "Solvers.NLOPT": [
+      {
+        "old": "http://ab-initio.mit.edu/wiki/index.php/NLopt",
+        "new": "https://nlopt.readthedocs.io/"
+      },
+      {
+        "old": "http://ab-initio.mit.edu/nlo",
+        "new": "https://nlopt.readthedocs.io/"
+      }
+    ],
+    "Solvers.NOMAD": [
+      {
+        "old": "http://www.gnu.org/copyleft/lesser.html",
+        "new": "https://www.gnu.org/licenses/lgpl-3.0.html"
+      },
+      {
+        "old": "https://www.gerad.ca/nomad/Project/Home.html",
+        "new": "https://www.gerad.ca/en/software/nomad/"
+      },
+      {
+        "old": "https://www.gerad.ca/nomad/PHP_Forms/Download.php",
+        "new": "https://www.gerad.ca/en/software/nomad/"
+      }
+    ],
+    "Solvers.PSWARM": [
+      {
+        "old": "[PSWARM Home Page](http://www.norg.uminho.pt/aivaz/pswarm/)",
+        "new": "PSWARM Home Page"
+      },
+      {
+        "old": "[PSWARM Download Page](http://www.norg.uminho.pt/aivaz/pswarm/)",
+        "new": "PSWARM Download Page"
+      },
+      {
+        "old": "http://www.norg.uminho.pt/aivaz/",
+        "new": "https://algoritmi.uminho.pt/user/antonio-ismael-freitas-vaz/"
+      }
+    ],
+    "Solvers.SCIP": [
+      {
+        "old": "http://www.zib.de/koch/",
+        "new": "https://www.zib.de/members/koch"
+      },
+      {
+        "old": "http://scip.zib.de/academic.txt",
+        "new": "https://www.scipopt.org/index.php/download"
+      },
+      {
+        "old": "http://scip.zib.de/download.shtml",
+        "new": "https://www.scipopt.org/index.php/download"
+      },
+      {
+        "old": "http://scip.zib.de/",
+        "new": "https://www.scipopt.org/"
+      },
+      {
+        "old": "http://soplex.zib.de/",
+        "new": "https://github.com/scipopt/soplex"
+      }
+    ],
+    "Solvers.SEDUMI": [
+      {
+        "old": "http://imre.polik.net/",
+        "new": "https://optimization-online.org/author/imre-polik/"
+      },
+      {
+        "old": "http://users.isy.liu.se/en/rt/johanl/",
+        "new": "https://liu.se/en/employee/johlo46"
+      },
+      {
+        "old": "http://www.gnu.org/licenses/gpl.html",
+        "new": "https://www.gnu.org/licenses/gpl-3.0.html"
+      }
+    ],
+    "Utilities.ADIFF": [
+      {
+        "old": "http://www.mathworks.com/matlabcentral/fileexchange/authors/87312",
+        "new": "https://www.mathworks.com/matlabcentral/fileexchange/26807-automatic-differentiation-with-matlab-objects"
+      }
+    ],
+    "Utilities.CoinUtils": [
+      {
+        "old": "http://www.opensource.org/licenses/eclipse-1.0",
+        "new": "https://opensource.org/license/EPL-1.0"
+      }
+    ],
+    "Utilities.CppAD": [
+      {
+        "old": "[Dr. Bradley Bell](http://www.seanet.com/~bradbell/home.htm)",
+        "new": "Dr. Bradley Bell"
+      },
+      {
+        "old": "http://www.opensource.org/licenses/eclipse-1.0",
+        "new": "https://opensource.org/license/EPL-1.0"
+      }
+    ]
+  },
+  "content_override_files": {
+    "DL.Academic": "overrides/academic-extension.mdx"
+  },
+  "exclude_groups": [
+    "Blog",
+    "Comments"
+  ],
+  "exclude_pages": [
+    "Advanced.AdvOpt",
+    "Advanced.Integer",
+    "Advanced.SOS",
+    "Dynamic.DynamicParameterEstimation",
+    "Dynamic.DynamicSystemParameterEstimation",
+    "Dynamic.Opts",
+    "Linear.MILP",
+    "Main.MyNewPage",
+    "Main.WikiSandbox",
+    "Options.Optiset"
+  ],
+  "allow_unresolved_links": {}
+}

@@ -16,8 +16,9 @@
 % that order.
 
 % 1) Get SCIP & SoPlex
-% SCIP is available from http://scip.zib.de/. Ensure you download the SCIP
-% optimization suite, which includes SoPlex. We will create the VS projects 
+% SCIP is available from https://www.scipopt.org/index.php/download.
+% Ensure you download the SCIP optimization suite, which includes SoPlex.
+% We will create the VS projects
 % below.
 
 % 2) Compile SCIP & SoPlex

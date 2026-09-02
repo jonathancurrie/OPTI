@@ -9,7 +9,7 @@
 % To recompile you will need to get / do the following:
 
 % 1) Get NOMAD
-% NOMAD is available from http://www.gerad.ca/NOMAD/PHP_Forms/Download.php.
+% NOMAD is available from https://www.gerad.ca/en/software/nomad/.
 % Complete the download form then download the latest version. Once you
 % have installed NOMAD, locate the /src/ directory.
 

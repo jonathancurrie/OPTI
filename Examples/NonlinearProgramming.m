@@ -6,8 +6,8 @@
 %
 %   Copyright (C) 2014 Jonathan Currie (Control Engineering)
 
-% There is also a page on the Wiki which supplements this example:
-web('https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/NLP');
+% There is also a documentation page which supplements this example:
+web('https://jonathancurrie.github.io/OPTI/examples/problem-types/nlp/');
 
 %% Determing which Solver to Use
 % OPTI Toolbox comes with a number of NLP solvers, thus to determine which

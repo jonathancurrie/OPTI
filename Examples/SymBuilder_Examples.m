@@ -8,8 +8,8 @@
 %   Copyright (C) 2014 Jonathan Currie (Control Engineering)
 clear
 
-% There is also a page on the Wiki which supplements this example:
-web('https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Advanced/SymBuilder');
+% There is also a documentation page which supplements this example:
+web('https://jonathancurrie.github.io/OPTI/guides/advanced/sym-builder/');
 
 % NOTE - If you get an error similar to "Undefined function 'symb_cb'" when
 % using SymBuilder then try type "rehash" at the MATLAB command line. This 

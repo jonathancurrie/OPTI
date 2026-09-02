@@ -15,7 +15,7 @@ function opti_Install(savePath,runTests,openBrowser,downloadMex)
 % You MUST be in the current directory of this file!
 %
 %   Copyright (C) 2023 Jonathan Currie (Control Engineering)
-%   https://controlengineering.co.nz/Wikis/OPTI/
+%   https://jonathancurrie.github.io/OPTI/
 
 % Handle missing input args
 if (nargin < 4), downloadMex = []; end
@@ -60,11 +60,13 @@ genp = regexp(genp,';','split');
 %Folders to exclude from adding to Matlab path
 i = 1;
 rInd{:,:,i} = strfind(genp,'Documentation + Licenses'); i = i + 1;
+rInd{:,:,i} = strfind(genp,'Documentation'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'Source'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'CppAD'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'misdp'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'tex'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'.git'); i = i + 1;
+rInd{:,:,i} = strfind(genp,'.github'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'Crash Files'); i = i + 1;
 rInd{:,:,i} = strfind(genp,'mexopts'); i = i + 1;
 if(~exist([cd '\Solvers\Source\lib\win32\libclp.lib'],'file'))
@@ -113,7 +115,7 @@ end
 
 %Launch Examples page
 if (isempty(openBrowser) || (openBrowser == true))
-    web('https://controlengineering.co.nz/Wikis/OPTI/index.php/Examples/Examples','-browser');
+    web('https://jonathancurrie.github.io/OPTI/examples/','-browser');
 end
 
 %Finished

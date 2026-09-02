@@ -227,8 +227,8 @@
 %
 %   Finally, for more information, please consult the following webpages:
 %
-%      http://www.cs.ubc.ca/~pcarbo/ipopt-for-matlab
-%      http://projects.coin-or.org/Ipopt
+%      https://profiles.uchicago.edu/profiles/display/37244
+%      http://www.coin-or.org/download/source/Ipopt/
 %
 %   Copyright (C) 2008 Peter Carbonetto. All Rights Reserved.
 %   This code is published under the Eclipse Public License.

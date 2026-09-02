@@ -1,7 +1,7 @@
 %% BUG FIXES
 
-% cbc problems lift and project cuts
-% https://projects.coin-or.org/Cbc/ticket/135
+% CBC problems: lift-and-project cuts (legacy ticket 135)
+% https://projects.coin-or.org/Cbc
 
 % LEVMAR single inequality problem
 % OPTI problems\ParameterEstimationProblem

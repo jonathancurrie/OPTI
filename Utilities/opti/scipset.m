@@ -73,7 +73,7 @@ fprintf('           testmode: [ Validate the nonlinear function generation (will
 fprintf('\n');
 
 fprintf(' To set SCIP options not available via optiset, you may now set any available SCIP option using the ''scipopts'' field:\n');
-fprintf(' - For a list of all available options, see http://scip.zib.de/doc/html/PARAMETERS.php\n');
+fprintf(' - For a list of all available options, see https://www.scipopt.org/doc/html/PARAMETERS.php\n');
 fprintf(' - For example, to limit SCIP to the first feasible solution, use "scipset(''scipopts'',{''limits/solutions'',1})"\n');
 fprintf(' - Note:\n    - Boolean, Int, LongInt and Real parameters are all assumed MATLAB doubles, and converted internally.\n');
 fprintf('    - scipopts options take priority over all optiset options and override any emphasis settings\n');

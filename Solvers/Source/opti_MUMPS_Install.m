@@ -16,11 +16,11 @@
 % To recompile you will need to get / do the following:
 
 % 1) Get MUMPS
-% MUMPS is available from http://graal.ens-lyon.fr/MUMPS/. You will need to
-% register before you can download.
+% MUMPS is available from https://mumps-solver.org/index.php?page=dwnld.
+% You will need to register before you can download.
 
 % 2) Get METIS
-% METIS is available from http://glaros.dtc.umn.edu/gkhome/fsroot/sw/metis/OLD.
+% METIS is available from https://github.com/KarypisLab/METIS.
 % Download version 4.0.3 (last compatible version with MUMPS).
 
 % 3) Compile MUMPS and METIS

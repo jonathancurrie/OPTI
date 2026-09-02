@@ -13,7 +13,7 @@ set(gcf,'position',stdsize);
 set(gcf,'PaperPositionMode','auto');
 
 %% Basic OPTI Usage
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/GetStart/Basics
+% https://jonathancurrie.github.io/OPTI/getting-started/basics/
 
 % Ex1
 % Problem
@@ -79,7 +79,7 @@ if(~isempty(figDir))
 end
 
 %% MATLAB Optimization Toolbox Overloads
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/GetStart/Overloads
+% https://jonathancurrie.github.io/OPTI/getting-started/overloads/
 
 % Ex1
 % Problem
@@ -129,7 +129,7 @@ opts = optiset('solver','nomad');
 [x,fval] = opti_fmincon(fun,x0,[],[],[],[],lb,ub,[],opts)
 
 %% Linear Program
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/LP
+% https://jonathancurrie.github.io/OPTI/examples/problem-types/lp/
 
 % Ex 1
 % Objective
@@ -238,7 +238,7 @@ Opt = opti('f',f,'objbias',objbias,'ineq',A,b,'bounds',lb,ub)
 [x,fval] = solve(Opt)
 
 %% MILP
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/MILP
+% https://jonathancurrie.github.io/OPTI/examples/problem-types/milp/
 
 % Ex1
 % Objective
@@ -330,7 +330,7 @@ nB = 10; %Number of Binary Variables
 xtype = [repmat('C',1,nC),repmat('I',1,nI),repmat('B',1,nB)]
 
 %% SDP
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/SDP
+% https://jonathancurrie.github.io/OPTI/examples/problem-types/sdp/
 
 % Ex1
 % Objective
@@ -415,7 +415,7 @@ if(~isempty(which('sedumi.m')))
 end
 
 %% QP
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/QP
+% https://jonathancurrie.github.io/OPTI/examples/problem-types/qp/
 
 % Ex 1
 % Objective
@@ -502,7 +502,7 @@ if(~isempty(figDir))
 end
 
 %% MIQP
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/MIQP
+% https://jonathancurrie.github.io/OPTI/examples/problem-types/miqp/
 
 % Ex 1
 % Objective
@@ -529,7 +529,7 @@ if(~isempty(figDir))
 end
 
 %% QCQP
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/QCQP
+% https://jonathancurrie.github.io/OPTI/examples/problem-types/qcqp/
 
 % Ex1
 % Objective
@@ -670,7 +670,7 @@ if(~isempty(figDir))
 end
 
 %% MIQCQPs
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/MIQCQP
+% https://jonathancurrie.github.io/OPTI/examples/problem-types/miqcqp/
 
 %Ex1
 % Objective
@@ -700,7 +700,7 @@ if(~isempty(figDir))
 end
 
 %% SNLE
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/SNLE
+% https://jonathancurrie.github.io/OPTI/examples/problem-types/snle/
 
 % Ex 1
 % System of Nonlinear Equations
@@ -747,7 +747,7 @@ Opt = opti('nleq',nleq,'nlJac',nlJac,'nlJacstr',nlJacstr,'x0',x0)
 [x,fval,exitflag,info] = solve(Opt)
 
 %% SCNLE
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/SCNLE
+% https://jonathancurrie.github.io/OPTI/examples/problem-types/scnle/
 
 % Ex1
 % System of Nonlinear Equations
@@ -768,7 +768,7 @@ Opt = opti('nleq',nleq,'bounds',lb,ub,'x0',x0)
 plot(Opt,0.75,1)
 
 %% NLS
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/NLS
+% https://jonathancurrie.github.io/OPTI/examples/problem-types/nls/
 
 % Ex1
 % Objective (Fitting) Function
@@ -932,7 +932,7 @@ if(~isempty(figDir))
 end
 
 %% DNLS
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Dynamic/DynamicSystemParameterEstimation
+% https://jonathancurrie.github.io/OPTI/examples/dynamic-optimization/dnls/
 
 %Ex1
 % ODE System
@@ -1248,7 +1248,7 @@ Opt = opti('ode',ode,'data',tm,zm,'bounds',0.5,2.5,'z0',z0,...
 [theta,fval,exitflag,info] = solve(Opt)
 
 %% NLP
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/NLP
+% https://jonathancurrie.github.io/OPTI/examples/problem-types/nlp/
 
 %Ex1
 % Objective
@@ -1411,7 +1411,7 @@ end
 clf;
 
 %% GNLP
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/GNLP
+% https://jonathancurrie.github.io/OPTI/examples/problem-types/gnlp/
 
 %Ex1
 % Objective
@@ -1473,7 +1473,7 @@ if(~isempty(figDir))
 end
 
 %% MINLP
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/MINLP
+% https://jonathancurrie.github.io/OPTI/examples/problem-types/minlp/
 
 %Ex1
 % Objective
@@ -1534,7 +1534,7 @@ end
 clf;
 
 %% OPTIFIT
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Probs/ModelFit
+% https://jonathancurrie.github.io/OPTI/examples/problem-types/model-fit/
 
 %Ex 1
 % Fitting Data
@@ -1590,7 +1590,7 @@ if(~isempty(figDir))
 end
 
 %% Plot
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Advanced/Plots
+% https://jonathancurrie.github.io/OPTI/guides/advanced/plots/
 
 %Ex1
 % Objective (supplied with OPTI)
@@ -1741,7 +1741,7 @@ set(gcf,'position',stdsize); %return to normal
 
 
 %% Multi solve
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Advanced/MultiSolve
+% https://jonathancurrie.github.io/OPTI/guides/advanced/multi-solve/
 
 %Ex 1
 % QP Objective
@@ -1811,7 +1811,7 @@ end
 
 %% SymBuilder
 if (exist('syms.m','file'))
-    % https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Advanced/SymBuilder
+    % https://jonathancurrie.github.io/OPTI/guides/advanced/sym-builder/
     % Create SymBuilder Object
     B = SymBuilder();
     % Create SymBuilder Object with suppressed command line output 
@@ -2046,7 +2046,7 @@ if (exist('syms.m','file'))
 end
 
 %% Two Cons
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Advanced/Cons
+% https://jonathancurrie.github.io/OPTI/guides/advanced/cons/
 
 % Objective (f'x)
 f = -[1 2 3]';
@@ -2131,7 +2131,7 @@ Opt = opti('fun',fun,'nl',nlcon,cl,cu,'bounds',lb,ub)
 [x,fval] = solve(Opt,x0)
 
 %% Low Level
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Advanced/LowLevel
+% https://jonathancurrie.github.io/OPTI/guides/advanced/low-level/
 
 % Ex1
 % Load Large LP Test Problem
@@ -2204,7 +2204,7 @@ Opt = opti('fun',fun,'nl',nlcon,cl,cu,'x0',x0)
 
 
 %% 1st Ders
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Advanced/Deriv1
+% https://jonathancurrie.github.io/OPTI/guides/advanced/deriv1/
 
 % Objective
 fun = @(x) x(1)*x(4)*(x(1) + x(2) + x(3)) + x(3);
@@ -2221,7 +2221,7 @@ dfa = autoJac(fun,x0)
 dfc = cstepJac(fun,x0)
 
 % Symbolic Differentiation
-if (exist('syms.m','file'))
+if (license('test', 'symbolic_toolbox'))
     grad = symJac(fun)
 
     % Evaluate
@@ -2368,7 +2368,7 @@ Opt = opti('fun',fun,'grad',grad,'nl',nlcon,cl,cu,'jac',jac,'jacstr',jacstr,...
 
 
 %% 2nd Ders
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Advanced/Deriv2
+% https://jonathancurrie.github.io/OPTI/guides/advanced/deriv2/
 
 % Objective
 fun = @(x) x(1)*x(4)*(x(1) + x(2) + x(3)) + x(3);
@@ -2433,7 +2433,7 @@ Opt = opti('fun',fun,'grad',grad,'nl',nlcon,cl,cu,'jac',jac,'jacstr',jacstr,...
 
 
 %% MPS
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/File/MPS
+% https://jonathancurrie.github.io/OPTI/examples/file-formats/mps/
  
 prob = coinRead('testLP.mps')
  % Build an OPTI object of the returned problem 
@@ -2506,7 +2506,7 @@ prob = amplRead('hs100.nl')
 prob.conlin
 
 %% SDPA
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/File/SDPA
+% https://jonathancurrie.github.io/OPTI/examples/file-formats/sdpa/
 
 prob = sdpRead('arch0.dat-s')
 % Build an OPTI object of the returned problem 
@@ -2525,7 +2525,7 @@ OptSDMI = opti(prob)
 
 
 %% WhiteBox Solvers
-% https://www.controlengineering.co.nz/Wikis/OPTI/index.php/Advanced/WhiteBox
+% https://jonathancurrie.github.io/OPTI/guides/advanced/white-box/
 clc
 
 % SCIP variable vector

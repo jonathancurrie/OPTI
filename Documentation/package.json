@@ -1,0 +1,30 @@
+{
+  "name": "opti-documentation",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "docusaurus": "docusaurus",
+    "start": "docusaurus start",
+    "build": "docusaurus build",
+    "serve": "docusaurus serve",
+    "clear": "docusaurus clear"
+  },
+  "dependencies": {
+    "@cmfcmf/docusaurus-search-local": "2.0.1",
+    "@docusaurus/core": "3.10.2",
+    "@docusaurus/plugin-client-redirects": "3.10.2",
+    "@docusaurus/preset-classic": "3.10.2",
+    "@mdx-js/react": "3.1.1",
+    "katex": "0.16.47",
+    "prism-react-renderer": "2.4.1",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "rehype-katex": "7.0.1",
+    "remark-math": "6.0.0"
+  },
+  "engines": {
+    "node": ">=20.0"
+  },
+  "packageManager": "pnpm@11.9.0"
+}
+
